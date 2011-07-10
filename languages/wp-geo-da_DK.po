@@ -1,0 +1,382 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Geo\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-21 22:44+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Team Blogos <wordpress@blogos.dk>\n"
+"Language-Team: Team Blogos <wordpress@blogos.dk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2;plural=n != 1;\n"
+"X-Poedit-Language: Danish\n"
+"X-Poedit-Country: DENMARK\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_c;_e;__ngettext:1,2;__ngettext_noop:1,2;_n:1,2;_nc:1,2;_n_noop:1,2\n"
+"X-Poedit-Basepath: d:\\wordpress\\plugins\\wp-geo\n"
+"X-Poedit-SearchPath-0: d:\\wordpress\\plugins\\wp-geo\n"
+
+#: d:\wordpress\plugins\wp-geo/admin/donate-links.php:17
+msgid "Support this plugin"
+msgstr "Støt dette plugin"
+
+#: d:\wordpress\plugins\wp-geo/admin/donate-links.php:18
+msgid "Make a Donation"
+msgstr "Donér"
+
+#: d:\wordpress\plugins\wp-geo/admin/donate-links.php:19
+msgid "Follow me on Twitter"
+msgstr "Følg mig på Twitter"
+
+#: d:\wordpress\plugins\wp-geo/includes/widgets.php:150
+msgid "WP Geo is not currently active as you have not entered a Google API Key"
+msgstr "WP Geo er ikke aktiv i øjeblikket, fordi du ikke har indtastet en Google API-nøgle"
+
+#: d:\wordpress\plugins\wp-geo/includes/widgets.php:150
+msgid "Please update your WP Geo settings"
+msgstr "Opdatér venligst dine WP Geo-indstillinger"
+
+#: d:\wordpress\plugins\wp-geo/includes/widgets.php:153
+msgid "Title"
+msgstr "Titel"
+
+#: d:\wordpress\plugins\wp-geo/includes/widgets.php:154
+msgid "Width"
+msgstr "Bredde"
+
+#: d:\wordpress\plugins\wp-geo/includes/widgets.php:155
+msgid "Height"
+msgstr "Højde"
+
+#: d:\wordpress\plugins\wp-geo/includes/widgets.php:156
+msgid "Zoom"
+msgstr "Zoom"
+
+#: d:\wordpress\plugins\wp-geo/includes/widgets.php:157
+msgid "Settings"
+msgstr "Opsætning"
+
+#: d:\wordpress\plugins\wp-geo/includes/widgets.php:189
+msgid "Default"
+msgstr "Standard"
+
+#: d:\wordpress\plugins\wp-geo/includes/widgets.php:190
+msgid "Show Polylines"
+msgstr "Vis polylinjer"
+
+#: d:\wordpress\plugins\wp-geo/includes/widgets.php:191
+msgid "Hide Polylines"
+msgstr "Skjul polylinjer"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1033
+msgid "WP Geo settings updated"
+msgstr "WP Geo-indstillinger opdateret"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1047
+msgid "WP Geo Settings"
+msgstr "WP Geo-indstillinger"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1051
+msgid "General Settings"
+msgstr "Generelle indstillinger"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1053
+#, php-format
+msgid "For more information and documentation about this plugin please visit the <a %s>WP Geo Plugin</a> home page."
+msgstr "Du kan besøge <a %s>WP Geo-plugin</a>-hjemmesiden, hvis du ønsker mere information og dokumentation vedrørende dette plugin."
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1054
+#, php-format
+msgid "If you experience any problems/bugs with the plugin, please <a %s>log it here</a>."
+msgstr "Hvis du opdager problemer med eller finder bugs i dette plugin, må du meget gerne <a %s>logge det her</a>."
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1064
+msgid "Google API Key"
+msgstr "Google API-nøgle"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1068
+msgid "Map Type"
+msgstr "Kort-type"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1072
+msgid "Show Post Map"
+msgstr "Vis kort i indlæg"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1076
+msgid "Default Map Location"
+msgstr "Standardplacering af kort"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1083
+msgid "Default Map Width"
+msgstr "Standard-bredde for kort"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1087
+msgid "Default Map Height"
+msgstr "Standard-højde for kort"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1091
+msgid "Default Map Zoom"
+msgstr "Standard-zoom for kort"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1095
+msgid "Default Map Controls"
+msgstr "Standard-kontrolknapper for kort"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1098
+msgid "Map Type Controls"
+msgstr "Kontrolknap-type for kort"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1099
+msgid "You must select at least 2 map types for the control to show."
+msgstr "Du skal vælge mindst to kort-typer for at få kontrolknapperne vist."
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1100
+msgid "Normal map"
+msgstr "Normalt kort"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1101
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1290
+msgid "Satellite (photographic map)"
+msgstr "Satellit-kort (fotografisk)"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1102
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1291
+msgid "Hybrid (photographic map with normal features)"
+msgstr "Hybrid (fotografisk kort med normale funktioner)"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1103
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1292
+msgid "Physical (terrain map)"
+msgstr "Fysisk (terræn-kort)"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1104
+msgid "Other Controls"
+msgstr "Andre kontrolknapper"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1105
+msgid "Show map scale"
+msgstr "Vis målestoksforhold på kort"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1106
+msgid "Show collapsible overview map (in the corner of the map)"
+msgstr "Vis sammenfoldeligt oversigtskort (i hjørnet af kortet)"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1110
+msgid "Polylines"
+msgstr "Polylinjer"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1111
+msgid "Show polylines (to connect multiple points on a single map)"
+msgstr "Vis polylinjer (til at forbinde flere punkter på et enkelt kort)"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1114
+msgid "Polyline Colour"
+msgstr "Farve på polylinjer"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1118
+msgid "Show Maps On"
+msgstr "Vis kort på"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1120
+msgid "Pages"
+msgstr "Sider"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1121
+msgid "Posts (single posts)"
+msgstr "Indlæg (enkelt-indlæg)"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1122
+msgid "Posts home page"
+msgstr "Indlæggenes hjemme-side"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1123
+msgid "Posts in date archives"
+msgstr "Indlæg i dato-arkiver"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1124
+msgid "Posts in category archives"
+msgstr "Indlæg i kategori-arkiver"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1125
+msgid "Search Results"
+msgstr "Søgeresultater"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1129
+msgid "Feeds"
+msgstr "Feeds"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1130
+msgid "Add geographic information"
+msgstr "Tilføj geografisk information"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1134
+msgid "Save Changes"
+msgstr "Gem ændringer"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1138
+msgid "Marker Settings"
+msgstr "Indstillinger for markører"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1139
+msgid "<p>Custom marker images are automatically created in your WordPress uploads folder and used by WP Geo.<br />A copy of these images will remain in the WP Geo folder in case you need to revert to them at any time.<br />You may edit these marker icons if you wish - they must be PNG files. Each marker consist of a marker image and a shadow image. If you do not wish to show a marker shadow you should use a transparent PNG for the shadow file.</p><p>Currently you must update these images manually and the anchor point must be the same - looking to provide more control in future versions.</p>"
+msgstr "<p>Brugerdefinerede markørbilleder oprettes automatisk i din upload-folder i WordPress og bruges af WP Geo.<br />En kopi af disse billeder opbevares i WP Geo-mappen, for det tilfældes skyld, at du skulle få brug for at vende tilbage til dem engang.<br />Du kan redigere disse markør-ikoner, hvis du ønsker det &ndash; det skal blot være PNG-filer. Hver markør består af et markørbillede og et skyggebillede. Hvis du ikke ønsker at vise en markørskygge, skal du bruge en transparent PNG som skyggefil.</p><p>For øjeblikket er du nødt til at opdatere disse billeder manuelt, og ankerpunktet skal være det samme &ndash; jeg håber at kunne give mulighed for større kontrol i fremtidige udgaver.</p>"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1142
+msgid "Large Marker"
+msgstr "Stor markør"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1146
+msgid "This is the default marker used to indicate a location on most maps."
+msgstr "Dette er markøren, der som standard bruges til at vise placering på de fleste kort."
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1152
+msgid "Small Marker"
+msgstr "Lille markør"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1156
+msgid "This is the default marker used for the WP Geo sidebar widget."
+msgstr "Dette er markøren, der som standard bruges i WP Geo's sidepanels-widget."
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1162
+msgid "Dot Marker"
+msgstr "Punkt-markør"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1166
+msgid "This marker image is not currently used but it is anticipated that it will be used to indicate less important locations in a future versions of WP Geo."
+msgstr "Dette markørbillede bruges ikke i øjeblikket, men det forventes, at den vil blive brugt til at vise mindre vigtige placeringer i senere udgaver af WP Geo."
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1176
+msgid "Documentation"
+msgstr "Dokumentation"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1177
+msgid "<p>If you set the Show Post Map setting to &quot;Manual&quot;, you can use the Shortcode <code>[wp_geo_map]</code> in a post to display a map (if a location has been set for the post). You can only include the Shortcode once within a post. If you select another Show Post Map option then the Shortcode will be ignored and the map will be positioned automatically.</p>"
+msgstr "<p>Hvis du sætter Vis kort i indlæg-indstillingen til &quot;Manuelt&quote;, kan du bruge kortkoden <code>[wp_geo_map]</code>, hvis du vil vise et kort i et indlæg (forudsat at en placering er blevet angivet for indlægget). Du kan kun bruge kortkoden én gang i hvert indlæg. Hvis du vælger en anden indstilling for Vis kort i indlæg, vil kortkoden blive ignoreret og kortet placeret automatisk.</p>"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1178
+msgid "Feedback"
+msgstr "Feedback"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1179
+#, php-format
+msgid "<p>If you experience any problems or bugs with the plugin, or want to suggest an improvement, please visit the <a %s>WP Geo Google Code page</a> to log your issue. If you would like to feedback or comment on the plugin please visit the <a %s>WP Geo plugin</a> page.</p>"
+msgstr "Hvis du har problemer med pluginnet eller finder en bug, eller hvis du ønsker en forbedring, så besøg <a %s>WP Google Code page</a> og log dit anliggende. Hvis du ønsker at give feedback eller kommentere på pluginnet, er du velkommen til at besøge <a %s>WP Geo plugin-siden.</a>"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1180
+#, php-format
+msgid "<p>If you like WP Geo and would like to make a donation, please do so on the <a %s>WP Geo website</a>. Your contributions help to ensure that I can dedicate more time to the support and development of the plugin.</p>"
+msgstr "<p>Hvis du synes om WP Geo og ønsker at give en lille gave, kan du gøre det på <a %s>WP Geo's hjemmeside</a>. Dine bidrag hjælper med til, at jeg kan bruge mere tid på support og udvikling af pluginnet.</p>"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1199
+msgid "Large 3D pan/zoom control"
+msgstr "Store 3d-pan-/zoom-kontrolknapper"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1200
+msgid "Large pan/zoom control"
+msgstr "Store pan-/zoom-kontrolknapper"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1201
+msgid "Smaller pan/zoom control"
+msgstr "Mindre pan-/zoom-kontrolknapper"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1202
+msgid "Small 3D zoom control (no panning controls)"
+msgstr "Små 3d-zoom-kontrolknapper (ingen kontrolknapper til panorering)"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1203
+msgid "Small zoom control (no panning controls)"
+msgstr "Små zoom-kontrolknapper (ingen kontrolknapper til panorering)"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1204
+msgid "No pan/zoom controls"
+msgstr "Ingen pan-/zoom-kontrolknapper"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1237
+msgid "Zoomed Out"
+msgstr "Zoomet ud"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1256
+msgid "Zoomed In"
+msgstr "Zoomet ind"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1289
+msgid "Normal"
+msgstr "Normal"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1325
+msgid "At top of post"
+msgstr "I toppen af indlæg"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1326
+msgid "At bottom of post"
+msgstr "I bunden af indlæg"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1327
+msgid "Manually"
+msgstr "Manuelt"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1454
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1455
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1550
+msgid "WP Geo Location"
+msgstr "WP Geo-stedvisning"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1505
+msgid "Search for location"
+msgstr "Søg efter sted"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1505
+msgid "town, postcode or address"
+msgstr "by, postnummer eller adresse"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1506
+msgid "Search"
+msgstr "Søg"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1511
+msgid "Loading Google map, please wait..."
+msgstr "Indlæser Google-kort, vent venligst ..."
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1516
+msgid "Latitude"
+msgstr "Breddegrad"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1516
+msgid "Longitude"
+msgstr "Længdegrad"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1519
+msgid "clear location"
+msgstr "ryd stedvisning"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1519
+msgid "centre location"
+msgstr "centrér sted"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1523
+msgid "Marker Title"
+msgstr "Markørtitel"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1523
+msgid "optional"
+msgstr "valgfri"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1527
+msgid "Map Settings"
+msgstr "Indstillinger for kortet"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1529
+msgid "Save custom map zoom for this post"
+msgstr "Gem dit valg af zoomværdi for dette indlæg"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1530
+msgid "Save custom map type for this post"
+msgstr "Gem dit valg af korttype for dette indlæg"
+
+#: d:\wordpress\plugins\wp-geo/includes/wp-geo.php:1531
+msgid "Save map centre point for this post"
+msgstr "Gem kortcentreringspunkt for dette indlæg"
+
+#~ msgid "Buy me something"
+#~ msgstr "Køb noget til mig"

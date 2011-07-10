@@ -1,0 +1,145 @@
+
+
+
+/**
+ * Settings for all maps
+ */
+
+div.wp_geo_map {
+	overflow: hidden;
+}
+
+
+/* Try to fix theme with image background colours */
+div.wp_geo_map img,
+#content div.wp_geo_map img,
+div.wpgeo_map img,
+#content div.wpgeo_map img {
+	background: transparent;
+	border: none;
+	padding: 0px;
+}
+
+/* Try to fix theme with max-width images */
+div.wp_geo_map img,
+#content div.wp_geo_map img,
+#content .attachment div.wp_geo_map img,
+#sidebar div.wp_geo_map img,
+div.wpgeo_map img,
+#content div.wpgeo_map img,
+#content .attachment div.wpgeo_map img,
+#sidebar div.wpgeo_map img {
+	max-width:none;
+}
+
+
+
+/**
+ * Settings for the widget
+ */
+
+div.tooltip{
+	background-color:#FFFFFF;
+	border:1px solid #CCCCCC;
+	padding:3px;
+	white-space:nowrap;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #000000;
+}
+
+
+
+/**
+ * Settings for admin
+ */
+
+.wp_geo_error, .wp_geo_error a:link, .wp_geo_error a:visited {
+	color:#CC0000;
+}
+
+.wp_geo_error a:hover, .wp_geo_error a:active {
+	color:#333333;
+}
+
+.donate-links {
+	border: solid 1px #E9E9E9;
+	background-color: #F3F3F3;
+    margin-right:100px;
+    padding:1px 10px;
+    -moz-border-radius:4px;
+    -khtml-border-radius:4px;
+    -webkit-border-radius:4px;
+    border-radius:4px;
+}
+
+
+
+/**
+ * Settings for data
+ * These styles are used to display map data as HTML if Javascript is disabled
+ * (only applied to development version at present)
+ */
+ 
+.wp-geo-mapdata {
+	border: solid 1px #E9E9E9;
+	background-color: #F9F9F9;
+	/*display:none;*/
+}
+
+.wp-geo-mapdata .wp-geo-width:before {
+	content:"width: ";
+}
+
+.wp-geo-mapdata .wp-geo-height:before {
+	content:"height: ";
+}
+
+.wp-geo-mapdata .wp-geo-type:before {
+	content:"type: ";
+}
+
+.wp-geo-mapdata .wp-geo-zoom:before {
+	content:"zoom: ";
+}
+
+.wp-geo-mapdata .wp-geo-controls:before {
+	content:"controls: ";
+}
+
+.wp-geo-mapdata .wp-geo-controltypes:before {
+	content:"controltypes: ";
+}
+
+.wp-geo-mapdata .wp-geo-scale:before {
+	content:"scale: ";
+}
+
+.wp-geo-mapdata .wp-geo-overview:before {
+	content:"overview: ";
+}
+
+.wp-geo-mapdata .wp-geo-marker:before {
+	content:"marker: ";
+}
+
+
+
+/**
+ * Tooltip Style
+ */
+
+#tooltip2 {
+	z-index: 1000;
+	position: absolute;
+	border: 1px solid #CCCCCC;
+	padding: 3px 5px;
+	background-color: #FFFFFF;
+	max-width: 300px;
+	text-align: left;
+	display: none;
+	font-family: Arial, sans-serif;
+	font-size: 11px;
+	color:#000000;
+}
+

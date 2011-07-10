@@ -1,0 +1,414 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Geo 1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-geo\n"
+"POT-Creation-Date: 2010-06-29 20:42+0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Diego Pierotto <ita.translations@tiscali.it>\n"
+"Language-Team: Diego Pierotto <ita.translations@tiscali.it>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Poedit-Language: Italian\n"
+"X-Poedit-Country: ITALY\n"
+
+#: admin/donate-links.php:17
+msgid "Support this plugin"
+msgstr "Supporta questo plugin"
+
+#: admin/donate-links.php:18
+msgid "Make a donation"
+msgstr "Effettua una donazione"
+
+#: admin/donate-links.php:19
+msgid "Follow @wpgeo for updates"
+msgstr "Segui @wpgeo per aggiornamenti"
+
+#: admin/donate-links.php:20
+msgid "Follow me on Twitter"
+msgstr "Seguimi su Twitter"
+
+#: includes/maps.php:162
+#: includes/widgets.php:59
+#: includes/widgets.php:286
+msgid "title"
+msgstr "titolo"
+
+#: includes/markers.php:38
+msgid "Default Large Marker"
+msgstr "Marcatore 'grande' predefinito"
+
+#: includes/markers.php:39
+msgid "This is the default marker used to indicate a location on most maps."
+msgstr "Questo è il marcatore predefinito usato per indicare la posizione nella maggior parte delle mappe."
+
+#: includes/markers.php:48
+msgid "Default Small Marker"
+msgstr "Marcatore 'piccolo' predefinito"
+
+#: includes/markers.php:49
+msgid "This is the default marker used for the WP Geo sidebar widget."
+msgstr "Questo è il marcatore predefinito usato per il widget della barra laterale di WP Geo."
+
+#: includes/markers.php:58
+msgid "Default Dot Marker"
+msgstr "Marcatore 'punto' predefinito"
+
+#: includes/markers.php:59
+msgid "This marker image is not currently used but it is anticipated that it will be used to indicate less important locations in a future versions of WP Geo."
+msgstr "Questa immagine del marcatore non è attualmente usata ma indica che sarà usata per indicare posizioni di minor importanza nelle versioni future di WP Geo."
+
+#: includes/widgets.php:142
+msgid "WP Geo is not currently active as you have not entered a Google API Key"
+msgstr "WP Geo attualmente non è attivo visto che non hai inserito la chiave API di Google"
+
+#: includes/widgets.php:142
+msgid "Please update your WP Geo settings"
+msgstr "Aggiorna le impostazioni di WP Geo"
+
+#: includes/widgets.php:145
+msgid "Title"
+msgstr "Titolo"
+
+#: includes/widgets.php:146
+msgid "Width"
+msgstr "Larghezza"
+
+#: includes/widgets.php:147
+msgid "Height"
+msgstr "Altezza"
+
+#: includes/widgets.php:148
+msgid "Zoom"
+msgstr "Ingrandisci"
+
+#: includes/widgets.php:149
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: includes/widgets.php:181
+msgid "Default"
+msgstr "Predefinito"
+
+#: includes/widgets.php:182
+msgid "Show Polylines"
+msgstr "Mostra polilinee"
+
+#: includes/widgets.php:183
+msgid "Hide Polylines"
+msgstr "Nascondi polilinee"
+
+#: includes/wp-geo.php:1069
+msgid "WP Geo settings updated"
+msgstr "Impostazioni di WP Geo aggiornate"
+
+#: includes/wp-geo.php:1083
+msgid "WP Geo Settings"
+msgstr "Impostazioni WP Geo"
+
+#: includes/wp-geo.php:1087
+msgid "General Settings"
+msgstr "Impostazioni generali"
+
+#: includes/wp-geo.php:1089
+#, php-format
+msgid "For more information and documentation about this plugin please visit the <a %s>WP Geo Plugin</a> home page."
+msgstr "Per maggiori informazioni e documentazione su questo plugin visita la pagina del <a %s>Plugin WP Geo</a>"
+
+#: includes/wp-geo.php:1090
+#, php-format
+msgid "If you experience any problems/bugs with the plugin, please <a %s>log it here</a>."
+msgstr "Se hai avuto problemi o riscontrato bachi nel plugin, <a %s>descrivilo qui</a>."
+
+#: includes/wp-geo.php:1100
+msgid "Google API Key"
+msgstr "Chiave API Google"
+
+#: includes/wp-geo.php:1104
+msgid "Map Type"
+msgstr "Tipo di mappa"
+
+#: includes/wp-geo.php:1108
+msgid "Show Post Map"
+msgstr "Mostra mappa nell'articolo"
+
+#: includes/wp-geo.php:1112
+msgid "Default Map Location"
+msgstr "Posizione predefinita mappa"
+
+#: includes/wp-geo.php:1119
+msgid "Default Map Width"
+msgstr "Larghezza mappa predefinita"
+
+#: includes/wp-geo.php:1123
+msgid "Default Map Height"
+msgstr "Altezza mappa predefinita"
+
+#: includes/wp-geo.php:1127
+msgid "Default Map Zoom"
+msgstr "Ingrandimento mappa predefinito"
+
+#: includes/wp-geo.php:1131
+msgid "Default Map Controls"
+msgstr "Controlli mappa predefiniti"
+
+#: includes/wp-geo.php:1134
+msgid "Map Type Controls"
+msgstr "Controlli del tipo di mappa"
+
+#: includes/wp-geo.php:1135
+msgid "You must select at least 2 map types for the control to show."
+msgstr "Devi selezionare almeno 2 tipi di mappe per i controlli da mostrare."
+
+#: includes/wp-geo.php:1136
+msgid "Normal map"
+msgstr "Mappa normale"
+
+#: includes/wp-geo.php:1137
+#: includes/wp-geo.php:1313
+msgid "Satellite (photographic map)"
+msgstr "Satellite (mappa fotografica)"
+
+#: includes/wp-geo.php:1138
+#: includes/wp-geo.php:1314
+msgid "Hybrid (photographic map with normal features)"
+msgstr "Ibrida (mappa fotografica con le normali funzioni)"
+
+#: includes/wp-geo.php:1139
+#: includes/wp-geo.php:1315
+msgid "Physical (terrain map)"
+msgstr "Terreno (mappa del terreno)"
+
+#: includes/wp-geo.php:1140
+msgid "Other Controls"
+msgstr "Altri controlli"
+
+#: includes/wp-geo.php:1141
+msgid "Show map scale"
+msgstr "Mostra la scala della mappa"
+
+#: includes/wp-geo.php:1142
+msgid "Show collapsible overview map (in the corner of the map)"
+msgstr "Mostra una mappa sommario a comparsa (nell'angolo della mappa)"
+
+#: includes/wp-geo.php:1146
+msgid "Polylines"
+msgstr "Polilinee"
+
+#: includes/wp-geo.php:1147
+msgid "Show polylines (to connect multiple points on a single map)"
+msgstr "Mostra polilinee (per connettere punti multipli su una singola mappa)"
+
+#: includes/wp-geo.php:1150
+msgid "Polyline Colour"
+msgstr "Colore polilinea"
+
+#: includes/wp-geo.php:1154
+msgid "Show Maps On"
+msgstr "Mostra mappa in"
+
+#: includes/wp-geo.php:1156
+msgid "Pages"
+msgstr "Pagine"
+
+#: includes/wp-geo.php:1157
+msgid "Posts (single posts)"
+msgstr "Articoli (articoli singoli)"
+
+#: includes/wp-geo.php:1158
+msgid "Posts home page"
+msgstr "Articoli nella pagina principale"
+
+#: includes/wp-geo.php:1159
+msgid "Posts in date archives"
+msgstr "Articoli negli archivi delle date"
+
+#: includes/wp-geo.php:1160
+msgid "Posts in category archives"
+msgstr "Articoli negli archivi delle categorie"
+
+#: includes/wp-geo.php:1161
+msgid "Posts in tag archives"
+msgstr "Articoli nell'etichetta archivi"
+
+#: includes/wp-geo.php:1162
+msgid "Search Results"
+msgstr "Risultati della ricerca"
+
+#: includes/wp-geo.php:1183
+msgid "Feeds"
+msgstr "Feed"
+
+#: includes/wp-geo.php:1184
+msgid "Add geographic information"
+msgstr "Aggiungi informazione geografica"
+
+#: includes/wp-geo.php:1188
+msgid "Save Changes"
+msgstr "Salva le modifiche"
+
+#: includes/wp-geo.php:1192
+msgid "Marker Settings"
+msgstr "Impostazioni del marcatore"
+
+#: includes/wp-geo.php:1193
+msgid "<p>Custom marker images are automatically created in your WordPress uploads folder and used by WP Geo.<br />A copy of these images will remain in the WP Geo folder in case you need to revert to them at any time.<br />You may edit these marker icons if you wish - they must be PNG files. Each marker consist of a marker image and a shadow image. If you do not wish to show a marker shadow you should use a transparent PNG for the shadow file.</p><p>Currently you must update these images manually and the anchor point must be the same - looking to provide more control in future versions.</p>"
+msgstr "<p>Le immagini dei marcatori personalizzati vengono create automaticamente nella directory degli upload di WordPress e utilizzati dal plugin WP Geo.<br />Una copia di queste immagini rimangono nella directory WP Geo in caso tu voglia ripristinarle in qualunque momento.<br />Puoi modificare queste icone dei marcatori se lo desideri - devono essere file PNG. Ciascun marcatore è composto da un'immagine del marcatore e da una immagine dell'ombra. Se non desideri mostrare l'ombra del marcatore dovresti usare un PNG trasparente per il file di ombra.</p><p>Attualmente devi aggiornare queste immagini manualmente e il punto di ancora deve essere lo stesso - si sta cercando di fornire un miglior controllo nelle versioni future.</p>"
+
+#: includes/wp-geo.php:1199
+msgid "Documentation"
+msgstr "Documentazione"
+
+#: includes/wp-geo.php:1200
+msgid "<p>If you set the Show Post Map setting to &quot;Manual&quot;, you can use the Shortcode <code>[wp_geo_map]</code> in a post to display a map (if a location has been set for the post). You can only include the Shortcode once within a post. If you select another Show Post Map option then the Shortcode will be ignored and the map will be positioned automatically.</p>"
+msgstr "<p>Se imposti l'opzione &quot;Mostra mappa nell'articolo&quot; come &quot;Manuale&quot;, puoi usare il codice <code>[wp_geo_map]</code> nell'articolo per decidere dove mostrare la mappa (se una località è stata imposta nell'articolo). Puoi solo includere il codice una volta all'interno dell'articolo. Se selezioni un'altra opzione in &quot;Mostra mappa nell'articolo&quot; allora il codice sarà ignorato e la mappa sarà posizionata automaticamente.</p>"
+
+#: includes/wp-geo.php:1201
+msgid "Feedback"
+msgstr "Feedback"
+
+#: includes/wp-geo.php:1202
+#, php-format
+msgid "<p>If you experience any problems or bugs with the plugin, or want to suggest an improvement, please visit the <a %s>WP Geo Google Code page</a> to log your issue. If you would like to feedback or comment on the plugin please visit the <a %s>WP Geo plugin</a> page.</p>"
+msgstr "<p>Se hai avuto problemi o riscontrato bachi nel plugin, oppure vuoi suggerire una miglioria, visita la <a %s>pagina di WP Geo Google Code</a> per registrare l'argomento. Se vuoi lasciare un feedback o commentare il plugin visita la pagina del <a %s>plugin WP Geo</a>.</p>"
+
+#: includes/wp-geo.php:1203
+#, php-format
+msgid "<p>If you like WP Geo and would like to make a donation, please do so on the <a %s>WP Geo website</a>. Your contributions help to ensure that I can dedicate more time to the support and development of the plugin.</p>"
+msgstr "<p>Se ti piace WP Geo e vuoi effettuare una donazione, per favore fallo nel <a %s>sito web di WP Geo</a>. Il tuo contributo aiuterà l'autore a fare in modo che possa dedicare più tempo al supporto e allo sviluppo del plugin.</p>"
+
+#: includes/wp-geo.php:1222
+msgid "Large 3D pan/zoom control"
+msgstr "Controlli panoramica/ingrandimento 3D grandi"
+
+#: includes/wp-geo.php:1223
+msgid "Large pan/zoom control"
+msgstr "Controlli grandi per panorama/ingrandimento"
+
+#: includes/wp-geo.php:1224
+msgid "Smaller pan/zoom control"
+msgstr "Controlli piccoli per panorama/ingrandimento"
+
+#: includes/wp-geo.php:1225
+msgid "Small 3D zoom control (no panning controls)"
+msgstr "Controlli ingrandimento 3D piccoli (nessun controllo panoramica)"
+
+#: includes/wp-geo.php:1226
+msgid "Small zoom control (no panning controls)"
+msgstr "Controlli piccoli di ingrandimento (nessun controllo di spostamento)"
+
+#: includes/wp-geo.php:1227
+msgid "No pan/zoom controls"
+msgstr "Nessun controllo panorama/ingrandimento"
+
+#: includes/wp-geo.php:1260
+msgid "Zoomed Out"
+msgstr "Riduci ingrandimento"
+
+#: includes/wp-geo.php:1279
+msgid "Zoomed In"
+msgstr "Aumenta ingrandimento"
+
+#: includes/wp-geo.php:1312
+msgid "Normal"
+msgstr "Normale"
+
+#: includes/wp-geo.php:1348
+msgid "At top of post"
+msgstr "All'inizio dell'articolo"
+
+#: includes/wp-geo.php:1349
+msgid "At bottom of post"
+msgstr "Alla fine dell'articolo"
+
+#: includes/wp-geo.php:1350
+msgid "Manually"
+msgstr "Manuale"
+
+#: includes/wp-geo.php:1481
+#: includes/wp-geo.php:1482
+#: includes/wp-geo.php:1491
+#: includes/wp-geo.php:1590
+msgid "WP Geo Location"
+msgstr "Posizione WP Geo"
+
+#: includes/wp-geo.php:1545
+msgid "Search for location"
+msgstr "Cerca una posizione"
+
+#: includes/wp-geo.php:1545
+msgid "town, postcode or address"
+msgstr "città, codice postale o indirizzo"
+
+#: includes/wp-geo.php:1546
+msgid "Search"
+msgstr "Cerca"
+
+#: includes/wp-geo.php:1551
+msgid "Loading Google map, please wait..."
+msgstr "Caricamento Google map, attendere prego..."
+
+#: includes/wp-geo.php:1556
+msgid "Latitude"
+msgstr "Latitudine"
+
+#: includes/wp-geo.php:1556
+msgid "Longitude"
+msgstr "Longitudine"
+
+#: includes/wp-geo.php:1559
+msgid "clear location"
+msgstr "cancella la posizione"
+
+#: includes/wp-geo.php:1559
+msgid "centre location"
+msgstr "posizione centrale"
+
+#: includes/wp-geo.php:1563
+msgid "Marker Title"
+msgstr "Titolo marcatore"
+
+#: includes/wp-geo.php:1563
+msgid "optional"
+msgstr "opzionale"
+
+#: includes/wp-geo.php:1567
+msgid "Map Settings"
+msgstr "Impostazioni mappa"
+
+#: includes/wp-geo.php:1569
+msgid "Save custom map zoom for this post"
+msgstr "Salva ingrandimento mappa personalizzato dell'articolo"
+
+#: includes/wp-geo.php:1570
+msgid "Save custom map type for this post"
+msgstr "Salva tipo mappa personalizzato dell'articolo"
+
+#: includes/wp-geo.php:1571
+msgid "Save map centre point for this post"
+msgstr "Salva punto centrale nella mappa per questo articolo"
+
+#. Plugin Name of the plugin/theme
+msgid "WP Geo"
+msgstr "WP Geo"
+
+#. #-#-#-#-#  plugin.pot (WP Geo 3.1.4)  #-#-#-#-#
+#. Plugin URI of the plugin/theme
+#. #-#-#-#-#  plugin.pot (WP Geo 3.1.4)  #-#-#-#-#
+#. Author URI of the plugin/theme
+msgid "http://www.wpgeo.com/"
+msgstr "http://www.wpgeo.com/"
+
+#. Description of the plugin/theme
+msgid "Adds geocoding to WordPress."
+msgstr "Aggiunge la codifica geo a WordPress."
+
+#. Author of the plugin/theme
+msgid "Ben Huson"
+msgstr "Ben Huson"
+
+#~ msgid "Buy me something"
+#~ msgstr "Comprami qualcosa"
+

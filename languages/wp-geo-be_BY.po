@@ -1,0 +1,294 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Geo\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Fat Cow <zhr@tut.by>\n"
+"Language-Team: http://antsar.info/ <iliamrv@ya.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Language: Belarusian\n"
+"X-Poedit-Country: BELARUS\n"
+
+# Latitude
+msgid "Latitude"
+msgstr "шырата"
+
+# Longitude
+msgid "Longitude"
+msgstr "даўгата"
+
+# Label for location search field in admin
+msgid "Search for location"
+msgstr "шукаць па месцазнаходжанні"
+
+# Label for location search field in admin (in brackets)
+msgid "town, postcode or address"
+msgstr "горад ці адресс"
+
+# Admin search button
+msgid "Search"
+msgstr "пошук"
+
+# Clear location link in admin
+msgid "clear location"
+msgstr "месцазнаходжанне"
+
+# Widget options - Title
+msgid "Title"
+msgstr "назва"
+
+# Widget options - Width
+msgid "Width"
+msgstr "шырыня"
+
+# Widget options - Height
+msgid "Height"
+msgstr "вышыня"
+
+# Settings - Updated Message
+msgid "WP Geo settings updated"
+msgstr "кореектировать налады WP Geo"
+
+# Settings - <h2> Page Title
+msgid "WP Geo Settings"
+msgstr "налады WP Geo"
+
+# Settings - <h3> General Settings Title
+msgid "General Settings"
+msgstr "агульныя налады"
+
+# Settings - General Settings - Intro Para 1
+msgid "For more information and documentation about this plugin please visit the <a %s>WP Geo Plugin</a> home page."
+msgstr "для большай інфармацыі і дакументацыі пра гэту ўбудову, плжалуйста, наведаеце старонку  <a %s>WP Geo Plugin</a> "
+
+# Settings - General Settings - Intro Para 2
+msgid "If you experience any problems/bugs with the plugin, please <a %s>log it here</a>."
+msgstr "калі вы выявілі якія-небудзь праблемы-дэфекты, калі ласка,  <a %s>зарэгіструйце іх тут</a>."
+
+# Settings - Label for Google API Key field
+msgid "Google API Key"
+msgstr "Google API ключ"
+
+# Settings - Label for Map Type field
+msgid "Map Type"
+msgstr "тып карты"
+
+# Settings - Label for Show Post Map field
+msgid "Show Post Map"
+msgstr "паказаць паведамленне карты"
+
+# Settings - Show Post Map - At top of post
+msgid "At top of post"
+msgstr "угары паста"
+
+# Settings - Show Post Map - At bottom of post
+msgid "At bottom of post"
+msgstr "унізе паста"
+
+# Settings - Show Post Map - Manually
+msgid "Manually"
+msgstr "уручную"
+
+# Settings - Label for Default Map Width field
+msgid "Default Map Width"
+msgstr "шырыня карты па змаўчанні"
+
+# Settings - Label for Default Map Height field
+msgid "Default Map Height"
+msgstr "вышыня карты па змаўчанні"
+
+# Settings - Label for Default Map Zoom field
+msgid "Default Map Zoom"
+msgstr "маштаб карты па змаўчанні"
+
+# Settings - Default Map Zoom - Zoomed In
+msgid "Zoomed In"
+msgstr "павялічыць у"
+
+# Settings - Default Map Zoom - Zoomed Out
+msgid "Zoomed Out"
+msgstr "сціснуць"
+
+# Settings - Label for Default Map Controls fields
+msgid "Default Map Controls"
+msgstr "кіраванне картай па змаўчанні"
+
+# Settings - Default Map Controls - Large pan/zoom control
+msgid "Large pan/zoom control"
+msgstr "вялікая панарама - кантроль за павелічэннем"
+
+# Settings - Default Map Controls - Smaller pan/zoom control
+msgid "Smaller pan/zoom control"
+msgstr "маленькая панарама - кантроль за павелічэннем"
+
+# Settings - Default Map Controls - Small zoom control (no panning controls)
+msgid "Small zoom control (no panning controls)"
+msgstr "маленькі кантроль за павелічэннем (няма рэгуляцыі панарамы)"
+
+# Settings - Default Map Controls - No pan/zoom controls
+msgid "No pan/zoom controls"
+msgstr "няма панарамы - кантроль за павелічэннем"
+
+# Settings - Default Map Controls - Map Type
+msgid "Map Type Controls"
+msgstr "кантроль за тыпам карты"
+
+# Settings - Default Map Controls - Map Type - Message
+msgid "You must select at least 2 map types for the control to show."
+msgstr "вы павінны абраць, як миниму, два тыпу кантролю"
+
+# Settings - Default Map Controls - Map Type - Normal
+msgid "Normal"
+msgstr "норма"
+
+# Settings - Default Map Controls - Map Type - Satellite
+msgid "Satellite (photographic map)"
+msgstr "спадарожнік (фатаграфічная карта)"
+
+# Settings - Default Map Controls - Map Type - Hybrid
+msgid "Hybrid (photographic map with normal features)"
+msgstr "гібрыд (фатаграфічная карта са звычайнымі характарыстыкамі)"
+
+# Settings - Default Map Controls - Map Type - Physical
+msgid "Physical (terrain map)"
+msgstr "фізічны (карта мясцовасці)"
+
+# Settings - Default Map Controls - Other
+msgid "Other Controls"
+msgstr "іншыя выгляды кіравання"
+
+# Settings - Default Map Controls - Other - Show map scale
+msgid "Show map scale"
+msgstr "паказаць шкалу карты"
+
+# Settings - Default Map Controls - Other - Show collapsible overview map (in the corner of the map)
+msgid "Show collapsible overview map (in the corner of the map)"
+msgstr "паказаць раскладныя агляды карты (у куце карты)"
+
+# Settings - Label for Show Maps On fields
+msgid "Show Maps On"
+msgstr "паказаць карту на"
+
+# Settings - Show Maps On - Pages
+msgid "Pages"
+msgstr "старонкі"
+
+# Settings - Show Maps On - Posts (single posts)
+msgid "Posts (single posts)"
+msgstr "пасты (адзінкавыя пасты)"
+
+# Settings - Show Maps On - Posts home page
+msgid "Posts home page"
+msgstr "пасты хатніх старонак"
+
+# Settings - Show Maps On - Posts in date archives
+msgid "Posts in date archives"
+msgstr "пасты па архіве дат"
+
+# Settings - Show Maps On - Posts in category archives
+msgid "Posts in category archives"
+msgstr "пасты ў катэгорыі архівы"
+
+# Settings - Show Maps On - Search Results
+msgid "Search Results"
+msgstr "вынікі пошуку"
+
+# Settings - Label for Feeds fields
+msgid "Feeds"
+msgstr "падача"
+
+# Settings - Feeds - Checkbox
+msgid "Add geographic information"
+msgstr "дадаць геаграфічную інфармацыю"
+
+# Settings - Save Changes Button Text
+msgid "Save Changes"
+msgstr "захаваць змены"
+
+# Settings - <h2> Marker Settings Title
+msgid "Marker Settings"
+msgstr "налада маркера"
+
+# Settings - Marker Settings - Text
+msgid "<p>Custom marker images are automatically created in your WordPress uploads folder and used by WP Geo.<br />A copy of these images will remain in the WP Geo folder in case you need to revert to them at any time.<br />You may edit these marker icons if you wish - they must be PNG files. Each marker consist of a marker image and a shadow image. If you do not wish to show a marker shadow you should use a transparent PNG for the shadow file.</p><p>Currently you must update these images manually and the anchor point must be the same - looking to provide more control in future versions.</p>"
+msgstr "<p>Custom marker images are automatically created in your WordPress uploads folder and used by WP Geo.<br />A copy of these images will remain in the WP Geo folder in case you need to revert to them at any time.<br />You may edit these marker icons if you wish - they must be PNG files. Each marker consist of a marker image and a shadow image. If you do not wish to show a marker shadow you should use a transparent PNG for the shadow file.</p><p>Currently you must update these images manually and the anchor point must be the same - looking to provide more control in future versions.</p>"
+
+# Settings - Large Marker Title
+msgid "Large Marker"
+msgstr "вялікі маркер"
+
+# Settings - Large Marker Description
+msgid "This is the default marker used to indicate a location on most maps."
+msgstr "гэты маркер выкарыстоўваецца па змаўчанні, каб паказаць месцазнаходжанне на большасці карт"
+
+# Settings - Small Marker Title
+msgid "Small Marker"
+msgstr "маленькі маркер"
+
+# Settings - Small Marker Description
+msgid "This is the default marker used for the WP Geo sidebar widget."
+msgstr "гэты маркер выкарыстоўваецца па змаўчанні для контуру виджета  WP Geo"
+
+# Settings - Dot Marker Title
+msgid "Dot Marker"
+msgstr "кропка маркера"
+
+# Settings - Dot Marker Description
+msgid "This marker image is not currently used but it is anticipated that it will be used to indicate less important locations in a future versions of WP Geo."
+msgstr "гэты обрз маркера не выкарыстоўваецца цяпер, аднак предпалагается, што ён будзе скарыстаны, каб паказаць менне важныя месцазнаходжанні ў будучых версіях WP Geo."
+
+# Settings - Show polylines (to connect multiple points on a single map)
+msgid "Show polylines (to connect multiple points on a single map)"
+msgstr "паказаць лініі (каб звязаць шматлікія кропкі ў адну карту)"
+
+# Settings - Documentation
+msgid "Documentation"
+msgstr "дакументацыя"
+
+# Settings - Documentation Text
+msgid "<p>If you set the Show Post Map setting to &quot;Manual&quot;, you can use the Shortcode <code>[wp_geo_map]</code> in a post to display a map (if a location has been set for the post). You can only include the Shortcode once within a post. If you select another Show Post Map option then the Shortcode will be ignored and the map will be positioned automatically.</p>"
+msgstr "<p>Калі вы ўсталюеце налады Show Post Map на &quot;Ручныя&quot;, Вы павінны будзеце выкарыстоўваць Shortcode <code>[wp_geo_map]</code> у пасце для адлюстравання карты (калі для паста будзе ўсталявана лакацыя). Вы можаце ўключаць толькі кароткі раз на працягу паста. Калі вы абераце іншай тэмы Show Post Map , то Shortcode будуць ігнаравацца, і карта будзе аўтаматычна маштабавацца.</p>"
+
+# Settings - Feedback
+msgid "Feedback"
+msgstr "зваротная сувязь"
+
+# Settings - Feedback - Text 1
+msgid "<p>If you experience any problems or bugs with the plugin, or want to suggest an improvement, please visit the <a %s>WP Geo Google Code page</a> to log your issue. If you would like to feedback or comment on the plugin please visit the <a %s>WP Geo plugin</a> page.</p>"
+msgstr "<p>If you experience any problems or bugs with the plugin, or want to suggest an improvement, please visit the <a %s>WP Geo Google Code page</a> to log your issue. If you would like to feedback or comment on the plugin please visit the <a %s>WP Geo plugin</a> page.</p>"
+
+# Settings - Feedback - Text 2
+msgid "<p>If you like WP Geo and would like to make a donation, please do so on the <a %s>WP Geo website</a>. Your contributions help to ensure that I can dedicate more time to the support and development of the plugin.</p>"
+msgstr "<p>If you like WP Geo and would like to make a donation, please do so on the <a %s>WP Geo website</a>. Your contributions help to ensure that I can dedicate more time to the support and development of the plugin.</p>"
+
+# Admin Section Title
+msgid "WP Geo Location"
+msgstr "месцазнаходжанне WP Geo"
+
+# Admin - Google API Key Notice
+msgid "WP Geo is not currently active as you have not entered a Google API Key"
+msgstr "WP Geо пакуль не актывізавана, бо вы пакуль не ўвайшлі  ў  Google API Key"
+
+# Admin - Please update your WP Geo settings
+msgid "Please update your WP Geo settings"
+msgstr "калі ласка, абновіце вашы натсройки WP Geo"
+
+# Admin - Default (general)
+msgid "Default"
+msgstr "Па змаўчанні."
+
+# Admin - Show Polylines
+msgid "Show Polylines"
+msgstr "паказаць лініі"
+
+# Admin - Hide Polylines
+msgid "Hide Polylines"
+msgstr "схаваць лініі"
+
+# Admin - Polyline Colour
+msgid "Polyline Colour"
+msgstr "колер ліній"
+

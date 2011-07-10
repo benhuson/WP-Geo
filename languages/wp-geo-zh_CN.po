@@ -1,0 +1,414 @@
+#!/usr/bin/env php
+# Translation of the WordPress plugin WP Geo 3.1.3 by Ben Huson.
+# Copyright (C) 2010 Ben Huson
+# This file is distributed under the same license as the WP Geo package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Geo 3.1.3\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-geo\n"
+"POT-Creation-Date: 2010-03-22 17:32+0000\n"
+"PO-Revision-Date: 2010-05-24 21:44+0100\n"
+"Language-Team: be_BY antsar.info <iliamrv@ya.ru>\n"
+"Language-Team: bg_BG\n"
+"Language-Team: da_DK Team Blogos <wordpress@blogos.dk>\n"
+"Language-Team: de_DE Ivan Graf <contact@bildergallery.com>\n"
+"Language-Team: en_EN Ben Huson <ben@thewhiteroom.net>\n"
+"Language-Team: es_ES Alberto <alberto@berriart.com>\n"
+"Language-Team: fr_FR Alain Messin <dev@adecouvrir.info>\n"
+"Language-Team: hr_HR Andrija Papec <info.adriaindex@gmail.com>\n"
+"Language-Team: it_IT Diego Pierotto <ita.translations@tiscali.it>\n"
+"Language-Team: ru_RU Fat Cow <zhr@tut.by>\n"
+"Language-Team: zh_CN Steen Chow <steen198@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Ben Huson <ben@thewhiteroom.net>\n"
+
+#: admin/donate-links.php:17
+msgid "Support this plugin"
+msgstr "赞助此插件"
+
+#: admin/donate-links.php:18
+msgid "Make a Donation"
+msgstr "捐赠"
+
+#: admin/donate-links.php:19
+msgid "Follow me on Twitter"
+msgstr ""
+
+#: includes/maps.php:162
+#: includes/widgets.php:67
+#: includes/widgets.php:292
+msgid "title"
+msgstr "标题"
+
+#: includes/widgets.php:150
+msgid "WP Geo is not currently active as you have not entered a Google API Key"
+msgstr "WP Geo未能启用，请先输入Goole API信息"
+
+#: includes/widgets.php:150
+msgid "Please update your WP Geo settings"
+msgstr "请更新您的 WP Geo 设置"
+
+#: includes/widgets.php:153
+msgid "Title"
+msgstr "标题"
+
+#: includes/widgets.php:154
+msgid "Width"
+msgstr "宽度"
+
+#: includes/widgets.php:155
+msgid "Height"
+msgstr "高度"
+
+#: includes/widgets.php:156
+msgid "Zoom"
+msgstr "缩放"
+
+#: includes/widgets.php:157
+msgid "Settings"
+msgstr "设置"
+
+#: includes/widgets.php:189
+msgid "Default"
+msgstr "默认"
+
+#: includes/widgets.php:190
+msgid "Show Polylines"
+msgstr "显示多段线（Polylines）"
+
+#: includes/widgets.php:191
+msgid "Hide Polylines"
+msgstr "隐藏多段线（Polylines）"
+
+#: includes/wp-geo.php:1033
+msgid "WP Geo settings updated"
+msgstr "已更新WP Geo设置"
+
+#: includes/wp-geo.php:1047
+msgid "WP Geo Settings"
+msgstr "WP Geo设置"
+
+#: includes/wp-geo.php:1051
+msgid "General Settings"
+msgstr "一般设置"
+
+#: includes/wp-geo.php:1053
+#, php-format
+msgid "For more information and documentation about this plugin please visit the <a %s>WP Geo Plugin</a> home page."
+msgstr "更多信息和文档请点击 <a %s>WP Geo</a>插件页面"
+
+#: includes/wp-geo.php:1054
+#, php-format
+msgid "If you experience any problems/bugs with the plugin, please <a %s>log it here</a>."
+msgstr "如遇到各种问题或bug请点击<a %s>这里</a>上报。谢谢"
+
+#: includes/wp-geo.php:1064
+msgid "Google API Key"
+msgstr "Google API Key"
+
+#: includes/wp-geo.php:1068
+msgid "Map Type"
+msgstr "地图类型"
+
+#: includes/wp-geo.php:1072
+msgid "Show Post Map"
+msgstr "在文章中显示地图"
+
+#: includes/wp-geo.php:1076
+msgid "Default Map Location"
+msgstr "默认地图位置"
+
+#: includes/wp-geo.php:1083
+msgid "Default Map Width"
+msgstr "默认地图宽度"
+
+#: includes/wp-geo.php:1087
+msgid "Default Map Height"
+msgstr "默认地图高度"
+
+#: includes/wp-geo.php:1091
+msgid "Default Map Zoom"
+msgstr "默认地图缩放比例"
+
+#: includes/wp-geo.php:1095
+msgid "Default Map Controls"
+msgstr "默认地图控件"
+
+#: includes/wp-geo.php:1098
+msgid "Map Type Controls"
+msgstr "默认地图类型控制条"
+
+#: includes/wp-geo.php:1099
+msgid "You must select at least 2 map types for the control to show."
+msgstr "请至少选择2种地图类型"
+
+#: includes/wp-geo.php:1100
+msgid "Normal map"
+msgstr "普通地图"
+
+#: includes/wp-geo.php:1101
+#: includes/wp-geo.php:1290
+msgid "Satellite (photographic map)"
+msgstr "卫星地图"
+
+#: includes/wp-geo.php:1102
+#: includes/wp-geo.php:1291
+msgid "Hybrid (photographic map with normal features)"
+msgstr "混合地图（普通地图 + 卫星地图）"
+
+#: includes/wp-geo.php:1103
+#: includes/wp-geo.php:1292
+msgid "Physical (terrain map)"
+msgstr "地形图（带高程信息）"
+
+#: includes/wp-geo.php:1104
+msgid "Other Controls"
+msgstr "其他控件"
+
+#: includes/wp-geo.php:1105
+msgid "Show map scale"
+msgstr "显示地图缩放比例"
+
+#: includes/wp-geo.php:1106
+msgid "Show collapsible overview map (in the corner of the map)"
+msgstr "在地图角落显示可折叠的导航地图"
+
+#: includes/wp-geo.php:1110
+msgid "Polylines"
+msgstr "多段线"
+
+#: includes/wp-geo.php:1111
+msgid "Show polylines (to connect multiple points on a single map)"
+msgstr "显示多段线"
+
+#: includes/wp-geo.php:1114
+msgid "Polyline Colour"
+msgstr "多段线颜色"
+
+#: includes/wp-geo.php:1118
+msgid "Show Maps On"
+msgstr "将显示地图在"
+
+#: includes/wp-geo.php:1120
+msgid "Pages"
+msgstr "页面里"
+
+#: includes/wp-geo.php:1121
+msgid "Posts (single posts)"
+msgstr "文章里"
+
+#: includes/wp-geo.php:1122
+msgid "Posts home page"
+msgstr "文章首页"
+
+#: includes/wp-geo.php:1123
+msgid "Posts in date archives"
+msgstr "文章日期存档页"
+
+#: includes/wp-geo.php:1124
+msgid "Posts in category archives"
+msgstr "文章分类存档页"
+
+#: includes/wp-geo.php:1125
+msgid "Search Results"
+msgstr "搜索结果页"
+
+#: includes/wp-geo.php:1129
+msgid "Feeds"
+msgstr "Feeds"
+
+#: includes/wp-geo.php:1130
+msgid "Add geographic information"
+msgstr "添加地理信息"
+
+#: includes/wp-geo.php:1134
+msgid "Save Changes"
+msgstr "保存设置"
+
+#: includes/wp-geo.php:1138
+msgid "Marker Settings"
+msgstr "地图符号设置"
+
+#: includes/wp-geo.php:1139
+msgid "<p>Custom marker images are automatically created in your WordPress uploads folder and used by WP Geo.<br />A copy of these images will remain in the WP Geo folder in case you need to revert to them at any time.<br />You may edit these marker icons if you wish - they must be PNG files. Each marker consist of a marker image and a shadow image. If you do not wish to show a marker shadow you should use a transparent PNG for the shadow file.</p><p>Currently you must update these images manually and the anchor point must be the same - looking to provide more control in future versions.</p>"
+msgstr "<p>可自定义的地图符号已经随插件安装在你的uploads/wp-geo/markers目录下。<br />在wp geo的插件页面里也保存着这些地图符号的备份（具体在img/markers目录下），如果你想恢复它可以用这里的文件。当然，你也可以自己修改或上传你自己的地图符号文件，但文件格式必须是PNG。每个地图符号由符号图像本身和它的阴影图像组成。如果你不想显示符号的阴影，请将图片设置成透明背景的PNG文件</p><p>目前版本之允许你手工更新符号文件，且锚点必须相同，在今后版本里将添加更多对地图符号的控制功能。</p>"
+
+#: includes/wp-geo.php:1142
+msgid "Large Marker"
+msgstr "大尺寸符号"
+
+#: includes/wp-geo.php:1146
+msgid "This is the default marker used to indicate a location on most maps."
+msgstr "这是显示地理位置的默认符号"
+
+#: includes/wp-geo.php:1152
+msgid "Small Marker"
+msgstr "小尺寸符号"
+
+#: includes/wp-geo.php:1156
+msgid "This is the default marker used for the WP Geo sidebar widget."
+msgstr "这是在侧边栏地图里显示地理位置的默认符号"
+
+#: includes/wp-geo.php:1162
+msgid "Dot Marker"
+msgstr "点符号"
+
+#: includes/wp-geo.php:1166
+msgid "This marker image is not currently used but it is anticipated that it will be used to indicate less important locations in a future versions of WP Geo."
+msgstr "目前该地图符号并未启用，但今后在显示次要的地理位置信息时可能会使用到。"
+
+#: includes/wp-geo.php:1176
+msgid "Documentation"
+msgstr "文档"
+
+#: includes/wp-geo.php:1177
+msgid "<p>If you set the Show Post Map setting to &quot;Manual&quot;, you can use the Shortcode <code>[wp_geo_map]</code> in a post to display a map (if a location has been set for the post). You can only include the Shortcode once within a post. If you select another Show Post Map option then the Shortcode will be ignored and the map will be positioned automatically.</p>"
+msgstr "<p>如果你在<strong>显示地图</strong>设置项中将地图显示方式设置成&quot;手工&quot;显示的话，你需要在文章页面中手动输入<em><code>[wp_geo_map]</code></em>来显示地图。如果你选择其他的地图显示方式将自动在文章页面里显示地图。</p>"
+
+#: includes/wp-geo.php:1178
+msgid "Feedback"
+msgstr "反馈"
+
+#: includes/wp-geo.php:1179
+#, php-format
+msgid "<p>If you experience any problems or bugs with the plugin, or want to suggest an improvement, please visit the <a %s>WP Geo Google Code page</a> to log your issue. If you would like to feedback or comment on the plugin please visit the <a %s>WP Geo plugin</a> page.</p>"
+msgstr "<p>如果你遇到任何问题或bug，或有更好的建议来完善WP Geo，请访问<a %s>插件页面</a>。如果你想对插件做一些评论或反馈，请访问<a %s>WP Geo 插件页面</a>来提交。</p>"
+
+#: includes/wp-geo.php:1180
+#, php-format
+msgid "<p>If you like WP Geo and would like to make a donation, please do so on the <a %s>WP Geo website</a>. Your contributions help to ensure that I can dedicate more time to the support and development of the plugin.</p>"
+msgstr "<p>如果你喜欢WP Geo且愿意提供捐助，请<a %s>访问</a>我们的网站。你的帮助将有助于我花更多的时间和精力来完善此插件。谢谢 :)</p>"
+
+#: includes/wp-geo.php:1199
+msgid "Large 3D pan/zoom control"
+msgstr "大图 3D 平移/缩放 控件"
+
+#: includes/wp-geo.php:1200
+msgid "Large pan/zoom control"
+msgstr "大图 平移/缩放 控件"
+
+#: includes/wp-geo.php:1201
+msgid "Smaller pan/zoom control"
+msgstr "小图 平移/缩放 控件"
+
+#: includes/wp-geo.php:1202
+msgid "Small 3D zoom control (no panning controls)"
+msgstr "小图 3D 缩放 控件"
+
+#: includes/wp-geo.php:1203
+msgid "Small zoom control (no panning controls)"
+msgstr "大图 缩放 控件"
+
+#: includes/wp-geo.php:1204
+msgid "No pan/zoom controls"
+msgstr "无平移/缩放 控件"
+
+#: includes/wp-geo.php:1237
+msgid "Zoomed Out"
+msgstr "缩小"
+
+#: includes/wp-geo.php:1256
+msgid "Zoomed In"
+msgstr "放大"
+
+#: includes/wp-geo.php:1289
+msgid "Normal"
+msgstr "正常"
+
+#: includes/wp-geo.php:1325
+msgid "At top of post"
+msgstr "在文章顶部"
+
+#: includes/wp-geo.php:1326
+msgid "At bottom of post"
+msgstr "在文章尾部"
+
+#: includes/wp-geo.php:1327
+msgid "Manually"
+msgstr "手工"
+
+#: includes/wp-geo.php:1454
+#: includes/wp-geo.php:1455
+#: includes/wp-geo.php:1550
+msgid "WP Geo Location"
+msgstr "WP Geo Location"
+
+#: includes/wp-geo.php:1505
+msgid "Search for location"
+msgstr "搜寻位置"
+
+#: includes/wp-geo.php:1505
+msgid "town, postcode or address"
+msgstr "镇名称，邮编或详细地址"
+
+#: includes/wp-geo.php:1506
+msgid "Search"
+msgstr "搜索"
+
+#: includes/wp-geo.php:1511
+msgid "Loading Google map, please wait..."
+msgstr "正在加载Google地图，请稍等..."
+
+#: includes/wp-geo.php:1516
+msgid "Latitude"
+msgstr "纬度"
+
+#: includes/wp-geo.php:1516
+msgid "Longitude"
+msgstr "经度"
+
+#: includes/wp-geo.php:1519
+msgid "clear location"
+msgstr "清空位置信息"
+
+#: includes/wp-geo.php:1519
+msgid "centre location"
+msgstr "居中"
+
+#: includes/wp-geo.php:1523
+msgid "Marker Title"
+msgstr "地图符号的标题"
+
+#: includes/wp-geo.php:1523
+msgid "optional"
+msgstr "可选项"
+
+#: includes/wp-geo.php:1527
+msgid "Map Settings"
+msgstr "地图设置"
+
+#: includes/wp-geo.php:1529
+msgid "Save custom map zoom for this post"
+msgstr "为本文保存地图缩放比例信息"
+
+#: includes/wp-geo.php:1530
+msgid "Save custom map type for this post"
+msgstr "为本文保存地图类型信息"
+
+#: includes/wp-geo.php:1531
+msgid "Save map centre point for this post"
+msgstr "为本文保存地图中心点信息"
+
+#. Plugin Name of the plugin/theme
+msgid "WP Geo"
+msgstr "WP Geo"
+
+#. #-#-#-#-#  plugin.pot (WP Geo 3.1.3)  #-#-#-#-#
+#. Plugin URI of the plugin/theme
+#. #-#-#-#-#  plugin.pot (WP Geo 3.1.3)  #-#-#-#-#
+#. Author URI of the plugin/theme
+msgid "http://www.wpgeo.com/"
+msgstr "http://www.wpgeo.com/"
+
+#. Description of the plugin/theme
+msgid "Adds geocoding to WordPress."
+msgstr "在Wordpress中加入地理编码功能"
+
+#. Author of the plugin/theme
+msgid "Ben Huson"
+msgstr "Ben Huson"
+
