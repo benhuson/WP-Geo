@@ -75,6 +75,9 @@ class WPGeo {
 			'show_map_type_physical' => 'Y',
 			'show_map_scale' => 'N',
 			'show_map_overview' => 'N',
+			'save_post_zoom' => 'N',
+			'save_post_map_type' => 'N',
+			'save_post_centre_point' => 'N',
 			'show_polylines' => 'Y',
 			'polyline_colour' => '#FFFFFF',
 			'show_maps_on_home' => 'Y',
@@ -961,7 +964,7 @@ class WPGeo {
 		global $wpgeo;
 		
 		if ( function_exists('add_options_page') ) {
-			add_options_page('WP Geo Options', 'WP Geo', 8, __FILE__, array($wpgeo, 'options_page'));
+			add_options_page( 'WP Geo Options', 'WP Geo', 'manage_options', __FILE__, array( $wpgeo, 'options_page' ) );
 		}
 		
 	}

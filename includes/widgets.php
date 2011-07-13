@@ -28,10 +28,10 @@ class WPGeo_Widget {
 	function init_map_widget() {
 	
 		// This registers the widget so it appears in the sidebar
-		register_sidebar_widget('WP Geo', array('WPGeo_Widget', 'map_widget'));
+		wp_register_sidebar_widget( 'wpgeo_widget', 'WP Geo', array( 'WPGeo_Widget', 'map_widget' ) );
 	
 		// This registers the  widget control form
-		register_widget_control('WP Geo', array('WPGeo_Widget', 'map_widget_control'));
+		wp_register_widget_control( 'wpgeo_widget', 'WP Geo', array( 'WPGeo_Widget', 'map_widget_control' ) );
 	
 	}
 	
