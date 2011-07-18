@@ -108,4 +108,16 @@ jQuery(document).ready(function() {
 	
 	
 	
+	// Prevent enter from submitting post
+	jQuery(window).keydown(function(event){
+		if (jQuery("#wpgeo_location input:focus").length > 0) {
+			if (event.keyCode == 13) {
+				event.preventDefault();
+				return false;
+			}
+		}
+	});
+	
+	
+	
 });
