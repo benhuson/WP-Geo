@@ -85,6 +85,12 @@ jQuery(document).ready(function() {
 		
 		var geocoder = new GClientGeocoder();
 		
+		// Set default base country for search
+		if ( jQuery("input#wp_geo_base_country_code").length > 0 ) {
+			var base_country_code = jQuery("input#wp_geo_base_country_code").val();
+			geocoder.setBaseCountryCode(base_country_code);
+		}
+		
 		if ( geocoder ) {
 			geocoder.getLatLng(
 				address,

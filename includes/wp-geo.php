@@ -1658,7 +1658,9 @@ class WPGeo {
 		echo '<table cellpadding="3" cellspacing="5" class="form-table">
 			<tr>
 				<th scope="row">' . __('Search for location', 'wp-geo') . '<br /><span style="font-weight:normal;">(' . __('town, postcode or address', 'wp-geo') . ')</span></th>
-				<td><input name="wp_geo_search" type="text" size="45" id="wp_geo_search" value="' . $search . '" /> <span class="submit"><input type="button" id="wp_geo_search_button" name="wp_geo_search_button" value="' . __('Search', 'wp-geo') . '" /></span></td>
+				<td><input name="wp_geo_search" type="text" size="45" id="wp_geo_search" value="' . $search . '" />
+					<input type="hidden" name="wp_geo_base_country_code" id="wp_geo_base_country_code" value="' . apply_filters( 'wpgeo_base_country_code', '' ) . '" />
+					<span class="submit"><input type="button" id="wp_geo_search_button" name="wp_geo_search_button" value="' . __('Search', 'wp-geo') . '" /></span></td>
 			</tr>
 			<tr>
 				<td colspan="2">
