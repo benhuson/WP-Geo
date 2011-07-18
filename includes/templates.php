@@ -215,6 +215,11 @@ function get_wpgeo_post_map( $post_id = null ) {
 	
 	$show_post_map = apply_filters( 'wpgeo_show_post_map', $wp_geo_options['show_post_map'], $id );
 	
+	$latitude  = get_post_meta( $id, WPGEO_LATITUDE_META, true );
+	$longitude = get_post_meta( $id, WPGEO_LONGITUDE_META, true );
+	if ( !is_numeric( $latitude ) || !is_numeric( $longitude ) )
+		return '';
+	
 	if ( $id > 0 && !is_feed() ) {
 		if ( $wpgeo->show_maps() && $show_post_map != 'TOP' && $show_post_map != 'BOTTOM' && $wpgeo->checkGoogleAPIKey() ) {
 			
