@@ -117,8 +117,10 @@ class WPGeo {
 	
 	function is_wpgeo_feed() {
 		
-		if ( is_feed() && $_GET['wpgeo'] == 'true' ) {
-			return true;
+		if ( is_feed() && isset( $_GET['wpgeo'] ) ) {
+			if ( $_GET['wpgeo'] == 'true' ) {
+				return true;
+			}
 		}
 		return false;
 		
@@ -160,7 +162,7 @@ class WPGeo {
 		global $wpdb, $wpgeo;
 		
 		if ( $wpgeo->is_wpgeo_feed() ) {
-			$join .= " LEFT JOIN wp_postmeta ON (" . $wpdb->posts . ".ID = wp_postmeta.post_id)";
+			$join .= " LEFT JOIN $wpdb->postmeta ON (" . $wpdb->posts . ".ID = $wpdb->postmeta.post_id)";
 		}
 		return $join;
 		
@@ -177,10 +179,10 @@ class WPGeo {
 	
 	function posts_where( $where ) {
 	
-		global $wpgeo;
+		global $wpdb, $wpgeo;
 		
 		if ( $wpgeo->is_wpgeo_feed() ) {
-			$where .= " AND (wp_postmeta.meta_key = '" . WPGEO_LATITUDE_META . "' OR wp_postmeta.meta_key = '" . WPGEO_LONGITUDE_META . "')";
+			$where .= " AND ($wpdb->postmeta.meta_key = '" . WPGEO_LATITUDE_META . "' OR $wpdb->postmeta.meta_key = '" . WPGEO_LONGITUDE_META . "')";
 		}
 		return $where;
 	
