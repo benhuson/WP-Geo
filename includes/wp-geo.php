@@ -86,6 +86,7 @@ class WPGeo {
 			'show_maps_in_datearchives' => 'Y',
 			'show_maps_in_categoryarchives' => 'Y',
 			'show_maps_in_tagarchives' => 'Y',
+			'show_maps_in_taxarchives' => 'Y',
 			'show_maps_in_authorarchives' => 'Y',
 			'show_maps_in_searchresults' => 'N',
 			'show_maps_on_excerpts' => 'N',
@@ -1026,6 +1027,7 @@ class WPGeo {
 		if ( is_date() && $wp_geo_options['show_maps_in_datearchives'] == 'Y' )			return true;
 		if ( is_category() && $wp_geo_options['show_maps_in_categoryarchives'] == 'Y' )	return true;
 		if ( is_tag() && $wp_geo_options['show_maps_in_tagarchives'] == 'Y' )			return true;
+		if ( is_tax() && $wp_geo_options['show_maps_in_taxarchives'] == 'Y' )			return true;
 		if ( is_author() && $wp_geo_options['show_maps_in_authorarchives'] == 'Y' )		return true;
 		if ( is_search() && $wp_geo_options['show_maps_in_searchresults'] == 'Y' )		return true;
 		if ( is_feed() && $wp_geo_options['add_geo_information_to_rss'] == 'Y' )		return true;
@@ -1124,6 +1126,7 @@ class WPGeo {
 			$wp_geo_options['show_maps_in_datearchives']     = isset( $_POST['show_maps_in_datearchives'] ) && $_POST['show_maps_in_datearchives'] == 'Y' ? 'Y' : 'N';
 			$wp_geo_options['show_maps_in_categoryarchives'] = isset( $_POST['show_maps_in_categoryarchives'] ) && $_POST['show_maps_in_categoryarchives'] == 'Y' ? 'Y' : 'N';
 			$wp_geo_options['show_maps_in_tagarchives']      = isset( $_POST['show_maps_in_tagarchives'] ) && $_POST['show_maps_in_tagarchives'] == 'Y' ? 'Y' : 'N';
+			$wp_geo_options['show_maps_in_taxarchives']      = isset( $_POST['show_maps_in_taxarchives'] ) && $_POST['show_maps_in_taxarchives'] == 'Y' ? 'Y' : 'N';
 			$wp_geo_options['show_maps_in_authorarchives']   = isset( $_POST['show_maps_in_authorarchives'] ) && $_POST['show_maps_in_authorarchives'] == 'Y' ? 'Y' : 'N';
 			$wp_geo_options['show_maps_in_searchresults']    = isset( $_POST['show_maps_in_searchresults'] ) && $_POST['show_maps_in_searchresults'] == 'Y' ? 'Y' : 'N';
 			$wp_geo_options['show_maps_on_excerpts']         = isset( $_POST['show_maps_on_excerpts'] ) && $_POST['show_maps_on_excerpts'] == 'Y' ? 'Y' : 'N';
@@ -1240,6 +1243,7 @@ class WPGeo {
 							' . $wpgeo->options_checkbox('show_maps_in_datearchives', 'Y', $wp_geo_options['show_maps_in_datearchives']) . ' ' . __('Posts in date archives', 'wp-geo') . '<br />
 							' . $wpgeo->options_checkbox('show_maps_in_categoryarchives', 'Y', $wp_geo_options['show_maps_in_categoryarchives']) . ' ' . __('Posts in category archives', 'wp-geo') . '<br />
 							' . $wpgeo->options_checkbox('show_maps_in_tagarchives', 'Y', $wp_geo_options['show_maps_in_tagarchives']) . ' ' . __('Posts in tag archives', 'wp-geo') . '<br />
+							' . $wpgeo->options_checkbox('show_maps_in_taxarchives', 'Y', $wp_geo_options['show_maps_in_taxarchives']) . ' ' . __('Posts in taxonomy archives', 'wp-geo') . '<br />
 							' . $wpgeo->options_checkbox('show_maps_in_authorarchives', 'Y', $wp_geo_options['show_maps_in_authorarchives']) . ' ' . __('Posts in author archives', 'wp-geo') . '<br />
 							' . $wpgeo->options_checkbox('show_maps_in_searchresults', 'Y', $wp_geo_options['show_maps_in_searchresults']) . ' ' . __('Search Results', 'wp-geo') . '<br />';
 		if ( function_exists( 'get_post_types' ) && function_exists( 'post_type_supports' ) ) {
