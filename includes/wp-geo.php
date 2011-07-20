@@ -1348,7 +1348,21 @@ class WPGeo {
 	 * @return       (array or string) Array or menu HTML
 	 */
 	
-	function selectMapZoom( $return = 'array', $selected = '' ) {
+	function selectMapZoom( $return = 'array', $selected = '', $args = null ) {
+		
+		// Defaults
+		$args = wp_parse_args( (array)$args, array(
+			'return'   => null,
+			'selected' => null,
+			'name'     => 'default_map_zoom',
+			'id'       => 'default_map_zoom'
+		) );
+		
+		// Deprecated compatibility
+		if ( $args['return'] == null ) 
+			$args['return'] = $return;
+		if ( $args['selected'] == null ) 
+			$args['selected'] = $selected;
 		
 		// Array
 		$map_type_array = array(
@@ -1378,10 +1392,10 @@ class WPGeo {
 		if ( $return = 'menu' ) {
 			$menu = '';
 			foreach ( $map_type_array as $key => $val ) {
-				$is_selected = $selected == $key ? ' selected="selected"' : '';
+				$is_selected = $args['selected'] == $key ? ' selected="selected"' : '';
 				$menu .= '<option value="' . $key . '"' . $is_selected . '>' . $val . '</option>';
 			}
-			$menu = '<select name="default_map_zoom" id="default_map_zoom">' . $menu. '</select>';
+			$menu = '<select name="' . $args['name'] . '" id="' . $args['id'] . '">' . $menu. '</select>';
 			return $menu;
 		}
 		
@@ -1400,7 +1414,21 @@ class WPGeo {
 	 * @return       (array or string) Array or menu HTML
 	 */
 	
-	function google_map_types( $return = 'array', $selected = '' ) {
+	function google_map_types( $return = 'array', $selected = '', $args = null ) {
+		
+		// Defaults
+		$args = wp_parse_args( (array)$args, array(
+			'return'   => null,
+			'selected' => null,
+			'name'     => 'google_map_type',
+			'id'       => 'google_map_type'
+		) );
+		
+		// Deprecated compatibility
+		if ( $args['return'] == null ) 
+			$args['return'] = $return;
+		if ( $args['selected'] == null ) 
+			$args['selected'] = $selected;
 		
 		// Array
 		$map_type_array = array(
@@ -1411,13 +1439,13 @@ class WPGeo {
 		);
 		
 		// Menu?
-		if ( $return = 'menu' ) {
+		if ( $args['return'] = 'menu' ) {
 			$menu = '';
 			foreach ( $map_type_array as $key => $val ) {
-				$is_selected = $selected == $key ? ' selected="selected"' : '';
+				$is_selected = $args['selected'] == $key ? ' selected="selected"' : '';
 				$menu .= '<option value="' . $key . '"' . $is_selected . '>' . $val . '</option>';
 			}
-			$menu = '<select name="google_map_type" id="google_map_type">' . $menu. '</select>';
+			$menu = '<select name="' . $args['name'] . '" id="' . $args['id'] . '">' . $menu. '</select>';
 			return $menu;
 		}
 		
