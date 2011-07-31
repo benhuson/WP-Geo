@@ -53,6 +53,7 @@ include_once( WP_PLUGIN_DIR . '/wp-geo/includes/shortcodes.php' );
 include_once( WP_PLUGIN_DIR . '/wp-geo/includes/feeds.php' );
 include_once( WP_PLUGIN_DIR . '/wp-geo/includes/display.php' );
 include_once( WP_PLUGIN_DIR . '/wp-geo/includes/widgets.php' );
+include_once( WP_PLUGIN_DIR . '/wp-geo/widgets/recent-locations.php' );
 
 
 
