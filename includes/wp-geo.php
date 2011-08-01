@@ -781,7 +781,10 @@ class WPGeo {
 				$maptype = $settings['type'];
 			}
 			if ( !empty($settings['centre']) ) {
-				$mapcentre = explode( ',', $settings['centre'] );
+				$new_mapcentre = explode( ',', $settings['centre'] );
+				if ( is_numeric( $new_mapcentre[0] ) && is_numeric( $new_mapcentre[1] ) ) {
+					$mapcentre = $new_mapcentre;
+				}
 			}
 		}
 		
