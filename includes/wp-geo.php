@@ -41,11 +41,32 @@ class WPGeo {
 	
 	function WPGeo() {
 		
+		// Version
+		$wp_geo_version = get_option( 'wp_geo_version' );
+		if ( empty( $wp_geo_version ) || version_compare( $wp_geo_version, $this->version, '<' ) ) {
+			update_option( 'wp_geo_show_version_msg', 'Y' );
+			update_option( 'wp_geo_version', $this->version );
+		}
+		
 		$this->maps = array();
 		$this->maps2 = new WPGeo_Maps();
 		$this->markers = new WPGeo_Markers();
 		$this->feeds = new WPGeo_Feeds();
 		
+	}
+	
+	
+	
+	/**
+	 * Version upgrade message
+	 */
+	function version_upgrade_msg() {
+		$wp_geo_show_version_msg = get_option( 'wp_geo_show_version_msg' );
+		if ( current_user_can( 'manage_options' ) && $wp_geo_show_version_msg == 'Y' ) {
+			echo '<div id="wpgeo_version_message" class="error below-h2" style="margin:5px 15px 2px 0px;">
+					<p>WP Geo has been updated to use the WordPress widgets API. You will need to re-add your widgets. <a href="' . wp_nonce_url( add_query_arg( 'wpgeo_action', 'dismiss-update-msg', $_SERVER['PHP_SELF'] ), 'wpgeo_dismiss_update_msg' ) . '">Dismiss</a></p>
+				</div>';
+		}
 	}
 	
 	
@@ -607,6 +628,17 @@ class WPGeo {
 			if ( class_exists( 'WPGeo_Editor' ) ) {
 				$this->editor = new WPGeo_Editor();
 				$this->editor->add_buttons();
+			}
+		}
+		
+		// Dismiss Upgrade Message
+		if ( isset( $_GET['wpgeo_action'] ) && $_GET['wpgeo_action'] = 'dismiss-update-msg' ) {
+			if ( wp_verify_nonce( $_GET['_wpnonce'], 'wpgeo_dismiss_update_msg' ) ) {
+				update_option( 'wp_geo_show_version_msg', 'N' );
+				$url = remove_query_arg( 'wpgeo_action', $_SERVER['PHP_SELF'] );
+				$url = remove_query_arg( '_wpnonce', $url );
+				wp_redirect( $url );
+				exit();
 			}
 		}
 		

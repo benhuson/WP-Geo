@@ -87,6 +87,7 @@ add_action( 'admin_init', array( $wpgeo, 'admin_init' ) );
 add_action( 'admin_head', array( $wpgeo, 'admin_head' ) );
 add_action( 'admin_menu', array( $wpgeo, 'admin_menu' ) );
 add_action( 'after_plugin_row', array( $wpgeo, 'after_plugin_row' ) );
+add_action( 'admin_notices', array( $wpgeo, 'version_upgrade_msg' ) );
 
 
 
