@@ -170,16 +170,13 @@ class WPGeo_Map {
 		if ( $wp_geo_options['show_polylines'] == 'Y' ) {
 			if ( $this->show_polyline ) {
 				if ( count($this->points) > 1 ) {
-					$polyline_coords = '';
+					$polyline = new WPGeo_Polyline( array(
+						'color' => $wp_geo_options['polyline_colour']
+					) );
 					for ( $i = 0; $i < count($this->points); $i++ ) {
-						if ( $i > 0 ) {
-							$polyline_coords .= ',';
-						}
-						$polyline_coords .= 'new GLatLng(' . $this->points[$i]['latitude'] . ', ' . $this->points[$i]['longitude'] . ')' . "\n";
+						$polyline->add_coord( $this->points[$i]['latitude'], $this->points[$i]['longitude'] );
 					}
-					$js_polyline = 'var polyOptions = {geodesic:true};' . "\n";
-					$js_polyline .= 'var polyline = new GPolyline([' . $polyline_coords . '], "' . $wp_geo_options['polyline_colour'] . '", 2, 0.5, polyOptions);' . "\n";
-					$js_polyline .= 'map_' . $map_id . '.addOverlay(polyline);' . "\n";
+					$js_polyline .= 'map_' . $map_id . '.addOverlay(' . WPGeo_API_GMap2::render_polyline( $polyline ) . ');';
 				}
 			}
 		}
@@ -466,6 +463,63 @@ class WPGeo_Map {
 
 }
 
+class WPGeo_API_GMap2 {
+	
+	function render_polyline( $polyline ) {
+		// Coords
+		$coords = array();
+		foreach ( $polyline->coords as $coord ) {
+			$coords[] = WPGeo_API_GMap2::render_coord( $coord );
+		}
+		// Options
+		$options = array();
+		if ( $polyline->geodesic ) {
+			$options[] = 'geodesic:true';
+		}
+		return 'new GPolyline([' . implode( ',', $coords ) . '],"' . $polyline->color . '",' . $polyline->thickness . ',' . $polyline->opacity . ',{' . implode( ',', $options ) . '})';
+	}
+	
+	function render_coord( $coord ) {
+		return 'new GLatLng(' . $coord->latitude . ',' . $coord->longitude . ')';
+	}
+	
+}
 
+class WPGeo_Polyline {
+	
+	var $coords    = array();
+	var $geodesic  = true;
+	var $color     = '#FFFFFF';
+	var $thickness = 2;
+	var $opacity   = 0.5;
+	
+	function WPGeo_Polyline( $args = null ) {
+		$defaults = array(
+			'coords'    => $this->coords,
+			'geodesic'  => $this->geodesic,
+			'color'     => $this->color,
+			'thickness' => $this->thickness,
+			'opacity'   => $this->opacity
+		);
+		$args = wp_parse_args( $args, $defaults );
+	}
+	
+	function add_coord( $latitude, $longitude ) {
+		$this->coords[] = new WPGeo_Coord( $latitude, $longitude );
+	}
+	
+}
+
+class WPGeo_Coord {
+	
+	var $latitude  = null;
+	var $longitude = null;
+	
+	function WPGeo_Coord( $latitude, $longitude ) {
+		$this->latitude  = $latitude;
+		$this->longitude = $longitude;
+	}
+	
+}
 
 ?>
