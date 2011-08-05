@@ -58,6 +58,7 @@ class WPGeo_Recent_Locations_Widget extends WP_Widget {
 			$maptype 		= empty( $instance['maptype'] ) ? '' : $instance['maptype'];
 			$showpolylines 	= $wp_geo_options['show_polylines'] == 'Y' ? true : false;
 			$zoom 	 	    = is_numeric( $instance['zoom'] ) ? $instance['zoom'] : $wp_geo_options['default_map_zoom'];
+			$post_type 		= empty( $instance['post_type'] ) ? 'post' : $instance['post_type'];
 			
 			if ( $number > 0 ) {
 			
@@ -68,7 +69,7 @@ class WPGeo_Recent_Locations_Widget extends WP_Widget {
 				
 				// Start write widget
 				$html_content = '';
-				$map_content = $this->add_map( $width, $height, $maptype, $showpolylines, $zoom, $args['widget_id'] . '-map', $number );
+				$map_content = $this->add_map( $width, $height, $maptype, $showpolylines, $zoom, $args['widget_id'] . '-map', $number, $post_type );
 				
 				if ( !empty( $map_content ) ) {
 					$html_content = $before_widget;
@@ -97,7 +98,6 @@ class WPGeo_Recent_Locations_Widget extends WP_Widget {
 	 * @return (array) New values.
 	 */
 	function update( $new_instance, $old_instance ) {
-
 		$instance = $old_instance;
 		$instance['title']          = strip_tags( stripslashes( $new_instance['title'] ) );
 		$instance['width']          = strip_tags( stripslashes( $new_instance['width'] ) );
@@ -106,6 +106,7 @@ class WPGeo_Recent_Locations_Widget extends WP_Widget {
 		$instance['maptype']        = strip_tags( stripslashes( $new_instance['maptype'] ) );
 		$instance['show_polylines'] = in_array( $new_instance['show_polylines'], array( 'Y', 'N' ) ) ? $new_instance['show_polylines'] : '';
 		$instance['zoom']           = absint( $new_instance['zoom'] );
+		$instance['post_type']      = $new_instance['post_type'];
 		return $instance;
 		
 	}
@@ -132,11 +133,17 @@ class WPGeo_Recent_Locations_Widget extends WP_Widget {
 			'maptype'        => $wp_geo_options['google_map_type'],
 			'show_polylines' => '',
 			'zoom'           => null,
+			'post_type'      => array( 'post' ),
 		) );
 		
 		// Validation
 		if ( $instance['zoom'] === null ) {
 			$instance['zoom'] = $wp_geo_options['default_map_zoom'];
+		}
+		
+		$instance['post_type'] = (array)$instance['post_type'];
+		if ( count( $instance['post_type'] ) == 0 ) {
+			$instance['post_type'] = array( 'post' );
 		}
 		
 		// Message if API key not set
@@ -155,6 +162,18 @@ class WPGeo_Recent_Locations_Widget extends WP_Widget {
 		echo '<p><strong>' . __( 'Settings', 'wp-geo' ) . ':</strong></p>';
 		echo '<p>' . __( 'Map Type', 'wp-geo' ) . ':<br />' . $wpgeo->google_map_types( null, null, array( 'return' => 'menu', 'selected' => $instance['maptype'], 'id' => $this->get_field_id( 'maptype' ), 'name' => $this->get_field_name( 'maptype' ) ) ) . '</p>';
 		echo '<p>' . __( 'Polylines', 'wp-geo' ) . ':<br />' . $this->show_polylines_options( array( 'return' => 'menu', 'selected' => $instance['show_polylines'], 'id' => $this->get_field_id( 'show_polylines' ), 'name' => $this->get_field_name( 'show_polylines' ) ) ) . '</p>';
+		echo '<p><strong>' . __( 'Show Post Types', 'wp-geo' ) . ':</strong></p>';
+		
+		$post_types = get_post_types( array(), 'objects' );
+		$custom_post_type_checkboxes = '';
+		foreach ( $post_types as $post_type ) {
+			if ( post_type_supports( $post_type->query_var, 'wpgeo' ) || $post_type->name == 'post' || $post_type->name == 'page' ) {
+				$checked = in_array( $post_type->name, $instance['post_type'] ) ? true : false;
+				$custom_post_type_checkboxes .= $wpgeo->options_checkbox( $this->get_field_name( 'post_type' ) . '[]', $post_type->name, $checked ) . ' ' . __( $post_type->label, 'wp-geo' ) . '<br />';
+			}
+		}
+		echo $custom_post_type_checkboxes;
+		
 		
 	}
 	
@@ -212,7 +231,7 @@ class WPGeo_Recent_Locations_Widget extends WP_Widget {
 	 * @return       (string) HTML JavaScript.
 	 * @note         TO DO: integrate the code better into the existing one.
 	 */
-	function add_map( $width = '100%', $height = 150, $maptype = '', $showpolylines = false, $zoom = null, $id = 'wp_geo_map_widget', $number = 1 ) {
+	function add_map( $width = '100%', $height = 150, $maptype = '', $showpolylines = false, $zoom = null, $id = 'wp_geo_map_widget', $number = 1, $post_type = 'post' ) {
 	
 		global $wpgeo;
 		
@@ -226,7 +245,8 @@ class WPGeo_Recent_Locations_Widget extends WP_Widget {
 				'numberposts'  => $number,
 				'meta_key'     => WPGEO_LATITUDE_META,
 				'meta_value'   => 0,
-				'meta_compare' => '>'
+				'meta_compare' => '>',
+				'post_type'    => $post_type
 			) );
 		
 			// Set default width and height
