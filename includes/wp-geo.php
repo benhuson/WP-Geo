@@ -894,8 +894,7 @@ class WPGeo {
 					});
 					
 					' . apply_filters( 'wpgeo_map_js_preoverlays', '', 'map' ) . '
-					
-					map.addOverlay(marker);
+					' . WPGeo_API_GMap2::render_map_overlay( 'map', 'marker' ) . '
 					
 					' . $panel_open . '
 					

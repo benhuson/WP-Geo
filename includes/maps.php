@@ -176,7 +176,7 @@ class WPGeo_Map {
 					for ( $i = 0; $i < count($this->points); $i++ ) {
 						$polyline->add_coord( $this->points[$i]['latitude'], $this->points[$i]['longitude'] );
 					}
-					$js_polyline .= 'map_' . $map_id . '.addOverlay(' . WPGeo_API_GMap2::render_polyline( $polyline ) . ');';
+					$js_polyline .= WPGeo_API_GMap2::render_map_overlay( 'map_' . $map_id, WPGeo_API_GMap2::render_polyline( $polyline ) );
 				}
 			}
 		}
@@ -227,9 +227,9 @@ class WPGeo_Map {
     			' . $js_zoom . '
     			' . $js_controls . '
 				
-				//map_' . $map_id . '.addOverlay(new GLayer("org.wikipedia.en"));
-				//map_' . $map_id . '.addOverlay(new GLayer("com.panoramio.all"));
-				//map_' . $map_id . '.addControl(new google.maps.LocalSearch()); // http://googleajaxsearchapi.blogspot.com/2007/06/local-search-control-for-maps-api.html
+				//' . WPGeo_API_GMap2::render_map_overlay( 'map_' . $map_id, 'new GLayer("org.wikipedia.en")' ) . ';
+				//' . WPGeo_API_GMap2::render_map_overlay( 'map_' . $map_id, 'new GLayer("com.panoramio.all")' ) . ';
+				//' . WPGeo_API_GMap2::render_map_overlay( 'map_' . $map_id, 'new google.maps.LocalSearch()' ) . '; // http://googleajaxsearchapi.blogspot.com/2007/06/local-search-control-for-maps-api.html
 				
 			}';
 		
@@ -464,6 +464,15 @@ class WPGeo_Map {
 }
 
 class WPGeo_API_GMap2 {
+	
+	function render_map_overlay( $map, $overlay ) {
+		if ( is_string( $overlay ) ) {
+			$output = $map . '.addOverlay(' . $overlay . ');';
+		} else {
+			$output = '';
+		}
+		return $output;
+	}
 	
 	function render_polyline( $polyline ) {
 		// Coords

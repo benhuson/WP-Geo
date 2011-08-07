@@ -310,7 +310,7 @@ class WPGeo_Recent_Locations_Widget extends WP_Widget {
 					for ( $i = 0; $i < count( $coords ); $i++ ) {
 						$polyline->add_coord( $coords[$i]['latitude'], $coords[$i]['longitude'] );
 					}
-					$polyline_js = 'map.addOverlay(' . WPGeo_API_GMap2::render_polyline( $polyline ) . ');';
+					$polyline_js = WPGeo_API_GMap2::render_map_overlay( 'map', WPGeo_API_GMap2::render_polyline( $polyline ) );
 				}
 				
 				for ( $i = 0; $i < count( $coords ); $i++ ) {
