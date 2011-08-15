@@ -282,7 +282,7 @@ function get_wpgeo_map( $query, $options = null ) {
 		$r['height'] .= 'px';
 	}
 	
-	$posts = get_posts( $query );
+	$posts = get_posts( $r );
 	
 	$output = '
 		<div id="' . $id . '" class="wpgeo_map" style="width:' . $r['width'] . '; height:' . $r['height'] . ';float:' . $r['align'] . '"></div>
