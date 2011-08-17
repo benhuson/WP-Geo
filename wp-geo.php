@@ -54,6 +54,7 @@ include_once( WP_PLUGIN_DIR . '/wp-geo/includes/feeds.php' );
 include_once( WP_PLUGIN_DIR . '/wp-geo/includes/display.php' );
 include_once( WP_PLUGIN_DIR . '/wp-geo/widgets/contextual-map.php' );
 include_once( WP_PLUGIN_DIR . '/wp-geo/widgets/recent-locations.php' );
+include_once( WP_PLUGIN_DIR . '/wp-geo/widgets/category-map.php' );
 
 
 
