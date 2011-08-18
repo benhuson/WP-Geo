@@ -15,7 +15,8 @@
  *               The widget displays markers for posts in the current category.
  * @author       Marco Alionso Ramirez <marco@onemarco.com>
  *               updated by Ben Huson <ben@thewhiteroom.net>
- * @version      1.4
+ *               David Keen <dkkeen@gmail.com>
+ * @version      1.0
  */
 class WPGeo_Category_Map_Widget extends WP_Widget {
 
@@ -207,7 +208,7 @@ class WPGeo_Category_Map_Widget extends WP_Widget {
 	 */
 	function add_map( $width = '100%', $height = 150, $maptype = '', $showpolylines = false, $zoom = null, $id = 'wp_geo_map_widget' ) {
 
-		global $posts, $wpgeo;
+		global $post, $posts, $wpgeo;
 
 		$html_js = '';
 
@@ -227,18 +228,16 @@ class WPGeo_Category_Map_Widget extends WP_Widget {
 
 			// Find the coordinates for the posts
 			$coords = array();
-            $postCats = get_the_category();
-//            $catIds = array_map("callback", postCats);
-//            $args = array( 'numberposts' => -1, 'category' => implode(",", $catIds) );
-            $postCatId = $postCats[0]->cat_ID;
-            $args = array( 'numberposts' => -1, 'category' => $postCatId );
+            $post_categories = get_the_category();
+            $args = array( 'numberposts' => -1, 'category' => $post_categories[0]->cat_ID );
             $posts = get_posts($args);
-            global $post;
-            $currentPostId = $post->ID;
+            $this_post_id = $post->ID;
 			for ( $i = 0; $i < count( $posts ); $i++ ) {
 
 				$post 		= $posts[$i];
-                if ($post->ID == $currentPostId) {
+                
+                // Don't include this post in the map.
+                if ($post->ID == $this_post_id) {
                     continue;
                 }
 				$latitude 	= get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
