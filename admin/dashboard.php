@@ -93,7 +93,7 @@ if ( !class_exists('WPGeo_Dashboard') ) {
 			extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
 
 			echo $before_widget . $before_title . $widget_name . $after_title;
-			echo '<div style="background-image:url(' . plugins_url( 'wp-geo/img/logo/wp-geo.png' ) . '); background-repeat:no-repeat; background-position:right top; padding-right:80px;">';
+			echo '<div style="background-image:url(' . plugins_url( WPGEO_SUBDIR . 'img/logo/wp-geo.png' ) . '); background-repeat:no-repeat; background-position:right top; padding-right:80px;">';
 			
 			$feed = fetch_feed('http://feeds2.feedburner.com/wpgeo');
 			

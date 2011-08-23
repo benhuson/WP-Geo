@@ -146,7 +146,7 @@ class WPGeo_Markers {
 		}
 		
 		// Marker Folders
-		$old_marker_image_dir = WP_CONTENT_DIR . '/plugins/wp-geo/img/markers/';
+		$old_marker_image_dir = WPGEO_DIR . 'img/markers/';
 		$new_marker_image_dir = WP_CONTENT_DIR . $this->marker_image_dir;
 		
 		// Marker Files

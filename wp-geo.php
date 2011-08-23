@@ -25,7 +25,10 @@ if ( !defined( 'WP_PLUGIN_URL' ) )
 if ( !defined( 'WP_PLUGIN_DIR' ) )
 	define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins' );
 
-
+// WP Geo plugin directory and url paths. props Alain (alm)
+define( 'WPGEO_SUBDIR', '/' . str_replace( basename( __FILE__ ), '', plugin_basename( __FILE__ ) ) );
+define( 'WPGEO_URL', WP_PLUGIN_URL . WPGEO_SUBDIR );
+define( 'WPGEO_DIR', WP_PLUGIN_DIR . WPGEO_SUBDIR );
 
 // Constants
 define( 'WPGEO_LATITUDE_META',     '_wp_geo_latitude' );
@@ -42,26 +45,26 @@ load_plugin_textdomain( 'wp-geo', false, dirname( plugin_basename( __FILE__ ) ) 
 
 
 // Includes
-include_once( WP_PLUGIN_DIR . '/wp-geo/includes/wp-geo.php' );
-include_once( WP_PLUGIN_DIR . '/wp-geo/includes/query.php' );
-include_once( WP_PLUGIN_DIR . '/wp-geo/includes/marker.php' );
-include_once( WP_PLUGIN_DIR . '/wp-geo/includes/markers.php' );
-include_once( WP_PLUGIN_DIR . '/wp-geo/includes/maps.php' );
-include_once( WP_PLUGIN_DIR . '/wp-geo/includes/functions.php' );
-include_once( WP_PLUGIN_DIR . '/wp-geo/includes/templates.php' );
-include_once( WP_PLUGIN_DIR . '/wp-geo/includes/shortcodes.php' );
-include_once( WP_PLUGIN_DIR . '/wp-geo/includes/feeds.php' );
-include_once( WP_PLUGIN_DIR . '/wp-geo/includes/display.php' );
-include_once( WP_PLUGIN_DIR . '/wp-geo/widgets/contextual-map.php' );
-include_once( WP_PLUGIN_DIR . '/wp-geo/widgets/recent-locations.php' );
+include_once( WPGEO_DIR . 'includes/wp-geo.php' );
+include_once( WPGEO_DIR . 'includes/query.php' );
+include_once( WPGEO_DIR . 'includes/marker.php' );
+include_once( WPGEO_DIR . 'includes/markers.php' );
+include_once( WPGEO_DIR . 'includes/maps.php' );
+include_once( WPGEO_DIR . 'includes/functions.php' );
+include_once( WPGEO_DIR . 'includes/templates.php' );
+include_once( WPGEO_DIR . 'includes/shortcodes.php' );
+include_once( WPGEO_DIR . 'includes/feeds.php' );
+include_once( WPGEO_DIR . 'includes/display.php' );
+include_once( WPGEO_DIR . 'widgets/contextual-map.php' );
+include_once( WPGEO_DIR . 'widgets/recent-locations.php' );
 
 
 
 // Admin Includes
 if ( is_admin() ) {
-	include_once( WP_PLUGIN_DIR . '/wp-geo/admin/editor.php' );
-	include_once( WP_PLUGIN_DIR . '/wp-geo/admin/dashboard.php' );
-	include_once( WP_PLUGIN_DIR . '/wp-geo/admin/settings.php' );
+	include_once( WPGEO_DIR . 'admin/editor.php' );
+	include_once( WPGEO_DIR . 'admin/dashboard.php' );
+	include_once( WPGEO_DIR . 'admin/settings.php' );
 }
 
 
