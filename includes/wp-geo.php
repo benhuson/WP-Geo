@@ -845,9 +845,8 @@ class WPGeo {
 					zoom_setting.value = ' . $zoom . ';
 					
 					// Map Controls
-					var mapTypeControl = new GMapTypeControl();
-					map.addControl(new GLargeMapControl3D());
-					map.addControl(mapTypeControl);
+					' . WPGeo_API_GMap2::render_map_control( 'map', 'GLargeMapControl3D' ) . '
+					' . WPGeo_API_GMap2::render_map_control( 'map', 'GMapTypeControl' ) . '
 					//map.setUIToDefault();
 					
 					map.setMapType(' . $maptype . ');

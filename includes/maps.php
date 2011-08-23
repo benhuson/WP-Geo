@@ -145,15 +145,7 @@ class WPGeo_Map {
 		$maptypes = $this->maptypes;
 		$maptypes[] = $this->maptype;
 		$maptypes = array_unique($maptypes);
-		$js_maptypes = '';
-		if ( in_array('G_PHYSICAL_MAP', $maptypes) )
-			$js_maptypes .= 'map_' . $map_id . '.addMapType(G_PHYSICAL_MAP);';
-		if ( !in_array('G_NORMAL_MAP', $maptypes) )
-			$js_maptypes .= 'map_' . $map_id . '.removeMapType(G_NORMAL_MAP);';
-		if ( !in_array('G_SATELLITE_MAP', $maptypes) )
-			$js_maptypes .= 'map_' . $map_id . '.removeMapType(G_SATELLITE_MAP);';
-		if ( !in_array('G_HYBRID_MAP', $maptypes) )
-			$js_maptypes .= 'map_' . $map_id . '.removeMapType(G_HYBRID_MAP);';
+		$js_maptypes = WPGeo_API_GMap2::render_map_types( 'map_' . $map_id, $maptypes );
 		
 		// Markers
 		$js_markers = '';
@@ -195,9 +187,9 @@ class WPGeo_Map {
 		// Controls
 		$js_controls = '';
 		if ( $this->show_map_scale )
-			$js_controls .= 'map_' . $map_id . '.addControl(new GScaleControl());';
+			$js_controls .= WPGeo_API_GMap2::render_map_control( 'map_' . $map_id, 'GScaleControl' );
 		if ( $this->show_map_overview )
-			$js_controls .= 'map_' . $map_id . '.addControl(new GOverviewMapControl());';
+			$js_controls .= WPGeo_API_GMap2::render_map_control( 'map_' . $map_id, 'GOverviewMapControl' );
 		
 		// Map Javascript
 		$js = '
@@ -212,10 +204,9 @@ class WPGeo_Map {
 				' . $js_maptypes . '
 				map_' . $map_id . '.setMapType(' . $this->maptype . ');
 				
-				var mapTypeControl = new GMapTypeControl();
-				map_' . $map_id . '.addControl(mapTypeControl);';
+				' . WPGeo_API_GMap2::render_map_control( 'map_' . $map_id, 'GMapTypeControl' );
 		if ( $this->mapcontrol != "" ) {
-			$js .= 'map_' . $map_id . '.addControl(new ' . $this->mapcontrol . '());';
+			$js .= WPGeo_API_GMap2::render_map_control( 'map_' . $map_id, $this->mapcontrol );
 		}
 		$js .= '
 				var center_' . $map_id .' = new GLatLng(' . $this->points[0]['latitude'] . ', ' . $this->points[0]['longitude'] . ');
@@ -465,12 +456,34 @@ class WPGeo_Map {
 
 class WPGeo_API_GMap2 {
 	
+	function render_map_types( $map, $maptypes ) {
+		$output = '';
+		if ( is_array( $maptypes ) ) {
+			if ( in_array( 'G_PHYSICAL_MAP', $maptypes ) )
+				$output .= $map . '.addMapType(G_PHYSICAL_MAP);';
+			if ( !in_array( 'G_NORMAL_MAP', $maptypes ) )
+				$output .= $map . '.removeMapType(G_NORMAL_MAP);';
+			if ( !in_array( 'G_SATELLITE_MAP', $maptypes ) )
+				$output .= $map . '.removeMapType(G_SATELLITE_MAP);';
+			if ( !in_array( 'G_HYBRID_MAP', $maptypes ) )
+				$output .= $map . '.removeMapType(G_HYBRID_MAP);';
+		}
+		return $output;
+	}
+	
 	function render_map_overlay( $map, $overlay ) {
 		if ( is_string( $overlay ) ) {
 			$output = $map . '.addOverlay(' . $overlay . ');';
 		} else {
 			$output = '';
 		}
+		return $output;
+	}
+	
+	function render_map_control( $map, $control ) {
+		//if ( is_string( $control ) ) {
+			$output = $map . '.addControl(new ' . $control . '());';
+		//}
 		return $output;
 	}
 	

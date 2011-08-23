@@ -343,7 +343,7 @@ class WPGeo_Recent_Locations_Widget extends WP_Widget {
 					function createMapWidget() {
 						if (GBrowserIsCompatible()) {
 							map = new GMap2(document.getElementById("' . $id . '"));
-							map.addControl(new GSmallZoomControl3D());
+							' . WPGeo_API_GMap2::render_map_control( 'map', 'GSmallZoomControl3D' ) . '
 							map.setCenter(new GLatLng(0, 0), 0);
 							map.setMapType(' . $maptype . ');
 							bounds = new GLatLngBounds();
