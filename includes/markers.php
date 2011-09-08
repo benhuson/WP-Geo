@@ -80,15 +80,11 @@ class WPGeo_Markers {
 	 */
 	function get_image_url( $img ) {
 		
-		$plugin_url = WP_PLUGIN_URL . '/wp-geo/img/markers/';
-		$upload_url = WP_CONTENT_URL . $this->marker_image_dir;
-		$upload_dir = WP_CONTENT_DIR . $this->marker_image_dir;
-		
-		if ( file_exists( $upload_dir . $img ) ) {
-			return $upload_url . $img;
+		if ( file_exists( $this->wpgeo_upload_dir . $img ) ) {
+			return $this->marker_image_url . $img;
 		}
 		
-		return $plugin_url . $img;
+		return WPGEO_URL . 'img/markers/' . $img;
 		
 	}
 	
