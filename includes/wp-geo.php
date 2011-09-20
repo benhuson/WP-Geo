@@ -54,6 +54,7 @@ class WPGeo {
 		$this->markers = new WPGeo_Markers();
 		$this->feeds = new WPGeo_Feeds();
 		
+		add_action('posts_where_request', array(&$this, 'searchTitle'));
 		
 	}
 	
@@ -1909,5 +1910,28 @@ class WPGeo {
 		
 	}
 
+	function searchTitle($where)
+	{
+		if (is_search()) {
+			global $wpdb, $wp;
+			$where = $where . " OR (($wpdb->postmeta.meta_key = '_{$this->tag}_title' AND $wpdb->postmeta.meta_value = '".mysql_real_escape_string($wp->query_vars['s'])."') AND $wpdb->posts.post_status='publish')";
+			add_filter('posts_join_request', array(&$this, 'search_join'));
+			add_filter('posts_distinct_request', array(&$this, 'search_distinct'));
+		}
+		return $where;
+	}
+
+	function search_join($join)
+	{
+		global $wpdb;
+		return $join .= " LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id) ";
+	}
+
+	function search_distinct($distinct)
+	{
+		global $wpdb;
+		return $distinct .= " DISTINCT $wpdb->posts.ID, ";
+	}
+	
 }
 //no trailing newline
