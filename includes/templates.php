@@ -400,12 +400,17 @@ function get_wpgeo_post_static_map( $post_id = null, $query = null ) {
 	
 	// options
 	$defaults = array(
-		'width'   => $wp_geo_options['default_map_width'],
-		'height'  => $wp_geo_options['default_map_height'],
+		'width'   => trim( $wp_geo_options['default_map_width'], 'px' ),
+		'height'  => trim( $wp_geo_options['default_map_height'], 'px' ),
 		'maptype' => $wp_geo_options['google_map_type'],
 		'zoom'    => $wp_geo_options['default_map_zoom'],
 	);
 	$options = wp_parse_args( $query, $defaults );
+	
+	// Can't do percentage sizes to abort
+	if ( strpos( $options['width'], '%' ) !== false || strpos( $options['height'], '%' ) !== false ) {
+		return '';
+	}
 
 	// translate WP-geo maptypes to static map type url param
 	$types = array(
