@@ -1172,6 +1172,13 @@ class WPGeo {
 			$wp_geo_options['show_maps_on_excerpts']         = isset( $_POST['show_maps_on_excerpts'] ) && $_POST['show_maps_on_excerpts'] == 'Y' ? 'Y' : 'N';
 			$wp_geo_options['show_maps_on_customposttypes']  = array();
 			
+			// Ensure post types that support WP Geo continue to do so.  disabled checkboxes aren't being submitted.
+			$post_types = get_post_types( array(), 'objects' );
+			foreach ( $post_types as $post_type ) {
+				if ( $post_type->name != 'post' && $post_type->name != 'page' && post_type_supports( $post_type->query_var, 'wpgeo' ) ) {
+					$wp_geo_options['show_maps_on_customposttypes'][$post_type->name] = 'Y';
+				}
+			}
 			if ( isset( $_POST['show_maps_on_customposttypes'] ) && is_array( $_POST['show_maps_on_customposttypes'] ) ) {
 				foreach ( $_POST['show_maps_on_customposttypes'] as $key => $val ) {
 					$wp_geo_options['show_maps_on_customposttypes'][$key] = $val == 'Y' ? 'Y' : 'N';
