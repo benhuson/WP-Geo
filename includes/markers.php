@@ -17,7 +17,10 @@ class WPGeo_Markers {
 	/**
 	 * Properties
 	 */
-	var $marker_image_dir = '/uploads/wp-geo/markers/';
+	var $upload_dir       = '';
+	var $wpgeo_upload_dir = '';
+	var $marker_image_url = '';
+	var $marker_image_dir = '';
 	var $markers;
 	
 	
@@ -27,6 +30,13 @@ class WPGeo_Markers {
 	 * @description  Initialise the class.
 	 */
 	function WPGeo_Markers() {
+		
+		// Marker directories abstraction. props Alain (alm)
+		$upl = wp_upload_dir();
+		$this->upload_dir = $upl['basedir'];
+		$this->wpgeo_upload_dir = $upl['basedir'] . '/wp-geo/';
+		$this->marker_image_dir = $upl['basedir'] . '/wp-geo/markers/';
+		$this->marker_image_url = $upl['baseurl'] . '/wp-geo/markers/';
 		
 		$this->markers = array();
 		
@@ -70,15 +80,11 @@ class WPGeo_Markers {
 	 */
 	function get_image_url( $img ) {
 		
-		$plugin_url = WP_PLUGIN_URL . '/wp-geo/img/markers/';
-		$upload_url = WP_CONTENT_URL . $this->marker_image_dir;
-		$upload_dir = WP_CONTENT_DIR . $this->marker_image_dir;
-		
-		if ( file_exists( $upload_dir . $img ) ) {
-			return $upload_url . $img;
+		if ( file_exists( $this->wpgeo_upload_dir . $img ) ) {
+			return $this->marker_image_url . $img;
 		}
 		
-		return $plugin_url . $img;
+		return WPGEO_URL . 'img/markers/' . $img;
 		
 	}
 	
@@ -120,10 +126,14 @@ class WPGeo_Markers {
 	 */
 	function marker_folder_exists() {
 		
-		if ( is_dir( WP_CONTENT_DIR . '/uploads/wp-geo/markers' ) ) {
+		if ( is_dir( $this->marker_image_dir ) ) {
 			return true;
 		}
-		return false;
+		
+		// Make dirs and register for site because we may be in multisite.
+		// Then retry. props Alain (alm)
+		$this->register_activation();
+		return ( is_dir( $this->marker_image_dir ) ) ? true : false;
 		
 	}
 	
@@ -140,14 +150,14 @@ class WPGeo_Markers {
 		clearstatcache();
 		$old_umask = umask( 0 );
 		
-		if ( is_writable( WP_CONTENT_DIR ) && ( !is_dir( WP_CONTENT_DIR . '/uploads/wp-geo' ) || !is_dir( WP_CONTENT_DIR . '/uploads/wp-geo/markers' ) ) ) {
-			mkdir( WP_CONTENT_DIR . '/uploads/wp-geo' );
-			mkdir( WP_CONTENT_DIR . '/uploads/wp-geo/markers' );
+		if ( is_writable( WP_CONTENT_DIR ) && ( !is_dir( $this->wpgeo_upload_dir ) || !is_dir( $this->marker_image_dir ) ) ) {
+			mkdir( $this->wpgeo_upload_dir );
+			mkdir( $this->marker_image_dir );
 		}
 		
 		// Marker Folders
-		$old_marker_image_dir = WP_CONTENT_DIR . '/plugins/wp-geo/img/markers/';
-		$new_marker_image_dir = WP_CONTENT_DIR . $this->marker_image_dir;
+		$old_marker_image_dir = WPGEO_DIR . 'img/markers/';
+		$new_marker_image_dir = $this->marker_image_dir;
 		
 		// Marker Files
 		if ( is_dir( $new_marker_image_dir ) ) {
