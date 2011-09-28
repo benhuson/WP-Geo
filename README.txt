@@ -4,7 +4,7 @@ Donate link: http://www.wpgeo.com/donate
 Tags: maps, map, geo, geocoding, google, location, georss
 Requires at least: 2.9
 Tested up to: 3.2.1
-Stable tag: 3.2.5
+Stable tag: 3.2.6
 
 Add location maps to your posts and pages.
 
@@ -79,6 +79,15 @@ If upgrading from a previous version of the plugin:
 4. Widget Settings
 
 == Changelog ==
+
+= WP Geo 3.2.6 =
+
+* Added support for custom post type in Recent Locations widget.
+* Added Static Map (get_)wpgeo_post_static_map template tags. Props Jurriaan Persyn.
+* Added Dutch translation by Davey IJzermans.
+* Fixed custom post type settings. Checkboxes are now only shown disabled if support is explicitly added using add_post_type_support().
+* Fixed widget_is_active() function.
+* Fixed path and compatibility for MultiSite installations.
 
 = WP Geo 3.2.5 =
 
