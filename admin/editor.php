@@ -70,7 +70,7 @@ class WPGeo_Editor {
 	
 	function add_map_plugin( $plugin_array ) {
 	
-		$plugin_array['wpgeomap'] = WPGEO_DIR . 'js/tinymce/plugins/wpgeomap/editor_plugin.js';
+		$plugin_array['wpgeomap'] = WPGEO_URL . 'js/tinymce/plugins/wpgeomap/editor_plugin.js';
 		return $plugin_array;
 	
 	}
