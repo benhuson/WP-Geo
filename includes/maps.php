@@ -524,6 +524,11 @@ class WPGeo_Polyline {
 			'opacity'   => $this->opacity
 		);
 		$args = wp_parse_args( $args, $defaults );
+		$this->coords    = $args['coords'];
+		$this->geodesic  = $args['geodesic'];
+		$this->color     = $args['color'];
+		$this->thickness = $args['thickness'];
+		$this->opacity   = $args['opacity'];
 	}
 	
 	function add_coord( $latitude, $longitude ) {
