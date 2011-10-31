@@ -192,6 +192,7 @@ if ( !function_exists( 'shortcode_wpgeo_mashup' ) ) {
 			'polyline_colour' => $wp_geo_options['polyline_colour'],
 			'align'           => 'none',
 			'numberposts'     => -1,
+			'posts_per_page'  => -1,
 			'post_type'       => null,
 			'post_status'     => 'publish',
 			'orderby'         => 'post_date',
