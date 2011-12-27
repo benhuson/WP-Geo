@@ -128,22 +128,6 @@ if ( !function_exists( 'shortcode_wpgeo_map' ) ) {
 				return '[wp_geo_map]';
 			}
 			
-			$map_width = $wp_geo_options['default_map_width'];
-			$map_height = $wp_geo_options['default_map_height'];
-			
-			if ( $atts['width'] != null ) {
-				$map_width = $atts['width'];
-				if ( is_numeric( $map_width ) ) {
-					$map_width = $map_width . 'px';
-				}
-			}
-			if ( $atts['height'] != null ) {
-				$map_height = $atts['height'];
-				if ( is_numeric( $map_height ) ) {
-					$map_height = $map_height . 'px';
-				}
-			}
-		
 			// To Do: Add in lon/lat check and output map if needed
 			
 			// Alignment
@@ -153,8 +137,8 @@ if ( !function_exists( 'shortcode_wpgeo_map' ) ) {
 				'id'      => 'wp_geo_map_' . $id,
 				'classes' => array( 'wp_geo_map' ),
 				'styles'  => array( $float ),
-				'width'   => $map_width,
-				'height'  => $map_height,
+				'width'   => $atts['width'],
+				'height'  => $atts['height'],
 				'content' => $content
 			) );
 			

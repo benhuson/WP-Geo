@@ -24,7 +24,7 @@ class WPGeo_API_GoogleMaps {
 			'height'  => $wp_geo_options['default_map_height'],
 			'content' => ''
 		) );
-		return '<div id="' . $args['id'] . '" class="' . implode( ' ', $args['classes'] ) . '" style="width:' . $args['width'] . '; height:' . $args['height'] . '; ' . implode( '; ', $args['styles'] ) . '">' . $args['content'] . '</div>';
+		return '<div id="' . $args['id'] . '" class="' . implode( ' ', $args['classes'] ) . '" style="width:' . wpgeo_css_dimension( $args['width'] ) . '; height:' . wpgeo_css_dimension( $args['height'] ) . '; ' . implode( '; ', $args['styles'] ) . '">' . $args['content'] . '</div>';
 	}
 	
 	/**

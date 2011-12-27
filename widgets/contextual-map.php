@@ -332,12 +332,6 @@ class WPGeo_Contextual_Map_Widget extends WP_Widget {
 					//]]>
 					</script>';
 				
-				// Set width and height
-				if ( is_numeric( $width ) )
-					$width = $width . 'px';
-				if ( is_numeric( $height ) )
-					$height = $height . 'px';
-				
 				$html_js .= apply_filters( 'wpgeo_map', '', array(
 					'id'      => $id,
 					'classes' => array( 'wp_geo_map' ),
