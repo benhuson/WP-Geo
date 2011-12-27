@@ -162,7 +162,7 @@ class WPGeo_Marker {
 	
 	function get_javascript() {
 		
-		return "var wpgeo_icon_" . $this->id . " = wpgeo_createIcon(" . $this->width . ", " . $this->height . ", " . $this->anchorX . ", " . $this->anchorY . ", '" . $this->image . "', '" . $this->shadow . "');";
+		return "var wpgeo_icon_" . $this->id . " = " . apply_filters( 'wpgeo_marker_javascript', '', $this ) . ';';
 		
 	}		
 	

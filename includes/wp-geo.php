@@ -298,7 +298,12 @@ class WPGeo {
 		}
 		
 		if ( $showmap && !is_feed() && $this->checkGoogleAPIKey() ) {
-			echo '<div class="wp_geo_map" id="wp_geo_map_visible" style="width:' . $map_width . '; height:' . $map_height . ';"></div>';
+			echo apply_filters( 'wpgeo_map', '', array(
+				'id'      => 'wp_geo_map_visible',
+				'classes' => array( 'wp_geo_map' ),
+				'width'   => $map_width,
+				'height'  => $map_height
+			) );
 		}
 		
 	}
@@ -967,8 +972,13 @@ class WPGeo {
 			// Need a map?
 			if ( is_numeric($latitude) && is_numeric($longitude) ) {
 				
-				$new_content .= '<div class="wp_geo_map" id="wp_geo_map_' . $id . '" style="width:' . $wp_geo_options['default_map_width'] . '; height:' . $wp_geo_options['default_map_height'] . ';"></div>';
-			
+				$new_content .= apply_filters( 'wpgeo_map', '', array(
+					'id'      => 'wp_geo_map_' . $id,
+					'classes' => array( 'wp_geo_map' ),
+					'width'   => $wp_geo_options['default_map_width'],
+					'height'  => $wp_geo_options['default_map_height']
+				) );
+				
 				// Run HTML through filter
 				$new_content = apply_filters( 'wpgeo_the_content_map', $new_content );
 				

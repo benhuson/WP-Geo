@@ -80,8 +80,9 @@ if ( !function_exists( 'shortcode_wpgeo_map_link' ) ) {
 		
 		if ( !$content ) $content = __( 'View Larger Map', 'wp-geo' );
 		
-		return '<a href="' . $url . '" target="' . $r['target'] . '">' . do_shortcode( $content ) . '</a>';
-		
+		if ( !empty( $url ) )
+			return '<a href="' . $url . '" target="' . $r['target'] . '">' . do_shortcode( $content ) . '</a>';
+		return '';
 	}
 	
 	add_shortcode( 'wpgeo_map_link', 'shortcode_wpgeo_map_link' );
@@ -146,10 +147,17 @@ if ( !function_exists( 'shortcode_wpgeo_map' ) ) {
 			// To Do: Add in lon/lat check and output map if needed
 			
 			// Alignment
-			$float = in_array( strtolower( $atts['align'] ), array( 'left', 'right' ) ) ? 'float:' . strtolower( $atts['align'] ) . ';' : '';
+			$float = in_array( strtolower( $atts['align'] ), array( 'left', 'right' ) ) ? 'float:' . strtolower( $atts['align'] ) : '';
 			
-			return '<div class="wp_geo_map" id="wp_geo_map_' . $id . '" style="' . $float . 'width:' . $map_width . '; height:' . $map_height . ';">' . $content . '</div>';
-		
+			return apply_filters( 'wpgeo_map', '', array(
+				'id'      => 'wp_geo_map_' . $id,
+				'classes' => array( 'wp_geo_map' ),
+				'styles'  => array( $float ),
+				'width'   => $map_width,
+				'height'  => $map_height,
+				'content' => $content
+			) );
+			
 		} else {
 		
 			return '';

@@ -373,7 +373,12 @@ class WPGeo_Recent_Locations_Widget extends WP_Widget {
 				if ( is_numeric( $height ) )
 					$height = $height . 'px';
 				
-				$html_js .= '<div class="wp_geo_map" id="' . $id . '" style="width:' . $width . '; height:' . $height . ';"></div>';
+				$html_js .= apply_filters( 'wpgeo_map', '', array(
+					'id'      => $id,
+					'classes' => array( 'wp_geo_map' ),
+					'width'   => $width,
+					'height'  => $height
+				) );
 			
 			}
 			

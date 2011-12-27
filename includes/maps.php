@@ -262,7 +262,12 @@ class WPGeo_Map {
 			}
 		}
 		
-		return '<div class="wpgeo_map" id="wpgeo_map_' . $this->id . '" style="width:' . $map_width . '; height:' . $map_height . ';"></div>';
+		return apply_filters( 'wpgeo_map', '', array(
+			'id'      => 'wpgeo_map_' . $this->id,
+			'classes' => array( 'wpgeo_map' ),
+			'width'   => $map_width,
+			'height'  => $map_height
+		) );
 		
 	}
 	

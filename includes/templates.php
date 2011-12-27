@@ -140,16 +140,14 @@ function wpgeo_map_link( $args = null ) {
 	
 	global $post;
 	
-	$defaults = array(
+	// Validate Args
+	$r = wp_parse_args( $args, array(
 		'post_id'   => $post->ID,
 		'latitude'  => null,
 		'longitude' => null,
 		'zoom'      => 5,
 		'echo'      => 1
-	);
-	
-	// Validate Args
-	$r = wp_parse_args( $args, $defaults );
+	) );
 	$r['post_id']   = absint( $r['post_id'] );
 	$r['latitude']  = (float) $r['latitude'];
 	$r['longitude'] = (float) $r['longitude'];
@@ -165,13 +163,7 @@ function wpgeo_map_link( $args = null ) {
 	// If lat/lng...
 	$url = '';
 	if ( $r['latitude'] && $r['longitude'] ) {
-	
-		$q = 'q=' . $r['latitude'] . ',' . $r['longitude'];
-		$z = $r['zoom'] ? '&z=' . $r['zoom'] : '';
-		
-		$url = 'http://maps.google.co.uk/maps?' . $q . $z;
-		$url = apply_filters( 'wpgeo_map_link', $url, $r );
-		
+		$url = apply_filters( 'wpgeo_map_link', '', $r );
 	}
 	
 	// Output
@@ -234,7 +226,12 @@ function get_wpgeo_post_map( $post_id = null ) {
 				$map_height = $map_height . 'px';
 			}
 			
-			return '<div class="wp_geo_map" id="wp_geo_map_' . $id . '" style="width:' . $map_width . '; height:' . $map_height . ';"></div>';
+			return apply_filters( 'wpgeo_map', '', array(
+				'id'      => 'wp_geo_map_' . $id,
+				'classes' => array( 'wpgeo_map' ),
+				'width'   => $map_width,
+				'height'  => $map_height
+			) );
 		}
 	}
 	
@@ -292,8 +289,14 @@ function get_wpgeo_map( $query, $options = null ) {
 	
 	$posts = get_posts( $r );
 	
-	$output = '
-		<div id="' . $id . '" class="wpgeo_map" style="width:' . $r['width'] . '; height:' . $r['height'] . ';float:' . $r['align'] . '"></div>
+	$output = apply_filters( 'wpgeo_map', '', array(
+		'id'      => $id,
+		'classes' => array( 'wpgeo_map' ),
+		'styles'  => array( 'float:' . $r['align'] ),
+		'width'   => $r['width'],
+		'height'  => $r['height']
+	) );
+	$output .= '
 		<script type="text/javascript">
 		<!--
 		jQuery(window).load( function() {

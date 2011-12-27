@@ -138,7 +138,13 @@ class WPGeo_Display {
 			);
 			$this->addMap($map);
 			$wp_geo_options = get_option('wp_geo_options');
-			return '<div id="wpgeo-' . $id . '" class="wpgeo wpgeo-rss" style="width:' . $wp_geo_options['default_map_width'] . '; height:' . $wp_geo_options['default_map_height'] . ';">' . $rss . '</div>';
+			return apply_filters( 'wpgeo_map', '', array(
+				'id'      => 'wpgeo-' . $id,
+				'classes' => array( 'wpgeo', 'wpgeo-rss' ),
+				'width'   => $wp_geo_options['default_map_width'],
+				'height'  => $wp_geo_options['default_map_height'],
+				'content' => $rss
+			) );
 		}
 		
 		return '';
