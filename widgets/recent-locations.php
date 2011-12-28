@@ -1,27 +1,17 @@
 <?php
 
-
-
 /**
- * @package    WP Geo
- * @subpackage WP Geo Recent Locations Widget class
+ * WP Geo Recent Locations Widget v.1.1
+ * Adds a map widget to WordPress (requires WP Geo plugin).
+ * The widget displays markers for recent posts.
+ *
+ * Ben Huson <ben@thewhiteroom.net>
  */
 
-
-
-/**
- * @class        WP Geo Recent Locations Widget
- * @description  Adds a map widget to WordPress (requires WP Geo plugin).
- *               The widget displays markers for recent posts.
- * @author       Ben Huson <ben@thewhiteroom.net>
- * @version      1.0
- */
 class WPGeo_Recent_Locations_Widget extends WP_Widget {
 	
-	
-	
 	/**
-	 * Widget Constuctor
+	 * Constuctor
 	 */
 	function WPGeo_Recent_Locations_Widget() {
 		$widget_ops = array(
@@ -31,16 +21,10 @@ class WPGeo_Recent_Locations_Widget extends WP_Widget {
 		$this->WP_Widget( 'wpgeo_recent_locations_widget', __( 'WP Geo Recent Locations', 'wp-geo' ), $widget_ops );
 	}
 	
-	
-	
 	/**
 	 * Widget Output
-	 *
-	 * @param $args (array)
-	 * @param $instance (array) Widget values.
 	 */
 	function widget( $args, $instance ) {
-	
 		global $wpgeo;
 		
 		// If Google API Key...
@@ -90,29 +74,17 @@ class WPGeo_Recent_Locations_Widget extends WP_Widget {
 				
 				if ( !empty( $map_content ) ) {
 					$html_content = $before_widget;
-					if ( !empty( $title ) ) {
+					if ( !empty( $title ) )
 						$html_content .= $before_title . $title . $after_title;
-					}
 					$html_content .= $map_content . $after_widget;
 				}
-				
 				echo $html_content;
-			
 			}
-		
 		}
-		
 	}
-	
-	
 	
 	/**
 	 * Update Widget
-	 *
-	 * @param $new_instance (array) New widget values.
-	 * @param $old_instance (array) Old widget values.
-	 *
-	 * @return (array) New values.
 	 */
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
@@ -125,38 +97,27 @@ class WPGeo_Recent_Locations_Widget extends WP_Widget {
 		$instance['zoom']           = absint( $new_instance['zoom'] );
 		$instance['post_type']      = $new_instance['post_type'];
 		return $instance;
-		
 	}
-	
-	
 	
 	/**
 	 * Widget Options Form
-	 *
-	 * @param $instance (array) Widget values.
 	 */
 	function form( $instance ) {
-		
 		global $wpgeo;
 		
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		
 		// Defaults
-		$instance = wp_parse_args( (array)$instance, array(
+		$instance = wp_parse_args( $instance, array(
 			'title'          => 'Map',
 			'width'          => '100%',
 			'height'         => '150',
 			'number'         => 1,
 			'maptype'        => $wp_geo_options['google_map_type'],
 			'show_polylines' => '',
-			'zoom'           => null,
+			'zoom'           => $wp_geo_options['default_map_zoom'],
 			'post_type'      => array( 'post' ),
 		) );
-		
-		// Validation
-		if ( $instance['zoom'] === null ) {
-			$instance['zoom'] = $wp_geo_options['default_map_zoom'];
-		}
 		
 		$instance['post_type'] = (array)$instance['post_type'];
 		if ( count( $instance['post_type'] ) == 0 ) {
@@ -190,22 +151,14 @@ class WPGeo_Recent_Locations_Widget extends WP_Widget {
 			}
 		}
 		echo $custom_post_type_checkboxes;
-		
-		
 	}
 	
-	
-	
 	/**
-	 * @method       Show Polylines Options
-	 * @description  Polylines options menu for the map.
-	 * @param        $args = Array of arguments.
-	 * @return       (array or string) Array or HTML select menu.
+	 * Show Polylines Options
+	 * Polylines options menu for the map.
 	 */
 	function show_polylines_options( $args = null ) {
-		
-		// Defaults
-		$args = wp_parse_args( (array)$args, array(
+		$args = wp_parse_args( $args, array(
 			'id'       => 'show_polylines',
 			'name'     => 'show_polylines',
 			'return'   => 'array',
@@ -230,20 +183,12 @@ class WPGeo_Recent_Locations_Widget extends WP_Widget {
 			return $menu;
 		}
 		
-		// Default return
 		return $map_type_array;
-		
 	}
 	
-	
-		
 }
-
-
 
 // Widget Hooks
 add_action( 'widgets_init', create_function( '', 'return register_widget( "WPGeo_Recent_Locations_Widget" );' ) );
-
-
 
 ?>
