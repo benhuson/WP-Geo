@@ -1225,6 +1225,7 @@ class WPGeo {
 					<tr valign="top">
 						<th scope="row">' . __('Default Map Location', 'wp-geo') . '</th>
 						<td>
+							' . __( 'When creating a new post, the map will default to showing this area for you to position a marker.', 'wp-geo' ) . '<br />
 							<label for="default_map_latitude" style="width:70px; display:inline-block;">Latitude</label> <input name="default_map_latitude" type="text" id="default_map_latitude" value="' . $wp_geo_options['default_map_latitude'] . '" size="25" /><br />
 							<label for="default_map_longitude" style="width:70px; display:inline-block;">Longitude</label> <input name="default_map_longitude" type="text" id="default_map_longitude" value="' . $wp_geo_options['default_map_longitude'] . '" size="25" />
 						</td>
