@@ -31,8 +31,9 @@ class WPGeo {
 	
 	var $default_map_latitude = '51.492526418807465';
 	var $default_map_longitude = '-0.15754222869873047';
+	var $default_map_title = 'London, UK';
 	
-	
+	var $tag = 'wp_geo';	
 	
 	/**
 	 * @method       Constructor
@@ -86,6 +87,7 @@ class WPGeo {
 			'show_post_map' => 'TOP', 
 			'default_map_latitude' => '51.492526418807465',
 			'default_map_longitude' => '-0.15754222869873047',
+			'default_map_title'    => 'London, UK',
 			'default_map_width' => '100%', 
 			'default_map_height' => '300px',
 			'default_map_zoom' => '5',
@@ -789,6 +791,7 @@ class WPGeo {
 		if ( !is_numeric($latitude) || !is_numeric($longitude) ) {
 			$latitude = $wp_geo_options['default_map_latitude'];
 			$longitude = $wp_geo_options['default_map_longitude'];
+			$title = $wp_geo_options['default_map_title'];
 			$zoom = $wp_geo_options['default_map_zoom']; // Default 5;
 			$panel_open = true;
 			$hide_marker = true;
@@ -1138,6 +1141,7 @@ class WPGeo {
 			$wp_geo_options['show_post_map']         = $_POST['show_post_map'];
 			$wp_geo_options['default_map_latitude']  = empty( $_POST['default_map_latitude'] ) ? $wpgeo->default_map_latitude : $_POST['default_map_latitude'];
 			$wp_geo_options['default_map_longitude'] = empty( $_POST['default_map_longitude'] ) ? $wpgeo->default_map_longitude : $_POST['default_map_longitude'];
+			$wp_geo_options['default_map_title'] = empty( $_POST['default_map_title'] ) ? $wpgeo->default_map_title : $_POST['default_map_title'];
 			$wp_geo_options['default_map_width']     = wpgeo_css_dimension( $_POST['default_map_width'] );
 			$wp_geo_options['default_map_height']    = wpgeo_css_dimension( $_POST['default_map_height'] );
 			$wp_geo_options['default_map_zoom']      = $_POST['default_map_zoom'];
@@ -1227,7 +1231,8 @@ class WPGeo {
 						<td>
 							' . __( 'When creating a new post, the map will default to showing this area for you to position a marker.', 'wp-geo' ) . '<br />
 							<label for="default_map_latitude" style="width:70px; display:inline-block;">Latitude</label> <input name="default_map_latitude" type="text" id="default_map_latitude" value="' . $wp_geo_options['default_map_latitude'] . '" size="25" /><br />
-							<label for="default_map_longitude" style="width:70px; display:inline-block;">Longitude</label> <input name="default_map_longitude" type="text" id="default_map_longitude" value="' . $wp_geo_options['default_map_longitude'] . '" size="25" />
+							<label for="default_map_longitude" style="width:70px; display:inline-block;">Longitude</label> <input name="default_map_longitude" type="text" id="default_map_longitude" value="' . $wp_geo_options['default_map_longitude'] . '" size="25" /><br />
+							<label for="default_map_title" style="width:70px; display:inline-block;">Title</label> <input name="default_map_title" type="text" id="default_map_title" value="' . $wp_geo_options['default_map_title'] . '" size="25" /> (optional)
 						</td>
 					</tr>
 					<tr valign="top">
@@ -1677,9 +1682,15 @@ class WPGeo {
 		$wp_geo_options = get_option('wp_geo_options');
 		
 		$search    = '';
-		$latitude  = get_post_meta($post->ID, WPGEO_LATITUDE_META, true);
-		$longitude = get_post_meta($post->ID, WPGEO_LONGITUDE_META, true);
-		$title     = get_post_meta($post->ID, WPGEO_TITLE_META, true);
+		$latitude  = get_post_meta($post->ID, WPGEO_LATITUDE_META, true); //post value
+		    //otherwise, default value from settings
+		    if (0 === strlen(trim($latitude))) $latitude = $wp_geo_options['default_map_latitude'];
+		$longitude = get_post_meta($post->ID, WPGEO_LONGITUDE_META, true); //post value
+		    //otherwise, default value from settings
+		    if (0 === strlen(trim($longitude))) $longitude = $wp_geo_options['default_map_longitude'];
+		$title     = get_post_meta($post->ID, WPGEO_TITLE_META, true); //post value
+		    //otherwise, default value from settings
+		    if (0 === strlen(trim($title))) $title = $wp_geo_options['default_map_title'];
 		$marker    = get_post_meta($post->ID, WPGEO_MARKER_META, true);
 		$settings  = get_post_meta($post->ID, WPGEO_MAP_SETTINGS_META, true);
 		
@@ -1897,11 +1908,6 @@ class WPGeo {
 		}
 		
 	}
-	
-	
-	
+
 }
-
-
-
-?>
+//no trailing newline
