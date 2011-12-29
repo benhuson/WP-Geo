@@ -57,6 +57,7 @@ include_once( WPGEO_DIR . 'includes/feeds.php' );
 include_once( WPGEO_DIR . 'includes/display.php' );
 include_once( WPGEO_DIR . 'widgets/contextual-map.php' );
 include_once( WPGEO_DIR . 'widgets/recent-locations.php' );
+include_once( WPGEO_DIR . 'widgets/category-map.php' );
 include_once( WPGEO_DIR . 'api/google-maps/google-maps.php' );
 
 

@@ -443,8 +443,9 @@ function get_wpgeo_post_static_map( $post_id = null, $query = null ) {
  * Add widget map
  */
 function wpgeo_add_widget_map( $args = null ) {
-	global $wpgeo;
+	global $wpgeo, $post;
 	$wp_geo_options = get_option( 'wp_geo_options' );
+	$current_post = $post->ID;
 	
 	$html_js = '';
 	$markers_js = '';
