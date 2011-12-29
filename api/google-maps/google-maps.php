@@ -7,6 +7,7 @@ class WPGeo_API_GoogleMaps {
 	 */
 	function WPGeo_API_GoogleMaps() {
 		add_filter( 'wpgeo_map', array( $this, 'wpgeo_map' ), 5, 2 );
+		add_filter( 'wpgeo_static_map_url', array( $this, 'wpgeo_static_map_url' ), 5, 2 );
 		add_filter( 'wpgeo_map_link', array( $this, 'wpgeo_map_link' ), 5, 2 );
 		add_filter( 'wpgeo_marker_javascript', array( $this, 'wpgeo_marker_javascript' ), 5, 2 );
 	}
@@ -25,6 +26,21 @@ class WPGeo_API_GoogleMaps {
 			'content' => ''
 		) );
 		return '<div id="' . $args['id'] . '" class="' . implode( ' ', $args['classes'] ) . '" style="width:' . wpgeo_css_dimension( $args['width'] ) . '; height:' . wpgeo_css_dimension( $args['height'] ) . '; ' . implode( '; ', $args['styles'] ) . '">' . $args['content'] . '</div>';
+	}
+	
+	/**
+	 * Map Static Map URL
+	 */
+	function wpgeo_static_map_url( $url, $args ) {
+		$sensor = $args['sensor'] ? 'true' : 'false';
+		$url = 'http://maps.googleapis.com/maps/api/staticmap?';
+		$url .= 'center=' . $args['center']->latitude . ',' . $args['center']->longitude;
+		$url .= '&zoom=' . $args['zoom'];
+		$url .= '&size=' . $args['width'] . 'x' . $args['height'];
+		$url .= '&maptype=' . $args['maptype'];
+		$url .= '&markers=color:red%7C' . $args['coords']->latitude . ',' . $args['coords']->longitude;
+		$url .= '&sensor=' . $sensor;
+		return $url;
 	}
 	
 	/**

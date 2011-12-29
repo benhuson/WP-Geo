@@ -386,7 +386,7 @@ function get_wpgeo_post_static_map( $post_id = null, $query = null ) {
 	if ( !$wpgeo->show_maps() || !$wpgeo->checkGoogleAPIKey() ) {
 		return '';
 	}
-
+	
 	// fetch wp geo options & post settings
 	$wp_geo_options = get_option( 'wp_geo_options' );
 	$settings  = get_post_meta( $id, WPGEO_MAP_SETTINGS_META, true );
@@ -427,16 +427,20 @@ function get_wpgeo_post_static_map( $post_id = null, $query = null ) {
 	if ( !empty($settings['centre']) ) {
 		list($centerLatitude, $centerLongitude) = explode( ',', $settings['centre'] );
 	}
-
-	$url = 'http://maps.googleapis.com/maps/api/staticmap?';
-	$url .= 'center=' . $centerLatitude . ',' . $centerLongitude;
-	$url .= '&zoom=' . $options['zoom'];
-	$url .= '&size=' . $options['width'] . 'x' . $options['height'];
-	$url .= '&maptype=' . $types[$options['maptype']];
-	$url .= '&markers=color:red%7C' . $latitude . ',' . $longitude;
-	$url .= '&sensor=false';
 	
-	return '<img id="wp_geo_static_map_' . $id . '" src="' . $url . '" class="wp_geo_static_map" />';
+	$url = apply_filters( 'wpgeo_static_map_url', '', array(
+		'center'  => new WPGeo_Coord( $centerLatitude, $centerLongitude ),
+		'zoom'    => $options['zoom'],
+		'width'   => $options['width'],
+		'height'  => $options['height'],
+		'maptype' => $types[$options['maptype']],
+		'coords'  => new WPGeo_Coord( $latitude, $longitude ),
+		'sensor'  => false
+	) );
+	
+	if ( !empty( $url ) )
+		return '<img id="wp_geo_static_map_' . $id . '" src="' . $url . '" class="wp_geo_static_map" />';
+	return '';
 }
 
 /**
