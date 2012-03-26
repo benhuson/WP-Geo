@@ -620,6 +620,9 @@ class WPGeo {
 	 */
 	
 	function admin_init() {
+		include_once( WPGEO_DIR . 'admin/editor.php' );
+		include_once( WPGEO_DIR . 'admin/dashboard.php' );
+		include_once( WPGEO_DIR . 'admin/settings.php' );
 		
 		// Register Settings
 		if ( function_exists('register_setting') ) {

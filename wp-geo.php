@@ -60,15 +60,6 @@ include_once( WPGEO_DIR . 'widgets/recent-locations.php' );
 
 
 
-// Admin Includes
-if ( is_admin() ) {
-	include_once( WPGEO_DIR . 'admin/editor.php' );
-	include_once( WPGEO_DIR . 'admin/dashboard.php' );
-	include_once( WPGEO_DIR . 'admin/settings.php' );
-}
-
-
-
 // Init.
 global $wpgeo;
 $wpgeo = new WPGeo();
