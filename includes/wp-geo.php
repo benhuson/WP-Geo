@@ -324,7 +324,7 @@ class WPGeo {
 			if ( is_numeric($lat) && is_numeric($long) ) {
 				echo '<meta name="geo.position" content="' . $lat . ';' . $long . '" />' . $nl; // Geo-Tag: Latitude and longitude
 				//echo '<meta name="geo.region" content="DE-BY" />' . $nl;                      // Geo-Tag: Country code (ISO 3166-1) and regional code (ISO 3166-2)
-				//echo '<meta name="geo.placename" content="MŸnchen" />' . $nl;                 // Geo-Tag: City or the nearest town
+				//echo '<meta name="geo.placename" content="MÙnchen" />' . $nl;                 // Geo-Tag: City or the nearest town
 				if ( !empty($title) ) {
 					echo '<meta name="DC.title" content="' . $title . '" />' . $nl;             // Dublin Core Meta Tag Title (used by some geo databases)
 				}
@@ -845,9 +845,8 @@ class WPGeo {
 					zoom_setting.value = ' . $zoom . ';
 					
 					// Map Controls
-					var mapTypeControl = new GMapTypeControl();
-					map.addControl(new GLargeMapControl3D());
-					map.addControl(mapTypeControl);
+					' . WPGeo_API_GMap2::render_map_control( 'map', 'GLargeMapControl3D' ) . '
+					' . WPGeo_API_GMap2::render_map_control( 'map', 'GMapTypeControl' ) . '
 					//map.setUIToDefault();
 					
 					map.setMapType(' . $maptype . ');

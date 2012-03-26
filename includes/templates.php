@@ -292,7 +292,7 @@ function get_wpgeo_map( $query, $options = null ) {
 			if ( GBrowserIsCompatible() ) {
 				var bounds = new GLatLngBounds();
 				map = new GMap2(document.getElementById("' . $id . '"));
-				map.addControl(new GLargeMapControl3D());
+				' . WPGeo_API_GMap2::render_map_control( 'map', 'GLargeMapControl3D' ) . '
 				map.setMapType(' . $r['type'] . ');
 				';
 	if ( $posts ) :
