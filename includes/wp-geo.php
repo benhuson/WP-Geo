@@ -1014,9 +1014,16 @@ class WPGeo {
 	 */
 	
 	function widget_is_active() {
-		
-		return is_active_widget(array('WPGeo_Widget', 'map_widget'));
-		
+		$widgets = array(
+			'wpgeo_recent_locations_widget',
+			'wpgeo_contextual_map_widget'
+		);
+		foreach ( $widgets as $widget ) {
+			if ( is_active_widget( false, false, $widget, true ) ) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	
