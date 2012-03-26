@@ -28,7 +28,7 @@ if ( !defined( 'WP_PLUGIN_DIR' ) )
 // WP Geo plugin directory and url paths. props Alain (alm)
 define( 'WPGEO_SUBDIR', '/' . str_replace( basename( __FILE__ ), '', plugin_basename( __FILE__ ) ) );
 define( 'WPGEO_URL', plugins_url( WPGEO_SUBDIR ) );
-define( 'WPGEO_DIR', ABSPATH . 'wp-content/plugins' . WPGEO_SUBDIR );
+define( 'WPGEO_DIR', plugin_dir_path( __FILE__ ) );
 
 // Constants
 define( 'WPGEO_LATITUDE_META',     '_wp_geo_latitude' );
