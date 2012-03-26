@@ -594,12 +594,15 @@ class WPGeo {
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		
 		// Support for custom post types
-		if ( function_exists( 'get_post_types' ) && function_exists( 'add_post_type_support' ) && isset( $wp_geo_options['show_maps_on_customposttypes'] ) ) {
-			$post_types = get_post_types();
-			foreach ( $post_types as $post_type ) {
-				$post_type_object = get_post_type_object( $post_type );
-				if ( $post_type_object->show_ui && array_key_exists( $post_type, $wp_geo_options['show_maps_on_customposttypes'] ) && $wp_geo_options['show_maps_on_customposttypes'][$post_type] == 'Y' ) {
-					add_post_type_support( $post_type, 'wpgeo' );
+		// Don't add support if on the WP settings page though
+		if ( !is_admin() || !isset( $_GET['page'] ) || ( isset( $_GET['page'] ) && $_GET['page'] != 'wp-geo/includes/wp-geo.php' ) ) {
+			if ( function_exists( 'get_post_types' ) && function_exists( 'add_post_type_support' ) && isset( $wp_geo_options['show_maps_on_customposttypes'] ) ) {
+				$post_types = get_post_types();
+				foreach ( $post_types as $post_type ) {
+					$post_type_object = get_post_type_object( $post_type );
+					if ( $post_type_object->show_ui && array_key_exists( $post_type, $wp_geo_options['show_maps_on_customposttypes'] ) && $wp_geo_options['show_maps_on_customposttypes'][$post_type] == 'Y' ) {
+						add_post_type_support( $post_type, 'wpgeo' );
+					}
 				}
 			}
 		}
