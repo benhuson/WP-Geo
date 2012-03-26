@@ -3,12 +3,15 @@ Contributors: husobj
 Donate link: http://www.wpgeo.com/donate
 Tags: maps, map, geo, geocoding, google, location, georss
 Requires at least: 2.9
-Tested up to: 3.1.3
-Stable tag: 3.2.4
+Tested up to: 3.2.1
+Stable tag: 3.2.5
 
 Add location maps to your posts and pages.
 
 == Description ==
+
+**NOTE: You will need to re-add your widgets after upgrading to 3.2.5!**
+
 When editing a post or page, you will be able to set a physical location for that post and easily embed a Google map into your post. You can select the location by:
 
 1. Clicking on the map of the world to position the point.
@@ -76,6 +79,21 @@ If upgrading from a previous version of the plugin:
 4. Widget Settings
 
 == Changelog ==
+
+= WP Geo 3.2.5 =
+
+NOTE: You will need to re-add your widgets after upgrading!
+
+* Widgets updated to use Widget API - you can now add multiple widgets.
+* Added recent locations widget.
+* Added 'wpgeo_base_country_code' filter so you can default admin post map search to a base country.
+* Added option to show maps in taxonomy archives.
+* Fixed admin map not showing after publish if "Save map centre point for this post" checked but no marker added.
+* Fixed some deprecated functions and undeclared variables.
+* Fixed feeds - incorrect database table references.
+* Fixed dashboard - uses SimplePie.
+* Prevent post been saved when pressing enter in WP Geo post fields.
+* Check that co-ordinates have been set in get_wpgeo_post_map().
 
 = WP Geo 3.2.4 =
 

@@ -44,7 +44,7 @@ if ( !class_exists('WPGeo_Dashboard') ) {
 		
 		function register_widget() {
 		
-			wp_register_sidebar_widget('wpgeo_dashboard', 'WP Geo',
+			wp_add_dashboard_widget('wpgeo_dashboard', 'WP Geo',
 				array( &$this, 'widget' ),
 				array(
 					'all_link' => 'http://www.wpgeo.com/',
@@ -81,27 +81,39 @@ if ( !class_exists('WPGeo_Dashboard') ) {
 		 */
 		
 		function widget( $args = null ) {
-		
-			if ( is_array($args) )
-				extract( $args, EXTR_SKIP );
+			
+			// Validate Args
+			$defaults = array(
+				'before_widget' => '',
+				'after_widget'  => '',
+				'before_title'  => '',
+				'after_title'   => '',
+				'widget_name'   => ''
+			);
+			extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
 
 			echo $before_widget . $before_title . $widget_name . $after_title;
-			echo '<div style="background-image:url(' . WP_CONTENT_URL . '/plugins/wp-geo/img/logo/wp-geo.png); background-repeat:no-repeat; background-position:right top; padding-right:80px;">';
+			echo '<div style="background-image:url(' . plugins_url( 'wp-geo/img/logo/wp-geo.png' ) . '); background-repeat:no-repeat; background-position:right top; padding-right:80px;">';
 			
-			// Include WordPress native RSS functions.
-			include_once( ABSPATH . WPINC . '/rss.php' );
-
-			$rss = fetch_rss('http://feeds2.feedburner.com/wpgeo');
-			$items = array_slice($rss->items, 0, 2);
+			$feed = fetch_feed('http://feeds2.feedburner.com/wpgeo');
 			
-			if ( empty($items) ) {
-				echo '<p>No items</p>';
-			} else {
-				foreach ( $items as $item ) {
-					echo '<p><a style="font-size: 1.2em; font-weight:bold;" href="' . $item['link'] . '" title="' . $item['title'] . '">' . $item['title'] . '</a></p>';
-					echo '<p style="color: #aaa;">' . date('l, jS F Y', strtotime($item['pubdate'])) .'</p>';
-					echo '<p>' . $item['summary'] .'</p>';
-				}
+			if ( is_wp_error( $feed ) || !$feed->get_item_quantity() ) {
+				echo '<p>No recent updates.</p>';
+				return;
+			}
+			
+			$items = $feed->get_items( 0, 2 );
+			
+			foreach ( $items as $item ) {
+				$url         = esc_url( $item->get_link() );
+				$title       = esc_html( $item->get_title() );
+				$date        = esc_html( strip_tags( $item->get_date() ) );
+				$description = esc_html( strip_tags( @html_entity_decode( $item->get_description(), ENT_QUOTES, get_option( 'blog_charset' ) ) ) );
+				echo '<div style="margin-bottom:20px;">';
+				echo '<p style="margin-bottom:5px;"><a style="font-size: 1.2em; font-weight:bold;" href="' . $url  . '" title="' . $title . '">' . $title . '</a></p>';
+				echo '<p style="color: #aaa; margin-top:5px;">' . date( 'l, jS F Y', strtotime( $date ) ) . '</p>';
+				echo '<p>' . $description .'</p>';
+				echo '</div>';
 			}
 			
 			echo '<p><a href="http://www.wpgeo.com/">View all WP Geo news...</a></p>';

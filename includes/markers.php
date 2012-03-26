@@ -249,6 +249,7 @@ class WPGeo_Markers {
 		
 		if ( empty( $r['id'] ) )
 			$r['id'] = $r['name'];
+		$id = esc_attr( $r['id'] );
 		
 		$output = '<select name="' . $name . '" id="' . $id . '">';
 		if ( !empty( $r['show_option_none'] ) )
@@ -261,7 +262,7 @@ class WPGeo_Markers {
 		}
 		$output .= '</select>';
 		
-		if ( $echo )
+		if ( $r['echo'] )
 			echo $output;
 		
 		return $output;

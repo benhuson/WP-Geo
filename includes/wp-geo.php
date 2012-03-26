@@ -17,7 +17,7 @@ class WPGeo {
 	 */
 	
 	// Version Information
-	var $version    = '3.2.4';
+	var $version    = '3.2.5';
 	var $db_version = 1;
 	
 	var $markers;
@@ -41,11 +41,32 @@ class WPGeo {
 	
 	function WPGeo() {
 		
+		// Version
+		$wp_geo_version = get_option( 'wp_geo_version' );
+		if ( empty( $wp_geo_version ) || version_compare( $wp_geo_version, $this->version, '<' ) ) {
+			update_option( 'wp_geo_show_version_msg', 'Y' );
+			update_option( 'wp_geo_version', $this->version );
+		}
+		
 		$this->maps = array();
 		$this->maps2 = new WPGeo_Maps();
 		$this->markers = new WPGeo_Markers();
 		$this->feeds = new WPGeo_Feeds();
 		
+	}
+	
+	
+	
+	/**
+	 * Version upgrade message
+	 */
+	function version_upgrade_msg() {
+		$wp_geo_show_version_msg = get_option( 'wp_geo_show_version_msg' );
+		if ( current_user_can( 'manage_options' ) && $wp_geo_show_version_msg == 'Y' ) {
+			echo '<div id="wpgeo_version_message" class="error below-h2" style="margin:5px 15px 2px 0px;">
+					<p>WP Geo has been updated to use the WordPress widgets API. You will need to re-add your widgets. <a href="' . wp_nonce_url( add_query_arg( 'wpgeo_action', 'dismiss-update-msg', $_SERVER['PHP_SELF'] ), 'wpgeo_dismiss_update_msg' ) . '">Dismiss</a></p>
+				</div>';
+		}
 	}
 	
 	
@@ -75,6 +96,9 @@ class WPGeo {
 			'show_map_type_physical' => 'Y',
 			'show_map_scale' => 'N',
 			'show_map_overview' => 'N',
+			'save_post_zoom' => 'N',
+			'save_post_map_type' => 'N',
+			'save_post_centre_point' => 'N',
 			'show_polylines' => 'Y',
 			'polyline_colour' => '#FFFFFF',
 			'show_maps_on_home' => 'Y',
@@ -83,6 +107,7 @@ class WPGeo {
 			'show_maps_in_datearchives' => 'Y',
 			'show_maps_in_categoryarchives' => 'Y',
 			'show_maps_in_tagarchives' => 'Y',
+			'show_maps_in_taxarchives' => 'Y',
 			'show_maps_in_authorarchives' => 'Y',
 			'show_maps_in_searchresults' => 'N',
 			'show_maps_on_excerpts' => 'N',
@@ -114,8 +139,10 @@ class WPGeo {
 	
 	function is_wpgeo_feed() {
 		
-		if ( is_feed() && $_GET['wpgeo'] == 'true' ) {
-			return true;
+		if ( is_feed() && isset( $_GET['wpgeo'] ) ) {
+			if ( $_GET['wpgeo'] == 'true' ) {
+				return true;
+			}
 		}
 		return false;
 		
@@ -157,7 +184,7 @@ class WPGeo {
 		global $wpdb, $wpgeo;
 		
 		if ( $wpgeo->is_wpgeo_feed() ) {
-			$join .= " LEFT JOIN wp_postmeta ON (" . $wpdb->posts . ".ID = wp_postmeta.post_id)";
+			$join .= " LEFT JOIN $wpdb->postmeta ON (" . $wpdb->posts . ".ID = $wpdb->postmeta.post_id)";
 		}
 		return $join;
 		
@@ -174,10 +201,10 @@ class WPGeo {
 	
 	function posts_where( $where ) {
 	
-		global $wpgeo;
+		global $wpdb, $wpgeo;
 		
 		if ( $wpgeo->is_wpgeo_feed() ) {
-			$where .= " AND (wp_postmeta.meta_key = '" . WPGEO_LATITUDE_META . "' OR wp_postmeta.meta_key = '" . WPGEO_LONGITUDE_META . "')";
+			$where .= " AND ($wpdb->postmeta.meta_key = '" . WPGEO_LATITUDE_META . "' OR $wpdb->postmeta.meta_key = '" . WPGEO_LONGITUDE_META . "')";
 		}
 		return $where;
 	
@@ -604,6 +631,17 @@ class WPGeo {
 			}
 		}
 		
+		// Dismiss Upgrade Message
+		if ( isset( $_GET['wpgeo_action'] ) && $_GET['wpgeo_action'] = 'dismiss-update-msg' ) {
+			if ( wp_verify_nonce( $_GET['_wpnonce'], 'wpgeo_dismiss_update_msg' ) ) {
+				update_option( 'wp_geo_show_version_msg', 'N' );
+				$url = remove_query_arg( 'wpgeo_action', $_SERVER['PHP_SELF'] );
+				$url = remove_query_arg( '_wpnonce', $url );
+				wp_redirect( $url );
+				exit();
+			}
+		}
+		
 		// Show Settings Link
 		$this->settings = new WPGeo_Settings();
 		
@@ -775,7 +813,10 @@ class WPGeo {
 				$maptype = $settings['type'];
 			}
 			if ( !empty($settings['centre']) ) {
-				$mapcentre = explode( ',', $settings['centre'] );
+				$new_mapcentre = explode( ',', $settings['centre'] );
+				if ( is_numeric( $new_mapcentre[0] ) && is_numeric( $new_mapcentre[1] ) ) {
+					$mapcentre = $new_mapcentre;
+				}
 			}
 		}
 		
@@ -961,7 +1002,7 @@ class WPGeo {
 		global $wpgeo;
 		
 		if ( function_exists('add_options_page') ) {
-			add_options_page('WP Geo Options', 'WP Geo', 8, __FILE__, array($wpgeo, 'options_page'));
+			add_options_page( 'WP Geo Options', 'WP Geo', 'manage_options', __FILE__, array( $wpgeo, 'options_page' ) );
 		}
 		
 	}
@@ -1021,6 +1062,7 @@ class WPGeo {
 		if ( is_date() && $wp_geo_options['show_maps_in_datearchives'] == 'Y' )			return true;
 		if ( is_category() && $wp_geo_options['show_maps_in_categoryarchives'] == 'Y' )	return true;
 		if ( is_tag() && $wp_geo_options['show_maps_in_tagarchives'] == 'Y' )			return true;
+		if ( is_tax() && $wp_geo_options['show_maps_in_taxarchives'] == 'Y' )			return true;
 		if ( is_author() && $wp_geo_options['show_maps_in_authorarchives'] == 'Y' )		return true;
 		if ( is_search() && $wp_geo_options['show_maps_in_searchresults'] == 'Y' )		return true;
 		if ( is_feed() && $wp_geo_options['add_geo_information_to_rss'] == 'Y' )		return true;
@@ -1119,6 +1161,7 @@ class WPGeo {
 			$wp_geo_options['show_maps_in_datearchives']     = isset( $_POST['show_maps_in_datearchives'] ) && $_POST['show_maps_in_datearchives'] == 'Y' ? 'Y' : 'N';
 			$wp_geo_options['show_maps_in_categoryarchives'] = isset( $_POST['show_maps_in_categoryarchives'] ) && $_POST['show_maps_in_categoryarchives'] == 'Y' ? 'Y' : 'N';
 			$wp_geo_options['show_maps_in_tagarchives']      = isset( $_POST['show_maps_in_tagarchives'] ) && $_POST['show_maps_in_tagarchives'] == 'Y' ? 'Y' : 'N';
+			$wp_geo_options['show_maps_in_taxarchives']      = isset( $_POST['show_maps_in_taxarchives'] ) && $_POST['show_maps_in_taxarchives'] == 'Y' ? 'Y' : 'N';
 			$wp_geo_options['show_maps_in_authorarchives']   = isset( $_POST['show_maps_in_authorarchives'] ) && $_POST['show_maps_in_authorarchives'] == 'Y' ? 'Y' : 'N';
 			$wp_geo_options['show_maps_in_searchresults']    = isset( $_POST['show_maps_in_searchresults'] ) && $_POST['show_maps_in_searchresults'] == 'Y' ? 'Y' : 'N';
 			$wp_geo_options['show_maps_on_excerpts']         = isset( $_POST['show_maps_on_excerpts'] ) && $_POST['show_maps_on_excerpts'] == 'Y' ? 'Y' : 'N';
@@ -1235,6 +1278,7 @@ class WPGeo {
 							' . $wpgeo->options_checkbox('show_maps_in_datearchives', 'Y', $wp_geo_options['show_maps_in_datearchives']) . ' ' . __('Posts in date archives', 'wp-geo') . '<br />
 							' . $wpgeo->options_checkbox('show_maps_in_categoryarchives', 'Y', $wp_geo_options['show_maps_in_categoryarchives']) . ' ' . __('Posts in category archives', 'wp-geo') . '<br />
 							' . $wpgeo->options_checkbox('show_maps_in_tagarchives', 'Y', $wp_geo_options['show_maps_in_tagarchives']) . ' ' . __('Posts in tag archives', 'wp-geo') . '<br />
+							' . $wpgeo->options_checkbox('show_maps_in_taxarchives', 'Y', $wp_geo_options['show_maps_in_taxarchives']) . ' ' . __('Posts in taxonomy archives', 'wp-geo') . '<br />
 							' . $wpgeo->options_checkbox('show_maps_in_authorarchives', 'Y', $wp_geo_options['show_maps_in_authorarchives']) . ' ' . __('Posts in author archives', 'wp-geo') . '<br />
 							' . $wpgeo->options_checkbox('show_maps_in_searchresults', 'Y', $wp_geo_options['show_maps_in_searchresults']) . ' ' . __('Search Results', 'wp-geo') . '<br />';
 		if ( function_exists( 'get_post_types' ) && function_exists( 'post_type_supports' ) ) {
@@ -1339,7 +1383,21 @@ class WPGeo {
 	 * @return       (array or string) Array or menu HTML
 	 */
 	
-	function selectMapZoom( $return = 'array', $selected = '' ) {
+	function selectMapZoom( $return = 'array', $selected = '', $args = null ) {
+		
+		// Defaults
+		$args = wp_parse_args( (array)$args, array(
+			'return'   => null,
+			'selected' => null,
+			'name'     => 'default_map_zoom',
+			'id'       => 'default_map_zoom'
+		) );
+		
+		// Deprecated compatibility
+		if ( $args['return'] == null ) 
+			$args['return'] = $return;
+		if ( $args['selected'] == null ) 
+			$args['selected'] = $selected;
 		
 		// Array
 		$map_type_array = array(
@@ -1369,10 +1427,10 @@ class WPGeo {
 		if ( $return = 'menu' ) {
 			$menu = '';
 			foreach ( $map_type_array as $key => $val ) {
-				$is_selected = $selected == $key ? ' selected="selected"' : '';
+				$is_selected = $args['selected'] == $key ? ' selected="selected"' : '';
 				$menu .= '<option value="' . $key . '"' . $is_selected . '>' . $val . '</option>';
 			}
-			$menu = '<select name="default_map_zoom" id="default_map_zoom">' . $menu. '</select>';
+			$menu = '<select name="' . $args['name'] . '" id="' . $args['id'] . '">' . $menu. '</select>';
 			return $menu;
 		}
 		
@@ -1391,7 +1449,21 @@ class WPGeo {
 	 * @return       (array or string) Array or menu HTML
 	 */
 	
-	function google_map_types( $return = 'array', $selected = '' ) {
+	function google_map_types( $return = 'array', $selected = '', $args = null ) {
+		
+		// Defaults
+		$args = wp_parse_args( (array)$args, array(
+			'return'   => null,
+			'selected' => null,
+			'name'     => 'google_map_type',
+			'id'       => 'google_map_type'
+		) );
+		
+		// Deprecated compatibility
+		if ( $args['return'] == null ) 
+			$args['return'] = $return;
+		if ( $args['selected'] == null ) 
+			$args['selected'] = $selected;
 		
 		// Array
 		$map_type_array = array(
@@ -1402,13 +1474,13 @@ class WPGeo {
 		);
 		
 		// Menu?
-		if ( $return = 'menu' ) {
+		if ( $args['return'] = 'menu' ) {
 			$menu = '';
 			foreach ( $map_type_array as $key => $val ) {
-				$is_selected = $selected == $key ? ' selected="selected"' : '';
+				$is_selected = $args['selected'] == $key ? ' selected="selected"' : '';
 				$menu .= '<option value="' . $key . '"' . $is_selected . '>' . $val . '</option>';
 			}
-			$menu = '<select name="google_map_type" id="google_map_type">' . $menu. '</select>';
+			$menu = '<select name="' . $args['name'] . '" id="' . $args['id'] . '">' . $menu. '</select>';
 			return $menu;
 		}
 		
@@ -1649,7 +1721,9 @@ class WPGeo {
 		echo '<table cellpadding="3" cellspacing="5" class="form-table">
 			<tr>
 				<th scope="row">' . __('Search for location', 'wp-geo') . '<br /><span style="font-weight:normal;">(' . __('town, postcode or address', 'wp-geo') . ')</span></th>
-				<td><input name="wp_geo_search" type="text" size="45" id="wp_geo_search" value="' . $search . '" /> <span class="submit"><input type="button" id="wp_geo_search_button" name="wp_geo_search_button" value="' . __('Search', 'wp-geo') . '" /></span></td>
+				<td><input name="wp_geo_search" type="text" size="45" id="wp_geo_search" value="' . $search . '" />
+					<input type="hidden" name="wp_geo_base_country_code" id="wp_geo_base_country_code" value="' . apply_filters( 'wpgeo_base_country_code', '' ) . '" />
+					<span class="submit"><input type="button" id="wp_geo_search_button" name="wp_geo_search_button" value="' . __('Search', 'wp-geo') . '" /></span></td>
 			</tr>
 			<tr>
 				<td colspan="2">

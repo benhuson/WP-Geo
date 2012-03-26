@@ -85,6 +85,12 @@ jQuery(document).ready(function() {
 		
 		var geocoder = new GClientGeocoder();
 		
+		// Set default base country for search
+		if ( jQuery("input#wp_geo_base_country_code").length > 0 ) {
+			var base_country_code = jQuery("input#wp_geo_base_country_code").val();
+			geocoder.setBaseCountryCode(base_country_code);
+		}
+		
 		if ( geocoder ) {
 			geocoder.getLatLng(
 				address,
@@ -104,6 +110,18 @@ jQuery(document).ready(function() {
 		
 		return false;
 		
+	});
+	
+	
+	
+	// Prevent enter from submitting post
+	jQuery(window).keydown(function(event){
+		if (jQuery("#wpgeo_location input:focus").length > 0) {
+			if (event.keyCode == 13) {
+				event.preventDefault();
+				return false;
+			}
+		}
 	});
 	
 	
