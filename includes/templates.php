@@ -316,7 +316,7 @@ function get_wpgeo_map( $query, $options = null ) {
 			}
 		}
 		if ( $r['polylines'] == 'Y' ) {
-			$output .= 'map.addOverlay(' . WPGeo_API_GMap2::render_polyline( $polyline ) . ');';
+			$output .= WPGeo_API_GMap2::render_map_overlay( 'map', WPGeo_API_GMap2::render_polyline( $polyline ) );
 		}
 		$output .= '
 			zoom = map.getBoundsZoomLevel(bounds);

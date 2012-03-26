@@ -87,7 +87,7 @@ class WPGeo_Display {
 					GEvent.addListener(geoXml, "load", function() {
 						geoXml.gotoDefaultViewport(map);
 					});
-					map.addOverlay(geoXml);
+					' . WPGeo_API_GMap2::render_map_overlay( 'map', 'geoXml' ) . '
 					';
 			}
 			echo '}
