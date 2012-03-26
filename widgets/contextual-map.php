@@ -266,14 +266,17 @@ class WPGeo_Contextual_Map_Widget extends WP_Widget {
 					$maptype = empty( $wp_geo_options['google_map_type'] ) ? 'G_NORMAL_MAP' : $wp_geo_options['google_map_type'];
 				}
 				
-				// Polyline JS
-				$polyline_coords_js = '[';
-				
-				for ( $i = 0; $i < count( $coords ); $i++ ) {
-					$polyline_coords_js .= 'new GLatLng(' . $coords[$i]['latitude'] . ', ' . $coords[$i]['longitude'] . '),';
+				// Polylines
+				$polyline_js = '';
+				if ( $showpolylines ) {
+					$polyline = new WPGeo_Polyline( array(
+						'color' => $wp_geo_options['polyline_colour']
+					) );
+					for ( $i = 0; $i < count( $coords ); $i++ ) {
+						$polyline->add_coord( $coords[$i]['latitude'], $coords[$i]['longitude'] );
+					}
+					$polyline_js = 'map.addOverlay(' . WPGeo_API_GMap2::render_polyline( $polyline ) . ');';
 				}
-				
-				$polyline_coords_js .= ']';		
 		
 				for ( $i = 0; $i < count( $coords ); $i++ ) {
 					$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', 'small', $coords[$i]['post'], 'widget' );
@@ -314,11 +317,8 @@ class WPGeo_Contextual_Map_Widget extends WP_Widget {
 							'.	$markers_js .'
 							
 							// Draw the polygonal lines between points
-							';
-				if ( $showpolylines ) {
-					$html_js .= 'map.addOverlay(wpgeo_createPolyline(' . $polyline_coords_js . ', "' . $wp_geo_options['polyline_colour'] . '", 2, 0.50));';
-				}
-				$html_js .='
+							' . $polyline_js . '
+							
 							// Center the map to show all markers
 							var center = bounds.getCenter();
 							var zoom = map.getBoundsZoomLevel(bounds)
