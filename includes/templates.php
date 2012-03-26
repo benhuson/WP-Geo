@@ -266,11 +266,20 @@ function get_wpgeo_map( $query, $options = null ) {
 		'polyline_colour' => $wp_geo_options['polyline_colour'],
 		'align'           => 'none',
 		'numberposts'     => -1,
-		'post_type'       => null,
+		'post_type'       => 'post',
 		'post_status'     => 'publish',
 		'orderby'         => 'post_date',
 		'order'           => 'DESC',
-		'markers'         => 'large'
+		'markers'         => 'large',
+        'markers'         => 'large',
+        'offset'          => 0,
+        'category'        => null,
+        'include'         => null,
+        'exclude'         => null,
+        'meta_key'        => null,
+        'meta_value'      => null,
+        'post_mime_type'  => null,
+        'post_parent'     => null
 	);
 	
 	// Validate Args
@@ -282,7 +291,7 @@ function get_wpgeo_map( $query, $options = null ) {
 		$r['height'] .= 'px';
 	}
 	
-	$posts = get_posts( $query );
+	$posts = get_posts( $r );
 	
 	$output = '
 		<div id="' . $id . '" class="wpgeo_map" style="width:' . $r['width'] . '; height:' . $r['height'] . ';float:' . $r['align'] . '"></div>
