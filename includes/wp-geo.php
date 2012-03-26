@@ -1214,7 +1214,7 @@ class WPGeo {
             echo '<div class="error"><p>' . sprintf( __( "Unable to create the markers folder %s.<br />Please create it and copy the marker images to it from %s</p>", 'wp-geo' ), str_replace( ABSPATH, '', $wpgeo->markers->upload_dir ) . '/wp-geo/markers/', str_replace( ABSPATH, '' ,WP_PLUGIN_DIR ) . WPGEO_SUBDIR . 'img/markers' ) . '</div>';
         }
 		if ( !$this->checkGoogleAPIKey() ) {
-			echo '<div class="error"><p>Before you can use Wp Geo you must acquire a <a href="http://code.google.com/apis/maps/signup.html">Google API Key</a> for your blog - the plugin will not function without it!</p></div>';
+			echo '<div class="error"><p>Before you can use Wp Geo you must acquire a <a href="http://code.google.com/apis/maps/documentation/javascript/v2/introduction.html#Obtaining_Key">Google API Key</a> for your blog - the plugin will not function without it!</p></div>';
 		}
 		echo '<table class="form-table">
 					<tr valign="top">
