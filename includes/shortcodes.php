@@ -53,6 +53,27 @@ if ( !function_exists( 'shortcode_wpgeo_longitude' ) ) {
 
 }
 
+/**
+ * Shortcode [wpgeo_title]
+ * Outputs the marker title.
+ *
+ * @param array $atts Shortcode attributes.
+ * @param string $content Content between shortcode tags.
+ * @return string Title
+ */
+if ( ! function_exists( 'shortcode_wpgeo_title' ) ) {
+	function shortcode_wpgeo_title( $atts, $content = null ) {
+		global $post;
+		
+		// Validate Args
+		$atts = wp_parse_args( $atts, array(
+			'default_to_post_title' => true
+		) );
+		return get_wpgeo_title( $post->ID, $atts['default_to_post_title'] );
+	}
+	add_shortcode( 'wpgeo_title', 'shortcode_wpgeo_title' );
+}
+
 
 
 /**
