@@ -257,7 +257,14 @@ class WPGeo {
 	
 	function categoryMap( $args = '' ) {
 		
-		global $posts;
+		global $post;
+		
+		$posts = array();
+		while( have_posts() ) {
+			the_post();
+			$posts[] = $post;
+		}
+		rewind_posts();
 		
 		$wp_geo_options = get_option('wp_geo_options');
 		
@@ -343,7 +350,7 @@ class WPGeo {
 	
 	function wp_head() {
 		
-		global $wpgeo;
+		global $wpgeo, $post;
 		
 		$js_map_inits = '';
 		$js_marker_inits = '';
@@ -388,7 +395,12 @@ class WPGeo {
 		
 		if ( $wpgeo->show_maps() || $wpgeo->widget_is_active() ) {
 		
-			global $posts;
+			$posts = array();
+			while( have_posts() ) {
+				the_post();
+				$posts[] = $post;
+			}
+			rewind_posts();
 			
 			$this->markers->wp_head();
 			
@@ -952,7 +964,7 @@ class WPGeo {
 	
 	function the_content( $content = '' ) {
 	
-		global $wpgeo, $posts, $post, $wpdb;
+		global $wpgeo, $post, $wpdb;
 		
 		$new_content = '';
 		

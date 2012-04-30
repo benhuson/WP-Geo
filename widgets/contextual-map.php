@@ -207,7 +207,14 @@ class WPGeo_Contextual_Map_Widget extends WP_Widget {
 	 */
 	function add_map( $width = '100%', $height = 150, $maptype = '', $showpolylines = false, $zoom = null, $id = 'wp_geo_map_widget' ) {
 	
-		global $posts, $wpgeo;
+		global $post, $wpgeo;
+		
+		$posts = array();
+		while( have_posts() ) {
+			the_post();
+			$posts[] = $post;
+		}
+		rewind_posts();
 		
 		$html_js = '';
 		
