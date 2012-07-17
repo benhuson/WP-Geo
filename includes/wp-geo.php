@@ -272,10 +272,10 @@ class WPGeo {
 		
 		// Extract args
 		$allowed_args = array(
-			'width' => null,
-			'height' => null
+			'width'  => $wp_geo_options['default_map_width'],
+			'height' => $wp_geo_options['default_map_height']
 		);
-		$args = wp_parse_args($args, $allowed_args);
+		$args = wp_parse_args( $args, $allowed_args );
 		
 		for ( $i = 0; $i < count($posts); $i++ ) {
 			$post = $posts[$i];
@@ -288,24 +288,8 @@ class WPGeo {
 			
 		}
 		
-		$map_width = $wp_geo_options['default_map_width'];
-		$map_height = $wp_geo_options['default_map_height'];
-		
-		if ( $args['width'] != null) {
-			$map_width = $args['width'];
-			if ( is_numeric($map_width) ) {
-				$map_width = $map_width . 'px';
-			}
-		}
-		if ( $args['height'] != null) {
-			$map_height = $args['height'];
-			if ( is_numeric($map_height) ) {
-				$map_height = $map_height . 'px';
-			}
-		}
-		
 		if ( $showmap && !is_feed() && $this->checkGoogleAPIKey() ) {
-			echo '<div class="wp_geo_map" id="wp_geo_map_visible" style="width:' . $map_width . '; height:' . $map_height . ';"></div>';
+			echo '<div class="wp_geo_map" id="wp_geo_map_visible" style="width:' . wpgeo_css_dimension( $args['width'] ) . '; height:' . wpgeo_css_dimension( $args['height'] ) . ';"></div>';
 		}
 		
 	}

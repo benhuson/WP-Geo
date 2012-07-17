@@ -223,16 +223,8 @@ function get_wpgeo_post_map( $post_id = null ) {
 	if ( $id > 0 && !is_feed() ) {
 		if ( $wpgeo->show_maps() && $show_post_map != 'TOP' && $show_post_map != 'BOTTOM' && $wpgeo->checkGoogleAPIKey() ) {
 			
-			$map_width = $wp_geo_options['default_map_width'];
-			$map_height = $wp_geo_options['default_map_height'];
-		
-			if ( is_numeric( $map_width ) ) {
-				$map_width = $map_width . 'px';
-			}
-		
-			if ( is_numeric( $map_height ) ) {
-				$map_height = $map_height . 'px';
-			}
+			$map_width  = wpgeo_css_dimension( $wp_geo_options['default_map_width'] );
+			$map_height = wpgeo_css_dimension( $wp_geo_options['default_map_height'] );
 			
 			return '<div class="wp_geo_map" id="wp_geo_map_' . $id . '" style="width:' . $map_width . '; height:' . $map_height . ';"></div>';
 		}
@@ -284,12 +276,8 @@ function get_wpgeo_map( $query, $options = null ) {
 	
 	// Validate Args
 	$r = wp_parse_args( $query, $defaults );
-	if ( is_numeric( $r['width'] ) ) {
-		$r['width'] .= 'px';
-	}
-	if ( is_numeric( $r['height'] ) ) {
-		$r['height'] .= 'px';
-	}
+	$r['width']  = wpgeo_css_dimension( $r['width'] );
+	$r['height'] = wpgeo_css_dimension( $r['height'] );
 	
 	$posts = get_posts( $r );
 	

@@ -241,26 +241,13 @@ class WPGeo_Map {
 		
 		// Extract args
 		$allowed_args = array(
-			'width' => null,
-			'height' => null
+			'width'  => $wp_geo_options['default_map_width'],
+			'height' => $wp_geo_options['default_map_height']
 		);
 		$args = wp_parse_args($args, $allowed_args);
 		
-		$map_width = $wp_geo_options['default_map_width'];
-		$map_height = $wp_geo_options['default_map_height'];
-		
-		if ( $args['width'] != null) {
-			$map_width = $args['width'];
-			if ( is_numeric($map_width) ) {
-				$map_width = $map_width . 'px';
-			}
-		}
-		if ( $args['height'] != null) {
-			$map_height = $args['height'];
-			if ( is_numeric($map_height) ) {
-				$map_height = $map_height . 'px';
-			}
-		}
+		$map_width  = wpgeo_css_dimension( $allowed_args['default_map_width'] );
+		$map_height = wpgeo_css_dimension( $allowed_args['default_map_height'] );
 		
 		return '<div class="wpgeo_map" id="wpgeo_map_' . $this->id . '" style="width:' . $map_width . '; height:' . $map_height . ';"></div>';
 		

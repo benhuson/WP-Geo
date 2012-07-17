@@ -339,13 +339,7 @@ class WPGeo_Contextual_Map_Widget extends WP_Widget {
 					//]]>
 					</script>';
 				
-				// Set width and height
-				if ( is_numeric( $width ) )
-					$width = $width . 'px';
-				if ( is_numeric( $height ) )
-					$height = $height . 'px';
-				
-				$html_js .= '<div class="wp_geo_map" id="' . $id . '" style="width:' . $width . '; height:' . $height . ';"></div>';
+				$html_js .= '<div class="wp_geo_map" id="' . $id . '" style="width:' . wpgeo_css_dimension( $width ) . '; height:' . wpgeo_css_dimension( $height ) . ';"></div>';
 			
 			}
 			

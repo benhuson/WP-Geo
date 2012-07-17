@@ -133,36 +133,23 @@ if ( !function_exists( 'shortcode_wpgeo_map' ) ) {
 		if ( $wpgeo->show_maps() && !is_feed() && $show_post_map != 'TOP' && $show_post_map != 'BOTTOM' && $wpgeo->checkGoogleAPIKey() ) {
 			
 			$map_atts = array(
-				'width' => $wp_geo_options['default_map_width'],
+				'width'  => $wp_geo_options['default_map_width'],
 				'height' => $wp_geo_options['default_map_height'],
-				'align' => 'none',
-				'lat' => null,
-				'long' => null,
-				'type' => 'G_NORMAL_MAP',
+				'align'  => 'none',
+				'lat'    => null,
+				'long'   => null,
+				'type'   => 'G_NORMAL_MAP',
 				'escape' => false
 			);
-			extract( shortcode_atts( $map_atts, $atts ) );
+			$atts = wp_parse_args( $atts, $map_atts );
 			
 			// Escape?
-			if ( $escape == 'true' ) {
+			if ( $atts['escape'] == 'true' ) {
 				return '[wp_geo_map]';
 			}
 			
-			$map_width = $wp_geo_options['default_map_width'];
-			$map_height = $wp_geo_options['default_map_height'];
-			
-			if ( $atts['width'] != null ) {
-				$map_width = $atts['width'];
-				if ( is_numeric( $map_width ) ) {
-					$map_width = $map_width . 'px';
-				}
-			}
-			if ( $atts['height'] != null ) {
-				$map_height = $atts['height'];
-				if ( is_numeric( $map_height ) ) {
-					$map_height = $map_height . 'px';
-				}
-			}
+			$map_width  = wpgeo_css_dimension( $atts['width'] );
+			$map_height = wpgeo_css_dimension( $atts['height'] );
 		
 			// To Do: Add in lon/lat check and output map if needed
 			
