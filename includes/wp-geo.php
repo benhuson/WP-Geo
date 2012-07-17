@@ -1646,26 +1646,19 @@ class WPGeo {
 		
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		
-		if ( function_exists( 'add_meta_box') ) {
-			add_meta_box('wpgeo_location', __('WP Geo Location', 'wpgeo'), array($this, 'wpgeo_location_inner_custom_box'), 'post', 'advanced');
-			add_meta_box('wpgeo_location', __('WP Geo Location', 'wpgeo'), array($this, 'wpgeo_location_inner_custom_box'), 'page', 'advanced');
-			
-			// Support for custom post types
-			if ( function_exists( 'get_post_types' ) && function_exists( 'post_type_supports' ) ) {
-				$post_types = get_post_types();
-				foreach ( $post_types as $post_type ) {
-					$post_type_object = get_post_type_object( $post_type );
-					if ( post_type_supports( $post_type, 'wpgeo' ) ) {
-						add_meta_box( 'wpgeo_location', __( 'WP Geo Location', 'wpgeo' ), array( $this, 'wpgeo_location_inner_custom_box' ), $post_type, 'advanced' );
-					}
+		add_meta_box('wpgeo_location', __('WP Geo Location', 'wpgeo'), array($this, 'wpgeo_location_inner_custom_box'), 'post', 'advanced');
+		add_meta_box('wpgeo_location', __('WP Geo Location', 'wpgeo'), array($this, 'wpgeo_location_inner_custom_box'), 'page', 'advanced');
+		
+		// Support for custom post types
+		if ( function_exists( 'get_post_types' ) && function_exists( 'post_type_supports' ) ) {
+			$post_types = get_post_types();
+			foreach ( $post_types as $post_type ) {
+				$post_type_object = get_post_type_object( $post_type );
+				if ( post_type_supports( $post_type, 'wpgeo' ) ) {
+					add_meta_box( 'wpgeo_location', __( 'WP Geo Location', 'wpgeo' ), array( $this, 'wpgeo_location_inner_custom_box' ), $post_type, 'advanced' );
 				}
 			}
-			
-		} else {
-			add_action('dbx_post_advanced', array($this, 'wpgeo_location_old_custom_box'));
-			add_action('dbx_page_advanced', array($this, 'wpgeo_location_old_custom_box'));
 		}
-		
 	}
 	
 	
@@ -1768,27 +1761,6 @@ class WPGeo {
 			</tr>
 			' . apply_filters( 'wpgeo_edit_post_map_fields', '', $post->ID ) . '
 		</table>';
-		
-	}
-	
-	
-	
-	/**
-	 * @method       WP Geo Location Old Custom Box
-	 * @description  Prints the edit form for pre-WordPress 2.5 post/page.
-	 */
-	
-	function wpgeo_location_old_custom_box() {
-	
-		echo '<div class="dbx-b-ox-wrapper">' . "\n";
-		echo '<fieldset id="wpgeo_location_fieldsetid" class="dbx-box">' . "\n";
-		echo '<div class="dbx-h-andle-wrapper"><h3 class="dbx-handle">' . __('WP Geo Location', 'wpgeo') . "</h3></div>";   
-		echo '<div class="dbx-c-ontent-wrapper"><div class="dbx-content">';
-		
-		// output editing form
-		wpgeo_location_inner_custom_box();
-		
-		echo "</div></div></fieldset></div>\n";
 		
 	}
 	
