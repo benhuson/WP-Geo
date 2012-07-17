@@ -443,6 +443,125 @@ function get_wpgeo_post_static_map( $post_id = null, $query = null ) {
 	return '<img id="wp_geo_static_map_' . $id . '" src="' . $url . '" class="wp_geo_static_map" />';
 }
 
-
+/**
+ * Add widget map
+ */
+function wpgeo_add_widget_map( $args = null ) {
+	global $wpgeo;
+	$wp_geo_options = get_option( 'wp_geo_options' );
+	
+	$html_js = '';
+	$markers_js = '';
+	$polyline_js = '';
+	
+	$args = wp_parse_args( $args, array(
+		'width'         => '100%',
+		'height'        => 150,
+		'maptype'       => empty( $wp_geo_options['google_map_type'] ) ? 'G_NORMAL_MAP' : $wp_geo_options['google_map_type'],
+		'showpolylines' => false,
+		'zoom'          => $wp_geo_options['default_map_zoom'],
+		'id'            => 'wpgeo_widget_map',
+		'posts'         => null
+	) );
+	if ( ! $args['posts'] )
+		return $html_js;
+	
+	// If Google API Key...
+	if ( $wpgeo->checkGoogleAPIKey() ) {
+		
+		// Find the coordinates for the posts
+		$coords = array();
+		for ( $i = 0; $i < count( $args['posts'] ); $i++ ) {
+			$post 		= $args['posts'][$i];
+			$latitude 	= get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
+			$longitude 	= get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
+			$post_id 	= get_post( $post->ID );
+			$title 	    = get_post_meta( $post->ID, WPGEO_TITLE_META, true );
+			if ( empty( $title ) )
+				$title = $post->post_title;
+			if ( is_numeric( $latitude ) && is_numeric( $longitude ) ) {
+				array_push( $coords, array(
+					'id' 		=> $post->ID,
+					'latitude' 	=> $latitude,
+					'longitude' => $longitude,
+					'title' 	=> $title,
+					'post'		=> $post
+				) );
+			}
+		}
+		
+		// Only show map widget if there are coords to show
+		if ( count( $coords ) > 0 ) {
+			
+			// Polylines
+			if ( $args['showpolylines'] ) {
+				$polyline = new WPGeo_Polyline( array(
+					'color' => $wp_geo_options['polyline_colour']
+				) );
+				for ( $i = 0; $i < count( $coords ); $i++ ) {
+					$polyline->add_coord( $coords[$i]['latitude'], $coords[$i]['longitude'] );
+				}
+				$polyline_js = WPGeo_API_GMap2::render_map_overlay( 'map', WPGeo_API_GMap2::render_polyline( $polyline ) );
+			}
+			
+			// Markers
+			for ( $i = 0; $i < count( $coords ); $i++ ) {
+				$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', 'small', $coords[$i]['post'], 'widget' );
+				$markers_js .= 'marker' . $i . ' = wpgeo_createMarker(new GLatLng(' . $coords[$i]['latitude'] . ', ' . $coords[$i]['longitude'] . '), ' . $icon . ', "' . addslashes( __( $coords[$i]['title'] ) ) . '", "' . get_permalink( $coords[$i]['id'] ) . '");' . "\n";
+			}
+			
+			$wpgeo->includeGoogleMapsJavaScriptAPI();
+			$small_marker = $wpgeo->markers->get_marker_by_id( 'small' );
+			
+			$html_js .= '
+				<script type="text/javascript">
+				//<![CDATA[
+				
+				/**
+				 * Widget Map (' . $args['id'] . ')
+				 */
+				
+				// Define variables
+				var map = "";
+				var bounds = "";
+				
+				// Add events to load the map
+				GEvent.addDomListener(window, "load", createMapWidget);
+				GEvent.addDomListener(window, "unload", GUnload);
+				
+				// Create the map
+				function createMapWidget() {
+					if (GBrowserIsCompatible()) {
+						map = new GMap2(document.getElementById("' . $args['id'] . '"));
+						' . WPGeo_API_GMap2::render_map_control( 'map', 'GSmallZoomControl3D' ) . '
+						map.setCenter(new GLatLng(0, 0), 0);
+						map.setMapType(' . $args['maptype'] . ');
+						bounds = new GLatLngBounds();
+						
+						// Add the markers	
+						'.	$markers_js .'
+						
+						// Draw the polygonal lines between points
+						' . $polyline_js . '
+						
+						// Center the map to show all markers
+						var center = bounds.getCenter();
+						var zoom = map.getBoundsZoomLevel(bounds)
+						if (zoom > ' . $args['zoom'] . ') {
+							zoom = ' . $args['zoom'] . ';
+						}
+						map.setCenter(center, zoom);
+					}
+				}
+				
+				//]]>
+				</script>';
+			
+			$html_js .= '<div class="wp_geo_map" id="' . $args['id'] . '" style="width:' . wpgeo_css_dimension( $args['width'] ) . '; height:' . wpgeo_css_dimension( $args['height'] ) . ';"></div>';
+		}
+		
+		return $html_js;
+	}
+}
 
 ?>
