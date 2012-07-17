@@ -150,7 +150,7 @@ class WPGeo_Markers {
 		clearstatcache();
 		$old_umask = umask( 0 );
 		
-		if ( is_writable( WP_CONTENT_DIR ) && ( !is_dir( $this->wpgeo_upload_dir ) || !is_dir( $this->marker_image_dir ) ) ) {
+		if ( is_writable( ABSPATH . 'wp-content' ) && ( ! is_dir( $this->wpgeo_upload_dir ) || ! is_dir( $this->marker_image_dir ) ) ) {
 			mkdir( $this->wpgeo_upload_dir );
 			mkdir( $this->marker_image_dir );
 		}
