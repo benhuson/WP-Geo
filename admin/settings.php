@@ -52,7 +52,8 @@ class WPGeo_Settings {
 		if ( $file == 'wp-geo/wp-geo.php' )
 		{
 			$settings_link = '<a href="' . admin_url( 'options-general.php?page=wp-geo/includes/wp-geo.php' ) . '">' . __( 'Settings', 'wp-geo' ) . '</a>';
-			array_unshift( $links, $settings_link );
+			if ( ! in_array( $settings_link, $links ) )
+				array_unshift( $links, $settings_link );
 		}
 	
 		return $links;
