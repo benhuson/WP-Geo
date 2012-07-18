@@ -1,85 +1,55 @@
 <?php
 
-
-
 /**
- * @package     WP Geo
- * @subpackage  Dashboard Class
- * @author      Ben Huson <ben@thewhiteroom.net>
+ * WP Geo Dashboard
+ * Display the WP Geo Blog RSS feed in the dashboard.
  */
-
-
-
-if ( !class_exists('WPGeo_Dashboard') ) {
-	
-	
-	
-	/**
-	 * @class        Dashboard
-	 * @description  Display the WP Geo Blog RSS feed in the dashboard.
-	 */
+if ( ! class_exists( 'WPGeo_Dashboard' ) ) {
 	
 	class WPGeo_Dashboard {
 		
-		
-		
 		/**
-		 * @method       Constructor
-		 * @description  Initialise the class.
+		 * Constructor
 		 */
-		
 		function WPGeo_Dashboard() {
-		
-			add_action('wp_dashboard_setup', array($this, 'register_widget'));
-			add_filter('wp_dashboard_widgets', array($this, 'add_widget'));
-		
+			add_action( 'wp_dashboard_setup', array( $this, 'register_widget' ) );
+			add_filter( 'wp_dashboard_widgets', array( $this, 'add_widget' ) );
 		}
 		
-		
-		
 		/**
-		 * @method       Register Widget
-		 * @description  Register the dashboard widget.
+		 * Register the dashboard widget
 		 */
-		
 		function register_widget() {
-		
-			wp_add_dashboard_widget('wpgeo_dashboard', 'WP Geo',
+			wp_add_dashboard_widget( 'wpgeo_dashboard', 'WP Geo',
 				array( &$this, 'widget' ),
 				array(
-					'all_link' => 'http://www.wpgeo.com/',
+					'all_link'  => 'http://www.wpgeo.com/',
 					'feed_link' => 'http://www.wpgeo.com/feed/'
 				)
 			);
-		
 		}
 		
-		
-		
 		/**
-		 * @method       Add Widget
-		 * @description  Adds the dashboard widget.
+		 * Add the dashboard widget
+		 *
+		 * @param array $widgets Array of widgets.
+		 * @return array Widgets.
 		 */
-		
 		function add_widget( $widgets ) {
-		
 			global $wp_registered_widgets;
 			
-			if ( !isset($wp_registered_widgets['wpgeo_dashboard']) )
+			if ( ! isset( $wp_registered_widgets['wpgeo_dashboard'] ) )
 				return $widgets;
-			array_splice($widgets, sizeof($widgets) - 1, 0, 'wpgeo_dashboard');
+			array_splice( $widgets, sizeof( $widgets ) - 1, 0, 'wpgeo_dashboard' );
 			
 			return $widgets;
-		
 		}
 		
-		
-		
 		/**
-		 * @method       Widget
-		 * @description  Displays the dashboard widget.
+		 * Display the dashboard widget
+		 *
+		 * @param array $args Args.
 		 */
-		
 		function widget( $args = null ) {
 			
 			// Validate Args
@@ -95,10 +65,10 @@ if ( !class_exists('WPGeo_Dashboard') ) {
 			echo $before_widget . $before_title . $widget_name . $after_title;
 			echo '<div style="background-image:url(' . plugins_url( WPGEO_SUBDIR . 'img/logo/wp-geo.png' ) . '); background-repeat:no-repeat; background-position:right top; padding-right:80px;">';
 			
-			$feed = fetch_feed('http://feeds2.feedburner.com/wpgeo');
+			$feed = fetch_feed( 'http://feeds2.feedburner.com/wpgeo' );
 			
-			if ( is_wp_error( $feed ) || !$feed->get_item_quantity() ) {
-				echo '<p>No recent updates.</p>';
+			if ( is_wp_error( $feed ) || ! $feed->get_item_quantity() ) {
+				echo '<p>' . __( 'No recent updates.', 'wp-geo' ) . '</p>';
 				return;
 			}
 			
@@ -116,26 +86,16 @@ if ( !class_exists('WPGeo_Dashboard') ) {
 				echo '</div>';
 			}
 			
-			echo '<p><a href="http://www.wpgeo.com/">View all WP Geo news...</a></p>';
+			echo '<p><a href="http://www.wpgeo.com/">' . __( 'View all WP Geo news...', 'wp-geo' ) . '</a></p>';
 			echo '</div>';
 			echo $after_widget;
-			
 		}
-		
-		
 		
 	}
 	
-	
-	
-	// Start the plugin
 	global $wpgeo_dashboard;
 	$wpgeo_dashboard = new WPGeo_Dashboard();
 	
-
-
 }
-
-
 
 ?>

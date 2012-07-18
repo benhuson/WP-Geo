@@ -1,22 +1,9 @@
 <?php
 
-
-
 /**
- * @package     WP Geo
- * @subpackage  Marker Class
- * @author      Ben Huson <ben@thewhiteroom.net>
+ * Marker Class
  */
-
-
-
 class WPGeo_Marker {
-	
-	
-	
-	/**
-	 * @properties
-	 */
 	
 	// Reference
 	var $id          = null;
@@ -31,15 +18,10 @@ class WPGeo_Marker {
 	var $image   = null;
 	var $shadow  = null;
 	
-	
-	
 	/**
-	 * @method       Constructor
-	 * @description  Initialise the class.
+	 * Constructor
 	 */
-	
 	function WPGeo_Marker( $id, $name, $description, $width, $height, $anchorX, $anchorY, $image, $shadow = null ) {
-		
 		$this->set_id( $id );
 		$this->set_name( $name );
 		$this->set_description( $description );
@@ -47,135 +29,94 @@ class WPGeo_Marker {
 		$this->set_anchor( $anchorX, $anchorY );
 		$this->set_image( $image );
 		$this->set_shadow( $shadow );
-		
 	}
 	
-	
-	
 	/**
-	 * @method       Set ID
-	 * @description  Sets the marker's ID.
-	 * @param        $id (string)
+	 * Set the marker's ID.
+	 *
+	 * @param string $id ID.
 	 */
-	
 	function set_id( $id ) {
-		
 		$this->id = $id;
-		
 	}
 	
-	
-	
 	/**
-	 * @method       Set Name
-	 * @description  Sets the marker's name.
-	 * @param        $name (string)
+	 * Set the marker's name.
+	 *
+	 * @param string $name Marker name.
 	 */
-	
 	function set_name( $name ) {
-		
 		$this->name = $name;
-		
 	}
 	
-	
-	
 	/**
-	 * @method       Set Description
-	 * @description  Sets the marker's description.
-	 * @param        $description (string)
+	 * Set the marker's description.
+	 *
+	 * @param string $description Description.
 	 */
-	
 	function set_description( $description ) {
-		
 		$this->description = $description;
-		
 	}
 	
-	
-	
 	/**
-	 * @method       Set Size
-	 * @description  Sets the marker's width and height dimensions.
-	 * @param        $width  (int)
-	 * @param        $height (int)
+	 * Set Size
+	 * Sets the marker's width and height dimensions.
+	 *
+	 * @param int $width Width.
+	 * @param int $height Height.
 	 */
-	
 	function set_size( $width, $height ) {
-		
-		$this->width = $width;
+		$this->width  = $width;
 		$this->height = $height;
-		
 	}
 	
-	
-	
 	/**
-	 * @method       Set Anchor
-	 * @description  Sets the marker's anchor coordinates.
-	 * @param        $x (int)
-	 * @param        $y (int)
+	 * Set Anchor
+	 * Sets the marker's anchor coordinates.
+	 *
+	 * @param int $x
+	 * @param int $y
 	 */
-	
 	function set_anchor( $x, $y ) {
-		
 		$this->anchorX = $x;
 		$this->anchorY = $y;
-		
 	}
 	
-	
-	
 	/**
-	 * @method       Set Image
-	 * @description  Sets the marker's image file.
-	 * @param        $image (string)
+	 * Set the marker's image file.
+	 *
+	 * @param string $image Image URL.
 	 */
-	
 	function set_image( $image ) {
-		
 		$this->image = $image;
-		
 	}
 	
-	
-	
 	/**
-	 * @method       Set Shadow
-	 * @description  Sets the marker's shadow image file.
-	 * @param        $shadow (string)
+	 * Set Shadow
+	 * Sets the marker's shadow image file.
+	 *
+	 * @param string $shadow Shadow image URL.
 	 */
-	
 	function set_shadow( $shadow ) {
-		
 		$this->shadow = $shadow;
-		
 	}
 	
-	
-	
 	/**
-	 * @method       Get JavaScript
-	 * @description  Gets the JavaScript that defines a marker.
-	 * @return       (string) JavaScript
+	 * Get the JavaScript that defines a marker.
+	 *
+	 * @return string JavaScript.
 	 */
-	
 	function get_javascript() {
-		
 		return "var wpgeo_icon_" . $this->id . " = wpgeo_createIcon(" . $this->width . ", " . $this->height . ", " . $this->anchorX . ", " . $this->anchorY . ", '" . $this->image . "', '" . $this->shadow . "');";
-		
 	}		
 	
-	
-	
 	/**
-	 * @method       Get Admin Display
-	 * @description  Gets the HTML to display the marker in the admin.
-	 * @return       (string) HTML
+	 * Get Admin Display
+	 * Gets the HTML to display the marker in the admin.
+	 *
+	 * @return string HTML.
 	 */
-	
 	function get_admin_display() {
-		
 		return '<tr valign="top">
 					<th scope="row">' . $this->name . '</th>
 					<td>
@@ -185,13 +126,8 @@ class WPGeo_Marker {
 						</p>
 					</td>
 				</tr>';
-		
 	}
 	
-	
-	
 }
-
-
 
 ?>

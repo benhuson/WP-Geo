@@ -1,33 +1,18 @@
 <?php
 
-
-
 /**
- * @package    WP Geo
- * @subpackage Markers Class
- * @author     Ben Huson <ben@thewhiteroom.net>
+ * WP Geo Markers
  */
-
-
-
 class WPGeo_Markers {
 	
-	
-	
-	/**
-	 * Properties
-	 */
 	var $upload_dir       = '';
 	var $wpgeo_upload_dir = '';
 	var $marker_image_url = '';
 	var $marker_image_dir = '';
 	var $markers;
 	
-	
-	
 	/**
-	 * @method       Constructor
-	 * @description  Initialise the class.
+	 * Constructor
 	 */
 	function WPGeo_Markers() {
 		
@@ -69,63 +54,50 @@ class WPGeo_Markers {
 			$this->get_image_url( 'dot-marker.png' ),
 			$this->get_image_url( 'dot-marker-shadow.png' )
 		);
-		
 	}
 	
-	
-	
 	/**
-	 * @method       Get Image URL
-	 * @description  Get the URL of the image.
+	 * Get Image URL
+	 *
+	 * @param string $img Image file name.
+	 * @return string Image URL.
 	 */
 	function get_image_url( $img ) {
-		
 		if ( file_exists( $this->wpgeo_upload_dir . $img ) ) {
 			return $this->marker_image_url . $img;
 		}
-		
 		return WPGEO_URL . 'img/markers/' . $img;
-		
 	}
 	
-	
-	
 	/**
-	 * @method       Add extra markers
-	 * @description  Allow plugins and themes to add markers.
+	 * Add extra markers
+	 * Allows plugins and themes to add markers.
 	 */
 	function add_extra_markers() {
-		
-		// Allow plugins and themes to add markers
 		$this->markers = apply_filters( 'wpgeo_markers', $this->markers );
-		
 	}
 	
-	
-	
 	/**
-	 * @method       Get Marker by ID
-	 * @description  Retur s marker object.
+	 * Get Marker Object by ID
+	 *
+	 * @param string $marker_id Marker ID.
+	 * @return object Marker.
 	 */
 	function get_marker_by_id( $marker_id ) {
-		
 		foreach ( $this->markers as $m ) {
 			if ( $m->id == $marker_id ) {
 				return $m;
 			}
 		}
-		
 	}
 	
-	
-	
 	/**
-	 * @method       Marker Folder Exists
-	 * @description  Checks that the marker images folder has been created.
-	 * @return       (boolean)
+	 * Marker Folder Exists
+	 * Checks that the marker images folder has been created.
+	 *
+	 * @return boolean
 	 */
 	function marker_folder_exists() {
-		
 		if ( is_dir( $this->marker_image_dir ) ) {
 			return true;
 		}
@@ -134,22 +106,18 @@ class WPGeo_Markers {
 		// Then retry. props Alain (alm)
 		$this->register_activation();
 		return ( is_dir( $this->marker_image_dir ) ) ? true : false;
-		
 	}
 	
-	
-	
 	/**
-	 * @method       Register Activation
-	 * @description  When the plugin is activated, created all the required folder
-	 *               and move the marker images there.
+	 * Register Activation
+	 * When the plugin is activated, created all the required folder
+	 * and move the marker images there.
 	 */
 	function register_activation() {
 		
-		// New Marker Folders
+		// Create Marker Folders?
 		clearstatcache();
 		$old_umask = umask( 0 );
-		
 		if ( is_writable( ABSPATH . 'wp-content' ) && ( ! is_dir( $this->wpgeo_upload_dir ) || ! is_dir( $this->marker_image_dir ) ) ) {
 			mkdir( $this->wpgeo_upload_dir );
 			mkdir( $this->marker_image_dir );
@@ -171,79 +139,66 @@ class WPGeo_Markers {
 		
 		// Reset default permissions
 		umask( $old_umask );
-		
 	}
 	
-	
-	
 	/**
-	 * @method       Move File or Delete
-	 * @description  Move a file, or replace it if one already exists.
+	 * Move File or Delete
+	 * Move a file, or replace it if one already exists.
+	 *
+	 * @param string $old_file Old file path.
+	 * @param string $new_file New file path.
 	 */
 	function moveFileOrDelete( $old_file, $new_file ) {
-		
-		if ( !file_exists( $new_file ) ) {
+		if ( ! file_exists( $new_file ) ) {
 			$ok = copy( $old_file, $new_file );
 			if ( $ok ) {
 				// Moved OK...
 			}
 		}
-		
 	}
 	
-	
-	
 	/**
-	 * @method       WP Head
-	 * @description  Output HTML header.
+	 * WP Head
+	 * Output HTML header.
 	 */
 	function wp_head() {
-		
 		$js = '';
-		
 		foreach ( $this->markers as $m ) {
 			$js .= $m->get_javascript();
 		}
 		
 		echo '
-		
 			<script type="text/javascript">
 			//<![CDATA[
 			// ----- WP Geo Marker Icons -----
 			' . $js . '
 			//]]>
 			</script>
-			
 			';
-			
 	}
 	
-	
-	
 	/**
-	 * @method       Get Admin Display
-	 * @description  Output marker HTML for the admin.
+	 * Get Admin Display
+	 * Output marker HTML for the admin.
+	 *
+	 * @return string Table HTML.
 	 */
 	function get_admin_display() {
-		
 		$html = '';
-		
 		foreach ( $this->markers as $m ) {
 			$html .= $m->get_admin_display();
 		}
-		
 		return '<table class="form-table">' . $html . '</table>';
-		
 	}
 	
-	
-	
 	/**
-	 * @method       Dropdown Markers
-	 * @description  Output marker select menu.
+	 * Dropdown Markers
+	 * Output marker select menu.
+	 *
+	 * @param array $args Args.
+	 * @return string Dropdown HTML.
 	 */
 	function dropdown_markers( $args ) {
-		
 		$defaults = array(
 			'selected'          => '',
 			'echo'              => 1,
@@ -262,7 +217,7 @@ class WPGeo_Markers {
 		$id = esc_attr( $r['id'] );
 		
 		$output = '<select name="' . $name . '" id="' . $id . '">';
-		if ( !empty( $r['show_option_none'] ) )
+		if ( ! empty( $r['show_option_none'] ) )
 			$output .= '<option value="' . esc_attr( $r['option_none_value'] ) . '">' . $r['show_option_none'] . '</option>';
 		foreach ( $this->markers as $marker ) {
 			$selected = '';
@@ -274,15 +229,9 @@ class WPGeo_Markers {
 		
 		if ( $r['echo'] )
 			echo $output;
-		
 		return $output;
-		
 	}
 	
-	
-	
 }
-
-
 
 ?>

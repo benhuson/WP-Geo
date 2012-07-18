@@ -1,7 +1,5 @@
 <?php
 
-
-
 /*
 Plugin Name: WP Geo
 Plugin URI: http://www.wpgeo.com/
@@ -12,8 +10,6 @@ Author URI: http://www.benhuson.co.uk/
 Minimum WordPress Version Required: 2.9
 Tested up to: 3.3.1
 */
-
-
 
 // WP Geo plugin directory and url paths. props Alain (alm)
 define( 'WPGEO_SUBDIR', '/' . str_replace( basename( __FILE__ ), '', plugin_basename( __FILE__ ) ) );
@@ -27,12 +23,8 @@ define( 'WPGEO_TITLE_META',        '_wp_geo_title' );
 define( 'WPGEO_MARKER_META',       '_wp_geo_marker' );
 define( 'WPGEO_MAP_SETTINGS_META', '_wp_geo_map_settings' );
 
-
-
 // Language
 load_plugin_textdomain( 'wp-geo', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-
-
 
 // Includes
 include_once( WPGEO_DIR . 'includes/wp-geo.php' );
@@ -49,18 +41,12 @@ include_once( WPGEO_DIR . 'widgets/contextual-map.php' );
 include_once( WPGEO_DIR . 'widgets/category-map.php' );
 include_once( WPGEO_DIR . 'widgets/recent-locations.php' );
 
-
-
 // Init.
 global $wpgeo;
 $wpgeo = new WPGeo();
 
-
-
 // Activation Hook
 register_activation_hook( __FILE__, array( $wpgeo, 'register_activation' ) );
-
-
 
 // Action Hooks
 add_action( 'init', array( $wpgeo, 'init' ) );
@@ -75,15 +61,11 @@ add_action( 'admin_menu', array( $wpgeo, 'admin_menu' ) );
 add_action( 'after_plugin_row', array( $wpgeo, 'after_plugin_row' ) );
 add_action( 'admin_notices', array( $wpgeo, 'version_upgrade_msg' ) );
 
-
-
 // Filters
 add_filter( 'the_content', array( $wpgeo, 'the_content' ) );
 add_filter( 'get_the_excerpt', array( $wpgeo, 'get_the_excerpt' ) );
 add_filter( 'post_limits', array( $wpgeo, 'post_limits' ) );
 add_filter( 'posts_join', array( $wpgeo, 'posts_join' ) );
 add_filter( 'posts_where', array( $wpgeo, 'posts_where' ) );
-
-
 
 ?>

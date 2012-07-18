@@ -1,25 +1,15 @@
 <?php
 
-
-
 /**
- * @package    WP Geo
- * @subpackage WP Geo Contextual Map Widget class
- */
-
-
-
-/**
- * @class        WP Geo Contextual Widget
- * @description  Adds a map widget to WordPress (requires WP Geo plugin).
- *               The widget displays markers for posts on the current page.
- * @author       Marco Alionso Ramirez <marco@onemarco.com>
- *               updated by Ben Huson <ben@thewhiteroom.net>
- * @version      1.4
+ * WP Geo Contextual Widget
+ * Adds a map widget to WordPress (requires WP Geo plugin).
+ * The widget displays markers for posts on the current page.
+ *
+ * @version 1.4
+ * @author Marco Alionso Ramirez <marco@onemarco.com>
+ *         updated by Ben Huson <ben@thewhiteroom.net>
  */
 class WPGeo_Contextual_Map_Widget extends WP_Widget {
-	
-	
 	
 	/**
 	 * Widget Constuctor
@@ -32,13 +22,11 @@ class WPGeo_Contextual_Map_Widget extends WP_Widget {
 		$this->WP_Widget( 'wpgeo_contextual_map_widget', __( 'WP Geo Contextual Map', 'wp-geo' ), $widget_ops );
 	}
 	
-	
-	
 	/**
 	 * Widget Output
 	 *
-	 * @param $args (array)
-	 * @param $instance (array) Widget values.
+	 * @param array $args
+	 * @param array $instance Widget values.
 	 */
 	function widget( $args, $instance ) {
 		global $wpgeo, $posts;
@@ -75,32 +63,26 @@ class WPGeo_Contextual_Map_Widget extends WP_Widget {
 				'posts'         => $posts
 			) );
 			
-			if ( !empty( $map_content ) ) {
+			if ( ! empty( $map_content ) ) {
 				$html_content = $before_widget;
-				if ( !empty( $title ) ) {
+				if ( ! empty( $title ) ) {
 					$html_content .= $before_title . $title . $after_title;
 				}
 				$html_content .= $map_content . $after_widget;
 			}
 			
 			echo $html_content;
-		
 		}
-		
 	}
-	
-	
 	
 	/**
 	 * Update Widget
 	 *
-	 * @param $new_instance (array) New widget values.
-	 * @param $old_instance (array) Old widget values.
-	 *
-	 * @return (array) New values.
+	 * @param array $new_instance New widget values.
+	 * @param array $old_instance Old widget values.
+	 * @return array New values.
 	 */
 	function update( $new_instance, $old_instance ) {
-
 		$instance = $old_instance;
 		$instance['title']          = strip_tags( stripslashes( $new_instance['title'] ) );
 		$instance['width']          = strip_tags( stripslashes( $new_instance['width'] ) );
@@ -109,18 +91,14 @@ class WPGeo_Contextual_Map_Widget extends WP_Widget {
 		$instance['show_polylines'] = in_array( $new_instance['show_polylines'], array( 'Y', 'N' ) ) ? $new_instance['show_polylines'] : '';
 		$instance['zoom']           = absint( $new_instance['zoom'] );
 		return $instance;
-		
 	}
-	
-	
 	
 	/**
 	 * Widget Options Form
 	 *
-	 * @param $instance (array) Widget values.
+	 * @param array $instance Widget values.
 	 */
 	function form( $instance ) {
-		
 		global $wpgeo;
 		
 		$wp_geo_options = get_option( 'wp_geo_options' );
@@ -141,7 +119,7 @@ class WPGeo_Contextual_Map_Widget extends WP_Widget {
 		}
 		
 		// Message if API key not set
-		if ( !$wpgeo->checkGoogleAPIKey() ) {
+		if ( ! $wpgeo->checkGoogleAPIKey() ) {
 			// @todo Check if there is a 'less hard-coded' way to write link to settings page
 			echo '<p class="wp_geo_error">' . __( 'WP Geo is not currently active as you have not entered a Google API Key', 'wp-geo') . '. <a href="' . admin_url( '/options-general.php?page=wp-geo/includes/wp-geo.php' ) . '">' . __( 'Please update your WP Geo settings', 'wp-geo' ) . '</a>.</p>';
 		}
@@ -155,16 +133,14 @@ class WPGeo_Contextual_Map_Widget extends WP_Widget {
 		echo '<p><strong>' . __( 'Settings', 'wp-geo' ) . ':</strong></p>';
 		echo '<p>' . __( 'Map Type', 'wp-geo' ) . ':<br />' . $wpgeo->google_map_types( null, null, array( 'return' => 'menu', 'selected' => $instance['maptype'], 'id' => $this->get_field_id( 'maptype' ), 'name' => $this->get_field_name( 'maptype' ) ) ) . '</p>';
 		echo '<p>' . __( 'Polylines', 'wp-geo' ) . ':<br />' . $this->show_polylines_options( array( 'return' => 'menu', 'selected' => $instance['show_polylines'], 'id' => $this->get_field_id( 'show_polylines' ), 'name' => $this->get_field_name( 'show_polylines' ) ) ) . '</p>';
-		
 	}
 	
-	
-	
 	/**
-	 * @method       Show Polylines Options
-	 * @description  Polylines options menu for the map.
-	 * @param        $args = Array of arguments.
-	 * @return       (array or string) Array or HTML select menu.
+	 * Show Polylines Options
+	 * Polylines options menu for the map.
+	 *
+	 * @param array $args Array of arguments.
+	 * @return array|string Array or HTML select menu.
 	 */
 	function show_polylines_options( $args = null ) {
 		
@@ -196,18 +172,11 @@ class WPGeo_Contextual_Map_Widget extends WP_Widget {
 		
 		// Default return
 		return $map_type_array;
-		
 	}
-	
-	
 		
 }
 
-
-
 // Widget Hooks
 add_action( 'widgets_init', create_function( '', 'return register_widget( "WPGeo_Contextual_Map_Widget" );' ) );
-
-
 
 ?>

@@ -1,143 +1,104 @@
 <?php
 
-
-
 /**
- * @package    WP Geo
- * @subpackage Includes > Template
- * @author     Ben Huson <ben@thewhiteroom.net>
+ * WP Geo Latitude
+ * Outputs the post latitude.
+ *
+ * @param int $post_id (optional) Post ID.
  */
-
-
-
-/**
- * @method       WP Geo Latitude
- * @description  Outputs the post latitude.
- * @param        $post_id = Post ID (optional)
- */
-
 function wpgeo_latitude( $post_id = null ) {
-
 	echo get_wpgeo_latitude( $post_id );
-	
 }
 
-
-
 /**
- * @method       WP Geo Longitude
- * @description  Outputs the post longitude.
- * @param        $post_id = Post ID (optional)
+ * WP Geo Longitude
+ * Outputs the post longitude.
+ *
+ * @param int $post_id (optional) Post ID.
  */
-
 function wpgeo_longitude( $post_id = null ) {
-
 	echo get_wpgeo_longitude( $post_id );
-	
 }
 
-
-
 /**
- * @method       WP Geo Title
- * @description  Outputs the post title.
- * @param        $post_id = Post ID (optional)
- * @param        $default_to_post_title = Default to post title if point title empty (optional)
+ * WP Geo Title
+ * Outputs the post title.
+ *
+ * @param int $post_id (optional) Post ID
+ * @param bool $default_to_post_title (optional) Default to post title if point title empty.
  */
-
 function wpgeo_title( $post_id = null, $default_to_post_title = true ) {
-
 	echo get_wpgeo_title( $post_id, $default_to_post_title );
-	
 }
 
-
-
 /**
- * @method       Get WP Geo Latitude
- * @description  Gets the post latitude.
- * @param        $post_id = Post ID (optional)
- * @return       (float) Latitude
+ * Get WP Geo Latitude
+ * Gets the post latitude.
+ *
+ * @param int $post_id (optional) Post ID.
+ * @return float Latitude.
  */
-
-function get_wpgeo_latitude( $post_id = null ) {
-
+function get_wpgeo_latitude( $post_id = 0 ) {
 	global $post;
 	
-	$id = absint($post_id) > 0 ? absint($post_id) : $post->ID;
-	
-	if ( absint($id) > 0 ) {
-		return get_post_meta( absint($id), WPGEO_LATITUDE_META, true );
+	$post_id = absint( $post_id );
+	$post_id = $post_id > 0 ? $post_id : $post->ID;
+	if ( $post_id > 0 ) {
+		return get_post_meta( $post_id, WPGEO_LATITUDE_META, true );
 	}
-	
 	return null;
-	
 }
 
-
-
 /**
- * @method       Get WP Geo Longitude
- * @description  Gets the post longitude.
- * @param        $post_id = Post ID (optional)
- * @return       (float) Longitude
+ * Get WP Geo Longitude
+ * Gets the post longitude.
+ *
+ * @param int $post_id (optional) Post ID.
+ * @return float Longitude.
  */
-
-function get_wpgeo_longitude( $post_id = null ) {
-	
+function get_wpgeo_longitude( $post_id = 0 ) {
 	global $post;
 	
-	$id = absint($post_id) > 0 ? absint($post_id) : $post->ID;
-	
-	if ( absint($id) > 0 ) {
-		return get_post_meta( absint($id), WPGEO_LONGITUDE_META, true );
+	$post_id = absint( $post_id );
+	$post_id = $post_id > 0 ? $post_id : $post->ID;
+	if ( $post_id > 0 ) {
+		return get_post_meta( $post_id, WPGEO_LONGITUDE_META, true );
 	}
-	
 	return null;
-	
 }
 
-
-
 /**
- * @method       Get WP Geo Title
- * @description  Gets the post title.
- * @param        $post_id = Post ID (optional)
- * @param        $default_to_post_title = Default to post title if point title empty (optional)
- * @return       (string) Title
+ * Get WP Geo Title
+ *
+ * @param int $post_id (optional) Post ID.
+ * @param bool $default_to_post_title (optional) Default to post title if point title empty.
+ * @return string Title.
  */
-
-function get_wpgeo_title( $post_id = null, $default_to_post_title = true ) {
-	
+function get_wpgeo_title( $post_id = 0, $default_to_post_title = true ) {
 	global $post;
 	
-	$id = absint( $post_id ) > 0 ? absint( $post_id ) : $post->ID;
-	
-	if ( absint( $id ) > 0 ) {
-		$title = get_post_meta( $id, WPGEO_TITLE_META, true );
+	$post_id = absint( $post_id );
+	$post_id = $post_id > 0 ? $post_id : $post->ID;
+	if ( $post_id > 0 ) {
+		$title = get_post_meta( $post_id, WPGEO_TITLE_META, true );
 		if ( empty( $title ) && $default_to_post_title ) {
-			$p = &get_post( $id );
+			$p = &get_post( $post_id );
 			$title = isset( $p->post_title ) ? $p->post_title : '';
 		}
-		$title = apply_filters( 'wpgeo_point_title', $title, $id );
+		$title = apply_filters( 'wpgeo_point_title', $title, $post_id );
 		return $title;
 	}
-	
-	return null;
-	
+	return '';
 }
 
-
-
 /**
- * @method       WP Geo Map Link
- * @description  Gets a link to an external map.
- * @param        $args = Array of arguments (optional)
- * @return       (string) Map URL
+ * WP Geo Map Link
+ * Gets a link to an external map.
+ *
+ * @param array $args (optional) Array of arguments.
+ * @return string Map URL.
  */
-
 function wpgeo_map_link( $args = null ) {
-	
 	global $post;
 	
 	$defaults = array(
@@ -157,97 +118,83 @@ function wpgeo_map_link( $args = null ) {
 	$r['echo']      = absint( $r['echo'] );
 	
 	// If a post is specified override lat/lng...
-	if ( !$r['latitude'] && !$r['longitude'] ) {
+	if ( ! $r['latitude'] && ! $r['longitude'] ) {
 		$r['latitude']  = get_wpgeo_latitude( $r['post_id'] );
 		$r['longitude'] = get_wpgeo_longitude( $r['post_id'] );
 	}
 	
 	// If lat/lng...
+	// @todo Use add_query_arg()
 	$url = '';
 	if ( $r['latitude'] && $r['longitude'] ) {
-	
 		$q = 'q=' . $r['latitude'] . ',' . $r['longitude'];
 		$z = $r['zoom'] ? '&z=' . $r['zoom'] : '';
 		
 		$url = 'http://maps.google.co.uk/maps?' . $q . $z;
 		$url = apply_filters( 'wpgeo_map_link', $url, $r );
-		
 	}
 	
 	// Output
 	if ( $r['echo'] == 0 ) {
 		return $url;
-	} else {
-		echo $url;
 	}
-	
+	echo $url;
 }
 
-
-
 /**
- * @method       WP Geo Post Map
- * @description  Outputs the HTML for a post map.
- * @param        $post_id = Post ID (optional)
+ * WP Geo Post Map
+ * Outputs the HTML for a post map.
+ *
+ * @param int $post_id (optional) Post ID.
  */
-
 function wpgeo_post_map( $post_id = null ) {
-
 	echo get_wpgeo_post_map( $post_id );
-	
 }
 
-
-
 /**
- * @method       Get WP Geo Post Map
- * @description  Gets the HTML for a post map.
- * @param        $post_id = Post ID (optional)
- * @return       (string) HTML
+ * Get WP Geo Post Map
+ * Gets the HTML for a post map.
+ *
+ * @param int $post_id (optional) Post ID.
+ * @return string HTML.
  */
-
-function get_wpgeo_post_map( $post_id = null ) {
-
+function get_wpgeo_post_map( $post_id = 0 ) {
 	global $post, $wpgeo;
 	
-	$id = absint($post_id) > 0 ? absint($post_id) : $post->ID;
+	$post_id = absint( $post_id );
+	$post_id = $post_id > 0 ? $post_id : $post->ID;
 	$wp_geo_options = get_option( 'wp_geo_options' );
 	
-	$show_post_map = apply_filters( 'wpgeo_show_post_map', $wp_geo_options['show_post_map'], $id );
+	$show_post_map = apply_filters( 'wpgeo_show_post_map', $wp_geo_options['show_post_map'], $post_id );
 	
-	$latitude  = get_post_meta( $id, WPGEO_LATITUDE_META, true );
-	$longitude = get_post_meta( $id, WPGEO_LONGITUDE_META, true );
-	if ( !is_numeric( $latitude ) || !is_numeric( $longitude ) )
+	$latitude  = get_post_meta( $post_id, WPGEO_LATITUDE_META, true );
+	$longitude = get_post_meta( $post_id, WPGEO_LONGITUDE_META, true );
+	if ( ! is_numeric( $latitude ) || ! is_numeric( $longitude ) )
 		return '';
 	
-	if ( $id > 0 && !is_feed() ) {
+	if ( $post_id > 0 && ! is_feed() ) {
 		if ( $wpgeo->show_maps() && $show_post_map != 'TOP' && $show_post_map != 'BOTTOM' && $wpgeo->checkGoogleAPIKey() ) {
-			
 			$map_width  = wpgeo_css_dimension( $wp_geo_options['default_map_width'] );
 			$map_height = wpgeo_css_dimension( $wp_geo_options['default_map_height'] );
 			
-			return '<div class="wp_geo_map" id="wp_geo_map_' . $id . '" style="width:' . $map_width . '; height:' . $map_height . ';"></div>';
+			return '<div class="wp_geo_map" id="wp_geo_map_' . $post_id . '" style="width:' . $map_width . '; height:' . $map_height . ';"></div>';
 		}
 	}
-	
 	return '';
-	
 }
 
-
-
 /**
- * @method  Get WP Geo Map
+ * Get WP Geo Map
+ *
+ * @param array $query Query args.
+ * @param array $options Options array.
+ * @return string Output.
  */
-
 function get_wpgeo_map( $query, $options = null ) {
-	
 	global $wpgeo_map_id;
 	
 	$wpgeo_map_id++;
-	
 	$id = 'wpgeo_map_id_' . $wpgeo_map_id;
-	
 	$wp_geo_options = get_option('wp_geo_options');
 	
 	$defaults = array(
@@ -292,22 +239,22 @@ function get_wpgeo_map( $query, $options = null ) {
 				' . WPGeo_API_GMap2::render_map_control( 'map', 'GLargeMapControl3D' ) . '
 				map.setMapType(' . $r['type'] . ');
 				';
-	if ( $posts ) :
+	if ( $posts ) {
 		$polyline = new WPGeo_Polyline( array(
 			'color' => $r['polyline_colour']
 		) );
 		foreach ( $posts as $post ) {
-			$latitude = get_post_meta($post->ID, WPGEO_LATITUDE_META, true);
-			$longitude = get_post_meta($post->ID, WPGEO_LONGITUDE_META, true);
-			if ( is_numeric($latitude) && is_numeric($longitude) ) {
-				$marker = get_post_meta($post->ID, WPGEO_MARKER_META, true);
+			$latitude  = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
+			$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
+			if ( is_numeric( $latitude ) && is_numeric( $longitude ) ) {
+				$marker = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
 				if ( empty( $marker ) )
 					$marker = $r['markers'];
 				$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', $marker, $post, 'wpgeo_map' );
 				$polyline->add_coord( $latitude, $longitude );
 				$output .= '
 					var center = new GLatLng(' . $latitude . ',' . $longitude . ');
-					var marker = new wpgeo_createMarker2(map, center, ' . $icon . ', \'' . esc_js( $post->post_title ) . '\', \'' . get_permalink($post->ID) . '\');
+					var marker = new wpgeo_createMarker2(map, center, ' . $icon . ', \'' . esc_js( $post->post_title ) . '\', \'' . get_permalink( $post->ID ) . '\');
 					bounds.extend(center);
 					';
 			}
@@ -319,83 +266,68 @@ function get_wpgeo_map( $query, $options = null ) {
 			zoom = map.getBoundsZoomLevel(bounds);
 			map.setCenter(bounds.getCenter(), zoom);
 			';
-	else : 
+	} else {
 		$output .= '
 				map.setCenter(new GLatLng(' . $wp_geo_options['default_map_latitude'] . ', ' . $wp_geo_options['default_map_longitude'] . '), ' . $wp_geo_options['default_map_zoom'] . ');';
-	endif;
+	}
 	$output .= '
 			}
 		} );
 		-->
 		</script>
 		';
-	
 	return $output;
-	
 }
 
-
-
 /**
- * @method  WP Geo Map
+ * WP Geo Map
+ *
+ * @param array $query Query args.
+ * @param array $options Options array.
+ * @return string Output.
  */
-
 function wpgeo_map( $query, $options = null ) {
-
 	echo get_wpgeo_map( $query, $options );
-	
 }
 
-
-
 /**
- * @method       WP Geo Post Static Map
- * @description  Outputs the HTML for a static post map.
- * @param        $post_id = Post ID (optional)
- * @param        $query = Optional parameters
+ * WP Geo Post Static Map
+ * Outputs the HTML for a static post map.
+ *
+ * @param int $post_id (optional) Post ID.
+ * @param array $query (optional) Parameters.
  */
-
-function wpgeo_post_static_map( $post_id = null, $query = null ) {
-
+function wpgeo_post_static_map( $post_id = 0, $query = null ) {
 	echo get_wpgeo_post_static_map( $post_id, $query );
-	
 }
 
-
-
 /**
- * @method       Get WP Geo Post Static Map
- * @description  Gets the HTML for a static post map.
- * @param        $post_id = Post ID (optional)
- * @param        $query = Optional parameters
- * @return       (string) HTML
+ * Get WP Geo Post Static Map
+ * Gets the HTML for a static post map.
+ *
+ * @param int $post_id (optional) Post ID.
+ * @param array $query (optional) Parameters.
+ * @return string HTML.
  */
-
-function get_wpgeo_post_static_map( $post_id = null, $query = null ) {
-
+function get_wpgeo_post_static_map( $post_id = 0, $query = null ) {
 	global $post, $wpgeo;
 	
-	$id = absint($post_id) > 0 ? absint($post_id) : $post->ID;
+	$post_id = absint( $post_id );
+	$post_id = $post_id > 0 ? $post_id : $post->ID;
 
-	$latitude  = get_post_meta( $id, WPGEO_LATITUDE_META, true );
-	$longitude = get_post_meta( $id, WPGEO_LONGITUDE_META, true );
-
-	if ( !is_numeric( $latitude ) || !is_numeric( $longitude ) )
+	if ( ! $post_id || is_feed() || ! $wpgeo->show_maps() || ! $wpgeo->checkGoogleAPIKey() )
 		return '';
-
-	if ( !$id || is_feed() ) {
-		return '';
-	}
-
-	if ( !$wpgeo->show_maps() || !$wpgeo->checkGoogleAPIKey() ) {
-		return '';
-	}
-
-	// fetch wp geo options & post settings
-	$wp_geo_options = get_option( 'wp_geo_options' );
-	$settings  = get_post_meta( $id, WPGEO_MAP_SETTINGS_META, true );
 	
-	// options
+	$latitude  = get_post_meta( $post_id, WPGEO_LATITUDE_META, true );
+	$longitude = get_post_meta( $post_id, WPGEO_LONGITUDE_META, true );
+	if ( ! is_numeric( $latitude ) || ! is_numeric( $longitude ) )
+		return '';
+	
+	// Fetch wp geo options & post settings
+	$wp_geo_options = get_option( 'wp_geo_options' );
+	$settings  = get_post_meta( $post_id, WPGEO_MAP_SETTINGS_META, true );
+	
+	// Options
 	$defaults = array(
 		'width'   => trim( $wp_geo_options['default_map_width'], 'px' ),
 		'height'  => trim( $wp_geo_options['default_map_height'], 'px' ),
@@ -405,33 +337,33 @@ function get_wpgeo_post_static_map( $post_id = null, $query = null ) {
 	$options = wp_parse_args( $query, $defaults );
 	
 	// Can't do percentage sizes to abort
-	if ( strpos( $options['width'], '%' ) !== false || strpos( $options['height'], '%' ) !== false ) {
+	if ( strpos( $options['width'], '%' ) !== false || strpos( $options['height'], '%' ) !== false )
 		return '';
-	}
 
-	// translate WP-geo maptypes to static map type url param
+	// Convert WP Geo map types to static map type url param
 	$types = array(
-		'G_NORMAL_MAP' => 'roadmap',
+		'G_NORMAL_MAP'    => 'roadmap',
 		'G_SATELLITE_MAP' => 'satellite',
-		'G_PHYSICAL_MAP' => 'terrain',
-		'G_HYBRID_MAP' => 'hybrid'
+		'G_PHYSICAL_MAP'  => 'terrain',
+		'G_HYBRID_MAP'    => 'hybrid'
 	);	
 
-	// default: center on location marker
-	$centerLatitude = $latitude;
+	// Center on location marker by default
+	$centerLatitude  = $latitude;
 	$centerLongitude = $longitude;
 
-	// custom map settings?
+	// Custom map settings?
 	if ( isset( $settings['zoom'] ) && is_numeric( $settings['zoom'] ) ) {
 		$options['zoom'] = $settings['zoom'];
 	}
-	if ( !empty($settings['type']) ) {
+	if ( ! empty( $settings['type'] ) ) {
 		$options['maptype'] = $settings['type'];
 	}
-	if ( !empty($settings['centre']) ) {
-		list($centerLatitude, $centerLongitude) = explode( ',', $settings['centre'] );
+	if ( ! empty( $settings['centre'] ) ) {
+		list( $centerLatitude, $centerLongitude ) = explode( ',', $settings['centre'] );
 	}
-
+	
+	// @todo Use add_query_arg()
 	$url = 'http://maps.googleapis.com/maps/api/staticmap?';
 	$url .= 'center=' . $centerLatitude . ',' . $centerLongitude;
 	$url .= '&zoom=' . $options['zoom'];
@@ -440,11 +372,14 @@ function get_wpgeo_post_static_map( $post_id = null, $query = null ) {
 	$url .= '&markers=color:red%7C' . $latitude . ',' . $longitude;
 	$url .= '&sensor=false';
 	
-	return '<img id="wp_geo_static_map_' . $id . '" src="' . $url . '" class="wp_geo_static_map" />';
+	return '<img id="wp_geo_static_map_' . $post_id . '" src="' . $url . '" class="wp_geo_static_map" />';
 }
 
 /**
  * Add widget map
+ *
+ * @param array $args Args.
+ * @return string Output.
  */
 function wpgeo_add_widget_map( $args = null ) {
 	global $wpgeo, $post;

@@ -1,14 +1,14 @@
 <?php
 
 /**
- * WP Geo Category Widget v.1.4
+ * WP Geo Category Widget
  * Adds a map widget to WordPress (requires WP Geo plugin).
  * The widget displays markers for posts in the current category.
  *
- * David Keen
- * updated by Ben Huson <ben@thewhiteroom.net>
+ * @version 1.4
+ * @author David Keen
+ *         updated by Ben Huson <ben@thewhiteroom.net>
  */
-
 class WPGeo_Category_Map_Widget extends WP_Widget {
 
 	/**
@@ -24,6 +24,9 @@ class WPGeo_Category_Map_Widget extends WP_Widget {
 	
 	/**
 	 * Widget Output
+	 *
+	 * @param array $args
+	 * @param array $instance Widget values.
 	 */
 	function widget( $args, $instance ) {
 		global $wpgeo;
@@ -62,18 +65,18 @@ class WPGeo_Category_Map_Widget extends WP_Widget {
 			// @todo Exclude current post?
 			
 			$map_content = wpgeo_add_widget_map( array(
-				'width'             => $width,
-				'height'            => $height,
-				'maptype'           => $maptype,
-				'showpolylines'     => $showpolylines,
-				'zoom'              => $zoom,
-				'id'                => $args['widget_id'] . '-map',
-				'posts'             => $posts
+				'width'         => $width,
+				'height'        => $height,
+				'maptype'       => $maptype,
+				'showpolylines' => $showpolylines,
+				'zoom'          => $zoom,
+				'id'            => $args['widget_id'] . '-map',
+				'posts'         => $posts
 			) );
 			
-			if ( !empty( $map_content ) ) {
+			if ( ! empty( $map_content ) ) {
 				$html_content = $before_widget;
-				if ( !empty( $title ) )
+				if ( ! empty( $title ) )
 					$html_content .= $before_title . $title . $after_title;
 				$html_content .= $map_content . $after_widget;
 			}
@@ -84,6 +87,10 @@ class WPGeo_Category_Map_Widget extends WP_Widget {
 	
 	/**
 	 * Update Widget
+	 *
+	 * @param array $new_instance New widget values.
+	 * @param array $old_instance Old widget values.
+	 * @return array New values.
 	 */
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
@@ -98,6 +105,8 @@ class WPGeo_Category_Map_Widget extends WP_Widget {
 	
 	/**
 	 * Widget Options Form
+	 *
+	 * @param array $instance Widget values.
 	 */
 	function form( $instance ) {
 		global $wpgeo;
@@ -115,7 +124,7 @@ class WPGeo_Category_Map_Widget extends WP_Widget {
 		) );
 		
 		// Message if API key not set
-		if ( !$wpgeo->checkGoogleAPIKey() ) {
+		if ( ! $wpgeo->checkGoogleAPIKey() ) {
 			// @todo Check if there is a 'less hard-coded' way to write link to settings page
 			echo '<p class="wp_geo_error">' . __( 'WP Geo is not currently active as you have not entered a Google API Key', 'wp-geo') . '. <a href="' . admin_url( '/options-general.php?page=wp-geo/includes/wp-geo.php' ) . '">' . __( 'Please update your WP Geo settings', 'wp-geo' ) . '</a>.</p>';
 		}
@@ -134,6 +143,9 @@ class WPGeo_Category_Map_Widget extends WP_Widget {
 	/**
 	 * Show Polylines Options
 	 * Polylines options menu for the map.
+	 *
+	 * @param array $args Array of arguments.
+	 * @return array|string Array or HTML select menu.
 	 */
 	function show_polylines_options( $args = null ) {
 		$args = wp_parse_args( (array)$args, array(
