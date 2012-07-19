@@ -137,42 +137,7 @@ class WPGeo_Category_Map_Widget extends WP_Widget {
 			<small>' . __( 'If not all markers fit, the map will automatically be zoomed so they do.', 'wp-geo' ) . '</small></p>';
 		echo '<p><strong>' . __( 'Settings', 'wp-geo' ) . ':</strong></p>';
 		echo '<p>' . __( 'Map Type', 'wp-geo' ) . ':<br />' . $wpgeo->google_map_types( null, null, array( 'return' => 'menu', 'selected' => $instance['maptype'], 'id' => $this->get_field_id( 'maptype' ), 'name' => $this->get_field_name( 'maptype' ) ) ) . '</p>';
-		echo '<p>' . __( 'Polylines', 'wp-geo' ) . ':<br />' . $this->show_polylines_options( array( 'return' => 'menu', 'selected' => $instance['show_polylines'], 'id' => $this->get_field_id( 'show_polylines' ), 'name' => $this->get_field_name( 'show_polylines' ) ) ) . '</p>';
-	}
-	
-	/**
-	 * Show Polylines Options
-	 * Polylines options menu for the map.
-	 *
-	 * @param array $args Array of arguments.
-	 * @return array|string Array or HTML select menu.
-	 */
-	function show_polylines_options( $args = null ) {
-		$args = wp_parse_args( (array)$args, array(
-			'id'       => 'show_polylines',
-			'name'     => 'show_polylines',
-			'return'   => 'array',
-			'selected' => null
-		) );
-
-		// Array
-		$map_type_array = array(
-			''	=> __( 'Default', 'wp-geo' ),
-			'Y'	=> __( 'Show Polylines', 'wp-geo' ),
-			'N'	=> __( 'Hide Polylines', 'wp-geo' )
-		);
-
-		// Menu?
-		if ( $args['return'] = 'menu' ) {
-			$menu = '';
-			foreach ( $map_type_array as $key => $val ) {
-				$menu .= '<option value="' . $key . '" ' . selected( $args['selected'], $key, false ) . '>' . $val . '</option>';
-			}
-			$menu = '<select name="' . $args['name'] . '" id="' . $args['id'] . '">' . $menu. '</select>';
-			return $menu;
-		}
-		
-		return $map_type_array;
+		echo '<p>' . __( 'Polylines', 'wp-geo' ) . ':<br />' . wpgeo_show_polylines_options( array( 'return' => 'menu', 'selected' => $instance['show_polylines'], 'id' => $this->get_field_id( 'show_polylines' ), 'name' => $this->get_field_name( 'show_polylines' ) ) ) . '</p>';
 	}
 	
 }
