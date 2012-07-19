@@ -124,13 +124,12 @@ function wpgeo_map_link( $args = null ) {
 	}
 	
 	// If lat/lng...
-	// @todo Use add_query_arg()
 	$url = '';
-	if ( $r['latitude'] && $r['longitude'] ) {
-		$q = 'q=' . $r['latitude'] . ',' . $r['longitude'];
-		$z = $r['zoom'] ? '&z=' . $r['zoom'] : '';
-		
-		$url = 'http://maps.google.co.uk/maps?' . $q . $z;
+	if ( wpgeo_is_valid_geo_coord( $r['latitude'], $r['longitude'] ) ) {
+		$url = 'http://maps.google.co.uk/maps';
+		$url = add_query_arg( 'q', $r['latitude'] . ',' . $r['longitude'], $url );
+		if ( $r['zoom'] )
+			$url = add_query_arg( 'z', $r['zoom'], $url );
 		$url = apply_filters( 'wpgeo_map_link', $url, $r );
 	}
 	
@@ -363,14 +362,14 @@ function get_wpgeo_post_static_map( $post_id = 0, $query = null ) {
 		list( $centerLatitude, $centerLongitude ) = explode( ',', $settings['centre'] );
 	}
 	
-	// @todo Use add_query_arg()
-	$url = 'http://maps.googleapis.com/maps/api/staticmap?';
-	$url .= 'center=' . $centerLatitude . ',' . $centerLongitude;
-	$url .= '&zoom=' . $options['zoom'];
-	$url .= '&size=' . $options['width'] . 'x' . $options['height'];
-	$url .= '&maptype=' . $types[$options['maptype']];
-	$url .= '&markers=color:red%7C' . $latitude . ',' . $longitude;
-	$url .= '&sensor=false';
+	$url = add_query_arg( array(
+		'center'  => $centerLatitude . ',' . $centerLongitude,
+		'zoom'    => $options['zoom'],
+		'size'    => $options['width'] . 'x' . $options['height'],
+		'maptype' => $types[$options['maptype']],
+		'markers' => 'color:red%7C' . $latitude . ',' . $longitude,
+		'sensor'  => 'false'
+	), 'http://maps.googleapis.com/maps/api/staticmap' );
 	
 	return '<img id="wp_geo_static_map_' . $post_id . '" src="' . $url . '" class="wp_geo_static_map" />';
 }

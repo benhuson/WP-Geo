@@ -82,6 +82,34 @@ if ( ! function_exists( 'shortcode_wpgeo_map_link' ) ) {
 }
 
 /**
+ * WP Geo Map Link
+ * Outputs a map link.
+ *
+ * @param array $atts Shortcode attributes.
+ * @param string $content Content between shortcode tags.
+ * @return string Map link
+ */
+if ( ! function_exists( 'shortcode_wpgeo_static_map' ) ) {
+	function shortcode_wpgeo_static_map( $atts = null, $content = null ) {
+		global $post;
+		
+		$wp_geo_options = get_option( 'wp_geo_options' );
+		
+		// Validate Args
+		$r = wp_parse_args( $atts, array(
+			'post_id' => $post->ID,
+			'width'   => trim( $wp_geo_options['default_map_width'], 'px' ),
+			'height'  => trim( $wp_geo_options['default_map_height'], 'px' ),
+			'maptype' => $wp_geo_options['google_map_type'],
+			'zoom'    => $wp_geo_options['default_map_zoom']
+		) );
+		
+		return get_wpgeo_post_static_map( $r['post_id'], $r );
+	}
+	add_shortcode( 'wpgeo_static_map', 'shortcode_wpgeo_static_map' );
+}
+
+/**
  * Shortcode [wp_geo_map type="G_NORMAL_MAP"]
  * Outputs the post map.
  *
