@@ -944,8 +944,6 @@ class WPGeo {
 	/**
 	 * Options Checkbox HTML
 	 *
-	 * @todo Use checked() and disabled()
-	 *
 	 * @param string $id Field ID.
 	 * @param string $val Field value.
 	 * @param string $checked Checked value.
@@ -1311,8 +1309,6 @@ class WPGeo {
 	 * Post Map Menu
 	 * Map position array or menu.
 	 *
-	 * @todo Use selected()
-	 *
 	 * @param string $return (optional) Array or menu type.
 	 * @param string $selected (optional) Selected value.
 	 * @return array|string Array or menu HTML.
@@ -1448,8 +1444,6 @@ class WPGeo {
 	
 	/**
 	 * WP Geo Location Inner Custom Box
-	 *
-	 * @todo Use checked()
 	 */
 	function wpgeo_location_inner_custom_box() {
 		global $post;
@@ -1480,24 +1474,24 @@ class WPGeo {
 		
 		if ( isset( $settings['zoom'] ) && ! empty( $settings['zoom'] ) ) {
 			$wpgeo_map_settings_zoom = $settings['zoom'];
-			$wpgeo_map_settings_zoom_checked = checked( true );
+			$wpgeo_map_settings_zoom_checked = checked( true, true, false );
 		} elseif ( $wp_geo_options['save_post_zoom'] == 'Y' ) {
 			$wpgeo_map_settings_zoom = $wp_geo_options['save_post_zoom'];
-			$wpgeo_map_settings_zoom_checked = checked( true );
+			$wpgeo_map_settings_zoom_checked = checked( true, true, false );
 		}
 		if ( isset( $settings['type'] ) && ! empty( $settings['type'] ) ) {
 			$wpgeo_map_settings_type = $settings['type'];
-			$wpgeo_map_settings_type_checked = checked( true );
+			$wpgeo_map_settings_type_checked = checked( true, true, false );
 		} elseif ( $wp_geo_options['save_post_zoom'] == 'Y' ) {
 			$wpgeo_map_settings_type = $wp_geo_options['save_post_zoom'];
-			$wpgeo_map_settings_type_checked = checked( true );
+			$wpgeo_map_settings_type_checked = checked( true, true, false );
 		}
 		if ( isset( $settings['centre'] ) && ! empty( $settings['centre'] ) ) {
 			$wpgeo_map_settings_centre = $settings['centre'];
-			$wpgeo_map_settings_centre_checked = checked( true );
+			$wpgeo_map_settings_centre_checked = checked( true, true, false );
 		} elseif ( $wp_geo_options['save_post_centre_point'] == 'Y' ) {
 			$wpgeo_map_settings_centre = $wp_geo_options['save_post_centre_point'];
-			$wpgeo_map_settings_centre_checked = checked( true );
+			$wpgeo_map_settings_centre_checked = checked( true, true, false );
 		}
 		
 		// Use nonce for verification
