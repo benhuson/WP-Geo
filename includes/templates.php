@@ -169,7 +169,7 @@ function get_wpgeo_post_map( $post_id = 0 ) {
 	
 	$latitude  = get_post_meta( $post_id, WPGEO_LATITUDE_META, true );
 	$longitude = get_post_meta( $post_id, WPGEO_LONGITUDE_META, true );
-	if ( ! is_numeric( $latitude ) || ! is_numeric( $longitude ) )
+	if ( ! wpgeo_is_valid_geo_coord( $latitude, $longitude ) )
 		return '';
 	
 	if ( $post_id > 0 && ! is_feed() ) {
@@ -246,7 +246,7 @@ function get_wpgeo_map( $query, $options = null ) {
 		foreach ( $posts as $post ) {
 			$latitude  = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
 			$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
-			if ( is_numeric( $latitude ) && is_numeric( $longitude ) ) {
+			if ( wpgeo_is_valid_geo_coord( $latitude, $longitude ) ) {
 				$marker = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
 				if ( empty( $marker ) )
 					$marker = $r['markers'];
@@ -320,7 +320,7 @@ function get_wpgeo_post_static_map( $post_id = 0, $query = null ) {
 	
 	$latitude  = get_post_meta( $post_id, WPGEO_LATITUDE_META, true );
 	$longitude = get_post_meta( $post_id, WPGEO_LONGITUDE_META, true );
-	if ( ! is_numeric( $latitude ) || ! is_numeric( $longitude ) )
+	if ( ! wpgeo_is_valid_geo_coord( $latitude, $longitude ) )
 		return '';
 	
 	// Fetch wp geo options & post settings
@@ -415,7 +415,7 @@ function wpgeo_add_widget_map( $args = null ) {
 			$title 	    = get_post_meta( $post->ID, WPGEO_TITLE_META, true );
 			if ( empty( $title ) )
 				$title = $post->post_title;
-			if ( is_numeric( $latitude ) && is_numeric( $longitude ) ) {
+			if ( wpgeo_is_valid_geo_coord( $latitude, $longitude ) ) {
 				array_push( $coords, array(
 					'id' 		=> $post->ID,
 					'latitude' 	=> $latitude,

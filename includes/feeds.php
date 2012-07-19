@@ -101,7 +101,7 @@ class WPGeo_Feeds {
 			$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
 			
 			// Need a map?
-			if ( is_numeric( $latitude ) && is_numeric( $longitude ) ) {
+			if ( wpgeo_is_valid_geo_coord( $latitude, $longitude ) ) {
 				echo '<georss:point>' . $latitude . ' ' . $longitude . '</georss:point>';
 				echo '<geo:lat>' . $latitude . '</geo:lat>';
 				echo '<geo:long>' . $longitude . '</geo:long>';

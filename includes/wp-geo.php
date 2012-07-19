@@ -231,7 +231,7 @@ class WPGeo {
 			$post = $posts[$i];
 			$latitude  = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
 			$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
-			if ( is_numeric( $latitude ) && is_numeric( $longitude ) ) {
+			if ( wpgeo_is_valid_geo_coord( $latitude, $longitude ) ) {
 				$showmap = true;
 			}
 		}
@@ -253,7 +253,7 @@ class WPGeo {
 			$title = get_post_meta( $post->ID, WPGEO_TITLE_META, true );
 			$nl = "\n";
 			
-			if ( is_numeric( $lat ) && is_numeric( $long ) ) {
+			if ( wpgeo_is_valid_geo_coord( $lat, $long ) ) {
 				echo '<meta name="geo.position" content="' . $lat . ';' . $long . '" />' . $nl; // Geo-Tag: Latitude and longitude
 				//echo '<meta name="geo.region" content="DE-BY" />' . $nl;                      // Geo-Tag: Country code (ISO 3166-1) and regional code (ISO 3166-2)
 				//echo '<meta name="geo.placename" content="MÙnchen" />' . $nl;                 // Geo-Tag: City or the nearest town
@@ -343,7 +343,7 @@ class WPGeo {
 					$mymapzoom = $settings['zoom'];
 				}
 				
-				if ( is_numeric( $latitude ) && is_numeric( $longitude ) ) {
+				if ( wpgeo_is_valid_geo_coord( $latitude, $longitude ) ) {
 					$push = array(
 						'id'        => $post->ID,
 						'latitude'  => $latitude,
@@ -677,7 +677,7 @@ class WPGeo {
 		$maptype = empty( $wp_geo_options['google_map_type'] ) ? 'G_NORMAL_MAP' : $wp_geo_options['google_map_type'];	
 		
 		// Centre on London
-		if ( ! is_numeric( $latitude ) || ! is_numeric( $longitude ) ) {
+		if ( ! wpgeo_is_valid_geo_coord( $latitude, $longitude ) ) {
 			$latitude    = $wp_geo_options['default_map_latitude'];
 			$longitude   = $wp_geo_options['default_map_longitude'];
 			$zoom        = $wp_geo_options['default_map_zoom'];
@@ -696,7 +696,7 @@ class WPGeo {
 			}
 			if ( ! empty( $settings['centre'] ) ) {
 				$new_mapcentre = explode( ',', $settings['centre'] );
-				if ( is_numeric( $new_mapcentre[0] ) && is_numeric( $new_mapcentre[1] ) ) {
+				if ( wpgeo_is_valid_geo_coord( $new_mapcentre[0], $new_mapcentre[1] ) ) {
 					$mapcentre = $new_mapcentre;
 				}
 			}
@@ -831,7 +831,7 @@ class WPGeo {
 			$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
 			
 			// Need a map?
-			if ( is_numeric( $latitude ) && is_numeric( $longitude ) ) {
+			if ( wpgeo_is_valid_geo_coord( $latitude, $longitude ) ) {
 				$new_content .= '<div class="wp_geo_map" id="wp_geo_map_' . $id . '" style="width:' . $wp_geo_options['default_map_width'] . '; height:' . $wp_geo_options['default_map_height'] . ';"></div>';
 				$new_content = apply_filters( 'wpgeo_the_content_map', $new_content );
 			}
@@ -1601,7 +1601,7 @@ class WPGeo {
 			delete_post_meta( $post_id, WPGEO_LATITUDE_META );
 			delete_post_meta( $post_id, WPGEO_LONGITUDE_META );
 			
-			if ( is_numeric( $_POST['wp_geo_latitude'] ) && is_numeric( $_POST['wp_geo_longitude'] ) ) {
+			if ( wpgeo_is_valid_geo_coord( $_POST['wp_geo_latitude'], $_POST['wp_geo_longitude'] ) ) {
 				add_post_meta( $post_id, WPGEO_LATITUDE_META, $_POST['wp_geo_latitude'] );
 				add_post_meta( $post_id, WPGEO_LONGITUDE_META, $_POST['wp_geo_longitude'] );
 				$mydata[WPGEO_LATITUDE_META]  = $_POST['wp_geo_latitude'];

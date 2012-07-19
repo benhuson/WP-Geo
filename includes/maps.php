@@ -127,7 +127,7 @@ class WPGeo_Map {
 			$js_zoom .= 'map_' . $map_id . '.setCenter(bounds.getCenter(), map_' . $map_id . '.getBoundsZoomLevel(bounds));';
 		}
 		if ( count( $this->points ) == 1 ) {
-			if ( is_numeric( $this->mapcentre['latitude'] ) && is_numeric( $this->mapcentre['longitude'] ) ) {
+			if ( wpgeo_is_valid_geo_coord( $this->mapcentre['latitude'], $this->mapcentre['longitude'] ) ) {
 				$js_zoom .= 'map_' . $map_id . '.setCenter(new GLatLng(' . $this->mapcentre['latitude'] . ', ' . $this->mapcentre['longitude'] . '));';
 			}
 		}

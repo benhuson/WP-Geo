@@ -1,6 +1,18 @@
 <?php
 
-// @todo Add is_valid_geo_coord( $lat, $long );
+/**
+ * Is Valid Geo Coord
+ *
+ * @param float $lat Latitude.
+ * @param float $long Longitude.
+ * @return bool
+ */
+function wpgeo_is_valid_geo_coord( $lat, $lng ) {
+	if ( is_numeric( $lat ) && is_numeric( $lng ) ) {
+		return true;
+	}
+	return false;
+}
 
 /**
  * CSS Dimension
