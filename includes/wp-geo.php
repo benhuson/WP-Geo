@@ -951,15 +951,7 @@ class WPGeo {
 	 * @return string Checkbox HTML.
 	 */
 	function options_checkbox( $id, $val, $checked, $disabled = false ) {
-		$is_checked = '';
-		if ( $val == $checked )
-			$is_checked = 'checked="checked" ';
-		
-		$is_disabled = '';
-		if ( $val == $disabled )
-			$is_disabled = 'disabled="disabled" ';
-		
-		return '<input name="' . $id . '" type="checkbox" id="' . $id . '" value="' . $val . '" ' . $is_checked . $is_disabled . '/>';
+		return '<input name="' . $id . '" type="checkbox" id="' . $id . '" value="' . $val . '" ' . checked( $val, $checked, false ) . ' ' . disabled( $val, $disabled, false ) . '/>';
 	}
 	
 	/**
@@ -1183,8 +1175,6 @@ class WPGeo {
 	 * Select Map Control
 	 * Map control array or menu.
 	 *
-	 * @todo Use selected()
-	 *
 	 * @param string $return (optional) Array or menu type.
 	 * @param string $selected (optional) Selected value.
 	 * @return array|string Array or menu HTML.
@@ -1203,8 +1193,7 @@ class WPGeo {
 		if ( $return = 'menu' ) {
 			$menu = '';
 			foreach ( $map_type_array as $key => $val ) {
-				$is_selected = $selected == $key ? ' selected="selected"' : '';
-				$menu .= '<option value="' . $key . '"' . $is_selected . '>' . $val . '</option>';
+				$menu .= '<option value="' . $key . '"' . selected( $selected, $key, false ) . '>' . $val . '</option>';
 			}
 			$menu = '<select name="default_map_control" id="default_map_control">' . $menu. '</select>';
 			return $menu;
@@ -1216,8 +1205,6 @@ class WPGeo {
 	/**
 	 * Select Map Zoom
 	 * Map zoom array or menu.
-	 *
-	 * @todo Use selected()
 	 *
 	 * @param string $return (optional) Array or menu type.
 	 * @param string $selected (optional) Selected value.
@@ -1266,8 +1253,7 @@ class WPGeo {
 		if ( $return = 'menu' ) {
 			$menu = '';
 			foreach ( $map_type_array as $key => $val ) {
-				$is_selected = $args['selected'] == $key ? ' selected="selected"' : '';
-				$menu .= '<option value="' . $key . '"' . $is_selected . '>' . $val . '</option>';
+				$menu .= '<option value="' . $key . '"' . selected( $args['selected'], $key, false ) . '>' . $val . '</option>';
 			}
 			$menu = '<select name="' . $args['name'] . '" id="' . $args['id'] . '">' . $menu. '</select>';
 			return $menu;
@@ -1279,8 +1265,6 @@ class WPGeo {
 	/**
 	 * Google Map Types
 	 * Map type array or menu.
-	 *
-	 * @todo Use selected()
 	 *
 	 * @param string $return (optional) Array or menu type.
 	 * @param string $selected (optional) Selected value.
@@ -1313,8 +1297,7 @@ class WPGeo {
 		if ( $args['return'] = 'menu' ) {
 			$menu = '';
 			foreach ( $map_type_array as $key => $val ) {
-				$is_selected = $args['selected'] == $key ? ' selected="selected"' : '';
-				$menu .= '<option value="' . $key . '"' . $is_selected . '>' . $val . '</option>';
+				$menu .= '<option value="' . $key . '"' . selected( $args['selected'], $key, false ) . '>' . $val . '</option>';
 			}
 			$menu = '<select name="' . $args['name'] . '" id="' . $args['id'] . '">' . $menu. '</select>';
 			return $menu;
@@ -1344,8 +1327,7 @@ class WPGeo {
 		if ( $return = 'menu' ) {
 			$menu = '';
 			foreach ( $map_type_array as $key => $val ) {
-				$is_selected = $selected == $key ? ' selected="selected"' : '';
-				$menu .= '<option value="' . $key . '"' . $is_selected . '>' . $val . '</option>';
+				$menu .= '<option value="' . $key . '"' . selected( $selected, $key, false ) . '>' . $val . '</option>';
 			}
 			$menu = '<select name="show_post_map" id="show_post_map">' . $menu. '</select>';
 			return $menu;
@@ -1497,24 +1479,24 @@ class WPGeo {
 		
 		if ( isset( $settings['zoom'] ) && ! empty( $settings['zoom'] ) ) {
 			$wpgeo_map_settings_zoom = $settings['zoom'];
-			$wpgeo_map_settings_zoom_checked = ' checked="checked"';
+			$wpgeo_map_settings_zoom_checked = checked( true );
 		} elseif ( $wp_geo_options['save_post_zoom'] == 'Y' ) {
 			$wpgeo_map_settings_zoom = $wp_geo_options['save_post_zoom'];
-			$wpgeo_map_settings_zoom_checked = ' checked="checked"';
+			$wpgeo_map_settings_zoom_checked = checked( true );
 		}
 		if ( isset( $settings['type'] ) && ! empty( $settings['type'] ) ) {
 			$wpgeo_map_settings_type = $settings['type'];
-			$wpgeo_map_settings_type_checked = ' checked="checked"';
+			$wpgeo_map_settings_type_checked = checked( true );
 		} elseif ( $wp_geo_options['save_post_zoom'] == 'Y' ) {
 			$wpgeo_map_settings_type = $wp_geo_options['save_post_zoom'];
-			$wpgeo_map_settings_type_checked = ' checked="checked"';
+			$wpgeo_map_settings_type_checked = checked( true );
 		}
 		if ( isset( $settings['centre'] ) && ! empty( $settings['centre'] ) ) {
 			$wpgeo_map_settings_centre = $settings['centre'];
-			$wpgeo_map_settings_centre_checked = ' checked="checked"';
+			$wpgeo_map_settings_centre_checked = checked( true );
 		} elseif ( $wp_geo_options['save_post_centre_point'] == 'Y' ) {
 			$wpgeo_map_settings_centre = $wp_geo_options['save_post_centre_point'];
-			$wpgeo_map_settings_centre_checked = ' checked="checked"';
+			$wpgeo_map_settings_centre_checked = checked( true );
 		}
 		
 		// Use nonce for verification
@@ -1553,9 +1535,9 @@ class WPGeo {
 			<tr>
 				<th scope="row">' . __( 'Map Settings', 'wp-geo' ) . '</th>
 				<td>
-					<label for="wpgeo_map_settings_zoom"><input type="checkbox" name="wpgeo_map_settings_zoom" id="wpgeo_map_settings_zoom" value="' . $wpgeo_map_settings_zoom . '"' . $wpgeo_map_settings_zoom_checked . ' /> ' . __( 'Save custom map zoom for this post', 'wp-geo' ) . '</label><br />
-					<label for="wpgeo_map_settings_type"><input type="checkbox" name="wpgeo_map_settings_type" id="wpgeo_map_settings_type" value="' . $wpgeo_map_settings_type . '"' . $wpgeo_map_settings_type_checked . ' /> ' . __( 'Save custom map type for this post', 'wp-geo' ) . '</label><br />
-					<label for="wpgeo_map_settings_centre"><input type="checkbox" name="wpgeo_map_settings_centre" id="wpgeo_map_settings_centre" value="' . $wpgeo_map_settings_centre . '"' . $wpgeo_map_settings_centre_checked . ' /> ' . __( 'Save map centre point for this post', 'wp-geo' ) . '</label>
+					<label for="wpgeo_map_settings_zoom"><input type="checkbox" name="wpgeo_map_settings_zoom" id="wpgeo_map_settings_zoom" value="' . $wpgeo_map_settings_zoom . '" ' . $wpgeo_map_settings_zoom_checked . ' /> ' . __( 'Save custom map zoom for this post', 'wp-geo' ) . '</label><br />
+					<label for="wpgeo_map_settings_type"><input type="checkbox" name="wpgeo_map_settings_type" id="wpgeo_map_settings_type" value="' . $wpgeo_map_settings_type . '" ' . $wpgeo_map_settings_type_checked . ' /> ' . __( 'Save custom map type for this post', 'wp-geo' ) . '</label><br />
+					<label for="wpgeo_map_settings_centre"><input type="checkbox" name="wpgeo_map_settings_centre" id="wpgeo_map_settings_centre" value="' . $wpgeo_map_settings_centre . '" ' . $wpgeo_map_settings_centre_checked . ' /> ' . __( 'Save map centre point for this post', 'wp-geo' ) . '</label>
 				</td>
 			</tr>
 			' . apply_filters( 'wpgeo_edit_post_map_fields', '', $post->ID ) . '

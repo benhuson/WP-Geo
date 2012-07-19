@@ -166,8 +166,7 @@ class WPGeo_Category_Map_Widget extends WP_Widget {
 		if ( $args['return'] = 'menu' ) {
 			$menu = '';
 			foreach ( $map_type_array as $key => $val ) {
-				$is_selected = $args['selected'] == $key ? ' selected="selected"' : '';
-				$menu .= '<option value="' . $key . '"' . $is_selected . '>' . $val . '</option>';
+				$menu .= '<option value="' . $key . '" ' . selected( $args['selected'], $key, false ) . '>' . $val . '</option>';
 			}
 			$menu = '<select name="' . $args['name'] . '" id="' . $args['id'] . '">' . $menu. '</select>';
 			return $menu;

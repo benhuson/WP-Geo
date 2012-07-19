@@ -220,10 +220,7 @@ class WPGeo_Markers {
 		if ( ! empty( $r['show_option_none'] ) )
 			$output .= '<option value="' . esc_attr( $r['option_none_value'] ) . '">' . $r['show_option_none'] . '</option>';
 		foreach ( $this->markers as $marker ) {
-			$selected = '';
-			if ( $r['selected'] == $marker->id )
-				$selected = ' selected="selected"';
-			$output .= '<option value="' . esc_attr( $marker->id ) . '"' . $selected . '>' . $marker->name . '</option>';
+			$output .= '<option value="' . esc_attr( $marker->id ) . '" ' . selected( $r['selected'], $marker->id, false ) . '>' . $marker->name . '</option>';
 		}
 		$output .= '</select>';
 		
