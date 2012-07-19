@@ -861,13 +861,12 @@ class WPGeo {
 	}
 	
 	/**
-	 * Widget Is Active ?
-	 *
-	 * @todo Check category widget too
+	 * Widget Is Active?
 	 */
 	function widget_is_active() {
 		$widgets = array(
 			'wpgeo_recent_locations_widget',
+			'wpgeo_category_map_widget',
 			'wpgeo_contextual_map_widget'
 		);
 		foreach ( $widgets as $widget ) {
