@@ -592,12 +592,15 @@ class WPGeo {
 		}
 		
 		if ( ( $wpgeo->show_maps() || $wpgeo->widget_is_active()) && $wpgeo->checkGoogleAPIKey() ) {
-			
-			// Set Locale
 			$locale = $wpgeo->get_googlemaps_locale( '&hl=' );
+			$googlemaps_js = add_query_arg( array(
+				'v'      => 2,
+				'hl'     => $wpgeo->get_googlemaps_locale(),
+				'key'    => $wpgeo->get_google_api_key(),
+				'sensor' => 'false'
+			), 'http://maps.google.com/maps?file=api' );
 			
-			// @todo Use add_query_arg()
-			wp_register_script( 'googlemaps', 'http://maps.google.com/maps?file=api&v=2' . $locale . '&key=' . $wpgeo->get_google_api_key() . '&sensor=false', false, '2' );
+			wp_register_script( 'googlemaps', $googlemaps_js, false, '2' );
 			wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.js', array('googlemaps', 'wpgeotooltip'), '1.0' );
 			wp_register_script( 'wpgeo-admin-post', WPGEO_URL . 'js/admin-post.js', array('jquery', 'googlemaps'), '1.0' );
 			wp_register_script( 'wpgeotooltip', WPGEO_URL . 'js/tooltip.js', array('googlemaps', 'jquery'), '1.0' );
