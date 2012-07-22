@@ -38,6 +38,8 @@ class WPGeo {
 		$this->maps2   = new WPGeo_Maps();
 		$this->markers = new WPGeo_Markers();
 		$this->feeds   = new WPGeo_Feeds();
+		
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 	
 	/**
@@ -266,6 +268,14 @@ class WPGeo {
 	}
 	
 	/**
+	 * Enqueue scripts and styles
+	 */
+	function enqueue_scripts() {
+		wp_register_style( 'wpgeo', WPGEO_URL . 'css/wp-geo.css' );
+		wp_enqueue_style( 'wpgeo' );
+	}
+	
+	/**
 	 * WP Head
 	 * Outputs HTML and JavaScript to the header.
 	 */
@@ -305,10 +315,6 @@ class WPGeo {
 			//]]>
 			</script>
 			';
-		
-		// CSS
-		// @todo Enqueue this instead
-		echo '<link rel="stylesheet" href="' . WPGEO_URL . 'css/wp-geo.css" type="text/css" />';
 		
 		if ( $wpgeo->show_maps() || $wpgeo->widget_is_active() ) {
 			$posts = array();
