@@ -14,7 +14,8 @@ div.wp_geo_map {
 div.wp_geo_map img,
 #content div.wp_geo_map img,
 div.wpgeo_map img,
-#content div.wpgeo_map img {
+#content div.wpgeo_map img,
+body #wp_geo_map img {
 	background: transparent;
 	border: none;
 	padding: 0px;
