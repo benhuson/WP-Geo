@@ -54,7 +54,7 @@ if ( ! function_exists( 'shortcode_wpgeo_title' ) ) {
 }
 
 /**
- * WP Geo Map Link
+ * Shortcode [wpgeo_map_link target="_self"]
  * Outputs a map link.
  *
  * @param array $atts Shortcode attributes.
@@ -65,24 +65,21 @@ if ( ! function_exists( 'shortcode_wpgeo_map_link' ) ) {
 	function shortcode_wpgeo_map_link( $atts = null, $content = null ) {
 		
 		// Validate Args
-		$r = wp_parse_args( $atts, array(
+		$atts = wp_parse_args( $atts, array(
 			'target' => '_self'
 		) );
-		
 		$atts['echo'] = 0;
-		
-		$url = wpgeo_map_link( $atts );
 		
 		if ( ! $content )
 			$content = __( 'View Larger Map', 'wp-geo' );
 		
-		return '<a href="' . $url . '" target="' . $r['target'] . '">' . do_shortcode( $content ) . '</a>';
+		return '<a href="' . wpgeo_map_link( $atts ) . '" target="' . $atts['target'] . '">' . do_shortcode( $content ) . '</a>';
 	}
 	add_shortcode( 'wpgeo_map_link', 'shortcode_wpgeo_map_link' );
 }
 
 /**
- * WP Geo Map Link
+ * Shortcode [wpgeo_static_map post_id="" width="" height="" maptype="" zoom=""]
  * Outputs a map link.
  *
  * @param array $atts Shortcode attributes.
@@ -96,7 +93,7 @@ if ( ! function_exists( 'shortcode_wpgeo_static_map' ) ) {
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		
 		// Validate Args
-		$r = wp_parse_args( $atts, array(
+		$atts = wp_parse_args( $atts, array(
 			'post_id' => $post->ID,
 			'width'   => trim( $wp_geo_options['default_map_width'], 'px' ),
 			'height'  => trim( $wp_geo_options['default_map_height'], 'px' ),
@@ -104,13 +101,13 @@ if ( ! function_exists( 'shortcode_wpgeo_static_map' ) ) {
 			'zoom'    => $wp_geo_options['default_map_zoom']
 		) );
 		
-		return get_wpgeo_post_static_map( $r['post_id'], $r );
+		return get_wpgeo_post_static_map( $atts['post_id'], $atts );
 	}
 	add_shortcode( 'wpgeo_static_map', 'shortcode_wpgeo_static_map' );
 }
 
 /**
- * Shortcode [wp_geo_map type="G_NORMAL_MAP"]
+ * Shortcode [wpgeo_map width="" height="" align="" lat="" long="" type="G_NORMAL_MAP" escape=""]
  * Outputs the post map.
  *
  * @param array $atts Shortcode attributes.
@@ -121,12 +118,11 @@ if ( ! function_exists( 'shortcode_wpgeo_map' ) ) {
 	function shortcode_wpgeo_map( $atts, $content = null ) {
 		global $post, $wpgeo;
 		
-		$id = $post->ID;
 		$wp_geo_options = get_option( 'wp_geo_options' );
-		$show_post_map = apply_filters( 'wpgeo_show_post_map', $wp_geo_options['show_post_map'], $id );
+		$show_post_map = apply_filters( 'wpgeo_show_post_map', $wp_geo_options['show_post_map'], $post->ID );
 		
 		if ( $wpgeo->show_maps() && ! is_feed() && $show_post_map != 'TOP' && $show_post_map != 'BOTTOM' && $wpgeo->checkGoogleAPIKey() ) {
-			$map_atts = array(
+			$atts = wp_parse_args( $atts, array(
 				'width'  => $wp_geo_options['default_map_width'],
 				'height' => $wp_geo_options['default_map_height'],
 				'align'  => 'none',
@@ -134,26 +130,24 @@ if ( ! function_exists( 'shortcode_wpgeo_map' ) ) {
 				'long'   => null,
 				'type'   => 'G_NORMAL_MAP',
 				'escape' => false
-			);
-			$atts = wp_parse_args( $atts, $map_atts );
+			) );
 			
 			// Escape?
-			if ( $atts['escape'] == 'true' ) {
-				return '[wp_geo_map]';
-			}
-			
-			$map_width  = wpgeo_css_dimension( $atts['width'] );
-			$map_height = wpgeo_css_dimension( $atts['height'] );
+			if ( $atts['escape'] == 'true' )
+				return '[wpgeo_map]';
 		
 			// To Do: Add in lon/lat check and output map if needed
 			
-			// Alignment
+			$map_width  = wpgeo_css_dimension( $atts['width'] );
+			$map_height = wpgeo_css_dimension( $atts['height'] );
 			$float = in_array( strtolower( $atts['align'] ), array( 'left', 'right' ) ) ? 'float:' . strtolower( $atts['align'] ) . ';' : '';
 			
-			return '<div class="wp_geo_map" id="wp_geo_map_' . $id . '" style="' . $float . 'width:' . $map_width . '; height:' . $map_height . ';">' . $content . '</div>';
+			return '<div class="wp_geo_map" id="wp_geo_map_' . $post->ID . '" style="' . $float . 'width:' . $map_width . '; height:' . $map_height . ';">' . $content . '</div>';
 		}
 		return '';
 	}
+	add_shortcode( 'wpgeo_map', 'shortcode_wpgeo_map' );
+	// Deprecate this shortcode - standardised to the above.
 	add_shortcode( 'wp_geo_map', 'shortcode_wpgeo_map' );
 }
 
@@ -173,8 +167,7 @@ if ( ! function_exists( 'shortcode_wpgeo_mashup' ) ) {
 		
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		
-		// Default attributes
-		$map_atts = array(
+		$atts = wp_parse_args( $atts, array(
 			'width'           => $wp_geo_options['default_map_width'],
 			'height'          => $wp_geo_options['default_map_height'],
 			'type'            => $wp_geo_options['google_map_type'],
@@ -188,8 +181,7 @@ if ( ! function_exists( 'shortcode_wpgeo_mashup' ) ) {
 			'orderby'         => 'post_date',
 			'order'           => 'DESC',
 			'markers'         => 'large'
-		);
-		extract( shortcode_atts( $map_atts, $atts ) );
+		) );
 		
 		if ( ! is_feed() && isset( $wpgeo ) && $wpgeo->show_maps() && $wpgeo->checkGoogleAPIKey() )
 			return get_wpgeo_map( $atts );
