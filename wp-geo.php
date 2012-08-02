@@ -49,24 +49,4 @@ $wpgeo = new WPGeo();
 // Activation Hook
 register_activation_hook( __FILE__, array( $wpgeo, 'register_activation' ) );
 
-// Action Hooks
-add_action( 'init', array( $wpgeo, 'init' ) );
-add_action( 'init', array( $wpgeo, 'init_later' ), 10000 );
-add_action( 'wp_enqueue_scripts', array( $wpgeo, 'includeGoogleMapsJavaScriptAPI' ) );
-add_action( 'admin_enqueue_scripts', array( $wpgeo, 'includeGoogleMapsJavaScriptAPI' ) );
-add_action( 'wp_head', array( $wpgeo, 'wp_head' ) );
-add_action( 'wp_footer', array( $wpgeo, 'wp_footer' ) );
-add_action( 'admin_init', array( $wpgeo, 'admin_init' ) );
-add_action( 'admin_head', array( $wpgeo, 'admin_head' ) );
-add_action( 'admin_menu', array( $wpgeo, 'admin_menu' ) );
-add_action( 'after_plugin_row', array( $wpgeo, 'after_plugin_row' ) );
-add_action( 'admin_notices', array( $wpgeo, 'version_upgrade_msg' ) );
-
-// Filters
-add_filter( 'the_content', array( $wpgeo, 'the_content' ) );
-add_filter( 'get_the_excerpt', array( $wpgeo, 'get_the_excerpt' ) );
-add_filter( 'post_limits', array( $wpgeo, 'post_limits' ) );
-add_filter( 'posts_join', array( $wpgeo, 'posts_join' ) );
-add_filter( 'posts_where', array( $wpgeo, 'posts_where' ) );
-
 ?>

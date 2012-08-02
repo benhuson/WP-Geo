@@ -39,8 +39,27 @@ class WPGeo {
 		$this->markers = new WPGeo_Markers();
 		$this->feeds   = new WPGeo_Feeds();
 		
+		// Action Hooks
+		add_action( 'init', array( $this, 'init' ) );
+		add_action( 'init', array( $this, 'init_later' ), 10000 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'includeGoogleMapsJavaScriptAPI' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'includeGoogleMapsJavaScriptAPI' ) );
+		add_action( 'wp_head', array( $this, 'wp_head' ) );
+		add_action( 'wp_footer', array( $this, 'wp_footer' ) );
+		add_action( 'admin_init', array( $this, 'admin_init' ) );
+		add_action( 'admin_head', array( $this, 'admin_head' ) );
+		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+		add_action( 'after_plugin_row', array( $this, 'after_plugin_row' ) );
+		add_action( 'admin_notices', array( $this, 'version_upgrade_msg' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+		
+		// Filters
+		add_filter( 'the_content', array( $this, 'the_content' ) );
+		add_filter( 'get_the_excerpt', array( $this, 'get_the_excerpt' ) );
+		add_filter( 'post_limits', array( $this, 'post_limits' ) );
+		add_filter( 'posts_join', array( $this, 'posts_join' ) );
+		add_filter( 'posts_where', array( $this, 'posts_where' ) );
 	}
 	
 	/**

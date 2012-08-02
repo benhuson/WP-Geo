@@ -165,11 +165,7 @@ class WPGeo_Map {
 				' . $js_polyline . '
     			' . $js_zoom . '
     			' . $js_controls . '
-				
-				//' . WPGeo_API_GMap2::render_map_overlay( 'map_' . $map_id, 'new GLayer("org.wikipedia.en")' ) . ';
-				//' . WPGeo_API_GMap2::render_map_overlay( 'map_' . $map_id, 'new GLayer("com.panoramio.all")' ) . ';
-				//' . WPGeo_API_GMap2::render_map_overlay( 'map_' . $map_id, 'new google.maps.LocalSearch()' ) . '; // http://googleajaxsearchapi.blogspot.com/2007/06/local-search-control-for-maps-api.html
-				
+    			
 			}';
 		
 		return $js;
