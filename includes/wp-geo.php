@@ -854,7 +854,7 @@ class WPGeo {
 			
 			// Need a map?
 			if ( wpgeo_is_valid_geo_coord( $latitude, $longitude ) ) {
-				$new_content .= '<div class="wp_geo_map" id="wp_geo_map_' . $id . '" style="width:' . $wp_geo_options['default_map_width'] . '; height:' . $wp_geo_options['default_map_height'] . ';"></div>';
+				$new_content .= '<div class="wp_geo_map" id="wp_geo_map_' . $id . '" style="width:' . wpgeo_css_dimension( $wp_geo_options['default_map_width'] ) . '; height:' . wpgeo_css_dimension( $wp_geo_options['default_map_height'] ) . ';"></div>';
 				$new_content = apply_filters( 'wpgeo_the_content_map', $new_content );
 			}
 			
