@@ -40,6 +40,24 @@ class WPGeo {
 		$this->feeds   = new WPGeo_Feeds();
 		
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+	}
+	
+	/**
+	 * Admin Notices
+	 * Shows error message if WP Geo was unable to create the markers folder
+	 * and if no Google API Key has been entered.
+	 */
+	function admin_notices(){
+		global $wpgeo, $current_screen;
+		if ( $current_screen->id == 'settings_page_wp-geo' ) {
+			if ( ! $this->markers->marker_folder_exists() ) {
+				echo '<div class="error"><p>' . sprintf( __( "Unable to create the markers folder %s.<br />Please create it and copy the marker images to it from %s</p>", 'wp-geo' ), str_replace( ABSPATH, '', $wpgeo->markers->upload_dir ) . '/wp-geo/markers/', str_replace( ABSPATH, '', WPGEO_DIR ) . 'img/markers' ) . '</div>';
+			}
+			if ( ! $this->checkGoogleAPIKey() ) {
+				echo '<div class="error"><p>' . sprintf( __( "Before you can use WP Geo you must acquire a %s for your blog - the plugin will not function without it!", 'wp-geo' ), '<a href="https://developers.google.com/maps/documentation/javascript/v2/introduction#Obtaining_Key" target="_blank">' . __( 'Google API Key', 'wp-geo' ) . '</a>' ) . '</p></div>';
+			}
+		}
 	}
 	
 	/**
@@ -962,86 +980,17 @@ class WPGeo {
 	 */
 	function options_page() {
 		global $wpgeo;
-		
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		
-		// Process option updates
-		if ( isset( $_POST['action'] ) && $_POST['action'] == 'update' ) {
-		/*
-			$wp_geo_options['google_api_key']        = $_POST['google_api_key'];
-			$wp_geo_options['google_map_type']       = $_POST['google_map_type'];
-			$wp_geo_options['show_post_map']         = $_POST['show_post_map'];
-			$wp_geo_options['default_map_latitude']  = empty( $_POST['default_map_latitude'] ) ? $wpgeo->default_map_latitude : $_POST['default_map_latitude'];
-			$wp_geo_options['default_map_longitude'] = empty( $_POST['default_map_longitude'] ) ? $wpgeo->default_map_longitude : $_POST['default_map_longitude'];
-			$wp_geo_options['default_map_width']     = wpgeo_css_dimension( $_POST['default_map_width'] );
-			$wp_geo_options['default_map_height']    = wpgeo_css_dimension( $_POST['default_map_height'] );
-			$wp_geo_options['default_map_zoom']      = $_POST['default_map_zoom'];
-			
-			$wp_geo_options['default_map_control']     = $_POST['default_map_control'];
-			$wp_geo_options['show_map_type_normal']    = isset( $_POST['show_map_type_normal'] ) && $_POST['show_map_type_normal'] == 'Y' ? 'Y' : 'N';
-			$wp_geo_options['show_map_type_satellite'] = isset( $_POST['show_map_type_satellite'] ) && $_POST['show_map_type_satellite'] == 'Y' ? 'Y' : 'N';
-			$wp_geo_options['show_map_type_hybrid']    = isset( $_POST['show_map_type_hybrid'] ) && $_POST['show_map_type_hybrid'] == 'Y' ? 'Y' : 'N';
-			$wp_geo_options['show_map_type_physical']  = isset( $_POST['show_map_type_physical'] ) && $_POST['show_map_type_physical'] == 'Y' ? 'Y' : 'N';
-			$wp_geo_options['show_map_scale']          = isset( $_POST['show_map_scale'] ) && $_POST['show_map_scale'] == 'Y' ? 'Y' : 'N';
-			$wp_geo_options['show_map_overview']       = isset( $_POST['show_map_overview'] ) && $_POST['show_map_overview'] == 'Y' ? 'Y' : 'N';
-			
-			$wp_geo_options['save_post_zoom']         = isset( $_POST['save_post_zoom'] ) && $_POST['save_post_zoom'] == 'Y' ? 'Y' : 'N';
-			$wp_geo_options['save_post_map_type']     = isset( $_POST['save_post_map_type'] ) && $_POST['save_post_map_type'] == 'Y' ? 'Y' : 'N';
-			$wp_geo_options['save_post_centre_point'] = isset( $_POST['save_post_centre_point'] ) && $_POST['save_post_centre_point'] == 'Y' ? 'Y' : 'N';
-			
-			$wp_geo_options['show_polylines']  = isset( $_POST['show_polylines'] ) && $_POST['show_polylines'] == 'Y' ? 'Y' : 'N';
-			$wp_geo_options['polyline_colour'] = $_POST['polyline_colour'];
-			
-			$wp_geo_options['show_maps_on_home']             = isset( $_POST['show_maps_on_home'] ) && $_POST['show_maps_on_home'] == 'Y' ? 'Y' : 'N';
-			$wp_geo_options['show_maps_on_pages']            = isset( $_POST['show_maps_on_pages'] ) && $_POST['show_maps_on_pages'] == 'Y' ? 'Y' : 'N';
-			$wp_geo_options['show_maps_on_posts']            = isset( $_POST['show_maps_on_posts'] ) && $_POST['show_maps_on_posts'] == 'Y' ? 'Y' : 'N';
-			$wp_geo_options['show_maps_in_datearchives']     = isset( $_POST['show_maps_in_datearchives'] ) && $_POST['show_maps_in_datearchives'] == 'Y' ? 'Y' : 'N';
-			$wp_geo_options['show_maps_in_categoryarchives'] = isset( $_POST['show_maps_in_categoryarchives'] ) && $_POST['show_maps_in_categoryarchives'] == 'Y' ? 'Y' : 'N';
-			$wp_geo_options['show_maps_in_tagarchives']      = isset( $_POST['show_maps_in_tagarchives'] ) && $_POST['show_maps_in_tagarchives'] == 'Y' ? 'Y' : 'N';
-			$wp_geo_options['show_maps_in_taxarchives']      = isset( $_POST['show_maps_in_taxarchives'] ) && $_POST['show_maps_in_taxarchives'] == 'Y' ? 'Y' : 'N';
-			$wp_geo_options['show_maps_in_authorarchives']   = isset( $_POST['show_maps_in_authorarchives'] ) && $_POST['show_maps_in_authorarchives'] == 'Y' ? 'Y' : 'N';
-			$wp_geo_options['show_maps_in_searchresults']    = isset( $_POST['show_maps_in_searchresults'] ) && $_POST['show_maps_in_searchresults'] == 'Y' ? 'Y' : 'N';
-			$wp_geo_options['show_maps_on_excerpts']         = isset( $_POST['show_maps_on_excerpts'] ) && $_POST['show_maps_on_excerpts'] == 'Y' ? 'Y' : 'N';
-			$wp_geo_options['show_maps_on_customposttypes']  = array();
-			
-			if ( isset( $_POST['show_maps_on_customposttypes'] ) && is_array( $_POST['show_maps_on_customposttypes'] ) ) {
-				foreach ( $_POST['show_maps_on_customposttypes'] as $key => $val ) {
-					$wp_geo_options['show_maps_on_customposttypes'][$key] = $val == 'Y' ? 'Y' : 'N';
-				}
-			}
-			
-			$wp_geo_options['add_geo_information_to_rss'] = $_POST['add_geo_information_to_rss'] == 'Y' ? 'Y' : 'N';
-			
-			update_option( 'wp_geo_options', $wp_geo_options );
-			echo '<div class="updated"><p>' . __( 'WP Geo settings updated', 'wp-geo' ) . '</p></div>';
-			*/
-		}
-
-		// Markers
-		$markers = array();
-		$markers['large'] = $this->markers->get_marker_by_id( 'large' );
-		$markers['small'] = $this->markers->get_marker_by_id( 'small' );
-		$markers['dot']   = $this->markers->get_marker_by_id( 'dot' );
-		
-		// Write the form
 		echo '<div class="wrap">
 			<div id="icon-options-wpgeo" class="icon32" style="background: url(' . WPGEO_URL . 'img/logo/icon32.png) 2px 1px no-repeat;"><br></div>
 			<h2>' . __( 'WP Geo Settings', 'wp-geo' ) . '</h2>
 			<form action="options.php" method="post">';
 		include( WPGEO_DIR . 'admin/donate-links.php' );
 		
-        if ( ! $wpgeo->markers->marker_folder_exists() ) {
-            echo '<div class="error"><p>' . sprintf( __( "Unable to create the markers folder %s.<br />Please create it and copy the marker images to it from %s</p>", 'wp-geo' ), str_replace( ABSPATH, '', $wpgeo->markers->upload_dir ) . '/wp-geo/markers/', str_replace( ABSPATH, '', WPGEO_DIR ) . 'img/markers' ) . '</div>';
-        }
-		if ( ! $this->checkGoogleAPIKey() ) {
-			echo '<div class="error"><p>' . sprintf( __( "Before you can use WP Geo you must acquire a %s for your blog - the plugin will not function without it!", 'wp-geo' ), '<a href="https://developers.google.com/maps/documentation/javascript/v2/introduction#Obtaining_Key" target="_blank">' . __( 'Google API Key', 'wp-geo' ) . '</a>' ) . '</p></div>';
-		}
-		
 		do_settings_sections( 'wp_geo_options' );
 		settings_fields( 'wp_geo_options' );
-		echo '<p class="submit">
-					<input type="submit" name="submit" value="' . __( 'Save Changes', 'wp-geo' ) . '" class="button-primary" />
-				</p>
+		echo '<p class="submit"><input type="submit" name="submit" value="' . __( 'Save Changes', 'wp-geo' ) . '" class="button-primary" /></p>
 			</form>';
 		echo '
 				<h2 style="margin-top:30px;">' . __( 'Marker Settings', 'wp-geo' ) . '</h2>'
