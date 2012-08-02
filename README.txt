@@ -2,7 +2,7 @@
 Contributors: husobj
 Donate link: http://www.wpgeo.com/donate
 Tags: maps, map, geo, geocoding, google, location, georss
-Requires at least: 2.9
+Requires at least: 3.0
 Tested up to: 3.3.1
 Stable tag: 3.2.6.4
 

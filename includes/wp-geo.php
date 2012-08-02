@@ -503,7 +503,7 @@ class WPGeo {
 		
 		// Support for custom post types
 		// Don't add support if on the WP settings page though
-		if ( ! is_admin() || ! isset( $_GET['page'] ) || ( isset( $_GET['page'] ) && $_GET['page'] != 'wp-geo/includes/wp-geo.php' ) ) {
+		if ( ! is_admin() || ! isset( $_GET['page'] ) || ( isset( $_GET['page'] ) && $_GET['page'] != 'wp-geo' ) ) {
 			if ( function_exists( 'get_post_types' ) && function_exists( 'add_post_type_support' ) && isset( $wp_geo_options['show_maps_on_customposttypes'] ) ) {
 				$post_types = get_post_types();
 				foreach ( $post_types as $post_type ) {
@@ -528,9 +528,7 @@ class WPGeo {
 		include_once( WPGEO_DIR . 'admin/settings.php' );
 		
 		// Register Settings
-		if ( function_exists( 'register_setting' ) ) {
-			register_setting( 'wp-geo-options', 'wp_geo_options', '' );
-		}
+		$this->settings = new WPGeo_Settings();
 		
 		// Only show editor if Google API Key valid
 		if ( $this->checkGoogleAPIKey() ) {
@@ -550,9 +548,6 @@ class WPGeo {
 				exit();
 			}
 		}
-		
-		// Show Settings Link
-		$this->settings = new WPGeo_Settings();
 	}
 	
 	/**
@@ -865,7 +860,7 @@ class WPGeo {
 	function admin_menu() {
 		global $wpgeo;
 		if ( function_exists( 'add_options_page' ) ) {
-			add_options_page( 'WP Geo Options', 'WP Geo', 'manage_options', __FILE__, array( $wpgeo, 'options_page' ) );
+			add_options_page( __( 'WP Geo Options', 'wp-geo' ), __( 'WP Geo', 'wp-geo' ), 'manage_options', 'wp-geo', array( $wpgeo, 'options_page' ) );
 		}
 	}
 	
@@ -956,8 +951,10 @@ class WPGeo {
 	 * @param bool $disabled (optional) Is disabled?
 	 * @return string Checkbox HTML.
 	 */
-	function options_checkbox( $id, $val, $checked, $disabled = false ) {
-		return '<input name="' . $id . '" type="checkbox" id="' . $id . '" value="' . $val . '" ' . checked( $val, $checked, false ) . ' ' . disabled( $val, $disabled, false ) . '/>';
+	function options_checkbox( $name, $val, $checked, $disabled = false, $id = '' ) {
+		if ( empty( $id ) )
+			$id = $name;
+		return '<input name="' . $name . '" type="checkbox" id="' . $id . '" value="' . $val . '" ' . checked( $val, $checked, false ) . ' ' . disabled( true, $disabled, false ) . '/>';
 	}
 	
 	/**
@@ -970,7 +967,7 @@ class WPGeo {
 		
 		// Process option updates
 		if ( isset( $_POST['action'] ) && $_POST['action'] == 'update' ) {
-		
+		/*
 			$wp_geo_options['google_api_key']        = $_POST['google_api_key'];
 			$wp_geo_options['google_map_type']       = $_POST['google_map_type'];
 			$wp_geo_options['show_post_map']         = $_POST['show_post_map'];
@@ -1017,6 +1014,7 @@ class WPGeo {
 			
 			update_option( 'wp_geo_options', $wp_geo_options );
 			echo '<div class="updated"><p>' . __( 'WP Geo settings updated', 'wp-geo' ) . '</p></div>';
+			*/
 		}
 
 		// Markers
@@ -1026,149 +1024,30 @@ class WPGeo {
 		$markers['dot']   = $this->markers->get_marker_by_id( 'dot' );
 		
 		// Write the form
-		echo '
-		<div class="wrap">
+		echo '<div class="wrap">
+			<div id="icon-options-wpgeo" class="icon32" style="background: url(' . WPGEO_URL . 'img/logo/icon32.png) 2px 1px no-repeat;"><br></div>
 			<h2>' . __( 'WP Geo Settings', 'wp-geo' ) . '</h2>
-			<form method="post">
-				<img style="float:right; padding:0 20px 0 0; margin:0 0 20px 20px;" src="' . WPGEO_URL . 'img/logo/wp-geo.png" />';
-		include( WPGEO_DIR . 'admin/donate-links.php' );	
-		echo '<h3>' . __( 'General Settings', 'wp-geo' ) . '</h3>
-				<p>'
-				. sprintf( __( "For more information and documentation about this plugin please visit the <a %s>WP Geo Plugin</a> home page.", 'wp-geo' ), 'href="http://www.benhuson.co.uk/wordpress-plugins/wp-geo/"' ) . '<br />'
-				. sprintf( __( "If you experience any problems/bugs with the plugin, please <a %s>log it here</a>.", 'wp-geo' ), 'href="http://code.google.com/p/wp-geo/issues/list"' ) . 
-				'</p>';
+			<form action="options.php" method="post">';
+		include( WPGEO_DIR . 'admin/donate-links.php' );
+		
         if ( ! $wpgeo->markers->marker_folder_exists() ) {
             echo '<div class="error"><p>' . sprintf( __( "Unable to create the markers folder %s.<br />Please create it and copy the marker images to it from %s</p>", 'wp-geo' ), str_replace( ABSPATH, '', $wpgeo->markers->upload_dir ) . '/wp-geo/markers/', str_replace( ABSPATH, '', WPGEO_DIR ) . 'img/markers' ) . '</div>';
         }
 		if ( ! $this->checkGoogleAPIKey() ) {
 			echo '<div class="error"><p>' . sprintf( __( "Before you can use WP Geo you must acquire a %s for your blog - the plugin will not function without it!", 'wp-geo' ), '<a href="https://developers.google.com/maps/documentation/javascript/v2/introduction#Obtaining_Key" target="_blank">' . __( 'Google API Key', 'wp-geo' ) . '</a>' ) . '</p></div>';
 		}
-		echo '<table class="form-table">
-					<tr valign="top">
-						<th scope="row">' . __( 'Google API Key', 'wp-geo' ) . '</th>
-						<td><input name="google_api_key" type="text" id="google_api_key" value="' . $wp_geo_options['google_api_key'] . '" size="50" /></td>
-					</tr>
-					<tr valign="top">
-						<th scope="row">' . __( 'Map Type', 'wp-geo' ) . '</th>
-						<td>' . $wpgeo->google_map_types('menu', $wp_geo_options['google_map_type']) . '</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row">' . __( 'Show Post Map', 'wp-geo' ) . '</th>
-						<td>' . $wpgeo->post_map_menu( 'menu', $wp_geo_options['show_post_map'] ) . '<br />
-							' . $wpgeo->options_checkbox( 'show_maps_on_excerpts', 'Y', $wp_geo_options['show_maps_on_excerpts'] ) . ' ' . __( 'Show on excerpts', 'wp-geo' ) . '
-						</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row">' . __( 'Default Map Location', 'wp-geo' ) . '</th>
-						<td>
-							' . __( 'When creating a new post, the map will default to focussing on this area for you to position a marker.', 'wp-geo' ) . '<br />
-							<label for="default_map_latitude" style="width:70px; display:inline-block;">Latitude</label> <input name="default_map_latitude" type="text" id="default_map_latitude" value="' . $wp_geo_options['default_map_latitude'] . '" size="25" /><br />
-							<label for="default_map_longitude" style="width:70px; display:inline-block;">Longitude</label> <input name="default_map_longitude" type="text" id="default_map_longitude" value="' . $wp_geo_options['default_map_longitude'] . '" size="25" />
-						</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row">' . __( 'Default Map Width', 'wp-geo' ) . '</th>
-						<td><input name="default_map_width" type="text" id="default_map_width" value="' . $wp_geo_options['default_map_width'] . '" size="10" /></td>
-					</tr>
-					<tr valign="top">
-						<th scope="row">' . __( 'Default Map Height', 'wp-geo' ) . '</th>
-						<td><input name="default_map_height" type="text" id="default_map_height" value="' . $wp_geo_options['default_map_height'] . '" size="10" /></td>
-					</tr>
-					<tr valign="top">
-						<th scope="row">' . __( 'Default Map Zoom', 'wp-geo' ) . '</th>
-						<td>' . $wpgeo->selectMapZoom( 'menu', $wp_geo_options['default_map_zoom'] ) . '</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row">' . __( 'Default Map Controls', 'wp-geo' ) . '</th>
-						<td>
-							' . $wpgeo->selectMapControl( 'menu', $wp_geo_options['default_map_control'] ). '<br />
-							<p style="margin:1em 0 0 0;"><strong>' . __( 'Map Type Controls', 'wp-geo' ) . '</strong></p>
-							<p style="margin:0;">' . __( 'You must select at least 2 map types for the control to show.', 'wp-geo' ) . '</p>
-							' . $wpgeo->options_checkbox( 'show_map_type_normal', 'Y', $wp_geo_options['show_map_type_normal'] ) . ' ' . __( 'Normal map', 'wp-geo' ) . '<br />
-							' . $wpgeo->options_checkbox( 'show_map_type_satellite', 'Y', $wp_geo_options['show_map_type_satellite'] ) . ' ' . __( 'Satellite (photographic map)', 'wp-geo' ) . '<br />
-							' . $wpgeo->options_checkbox( 'show_map_type_hybrid', 'Y', $wp_geo_options['show_map_type_hybrid'] ) . ' ' . __( 'Hybrid (photographic map with normal features)', 'wp-geo' ) . '<br />
-							' . $wpgeo->options_checkbox( 'show_map_type_physical', 'Y', $wp_geo_options['show_map_type_physical'] ) . ' ' . __( 'Physical (terrain map)', 'wp-geo' ) . '<br />
-							<p style="margin:1em 0 0 0;"><strong>' . __( 'Other Controls', 'wp-geo' ) . '</strong></p>
-							' . $wpgeo->options_checkbox( 'show_map_scale', 'Y', $wp_geo_options['show_map_scale'] ) . ' ' . __( 'Show map scale', 'wp-geo' ) . '<br />
-							' . $wpgeo->options_checkbox( 'show_map_overview', 'Y', $wp_geo_options['show_map_overview'] ) . ' ' . __( 'Show collapsible overview map (in the corner of the map)', 'wp-geo' ) . '
-						</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row">' . __( 'Default Post Options', 'wp-geo' ) . '</th>
-						<td>
-							<p style="margin:0;">
-							' . $wpgeo->options_checkbox( 'save_post_zoom', 'Y', $wp_geo_options['save_post_zoom'] ) . ' ' . __( 'Save custom map zoom for this post', 'wp-geo' ) . '<br />
-							' . $wpgeo->options_checkbox( 'save_post_map_type', 'Y', $wp_geo_options['save_post_map_type'] ) . ' ' . __( 'Save custom map type for this post', 'wp-geo' ) . '<br />
-							' . $wpgeo->options_checkbox( 'save_post_centre_point', 'Y', $wp_geo_options['save_post_centre_point'] ) . ' ' . __( 'Save map centre point for this post', 'wp-geo' ) . '
-							</p>
-						</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row">' . __( 'Polylines', 'wp-geo' ) . '</th>
-						<td>' . $wpgeo->options_checkbox( 'show_polylines', 'Y', $wp_geo_options['show_polylines'] ) . ' ' . __( 'Show polylines (to connect multiple points on a single map)', 'wp-geo' ) . '</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row">' . __( 'Polyline Colour', 'wp-geo' ) . '</th>
-						<td><input name="polyline_colour" type="text" id="polyline_colour" value="' . $wp_geo_options['polyline_colour'] . '" size="7" /></td>
-					</tr>
-					<tr valign="top">
-						<th scope="row">' . __( 'Show Maps On', 'wp-geo' ) . '</th>
-						<td>
-							' . $wpgeo->options_checkbox( 'show_maps_on_pages', 'Y', $wp_geo_options['show_maps_on_pages'] ) . ' ' . __( 'Pages', 'wp-geo' ) . '<br />
-							' . $wpgeo->options_checkbox( 'show_maps_on_posts', 'Y', $wp_geo_options['show_maps_on_posts'] ) . ' ' . __( 'Posts (single posts)', 'wp-geo' ) . '<br />
-							' . $wpgeo->options_checkbox( 'show_maps_on_home', 'Y', $wp_geo_options['show_maps_on_home'] ) . ' ' . __( 'Posts home page', 'wp-geo' ) . '<br />
-							' . $wpgeo->options_checkbox( 'show_maps_in_datearchives', 'Y', $wp_geo_options['show_maps_in_datearchives'] ) . ' ' . __( 'Posts in date archives', 'wp-geo' ) . '<br />
-							' . $wpgeo->options_checkbox( 'show_maps_in_categoryarchives', 'Y', $wp_geo_options['show_maps_in_categoryarchives'] ) . ' ' . __( 'Posts in category archives', 'wp-geo' ) . '<br />
-							' . $wpgeo->options_checkbox( 'show_maps_in_tagarchives', 'Y', $wp_geo_options['show_maps_in_tagarchives'] ) . ' ' . __( 'Posts in tag archives', 'wp-geo' ) . '<br />
-							' . $wpgeo->options_checkbox( 'show_maps_in_taxarchives', 'Y', $wp_geo_options['show_maps_in_taxarchives'] ) . ' ' . __( 'Posts in taxonomy archives', 'wp-geo' ) . '<br />
-							' . $wpgeo->options_checkbox( 'show_maps_in_authorarchives', 'Y', $wp_geo_options['show_maps_in_authorarchives'] ) . ' ' . __( 'Posts in author archives', 'wp-geo' ) . '<br />
-							' . $wpgeo->options_checkbox( 'show_maps_in_searchresults', 'Y', $wp_geo_options['show_maps_in_searchresults'] ) . ' ' . __( 'Search Results', 'wp-geo' ) . '<br />';
-		if ( function_exists( 'get_post_types' ) && function_exists( 'post_type_supports' ) ) {
-			$custom_post_type_checkboxes = '';
-			$post_types = get_post_types( array(), 'objects' );
-			foreach ( $post_types as $post_type ) {
-				if ( $post_type->name == 'post' || $post_type->name == 'page' ) {
-					continue;
-				}
-				if ( $post_type->show_ui ) {
-					$custom_post_type_checkbox_value = isset( $wp_geo_options['show_maps_on_customposttypes'][$post_type->query_var] ) ? $wp_geo_options['show_maps_on_customposttypes'][$post_type->query_var] : '';
-					$custom_post_type_disabled = false;
-					if ( post_type_supports( $post_type->query_var, 'wpgeo' ) ) {
-						$custom_post_type_checkbox_value = 'Y';
-						$custom_post_type_disabled = true;
-					}
-					$custom_post_type_checkboxes .= $wpgeo->options_checkbox( 'show_maps_on_customposttypes[' . $post_type->query_var . ']', 'Y', $custom_post_type_checkbox_value, $custom_post_type_disabled ) . ' ' . __( $post_type->label, 'wp-geo' ) . '<br />';
-				} elseif ( post_type_supports( $post_type->query_var, 'wpgeo' )) {
-					$custom_post_type_checkboxes .= $wpgeo->options_checkbox( 'show_maps_on_customposttypes[' . $post_type->query_var . ']', 'Y', 'Y', true ) . ' ' . __( $post_type->label, 'wp-geo' ) . '<br />';
-				
-				}
-			}
-			if ( ! empty( $custom_post_type_checkboxes ) ) {
-				$custom_post_type_checkboxes = '<strong>Custom Post Types</strong><br />' . $custom_post_type_checkboxes;
-			}
-			echo $custom_post_type_checkboxes;
-		}
-		echo '
-						</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row">' . __( 'Feeds', 'wp-geo' ) . '</th>
-						<td>' . $wpgeo->options_checkbox( 'add_geo_information_to_rss', 'Y', $wp_geo_options['add_geo_information_to_rss'] ) . ' ' . __( 'Add geographic information', 'wp-geo' ) . '</td>
-					</tr>
-				</table>
-				<p class="submit">
-					<input type="submit" name="Submit" value="' . __( 'Save Changes', 'wp-geo' ) . '" />
-					<input type="hidden" name="action" value="update" />
-					<input type="hidden" name="option_fields" value="google_api_key,google_map_type,show_post_map" />
+		
+		do_settings_sections( 'wp_geo_options' );
+		settings_fields( 'wp_geo_options' );
+		echo '<p class="submit">
+					<input type="submit" name="submit" value="' . __( 'Save Changes', 'wp-geo' ) . '" class="button-primary" />
 				</p>
+			</form>';
+		echo '
 				<h2 style="margin-top:30px;">' . __( 'Marker Settings', 'wp-geo' ) . '</h2>'
 				. __( '<p>Custom marker images are automatically created in your WordPress uploads folder and used by WP Geo.<br />A copy of these images will remain in the WP Geo folder in case you need to revert to them at any time.<br />You may edit these marker icons if you wish - they must be PNG files. Each marker consist of a marker image and a shadow image. If you do not wish to show a marker shadow you should use a transparent PNG for the shadow file.</p><p>Currently you must update these images manually and the anchor point must be the same - looking to provide more control in future versions.</p>', 'wp-geo' ) . '
 				' . $wpgeo->markers->get_admin_display();
-		if ( function_exists( 'register_setting' ) && function_exists( 'settings_fields' ) ) {
-			settings_fields( 'wp-geo-options' ); 
-		}	
-		echo '</form>
-			<h2 style="margin-top:30px;">' . __( 'Documentation', 'wp-geo' ) . '</h2>'
+		echo '<h2 style="margin-top:30px;">' . __( 'Documentation', 'wp-geo' ) . '</h2>'
 			. __( '<p>If you set the Show Post Map setting to &quot;Manual&quot;, you can use the Shortcode <code>[wp_geo_map]</code> in a post to display a map (if a location has been set for the post). You can only include the Shortcode once within a post. If you select another Show Post Map option then the Shortcode will be ignored and the map will be positioned automatically.</p>', 'wp-geo' )
 			. '<h2 style="margin-top:30px;">' . __( 'Feedback', 'wp-geo' ) . '</h2>'
 			. sprintf( __( "<p>If you experience any problems or bugs with the plugin, or want to suggest an improvement, please visit the <a %s>WP Geo Google Code page</a> to log your issue. If you would like to feedback or comment on the plugin please visit the <a %s>WP Geo plugin</a> page.</p>", 'wp-geo' ), 'href="http://code.google.com/p/wp-geo/issues/list"', 'href="http://www.benhuson.co.uk/wordpress-plugins/wp-geo/"' )
@@ -1184,7 +1063,11 @@ class WPGeo {
 	 * @param string $selected (optional) Selected value.
 	 * @return array|string Array or menu HTML.
 	 */
-	function selectMapControl( $return = 'array', $selected = '' ) {
+	function selectMapControl( $return = 'array', $selected = '', $args = null ) {
+		$args = wp_parse_args( (array)$args, array(
+			'name' => 'default_map_control',
+			'id'   => 'default_map_control'
+		) );
 		$map_type_array = array(
 			'GLargeMapControl3D'  => __( 'Large 3D pan/zoom control', 'wp-geo' ),
 			'GLargeMapControl'    => __( 'Large pan/zoom control', 'wp-geo' ),
@@ -1200,7 +1083,7 @@ class WPGeo {
 			foreach ( $map_type_array as $key => $val ) {
 				$menu .= '<option value="' . $key . '"' . selected( $selected, $key, false ) . '>' . $val . '</option>';
 			}
-			$menu = '<select name="default_map_control" id="default_map_control">' . $menu. '</select>';
+			$menu = '<select name="' . $args['name'] . '" id="' . $args['id'] . '">' . $menu. '</select>';
 			return $menu;
 		}
 		
@@ -1319,7 +1202,11 @@ class WPGeo {
 	 * @param string $selected (optional) Selected value.
 	 * @return array|string Array or menu HTML.
 	 */
-	function post_map_menu( $return = 'array', $selected = '' ) {
+	function post_map_menu( $return = 'array', $selected = '', $args = null ) {
+		$args = wp_parse_args( (array)$args, array(
+			'name' => 'show_post_map',
+			'id'   => 'show_post_map'
+		) );
 		$map_type_array = array(
 			'TOP'    => __( 'At top of post', 'wp-geo' ), 
 			'BOTTOM' => __( 'At bottom of post', 'wp-geo' ), 
@@ -1332,7 +1219,7 @@ class WPGeo {
 			foreach ( $map_type_array as $key => $val ) {
 				$menu .= '<option value="' . $key . '"' . selected( $selected, $key, false ) . '>' . $val . '</option>';
 			}
-			$menu = '<select name="show_post_map" id="show_post_map">' . $menu. '</select>';
+			$menu = '<select name="' . $args['name'] . '" id="' . $args['id'] . '">' . $menu. '</select>';
 			return $menu;
 		}
 		
