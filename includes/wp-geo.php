@@ -10,6 +10,7 @@ class WPGeo {
 	var $version    = '3.2.6.4';
 	var $db_version = 1;
 	
+	var $admin;
 	var $markers;
 	var $show_maps_external = false;
 	var $plugin_message = '';
@@ -50,9 +51,7 @@ class WPGeo {
 		add_action( 'admin_head', array( $this, 'admin_head' ) );
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'after_plugin_row', array( $this, 'after_plugin_row' ) );
-		add_action( 'admin_notices', array( $this, 'version_upgrade_msg' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 		
 		// Filters
 		add_filter( 'the_content', array( $this, 'the_content' ) );
@@ -60,34 +59,11 @@ class WPGeo {
 		add_filter( 'post_limits', array( $this, 'post_limits' ) );
 		add_filter( 'posts_join', array( $this, 'posts_join' ) );
 		add_filter( 'posts_where', array( $this, 'posts_where' ) );
-	}
-	
-	/**
-	 * Admin Notices
-	 * Shows error message if WP Geo was unable to create the markers folder
-	 * and if no Google API Key has been entered.
-	 */
-	function admin_notices(){
-		global $wpgeo, $current_screen;
-		if ( $current_screen->id == 'settings_page_wp-geo' ) {
-			if ( ! $this->markers->marker_folder_exists() ) {
-				echo '<div class="error"><p>' . sprintf( __( "Unable to create the markers folder %s.<br />Please create it and copy the marker images to it from %s</p>", 'wp-geo' ), str_replace( ABSPATH, '', $wpgeo->markers->upload_dir ) . '/wp-geo/markers/', str_replace( ABSPATH, '', WPGEO_DIR ) . 'img/markers' ) . '</div>';
-			}
-			if ( ! $this->checkGoogleAPIKey() ) {
-				echo '<div class="error"><p>' . sprintf( __( "Before you can use WP Geo you must acquire a %s for your blog - the plugin will not function without it!", 'wp-geo' ), '<a href="https://developers.google.com/maps/documentation/javascript/v2/introduction#Obtaining_Key" target="_blank">' . __( 'Google API Key', 'wp-geo' ) . '</a>' ) . '</p></div>';
-			}
-		}
-	}
-	
-	/**
-	 * Version upgrade message
-	 */
-	function version_upgrade_msg() {
-		$wp_geo_show_version_msg = get_option( 'wp_geo_show_version_msg' );
-		if ( current_user_can( 'manage_options' ) && $wp_geo_show_version_msg == 'Y' ) {
-			echo '<div id="wpgeo_version_message" class="error below-h2" style="margin:5px 15px 2px 0px;">
-					<p>WP Geo has been updated to use the WordPress widgets API. You will need to re-add your widgets. <a href="' . wp_nonce_url( add_query_arg( 'wpgeo_action', 'dismiss-update-msg', $_SERVER['PHP_SELF'] ), 'wpgeo_dismiss_update_msg' ) . '">Dismiss</a></p>
-				</div>';
+		
+		// Admin
+		if ( is_admin() ) {
+			include_once( WPGEO_DIR . 'admin/admin.php' );
+			$this->admin = new WPGeo_Admin();
 		}
 	}
 	
