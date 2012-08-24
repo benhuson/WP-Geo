@@ -63,7 +63,7 @@ class WPGeo_Markers {
 	 * @return string Image URL.
 	 */
 	function get_image_url( $img ) {
-		if ( file_exists( $this->wpgeo_upload_dir . $img ) ) {
+		if ( file_exists( $this->marker_image_dir . $img ) ) {
 			return $this->marker_image_url . $img;
 		}
 		return WPGEO_URL . 'img/markers/' . $img;
