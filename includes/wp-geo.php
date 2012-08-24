@@ -913,46 +913,57 @@ class WPGeo {
 		
 		// Check settings
 		if ( is_home() && $wp_geo_options['show_maps_on_home'] == 'Y' )
-			return true;
+			return $this->show_maps_filter( true );
 		if ( is_single() ) {
 			if ( function_exists( 'get_post_type' ) && function_exists( 'get_post_type_object' ) && function_exists( 'post_type_supports' ) ) {
 				$post_type = get_post_type( $post->ID );
 				$post_type_object = get_post_type_object( $post_type );
 				if ( $post_type == 'post' ) {
-					return true;
+					return $this->show_maps_filter( true );
 				} elseif ( $wp_geo_options['show_maps_on_customposttypes'][$post_type] == 'Y' ) {
-					return true;
+					return $this->show_maps_filter( true );
 				} elseif ( ! $post_type_object->show_ui ) {
-					return post_type_supports( $post_type, 'wpgeo' );
+					return $this->show_maps_filter( post_type_supports( $post_type, 'wpgeo' ) );
 				}
 			} elseif ( $wp_geo_options['show_maps_on_posts'] == 'Y' ) {
-				return true;
+				return $this->show_maps_filter( true );
 			}
 		}
-		if ( is_page() && $wp_geo_options['show_maps_on_pages'] == 'Y' )				return true;
-		if ( is_date() && $wp_geo_options['show_maps_in_datearchives'] == 'Y' )			return true;
-		if ( is_category() && $wp_geo_options['show_maps_in_categoryarchives'] == 'Y' )	return true;
-		if ( is_tag() && $wp_geo_options['show_maps_in_tagarchives'] == 'Y' )			return true;
-		if ( is_tax() && $wp_geo_options['show_maps_in_taxarchives'] == 'Y' )			return true;
-		if ( is_author() && $wp_geo_options['show_maps_in_authorarchives'] == 'Y' )		return true;
-		if ( is_search() && $wp_geo_options['show_maps_in_searchresults'] == 'Y' )		return true;
-		if ( is_feed() && $wp_geo_options['add_geo_information_to_rss'] == 'Y' )		return true;
+		if ( is_page() && $wp_geo_options['show_maps_on_pages'] == 'Y' )				return $this->show_maps_filter( true );
+		if ( is_date() && $wp_geo_options['show_maps_in_datearchives'] == 'Y' )			return $this->show_maps_filter( true );
+		if ( is_category() && $wp_geo_options['show_maps_in_categoryarchives'] == 'Y' )	return $this->show_maps_filter( true );
+		if ( is_tag() && $wp_geo_options['show_maps_in_tagarchives'] == 'Y' )			return $this->show_maps_filter( true );
+		if ( is_tax() && $wp_geo_options['show_maps_in_taxarchives'] == 'Y' )			return $this->show_maps_filter( true );
+		if ( is_author() && $wp_geo_options['show_maps_in_authorarchives'] == 'Y' )		return $this->show_maps_filter( true );
+		if ( is_search() && $wp_geo_options['show_maps_in_searchresults'] == 'Y' )		return $this->show_maps_filter( true );
+		if ( is_feed() && $wp_geo_options['add_geo_information_to_rss'] == 'Y' )		return $this->show_maps_filter( true );
 
 		// Activate maps in admin...
 		if ( is_admin() ) {
 			// If editing a post or page...
 			if ( is_numeric( $post_ID ) && $post_ID > 0 )
-				return true;
+				return $this->show_maps_filter( true );
 			// If writing a new post or page...
 			if ( $pagenow == 'post-new.php' || $pagenow == 'page-new.php' )
-				return true;
+				return $this->show_maps_filter( true );
 		}
 		
 		// Do Action
 		if ( $this->show_maps_external )
-			return true;
+			return $this->show_maps_filter( true );
 		
-		return false;
+		return $this->show_maps_filter( false );
+	}
+	
+	/**
+	 * Show Maps Filter
+	 * Allows show maps value to be overridden.
+	 *
+	 * @param bool $show_maps Show Maps?
+	 * @return bool
+	 */
+	function show_maps_filter( $show_maps = false ) {
+		return apply_filters( 'wpgeo_show_maps', $show_maps );
 	}
 	
 	/**
