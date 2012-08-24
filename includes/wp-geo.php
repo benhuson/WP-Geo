@@ -1330,8 +1330,8 @@ class WPGeo {
 		if ( isset( $settings['type'] ) && ! empty( $settings['type'] ) ) {
 			$wpgeo_map_settings_type = $settings['type'];
 			$wpgeo_map_settings_type_checked = checked( true, true, false );
-		} elseif ( $wp_geo_options['save_post_zoom'] == 'Y' ) {
-			$wpgeo_map_settings_type = $wp_geo_options['save_post_zoom'];
+		} elseif ( $wp_geo_options['save_post_map_type'] == 'Y' ) {
+			$wpgeo_map_settings_type = $wp_geo_options['save_post_map_type'];
 			$wpgeo_map_settings_type_checked = checked( true, true, false );
 		}
 		if ( isset( $settings['centre'] ) && ! empty( $settings['centre'] ) ) {
