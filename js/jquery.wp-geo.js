@@ -1,6 +1,4 @@
 
-
-
 /**
 * WP Geo for jQuery
 * @author Ben Huson, ben@thewhiteroom.net based on functions by Marco Alionso Ramirez, marco@onemarco.com
@@ -8,33 +6,26 @@
 * Google Maps interface for WP Geo WordPress Plugin
 */
 
-
-
 // When DOM ready...
 //jQuery(document).ready();
 
-String.prototype.trim = function () {
+String.prototype.trim = function() {
     return this.replace(/^\s*/, "").replace(/\s*$/, "");
 }
 
-
 // When window loaded...
 jQuery(window).load(
-	function()
-	{
+	function() {
 		
 		// If Google maps supported...
-		if (GBrowserIsCompatible())
-		{
+		if (GBrowserIsCompatible()) {
 		
 			// Each Map...
 			jQuery("div.wp_geo_map").each(
-				function(i)
-				{
+				function(i) {
 				
 					// If has map data...
-					if (jQuery(this).find("ul.wp-geo-mapdata").length > 0)
-					{
+					if (jQuery(this).find("ul.wp-geo-mapdata").length > 0) {
 						var table_cell = "ul.wp-geo-mapdata li";
 						var w = jQuery(this).find(table_cell + ".wp-geo-width").text();
 						var h = jQuery(this).find(table_cell + ".wp-geo-height").text().toString();
@@ -65,20 +56,15 @@ jQuery(window).load(
 					var latitude;
 					var marker = new Array();
 					var point_counter = 1;
-					if (jQuery(this).find("ul.wp-geo-mapdata li.wp-geo-marker").length > 0)
-					{
+					if (jQuery(this).find("ul.wp-geo-mapdata li.wp-geo-marker").length > 0) {
 						jQuery(this).find("ul.wp-geo-mapdata li.wp-geo-marker").each(
-							function(i)
-							{
-							
+							function(i) {
 								latlong = jQuery(this).find("em").text().split(",");
 								latitude = parseFloat(latlong[0].trim());
 								longitude = parseFloat(latlong[1].trim());
-								
 								marker[point_counter] = new wpgeo_createMarker2(g_map, new GLatLng(latitude, longitude), wpgeo_icon_large, 'Barack\'s Home Sweet Home', 'http://wordpressdev/?p=15');
 								bounds.extend(new GLatLng(latitude, longitude));
 								point_counter++;
-								
 							}
 						);
 					}
@@ -90,7 +76,6 @@ jQuery(window).load(
 					var mapTypeControl = new GMapTypeControl();
 					g_map.addControl(new GSmallMapControl());
 					g_map.addControl(mapTypeControl);
-					
 					
 					bounds.extend(new GLatLng(38.897661, -77.036564));
 					
@@ -105,14 +90,11 @@ jQuery(window).load(
 					// Map Overview?
 					if (overview == 'Y')
 						g_map.addControl(new GOverviewMapControl());
-					
 				}
 			);
 		
 		}
 		
 	}
-	
-	
 	
 );
