@@ -142,8 +142,9 @@ class WPGeo_Admin {
 		echo '<h2 style="margin-top:30px;">' . __( 'Documentation', 'wp-geo' ) . '</h2>'
 			. __( '<p>If you set the Show Post Map setting to &quot;Manual&quot;, you can use the Shortcode <code>[wp_geo_map]</code> in a post to display a map (if a location has been set for the post). You can only include the Shortcode once within a post. If you select another Show Post Map option then the Shortcode will be ignored and the map will be positioned automatically.</p>', 'wp-geo' )
 			. '<h2 style="margin-top:30px;">' . __( 'Feedback', 'wp-geo' ) . '</h2>'
-			. sprintf( __( "<p>If you experience any problems or bugs with the plugin, or want to suggest an improvement, please visit the <a %s>WP Geo Google Code page</a> to log your issue. If you would like to feedback or comment on the plugin please visit the <a %s>WP Geo plugin</a> page.</p>", 'wp-geo' ), 'href="http://code.google.com/p/wp-geo/issues/list"', 'href="http://www.benhuson.co.uk/wordpress-plugins/wp-geo/"' )
-			. sprintf( __( "<p>If you like WP Geo and would like to make a donation, please do so on the <a %s>WP Geo website</a>. Your contributions help to ensure that I can dedicate more time to the support and development of the plugin.</p>", 'wp-geo' ), 'href="http://www.wpgeo.com/" target="_blank"' ) . '
+			. sprintf( __( "<p>If you require help or support with WP Geo, please visit the <a %s>WordPress Support Forums</a>.</p>", 'wp-geo' ), 'href="http://wordpress.org/support/plugin/wp-geo" target="_blank"' )
+			. sprintf( __( "<p>If you experience any problems or bugs with the plugin, or want to suggest an improvement, please visit the new <a %s>GitHib Issues</a> page to log your issue.</p>", 'wp-geo' ), 'href="https://github.com/benhuson/WP-Geo/issues" target="_blank"' )
+			. sprintf( __( "<p>If you like WP Geo and would like to make a donation, please do so on the <a %s>WP Geo website</a>. Your contributions help to ensure that I can dedicate more time to the support and development of the plugin.</p>", 'wp-geo' ), 'href="http://www.wpgeo.com/donate" target="_blank"' ) . '
 		</div>';
 	}
 	
