@@ -1,438 +1,589 @@
-# Translation of the WordPress plugin WP Geo 3.1.4 by Ben Huson.
-# Copyright (C) 2010 Ben Huson
-# This file is distributed under the same license as the WP Geo package.
-# Ben Huson <ben@thewhiteroom.net>, 2010.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Geo 3.1.4\n"
+"Project-Id-Version: WP Geo\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-geo\n"
-"POT-Creation-Date: 2010-06-29 20:42+0000\n"
-"PO-Revision-Date: 2011-09-15 20:42+0100\n"
-"Language-Team: be_BY antsar.info <iliamrv@ya.ru>\n"
-"Language-Team: bg_BG\n"
-"Language-Team: da_DK Team Blogos <wordpress@blogos.dk>\n"
-"Language-Team: de_DE Ivan Graf <contact@bildergallery.com>\n"
-"Language-Team: en_EN Ben Huson <ben@thewhiteroom.net>\n"
-"Language-Team: es_ES Alberto <alberto@berriart.com>\n"
-"Language-Team: fr_FR Alain Messin <dev@adecouvrir.info>\n"
-"Language-Team: hr_HR Andrija Papec <info.adriaindex@gmail.com>\n"
-"Language-Team: it_IT Diego Pierotto <ita.translations@tiscali.it>\n"
-"Language-Team: ru_RU Fat Cow <zhr@tut.by>\n"
+"POT-Creation-Date: 2012-08-26 20:09:37+00:00\n"
+"PO-Revision-Date: 2012-09-01 16:16+0100\n"
+"Last-Translator: Davey IJzermans <ik@daveyijzermans.nl>\n"
 "Language-Team: zh_CN @imsteen\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: Davey IJzermans <ik@daveyyzermans.nl>\n"
+"Language: nl\n"
 
-#: admin/donate-links.php:17
-msgid "Support this plugin"
-msgstr "Steun deze plugin"
+#: admin/admin.php:67
+msgid ""
+"Unable to create the markers folder %s.<br />Please create it and copy the "
+"marker images to it from %s"
+msgstr ""
+"Kon markeringsmap %s niet maken.<br />Maak deze map en kopieer de "
+"markeringsafbeeldingen vanuit %s hier naartoe."
 
-#: admin/donate-links.php:18
-msgid "Make a donation"
-msgstr "Doneer"
+#: admin/admin.php:71
+msgid ""
+"Before you can use WP Geo you must acquire a %s for your blog - the plugin "
+"will not function without it!"
+msgstr ""
+"Voordat u WP GEO kunt gebruiken moet een %s aanvragen voor uw blog - de "
+"plugin zal zonder niet werken!"
 
-#: admin/donate-links.php:19
-msgid "Follow @wpgeo for updates"
-msgstr "Volg @wpgeo voor updates"
-
-#: admin/donate-links.php:20
-msgid "Follow me on Twitter"
-msgstr "Volg mij op Twitter"
-
-#: includes/maps.php:162
-#: includes/widgets.php:59
-#: includes/widgets.php:286
-msgid "title"
-msgstr "titel"
-
-#: includes/markers.php:38
-msgid "Default Large Marker"
-msgstr "Standaard grote marker"
-
-#: includes/markers.php:39
-msgid "This is the default marker used to indicate a location on most maps."
-msgstr "Dit is de standaard markering die gebruikt wordt om op de meeste kaarten locaties aan te duiden."
-
-#: includes/markers.php:48
-msgid "Default Small Marker"
-msgstr "Standaard kleine marker"
-
-#: includes/markers.php:49
-msgid "This is the default marker used for the WP Geo sidebar widget."
-msgstr "Dit is de standaard markering die gebruikt wordt op op de WP Geo zijbalk-widget."
-
-#: includes/markers.php:58
-msgid "Default Dot Marker"
-msgstr "Standaard punt marker"
-
-#: includes/markers.php:59
-msgid "This marker image is not currently used but it is anticipated that it will be used to indicate less important locations in a future versions of WP Geo."
-msgstr "Deze marker wordt op dit moment niet gebruikt maar wordt mogelijk in latere versies van WP Geo gebruikt om minder belangrijke locaties aan te duiden."
-
-#: includes/widgets.php:142
-msgid "WP Geo is not currently active as you have not entered a Google API Key"
-msgstr "WP Geo is op dit moment niet actief omdat er geen Google API-sleutel is ingevoerd."
-
-#: includes/widgets.php:142
-msgid "Please update your WP Geo settings"
-msgstr "Pas alstublieft uw WP Geo-instellingen aan."
-
-#: includes/widgets.php:145
-msgid "Title"
-msgstr "Titel"
-
-#: includes/widgets.php:146
-msgid "Width"
-msgstr "Breedte"
-
-#: includes/widgets.php:147
-msgid "Height"
-msgstr "Hoogte"
-
-#: includes/widgets.php:148
-msgid "Zoom"
-msgstr "Zoom"
-
-#: includes/widgets.php:149
-msgid "Settings"
-msgstr "Instellingen"
-
-#: includes/widgets.php:181
-msgid "Default"
-msgstr "Standaard"
-
-#: includes/widgets.php:182
-msgid "Show Polylines"
-msgstr "Toon polylijnen"
-
-#: includes/widgets.php:183
-msgid "Hide Polylines"
-msgstr "Verberg polylijnen"
-
-#: includes/wp-geo.php:1069
-msgid "WP Geo settings updated"
-msgstr "WP Geo-instellingen opgeslagen"
-
-#: includes/wp-geo.php:1083
-msgid "WP Geo Settings"
-msgstr "WP Geo-instellingen"
-
-#: includes/wp-geo.php:1087
-msgid "General Settings"
-msgstr "Algemene instellingen"
-
-#: includes/wp-geo.php:1089
-#, php-format
-msgid "For more information and documentation about this plugin please visit the <a %s>WP Geo Plugin</a> home page."
-msgstr "Bezoek voor meer informatie over en de documentatie van deze plugin de <a %s>WP Geo Plugin</a> homepagina."
-
-#: includes/wp-geo.php:1090
-#, php-format
-msgid "If you experience any problems/bugs with the plugin, please <a %s>log it here</a>."
-msgstr "Als u problemen of fouten ondervindt met deze plugin, <a %s>vermeld deze dan hier</a>."
-
-#: includes/wp-geo.php:1100
+#: admin/admin.php:71 admin/settings.php:23
 msgid "Google API Key"
 msgstr "Google API-sleutel"
 
-#: includes/wp-geo.php:1104
-msgid "Map Type"
-msgstr "Kaarttype"
-
-#: includes/wp-geo.php:1108
-msgid "Show Post Map"
-msgstr "Toon kaart bij berichten"
-
-#: includes/wp-geo.php:1112
-msgid "Default Map Location"
-msgstr "Standaard kaartlocatie"
-
-#: includes/wp-geo.php:1119
-msgid "Default Map Width"
-msgstr "Standaard kaartbreedte"
-
-#: includes/wp-geo.php:1123
-msgid "Default Map Height"
-msgstr "Standaard kaarthoogte"
-
-#: includes/wp-geo.php:1127
-msgid "Default Map Zoom"
-msgstr "Standaard kaartzoom"
-
-#: includes/wp-geo.php:1131
-msgid "Default Map Controls"
-msgstr "Standaard kaartnavigatie"
-
-#: includes/wp-geo.php:1134
-msgid "Map Type Controls"
-msgstr "Kaarttypen"
-
-#: includes/wp-geo.php:1135
-msgid "You must select at least 2 map types for the control to show."
-msgstr "U moet minstens 2 kaarttypen kiezen om keuzeknoppen weer te laten geven."
-
-#: includes/wp-geo.php:1136
-msgid "Normal map"
-msgstr "Normale kaart"
-
-#: includes/wp-geo.php:1137
-#: includes/wp-geo.php:1313
-msgid "Satellite (photographic map)"
-msgstr "Satelliet (fotografische kaart)"
-
-#: includes/wp-geo.php:1138
-#: includes/wp-geo.php:1314
-msgid "Hybrid (photographic map with normal features)"
-msgstr "Hybride (fotografische kaart met normale functies)"
-
-#: includes/wp-geo.php:1139
-#: includes/wp-geo.php:1315
-msgid "Physical (terrain map)"
-msgstr "Fysiek (terrein)"
-
-#: includes/wp-geo.php:1140
-msgid "Other Controls"
-msgstr "Andere bedieningen"
-
-#: includes/wp-geo.php:1141
-msgid "Show map scale"
-msgstr "Toon schaal"
-
-#: includes/wp-geo.php:1142
-msgid "Show collapsible overview map (in the corner of the map)"
-msgstr "Toon inklapbare overzichtskaart (in de hoek van de kaart)"
-
-#: includes/wp-geo.php:1146
-msgid "Polylines"
-msgstr "Polylijnen"
-
-#: includes/wp-geo.php:1147
-msgid "Show polylines (to connect multiple points on a single map)"
-msgstr "Toon polylijnen (om meerdere punten op een kaart te verbinden)"
-
-#: includes/wp-geo.php:1150
-msgid "Polyline Colour"
-msgstr "Polylijnkleur"
-
-#: includes/wp-geo.php:1154
-msgid "Show Maps On"
-msgstr "Toon kaarten op"
-
-#: includes/wp-geo.php:1156
-msgid "Pages"
-msgstr "Pagina's"
-
-#: includes/wp-geo.php:1157
-msgid "Posts (single posts)"
-msgstr "Berichten (enkele berichten)"
-
-#: includes/wp-geo.php:1158
-msgid "Posts home page"
-msgstr "Berichtenpagina"
-
-#: includes/wp-geo.php:1159
-msgid "Posts in date archives"
-msgstr "Berichten in datum-archieven"
-
-#: includes/wp-geo.php:1160
-msgid "Posts in category archives"
-msgstr "Berichten in categorie-archieven"
-
-#: includes/wp-geo.php:1161
-msgid "Posts in tag archives"
-msgstr "Berichten in tag-archieven"
-
-#: includes/wp-geo.php:1162
-msgid "Search Results"
-msgstr "Zoekresultaten"
-
-#: includes/wp-geo.php:1183
-msgid "Feeds"
-msgstr "Feeds"
-
-#: includes/wp-geo.php:1184
-msgid "Add geographic information"
-msgstr "Voeg geografische informatie toe"
-
-#: includes/wp-geo.php:1188
-msgid "Save Changes"
-msgstr "Wijzigingen opslaan"
-
-#: includes/wp-geo.php:1192
-msgid "Marker Settings"
-msgstr "Marker-instellingen"
-
-#: includes/wp-geo.php:1193
-msgid "<p>Custom marker images are automatically created in your WordPress uploads folder and used by WP Geo.<br />A copy of these images will remain in the WP Geo folder in case you need to revert to them at any time.<br />You may edit these marker icons if you wish - they must be PNG files. Each marker consist of a marker image and a shadow image. If you do not wish to show a marker shadow you should use a transparent PNG for the shadow file.</p><p>Currently you must update these images manually and the anchor point must be the same - looking to provide more control in future versions.</p>"
-msgstr "<p>Aangepaste marker-afbeeldingen worden automatisch gemaakt in je WordPress uploads map en worden gebruikt door WP Geo.<br />Een kopie van deze afbeeldingen blijven in de WP Geo-map in het geval dat hierop teruggevallen moet worden.<br />U kunt deze aanpassen naar uw eigen wensen - het moeten PNG bestanden zijn. Enkele markering bestaat uit een marker-afbeelding en een schaduw-afbeelding. Als een schaduw niet vereist is gebruik dan een transparant PNG bestand als schaduw-afbeelding.</p><p>Deze afbeeldingen moeten op dit moment handmatig aangepast worden en hun &quot;anchor point&quot; moet hetzelfde blijven - dit zal in latere versies beter gecontroleerd kunnen worden.</p>"
-
-#: includes/wp-geo.php:1199
-msgid "Documentation"
-msgstr "Documentatie"
-
-#: includes/wp-geo.php:1200
-msgid "<p>If you set the Show Post Map setting to &quot;Manual&quot;, you can use the Shortcode <code>[wp_geo_map]</code> in a post to display a map (if a location has been set for the post). You can only include the Shortcode once within a post. If you select another Show Post Map option then the Shortcode will be ignored and the map will be positioned automatically.</p>"
-msgstr "<p>Als u de &quot;Toon kaart bij berichten&quot;-instelling op &quot;Handmatig&quot; instelt, kunt u gebruik maken van de shortcode <code>[wp_geo_map]</code> om een kaart in een bericht weer te geven (als het bericht een locatie is meegegeven). U kunt deze shortcode maar &euml;&euml;n keer gebruiken in een bericht. De shortcode wordt genegeerd en een kaart wordt automatisch getoond als u een andere optie selecteert.</p>"
-
-#: includes/wp-geo.php:1201
-msgid "Feedback"
-msgstr "Feedback"
-
-#: includes/wp-geo.php:1202
-#, php-format
-msgid "<p>If you experience any problems or bugs with the plugin, or want to suggest an improvement, please visit the <a %s>WP Geo Google Code page</a> to log your issue. If you would like to feedback or comment on the plugin please visit the <a %s>WP Geo plugin</a> page.</p>"
-msgstr "<p>Als u problemen of fouten ondervindt met deze plugin, of een verbetering wilt inzenden, bezoek dan de <a %s>WP Geo Google Code pagina</a> om uw probleem te vermelden. Als u feedback of commentaar wilt geven bezoek dan de <a %s>WP Geo plugin</a> pagina.</p>"
-
-#: includes/wp-geo.php:1203
-#, php-format
-msgid "<p>If you like WP Geo and would like to make a donation, please do so on the <a %s>WP Geo website</a>. Your contributions help to ensure that I can dedicate more time to the support and development of the plugin.</p>"
-msgstr "<p>Als u WP Geo leuk vindt en graag zou willen doneren, doe dat op de <a %s>WP Geo website</a>. Uw bijdrage helpt mij meer tijd spenderen aan de ondersteuning en het ontwikkelen van de plugin.</p>"
-
-#: includes/wp-geo.php:1222
-msgid "Large 3D pan/zoom control"
-msgstr "Grote 3D pan/zoom bedieningen"
-
-#: includes/wp-geo.php:1223
-msgid "Large pan/zoom control"
-msgstr "Grote pan/zoom bedieningen"
-
-#: includes/wp-geo.php:1224
-msgid "Smaller pan/zoom control"
-msgstr "Kleinere pan/zoom bedieningen"
-
-#: includes/wp-geo.php:1225
-msgid "Small 3D zoom control (no panning controls)"
-msgstr "Kleine 3D zoom bediening (zonder pannen)"
-
-#: includes/wp-geo.php:1226
-msgid "Small zoom control (no panning controls)"
-msgstr "Kleine zoom bediening (zonder pannen)"
-
-#: includes/wp-geo.php:1227
-msgid "No pan/zoom controls"
-msgstr "Geen pan/zoom bedieningen"
-
-#: includes/wp-geo.php:1260
-msgid "Zoomed Out"
-msgstr "Uitgezoomd"
-
-#: includes/wp-geo.php:1279
-msgid "Zoomed In"
-msgstr "Ingezoomd"
-
-#: includes/wp-geo.php:1312
-msgid "Normal"
-msgstr "Normaal"
-
-#: includes/wp-geo.php:1348
-msgid "At top of post"
-msgstr "Bovenaan het bericht"
-
-#: includes/wp-geo.php:1349
-msgid "At bottom of post"
-msgstr "Onderaan het bericht"
-
-#: includes/wp-geo.php:1350
-msgid "Manually"
-msgstr "Handmatig"
-
-#: includes/wp-geo.php:1481
-#: includes/wp-geo.php:1482
-#: includes/wp-geo.php:1491
-#: includes/wp-geo.php:1590
-msgid "WP Geo Location"
-msgstr "WP Geo locatie"
-
-#: includes/wp-geo.php:1545
-msgid "Search for location"
-msgstr "Zoek naar locatie"
-
-#: includes/wp-geo.php:1545
-msgid "town, postcode or address"
-msgstr "stad, postcode of adres"
-
-#: includes/wp-geo.php:1546
-msgid "Search"
-msgstr "Zoek"
-
-#: includes/wp-geo.php:1551
-msgid "Loading Google map, please wait..."
-msgstr "Laden van Google Map, een moment alstublieft..."
-
-#: includes/wp-geo.php:1556
-msgid "Latitude"
-msgstr "Breedtegraad"
-
-#: includes/wp-geo.php:1556
-msgid "Longitude"
-msgstr "Lengtegraad"
-
-#: includes/wp-geo.php:1559
-msgid "clear location"
-msgstr "wis locatie"
-
-#: includes/wp-geo.php:1559
-msgid "centre location"
-msgstr "centreer locatie"
-
-#: includes/wp-geo.php:1563
-msgid "Marker Title"
-msgstr "Marker titel"
-
-#: includes/wp-geo.php:1563
-msgid "optional"
-msgstr "optioneel"
-
-#: includes/wp-geo.php:1567
-msgid "Map Settings"
-msgstr "Kaart-instellingen"
-
-#: includes/wp-geo.php:1569
-msgid "Save custom map zoom for this post"
-msgstr "Sla aangepaste zoomniveau op voor dit bericht"
-
-#: includes/wp-geo.php:1570
-msgid "Save custom map type for this post"
-msgstr "Sla aangepaste kaarttype op voor dit bericht"
-
-#: includes/wp-geo.php:1571
-msgid "Save map centre point for this post"
-msgstr "Sla aangepast middelpunt op voor dit bericht"
-
+#: admin/admin.php:79
+msgid ""
+"WP Geo has been updated to use the WordPress widgets API. You will need to "
+"re-add your widgets."
+msgstr ""
+"WP Geo is geüpdatet voor het gebruik van de nieuwe WordPress widgets API. U "
+"zal uw widget opnieuw moeten toevoegen."
+
+#: admin/admin.php:79
+msgid "Dismiss"
+msgstr "Sluiten"
+
+#: admin/admin.php:117
+msgid "WP Geo Options"
+msgstr "WP Geo instellingen"
+
+#. #-#-#-#-#  plugin.pot (WP Geo 3.2.7)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
+#: admin/admin.php:117
 msgid "WP Geo"
 msgstr "WP Geo"
 
-#. #-#-#-#-#  plugin.pot (WP Geo 3.1.4)  #-#-#-#-#
+#: admin/admin.php:130
+msgid "WP Geo Settings"
+msgstr "WP Geo-instellingen"
+
+#: admin/admin.php:136
+msgid "Save Changes"
+msgstr "Wijzigingen opslaan"
+
+#: admin/admin.php:139
+msgid "Marker Settings"
+msgstr "Marker-instellingen"
+
+#: admin/admin.php:140
+msgid ""
+"<p>Custom marker images are automatically created in your WordPress uploads "
+"folder and used by WP Geo.<br />A copy of these images will remain in the WP "
+"Geo folder in case you need to revert to them at any time.<br />You may edit "
+"these marker icons if you wish - they must be PNG files. Each marker consist "
+"of a marker image and a shadow image. If you do not wish to show a marker "
+"shadow you should use a transparent PNG for the shadow file.</p><p>Currently "
+"you must update these images manually and the anchor point must be the same "
+"- looking to provide more control in future versions.</p>"
+msgstr ""
+"<p>Aangepaste markeringsafbeeldingen worden automatisch gemaakt in je "
+"WordPress uploads map en worden gebruikt door WP Geo.<br />Een kopie van "
+"deze afbeeldingen blijven in de WP Geo-map in het geval dat hierop "
+"teruggevallen moet worden.<br />U kunt deze aanpassen naar uw eigen wensen - "
+"het moeten PNG bestanden zijn. Enkele markering bestaat uit een "
+"markeringsafbeeldingen en een schaduw-afbeelding. Als een schaduw niet "
+"vereist is gebruik dan een transparant PNG bestand als schaduw-afbeelding.</"
+"p><p>Deze afbeeldingen moeten op dit moment handmatig aangepast worden en "
+"hun &quot;anchor point&quot; moet hetzelfde blijven - dit zal in latere "
+"versies beter gecontroleerd kunnen worden.</p>"
+
+#: admin/admin.php:142
+msgid "Documentation"
+msgstr "Documentatie"
+
+#: admin/admin.php:143
+msgid ""
+"<p>If you set the Show Post Map setting to &quot;Manual&quot;, you can use "
+"the Shortcode <code>[wp_geo_map]</code> in a post to display a map (if a "
+"location has been set for the post). You can only include the Shortcode once "
+"within a post. If you select another Show Post Map option then the Shortcode "
+"will be ignored and the map will be positioned automatically.</p>"
+msgstr ""
+"<p>Als u de &quot;Toon kaart bij berichten&quot;-instelling op &quot;"
+"Handmatig&quot; instelt, kunt u gebruik maken van de shortcode <code>"
+"[wp_geo_map]</code> om een kaart in een bericht weer te geven (als het "
+"bericht een locatie is meegegeven). U kunt deze shortcode maar &euml;&euml;n "
+"keer gebruiken in een bericht. De shortcode wordt genegeerd en een kaart "
+"wordt automatisch getoond als u een andere optie selecteert.</p>"
+
+#: admin/admin.php:144
+msgid "Feedback"
+msgstr "Feedback"
+
+#: admin/admin.php:145
+msgid ""
+"If you require help or support with WP Geo, please visit the <a %s>WordPress "
+"Support Forums</a>."
+msgstr ""
+"Heeft u hulp nodig met WP Geo, bezoek de het <a %s>WordPress "
+"Ondersteuningforum</a>."
+
+#: admin/admin.php:146
+msgid ""
+"If you experience any problems or bugs with the plugin, or want to suggest "
+"an improvement, please visit the new <a %s>GitHib Issues</a> page to log "
+"your issue."
+msgstr ""
+"<p>Als u problemen of fouten ondervindt met deze plugin, of een verbetering "
+"wilt inzenden, bezoek dan de nieuwe <a %s>GitHib Issues pagina</a> om uw "
+"probleem te vermelden.</p>"
+
+#: admin/admin.php:147
+msgid ""
+"If you like WP Geo and would like to make a donation, please do so on the <a "
+"%s>WP Geo website</a>. Your contributions help to ensure that I can dedicate "
+"more time to the support and development of the plugin."
+msgstr ""
+"<p>Als u WP Geo leuk vindt en graag zou willen doneren, doe dat op de <a "
+"%s>WP Geo website</a>. Uw bijdrage helpt mij meer tijd spenderen aan de "
+"ondersteuning en het ontwikkelen van de plugin.</p>"
+
+#: admin/admin.php:164 admin/admin.php:165 admin/admin.php:173
+msgid "WP Geo Location"
+msgstr "WP Geo locatie"
+
+#: admin/admin.php:205
+msgid "Use Default"
+msgstr "Gebruik standaard"
+
+#: admin/admin.php:237
+msgid "Search for location"
+msgstr "Zoek naar locatie"
+
+#: admin/admin.php:237
+msgid "town, postcode or address"
+msgstr "stad, postcode of adres"
+
+#: admin/admin.php:240
+msgid "Search"
+msgstr "Zoek"
+
+#: admin/admin.php:245
+msgid "Loading Google map, please wait..."
+msgstr "Laden van Google Map, een moment alstublieft..."
+
+#: admin/admin.php:250 admin/settings.php:84
+msgid "Latitude"
+msgstr "Breedtegraad"
+
+#: admin/admin.php:250 admin/settings.php:85
+msgid "Longitude"
+msgstr "Lengtegraad"
+
+#: admin/admin.php:253
+msgid "clear location"
+msgstr "wis locatie"
+
+#: admin/admin.php:253
+msgid "centre location"
+msgstr "centreer locatie"
+
+#: admin/admin.php:257
+msgid "Marker Title"
+msgstr "Marker titel"
+
+#: admin/admin.php:257
+msgid "optional"
+msgstr "optioneel"
+
+#: admin/admin.php:261
+msgid "Marker Image"
+msgstr "Marker-afbeelding"
+
+#: admin/admin.php:265
+msgid "Map Settings"
+msgstr "Kaart-instellingen"
+
+#: admin/admin.php:267 admin/settings.php:137
+msgid "Save custom map zoom for this post"
+msgstr "Sla aangepaste zoomniveau op voor dit bericht"
+
+#: admin/admin.php:268 admin/settings.php:138
+msgid "Save custom map type for this post"
+msgstr "Sla aangepaste kaarttype op voor dit bericht"
+
+#: admin/admin.php:269 admin/settings.php:139
+msgid "Save map centre point for this post"
+msgstr "Sla aangepast middelpunt op voor dit bericht"
+
+#: admin/dashboard.php:71
+msgid "No recent updates."
+msgstr "Geen recente updates."
+
+#: admin/dashboard.php:89
+msgid "View all WP Geo news..."
+msgstr "Toon al het WP Geo nieuws..."
+
+#: admin/donate-links.php:10
+msgid "Support Forum"
+msgstr "Ondersteuningsforum"
+
+#: admin/donate-links.php:11
+msgid "Report Bugs"
+msgstr "Rapporteer fouten"
+
+#: admin/donate-links.php:12
+msgid "Make a donation"
+msgstr "Doneer"
+
+#: admin/donate-links.php:13
+msgid "Follow @wpgeo for updates"
+msgstr "Volg @wpgeo voor updates"
+
+#: admin/donate-links.php:14
+msgid "Follow me on Twitter"
+msgstr "Volg mij op Twitter"
+
+#: admin/settings.php:22
+msgid "General Settings"
+msgstr "Algemene instellingen"
+
+#: admin/settings.php:24 widgets/wpgeo-widget.php:295
+msgid "Map Type"
+msgstr "Kaarttype"
+
+#: admin/settings.php:25
+msgid "Show Post Map"
+msgstr "Toon kaart bij berichten"
+
+#: admin/settings.php:26
+msgid "Default Map Location"
+msgstr "Standaard kaartlocatie"
+
+#: admin/settings.php:27
+msgid "Default Map Width"
+msgstr "Standaard kaartbreedte"
+
+#: admin/settings.php:28
+msgid "Default Map Height"
+msgstr "Standaard kaarthoogte"
+
+#: admin/settings.php:29
+msgid "Default Map Zoom"
+msgstr "Standaard kaartzoom"
+
+#: admin/settings.php:30
+msgid "Default Map Controls"
+msgstr "Standaard kaartnavigatie"
+
+#: admin/settings.php:31
+msgid "Default Post Options"
+msgstr "Standaard bericht-opties"
+
+#: admin/settings.php:32 widgets/wpgeo-widget.php:296
+msgid "Polylines"
+msgstr "Polylijnen"
+
+#: admin/settings.php:33
+msgid "Polyline Colour"
+msgstr "Polylijnkleur"
+
+#: admin/settings.php:34
+msgid "Show Maps On"
+msgstr "Toon kaarten op"
+
+#: admin/settings.php:35
+msgid "Feeds"
+msgstr "Feeds"
+
+#: admin/settings.php:46
+msgid ""
+"For more information and documentation about this plugin please visit the <a "
+"%s>WP Geo Plugin</a> home page."
+msgstr ""
+"Bezoek voor meer informatie over en de documentatie van deze plugin de <a "
+"%s>WP Geo Plugin</a> homepagina."
+
+#: admin/settings.php:47
+msgid ""
+"If you experience any problems/bugs with the plugin, please <a %s>log it "
+"here</a>."
+msgstr ""
+"Als u problemen of fouten ondervindt met deze plugin, <a %s>vermeld deze dan "
+"hier</a>."
+
+#: admin/settings.php:75
+msgid "Show on excerpts"
+msgstr "Toon op uittreksels"
+
+#: admin/settings.php:83
+msgid ""
+"When creating a new post, the map will default to focussing on this area for "
+"you to position a marker."
+msgstr ""
+"Bij het maken van een nieuw bericht, zal de kaart zich standaard centreren "
+"op dit gebied, zodat er een markering geplaatst kan worden."
+
+#: admin/settings.php:120
+msgid "Map Type Controls"
+msgstr "Kaarttypen"
+
+#: admin/settings.php:121
+msgid "You must select at least 2 map types for the control to show."
+msgstr ""
+"U moet minstens 2 kaarttypen kiezen om keuzeknoppen weer te laten geven."
+
+#: admin/settings.php:122
+msgid "Normal map"
+msgstr "Normale kaart"
+
+#: admin/settings.php:123 includes/wp-geo.php:1026
+msgid "Satellite (photographic map)"
+msgstr "Satelliet (fotografische kaart)"
+
+#: admin/settings.php:124 includes/wp-geo.php:1027
+msgid "Hybrid (photographic map with normal features)"
+msgstr "Hybride (fotografische kaart met normale functies)"
+
+#: admin/settings.php:125 includes/wp-geo.php:1028
+msgid "Physical (terrain map)"
+msgstr "Fysiek (terrein)"
+
+#: admin/settings.php:126
+msgid "Other Controls"
+msgstr "Andere bedieningen"
+
+#: admin/settings.php:127
+msgid "Show map scale"
+msgstr "Toon schaal"
+
+#: admin/settings.php:128
+msgid "Show collapsible overview map (in the corner of the map)"
+msgstr "Toon inklapbare overzichtskaart (in de hoek van de kaart)"
+
+#: admin/settings.php:149
+msgid "Show polylines (to connect multiple points on a single map)"
+msgstr "Toon polylijnen (om meerdere punten op een kaart te verbinden)"
+
+#: admin/settings.php:167
+msgid "Pages"
+msgstr "Pagina's"
+
+#: admin/settings.php:168
+msgid "Posts (single posts)"
+msgstr "Berichten (enkele berichten)"
+
+#: admin/settings.php:169
+msgid "Posts home page"
+msgstr "Berichtenpagina"
+
+#: admin/settings.php:170
+msgid "Posts in date archives"
+msgstr "Berichten in datum-archieven"
+
+#: admin/settings.php:171
+msgid "Posts in category archives"
+msgstr "Berichten in categorie-archieven"
+
+#: admin/settings.php:172
+msgid "Posts in tag archives"
+msgstr "Berichten in tag-archieven"
+
+#: admin/settings.php:173
+msgid "Posts in taxonomy archives"
+msgstr "Berichten in taxonomie-archieven"
+
+#: admin/settings.php:174
+msgid "Posts in author archives"
+msgstr "Berichten in auteur-archieven"
+
+#: admin/settings.php:175
+msgid "Search Results"
+msgstr "Zoekresultaten"
+
+#: admin/settings.php:202
+msgid "Add geographic information"
+msgstr "Voeg geografische informatie toe"
+
+#: admin/settings.php:222 widgets/wpgeo-widget.php:294
+msgid "Settings"
+msgstr "Instellingen"
+
+#: includes/functions.php:98
+msgid "Default"
+msgstr "Standaard"
+
+#: includes/functions.php:99
+msgid "Show Polylines"
+msgstr "Toon polylijnen"
+
+#: includes/functions.php:100
+msgid "Hide Polylines"
+msgstr "Verberg polylijnen"
+
+#: includes/markers.php:31
+msgid "Default Large Marker"
+msgstr "Standaard grote marker"
+
+#: includes/markers.php:32
+msgid "This is the default marker used to indicate a location on most maps."
+msgstr ""
+"Dit is de standaard markering die gebruikt wordt om op de meeste kaarten "
+"locaties aan te duiden."
+
+#: includes/markers.php:41
+msgid "Default Small Marker"
+msgstr "Standaard kleine marker"
+
+#: includes/markers.php:42
+msgid "This is the default marker used for the WP Geo sidebar widget."
+msgstr ""
+"Dit is de standaard markering die gebruikt wordt op op de WP Geo zijbalk-"
+"widget."
+
+#: includes/markers.php:51
+msgid "Default Dot Marker"
+msgstr "Standaard punt marker"
+
+#: includes/markers.php:52
+msgid ""
+"This marker image is not currently used but it is anticipated that it will "
+"be used to indicate less important locations in a future versions of WP Geo."
+msgstr ""
+"Deze marker wordt op dit moment niet gebruikt maar wordt mogelijk in latere "
+"versies van WP Geo gebruikt om minder belangrijke locaties aan te duiden."
+
+#: includes/shortcodes.php:74
+msgid "View Larger Map"
+msgstr "Toon grotere kaart"
+
+#: includes/wp-geo.php:919
+msgid "Large 3D pan/zoom control"
+msgstr "Grote 3D pan/zoom bedieningen"
+
+#: includes/wp-geo.php:920
+msgid "Large pan/zoom control"
+msgstr "Grote pan/zoom bedieningen"
+
+#: includes/wp-geo.php:921
+msgid "Smaller pan/zoom control"
+msgstr "Kleinere pan/zoom bedieningen"
+
+#: includes/wp-geo.php:922
+msgid "Small 3D zoom control (no panning controls)"
+msgstr "Kleine 3D zoom bediening (zonder pannen)"
+
+#: includes/wp-geo.php:923
+msgid "Small zoom control (no panning controls)"
+msgstr "Kleine zoom bediening (zonder pannen)"
+
+#: includes/wp-geo.php:924
+msgid "No pan/zoom controls"
+msgstr "Geen pan/zoom bedieningen"
+
+#: includes/wp-geo.php:965
+msgid "Zoomed Out"
+msgstr "Uitgezoomd"
+
+#: includes/wp-geo.php:984
+msgid "Zoomed In"
+msgstr "Ingezoomd"
+
+#: includes/wp-geo.php:1025
+msgid "Normal"
+msgstr "Normaal"
+
+#: includes/wp-geo.php:1058
+msgid "At top of post"
+msgstr "Bovenaan het bericht"
+
+#: includes/wp-geo.php:1059
+msgid "At bottom of post"
+msgstr "Onderaan het bericht"
+
+#: includes/wp-geo.php:1060
+msgid "Manually"
+msgstr "Handmatig"
+
+#: widgets/category-map.php:20
+msgid "WP Geo Category Map"
+msgstr "WP Geo categorie-kaart"
+
+#: widgets/category-map.php:23
+msgid "Displays markers from the current category"
+msgstr "Toon markeringen van de huidige categorie"
+
+#: widgets/contextual-map.php:20
+msgid "WP Geo Contextual Map"
+msgstr "WP Geo contextuele kaart"
+
+#: widgets/contextual-map.php:23
+msgid "Displays markers from the current page"
+msgstr "Toon markeringen van de huidige pagina"
+
+#: widgets/recent-locations.php:19
+msgid "WP Geo Recent Locations"
+msgstr "WP Geo recente locaties"
+
+#: widgets/recent-locations.php:22
+msgid "Displays markers for recent posts"
+msgstr "Toon markeringen voor recente berichten"
+
+#: widgets/recent-locations.php:103
+msgid "Number of markers to show"
+msgstr "Aantal markeringen"
+
+#: widgets/recent-locations.php:116
+msgid "Show Post Types"
+msgstr "Toon berichttypen"
+
+#: widgets/wpgeo-widget.php:138
+msgid "WP Geo is not currently active as you have not entered a Google API Key"
+msgstr ""
+"WP Geo is op dit moment niet actief omdat er geen Google API-sleutel is "
+"ingevoerd."
+
+#: widgets/wpgeo-widget.php:138
+msgid "Please update your WP Geo settings"
+msgstr "Pas alstublieft uw WP Geo-instellingen aan."
+
+#: widgets/wpgeo-widget.php:277
+msgid "Title"
+msgstr "Titel"
+
+#: widgets/wpgeo-widget.php:278
+msgid "Width"
+msgstr "Breedte"
+
+#: widgets/wpgeo-widget.php:279
+msgid "Height"
+msgstr "Hoogte"
+
+#: widgets/wpgeo-widget.php:292
+msgid "Zoom"
+msgstr "Zoom"
+
+#: widgets/wpgeo-widget.php:293
+msgid ""
+"If not all markers fit, the map will automatically be zoomed so they do."
+msgstr ""
+"Als niet alle markeringen passen, zal de kaart zo vergroot worden zodat dat "
+"wel is."
+
 #. Plugin URI of the plugin/theme
-#. #-#-#-#-#  plugin.pot (WP Geo 3.1.4)  #-#-#-#-#
-#. Author URI of the plugin/theme
 msgid "http://www.wpgeo.com/"
 msgstr "http://www.wpgeo.com/"
 
 #. Description of the plugin/theme
-msgid "Adds geocoding to WordPress."
-msgstr "Voegt geocode aan WordPress."
+msgid "Adds location maps to your posts, pages and custom post types."
+msgstr "Voegt locatie toe aan berichten, pagina's en aangepaste berichttypen."
 
 #. Author of the plugin/theme
 msgid "Ben Huson"
 msgstr "Ben Huson"
 
-#: includes/wp-geo.php:1174
-msgid "Show on excerpts"
-msgstr "Toon op uittreksels"
+#. Author URI of the plugin/theme
+msgid "http://www.benhuson.co.uk/"
+msgstr "http://www.benhuson.co.uk/"
 
-#: includes/wp-geo.php:1212
-msgid "Default Post Options"
-msgstr "Standaard bericht-opties"
+#~ msgid "Support this plugin"
+#~ msgstr "Steun deze plugin"
 
-#: includes/wp-geo.php:1673
-msgid "Marker Image"
-msgstr "Marker-afbeelding"
+#~ msgid "title"
+#~ msgstr "titel"
 
-#: includes/wp-geo.php:1619
-msgid "Use Default"
-msgstr "Gebruik standaard"
+#~ msgid "WP Geo settings updated"
+#~ msgstr "WP Geo-instellingen opgeslagen"
 
+#~ msgid "Adds geocoding to WordPress."
+#~ msgstr "Voegt geocode aan WordPress."
