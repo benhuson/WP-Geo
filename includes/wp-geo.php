@@ -7,7 +7,7 @@
 class WPGeo {
 	
 	// Version Information
-	var $version    = '3.2.6.4';
+	var $version    = '3.2.7';
 	var $db_version = 1;
 	
 	var $admin;
@@ -28,7 +28,7 @@ class WPGeo {
 		// Version
 		$wp_geo_version = get_option( 'wp_geo_version' );
 		if ( empty( $wp_geo_version ) || version_compare( $wp_geo_version, $this->version, '<' ) ) {
-			update_option( 'wp_geo_show_version_msg', 'Y' );
+			//update_option( 'wp_geo_show_version_msg', 'Y' );
 			update_option( 'wp_geo_version', $this->version );
 		}
 		

@@ -1,9 +1,3 @@
-# Translation of the WordPress plugin WP Geo 3.1.4 by Ben Huson.
-# Copyright (C) 2010 Ben Huson
-# This file is distributed under the same license as the WP Geo package.
-# Ben Huson <ben@thewhiteroom.net>, 2010.
-#
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Geo 3.1.4\n"
@@ -19,8 +13,9 @@ msgstr ""
 "Language-Team: fr_FR Alain Messin <dev@adecouvrir.info>\n"
 "Language-Team: hr_HR Andrija Papec <info.adriaindex@gmail.com>\n"
 "Language-Team: it_IT Diego Pierotto <ita.translations@tiscali.it>\n"
+"Language-Team: nl_NL Davey IJzermans <http://daveyyzermans.nl/>\n"
 "Language-Team: ru_RU Fat Cow <zhr@tut.by>\n"
-"Language-Team: zh_CN @imsteen\n"
+"Language-Team: zh_CN steen <@imsteen>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"

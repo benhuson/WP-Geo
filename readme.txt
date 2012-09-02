@@ -3,21 +3,20 @@ Contributors: husobj
 Donate link: http://www.wpgeo.com/donate
 Tags: maps, map, geo, geocoding, google, location, georss
 Requires at least: 3.0
-Tested up to: 3.3.1
+Tested up to: 3.4.1
 Stable tag: 3.2.6.4
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Add location maps to your posts and pages.
+Adds location maps to your posts, pages and custom post types.
 
 == Description ==
-
-**NOTE: You will need to re-add your widgets after upgrading to 3.2.5!**
 
 When editing a post or page, you will be able to set a physical location for that post and easily embed a Google map into your post. You can select the location by:
 
 1. Clicking on the map of the world to position the point.
 2. Searching for a location, town, city or address.
 3. Entering the latitude and longitude. 
-
 
 The WP Geo location selector is styled to fit seamlessly into the latest version of the WordPress admin.
 
@@ -30,7 +29,6 @@ More information can be found at http://www.wpgeo.com/.
 * Supports custom post types.
 * Widget zoom option.
 * Default Map Location setting.
-* Load maps from GeoRSS or KML data.
 * Geo Meta Tags
 * Markers links to posts
 * Settings for default controls
@@ -47,22 +45,33 @@ More information can be found at http://www.wpgeo.com/.
 * Set a location by searching for a location, town, city or address or
 * Set a location by entering the latitude and longitude
 
+= Languages =
+
+WP Geo is currently available in the following languages:
+
+* Belorussian (by Ilyuha)
+* Bulgarian (by Roman Rachkov)
+* Chinese, Simplified (by Steen Chow)
+* Croatian (by Andrija Papec)
+* English (default)
+* Danish (by Georg)
+* Dutch (by [Davey IJzermans](http://daveyyzermans.nl/))
+* French (by Alain Messin)
+* German (by Ivan Graf)
+* Italian (by Diego Pierotto)
+* Russian (by Fat Cower)
+* Spanish (by Alberto)
+
 == Installation ==
 1. Download the archive file and uncompress it.
-2. Put the "wp_geo" folder in "wp-content/plugins"
+2. Put the "wp-geo" folder in "wp-content/plugins"
 3. Enable in WordPress by visiting the "Plugins" menu and activating it.
 4. Go to the Settings page in the admin and enter your Google API Key and customise the settings.
 
-(you can sign up for a Google API Key at http://code.google.com/apis/maps/signup.html)
+You can [sign up for a Google API Key here](https://developers.google.com/maps/documentation/javascript/v2/introduction#Obtaining_Key).
 
 WP Geo will appear on the edit post and edit page screens.
 If you set a location, a Google map will automatically appear on your post or page (if your settings are set to).
-
-You can add a map you your category pages to which will display the locations of any posts within that category.
-Simply enter <?php $wpgeo->categoryMap(); ?> into your category template where you would like the map to appear.
-
-Please note that from version 2.2 you should access any WPGeo methods using the $wpgeo instance, not using a static class such as <?php WPGeo::categoryMap(); ?>.
-Being able to access methods in this way will be phased out in future versions so please change your code now if you need to.
 
 = Upgrading =
 
@@ -70,6 +79,11 @@ If upgrading from a previous version of the plugin:
 
 1. If you are not performing an automatic upgrade, deactivate and reactivate the plugin to ensure any new features are correctly installed.
 2. Visit the settings page after installing the plugin to customise any new options.
+
+== Frequently Asked Questions ==
+
+= Can I use Google Maps API v3? =
+Not yet but a future version of WP Geo will support it.
 
 == Screenshots ==
 
@@ -79,6 +93,21 @@ If upgrading from a previous version of the plugin:
 4. Widget Settings
 
 == Changelog ==
+
+= WP Geo 3.2.7 =
+
+* Added [wpgeo_title] shortcode.
+* Added [wpgeo_static_map] shortcode.
+* Added category map widget. Props David Keen.
+* Added wpgeo_is_valid_geo_coord() function.
+* Added 'wpgeo_show_maps' filter.
+* Settings page now uses WordPress Settings API.
+* All styles now enqueued properly.
+* Don't use global var $posts. Props pl.massard.
+* Fix WPGEO_DIR. Props Jghazally.
+* Fix post map type checkbox. Props RavanH.
+* Fix markers being searched for in the wrong folder. Props dolby_uk.
+* Minimum WordPress version 3.0 required - legacy code removed.
 
 = WP Geo 3.2.6.4 =
 
@@ -343,18 +372,13 @@ NOTE: You will need to re-add your widgets after upgrading!
 * Added option to set map type.
 * Added option to set wether maps appear at the top or bottom of posts.
 
-== Languages ==
+== Upgrade Notice ==
 
-WP Geo is currently available in the following languages:
+= 3.2.7 =
+Various bug fixes. Two new shortcodes. A new category widget. 'wpgeo_show_maps' filter.
 
-* Belorussian (by Ilyuha)
-* Bulgarian (by Roman Rachkov)
-* Chinese, Simplified (by Steen Chow)
-* Croatian (by Andrija Papec)
-* English (default)
-* Danish (by Georg)
-* French (by Alain Messin)
-* German (by Ivan Graf)
-* Italian (by Diego Pierotto)
-* Russian (by Fat Cower)
-* Spanish (by Alberto)
+= 3.2.5 =
+You will need to re-add your widgets after upgrading to 3.2.5!
+
+= 2.2 =
+Please note that from version 2.2 you should access any WPGeo methods using the $wpgeo instance, not using a static class such as <?php WPGeo::categoryMap(); ?>.
