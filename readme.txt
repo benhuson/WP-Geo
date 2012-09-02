@@ -49,17 +49,17 @@ More information can be found at http://www.wpgeo.com/.
 
 WP Geo is currently available in the following languages:
 
-* Belorussian (by Ilyuha)
-* Bulgarian (by Roman Rachkov)
-* Chinese, Simplified (by Steen Chow)
-* Croatian (by Andrija Papec)
-* English (default)
-* Danish (by Georg)
+* Belorussian (by [Ilyuha](http://antsar.info/))
+* Bulgarian (by [Roman Rachkov](http://www.georss.biz/))
+* Chinese, Simplified (by [Steen Chow](http://twitter.com/imsteen))
+* Croatian (by [Andrija Papec](http://www.adriaindex.com/))
+* Danish (by [Georg](http://wordpress.blogos.dk/søg-efter-downloads/?did=91))
 * Dutch (by [Davey IJzermans](http://daveyyzermans.nl/))
+* English (default)
 * French (by Alain Messin)
-* German (by Ivan Graf)
+* German (by [Ivan Graf](http://blog.bildergallery.com/))
 * Italian (by Diego Pierotto)
-* Russian (by Fat Cower)
+* Russian (by [Fat Cower](http://www.fatcow.com/))
 * Spanish (by Alberto)
 
 == Installation ==
