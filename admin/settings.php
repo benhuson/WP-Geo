@@ -166,7 +166,7 @@ class WPGeo_Settings {
 		$options = get_option( 'wp_geo_options' );
 		echo $wpgeo->options_checkbox( 'wp_geo_options[show_maps_on_pages]', 'Y', $options['show_maps_on_pages'], false, 'show_maps_on_pages' ) . ' ' . __( 'Pages', 'wp-geo' ) . '<br />';
 		echo $wpgeo->options_checkbox( 'wp_geo_options[show_maps_on_posts]', 'Y', $options['show_maps_on_posts'], false, 'show_maps_on_posts' ) . ' ' . __( 'Posts (single posts)', 'wp-geo' ) . '<br />';
-		echo $wpgeo->options_checkbox( 'wp_geo_options[show_maps_on_home]', 'Y', $options['show_maps_on_home'], false, 'show_maps_on_home' ) . ' ' . __( 'Posts home page', 'wp-geo' ) . '<br />';
+		echo $wpgeo->options_checkbox( 'wp_geo_options[show_maps_on_home]', 'Y', $options['show_maps_on_home'], false, 'show_maps_on_home' ) . ' ' . __( 'Posts archive/home page', 'wp-geo' ) . '<br />';
 		echo $wpgeo->options_checkbox( 'wp_geo_options[show_maps_in_datearchives]', 'Y', $options['show_maps_in_datearchives'], false, 'show_maps_in_datearchives' ) . ' ' . __( 'Posts in date archives', 'wp-geo' ) . '<br />';
 		echo $wpgeo->options_checkbox( 'wp_geo_options[show_maps_in_categoryarchives]', 'Y', $options['show_maps_in_categoryarchives'], false, 'show_maps_in_categoryarchives' ) . ' ' . __( 'Posts in category archives', 'wp-geo' ) . '<br />';
 		echo $wpgeo->options_checkbox( 'wp_geo_options[show_maps_in_tagarchives]', 'Y', $options['show_maps_in_tagarchives'], false, 'show_maps_in_tagarchives' ) . ' ' . __( 'Posts in tag archives', 'wp-geo' ) . '<br />';

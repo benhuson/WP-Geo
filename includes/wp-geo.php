@@ -850,15 +850,17 @@ class WPGeo {
 				return $this->show_maps_filter( true );
 			}
 		}
-		if ( is_page() && $wp_geo_options['show_maps_on_pages'] == 'Y' )				return $this->show_maps_filter( true );
-		if ( is_date() && $wp_geo_options['show_maps_in_datearchives'] == 'Y' )			return $this->show_maps_filter( true );
-		if ( is_category() && $wp_geo_options['show_maps_in_categoryarchives'] == 'Y' )	return $this->show_maps_filter( true );
-		if ( is_tag() && $wp_geo_options['show_maps_in_tagarchives'] == 'Y' )			return $this->show_maps_filter( true );
-		if ( is_tax() && $wp_geo_options['show_maps_in_taxarchives'] == 'Y' )			return $this->show_maps_filter( true );
-		if ( is_author() && $wp_geo_options['show_maps_in_authorarchives'] == 'Y' )		return $this->show_maps_filter( true );
-		if ( is_search() && $wp_geo_options['show_maps_in_searchresults'] == 'Y' )		return $this->show_maps_filter( true );
-		if ( is_feed() && $wp_geo_options['add_geo_information_to_rss'] == 'Y' )		return $this->show_maps_filter( true );
-
+		if ( is_page() && $wp_geo_options['show_maps_on_pages'] == 'Y' )                return $this->show_maps_filter( true );
+		if ( is_date() && $wp_geo_options['show_maps_in_datearchives'] == 'Y' )         return $this->show_maps_filter( true );
+		if ( is_category() && $wp_geo_options['show_maps_in_categoryarchives'] == 'Y' ) return $this->show_maps_filter( true );
+		if ( is_tag() && $wp_geo_options['show_maps_in_tagarchives'] == 'Y' )           return $this->show_maps_filter( true );
+		if ( is_tax() && $wp_geo_options['show_maps_in_taxarchives'] == 'Y' )           return $this->show_maps_filter( true );
+		if ( is_author() && $wp_geo_options['show_maps_in_authorarchives'] == 'Y' )     return $this->show_maps_filter( true );
+		if ( is_search() && $wp_geo_options['show_maps_in_searchresults'] == 'Y' )      return $this->show_maps_filter( true );
+		if ( is_feed() && $wp_geo_options['add_geo_information_to_rss'] == 'Y' )        return $this->show_maps_filter( true );
+		if ( is_post_type_archive() && post_type_supports( get_post_type(), 'wpgeo' ) && $wp_geo_options['show_maps_on_home'] == 'Y' )
+			return $this->show_maps_filter( true );
+		
 		// Activate maps in admin...
 		if ( is_admin() ) {
 			// If editing a post or page...
