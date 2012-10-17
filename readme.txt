@@ -3,8 +3,8 @@ Contributors: husobj
 Donate link: http://www.wpgeo.com/donate
 Tags: maps, map, geo, geocoding, google, location, georss
 Requires at least: 3.0
-Tested up to: 3.4.1
-Stable tag: 3.2.6.4
+Tested up to: 3.4.2
+Stable tag: 3.2.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,8 +101,10 @@ Not yet but a future version of WP Geo will support it.
 * Added category map widget. Props David Keen.
 * Added wpgeo_is_valid_geo_coord() function.
 * Added 'wpgeo_show_maps' filter.
+* Enable loading of maps on CPT archive page by checking the 'Show Maps On' CPT and 'Posts archive/home page' checkboxes.
 * Settings page now uses WordPress Settings API.
 * All styles now enqueued properly.
+* Only loads admin functionality when in admin.
 * Don't use global var $posts. Props pl.massard.
 * Fix WPGEO_DIR. Props Jghazally.
 * Fix post map type checkbox. Props RavanH.
@@ -375,7 +377,7 @@ NOTE: You will need to re-add your widgets after upgrading!
 == Upgrade Notice ==
 
 = 3.2.7 =
-Various bug fixes. Two new shortcodes. A new category widget. 'wpgeo_show_maps' filter.
+Various bug fixes. Two new shortcodes. A new category widget. 'wpgeo_show_maps' filter. Better CPT compatibility.
 
 = 3.2.5 =
 You will need to re-add your widgets after upgrading to 3.2.5!
