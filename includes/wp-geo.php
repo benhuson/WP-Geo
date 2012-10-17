@@ -51,6 +51,7 @@ class WPGeo {
 		add_filter( 'post_limits', array( $this, 'post_limits' ) );
 		add_filter( 'posts_join', array( $this, 'posts_join' ) );
 		add_filter( 'posts_where', array( $this, 'posts_where' ) );
+		add_filter( 'option_wp_geo_options', array( $this, 'option_wp_geo_options' ) );
 		
 		// Admin
 		if ( is_admin() ) {
@@ -60,13 +61,20 @@ class WPGeo {
 	}
 	
 	/**
-	 * Register Activation
-	 * Runs when the plugin is activated - creates options etc.
+	 * Filter 'wp_geo_options' value to ensure all defaults are set.
+	 *
+	 * @param array $option Option values.
+	 * @return array Default values.
 	 */
-	function register_activation() {
-		$wpgeo = new WPGeo();
-		
-		$options = array(
+	function option_wp_geo_options( $option ) {
+		return wp_parse_args( $option, $this->default_option_values() );
+	}
+	
+	/**
+	 * Default Option Values
+	 */
+	function default_option_values() {
+		return array(
 			'google_api_key'                => '', 
 			'google_map_type'               => 'G_NORMAL_MAP', 
 			'show_post_map'                 => 'TOP', 
@@ -99,6 +107,16 @@ class WPGeo {
 			'show_maps_on_excerpts'         => 'N',
 			'add_geo_information_to_rss'    => 'Y'
 		);
+	}
+	
+	/**
+	 * Register Activation
+	 * Runs when the plugin is activated - creates options etc.
+	 */
+	function register_activation() {
+		$wpgeo = new WPGeo();
+		
+		$options = $this->default_option_values();
 		// @todo Rather than add_option() check values and use update?
 		add_option( 'wp_geo_options', $options );
 		$wp_geo_options = get_option( 'wp_geo_options' );
