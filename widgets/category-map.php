@@ -51,11 +51,11 @@ class WPGeo_Category_Map_Widget extends WPGeo_Widget {
 				'meta_compare' => '>',
 				'category'     => $post_cat_id
 			) );
-			$args = wp_parse_args( $instance, array(
+			$map_args = wp_parse_args( $instance, array(
 				'id'    => $args['widget_id'] . '-map',
 				'posts' => $posts
 			) );
-			$map_content = $this->add_widget_map( $args );
+			$map_content = $this->add_widget_map( $map_args );
 			echo $this->wrap_content( $map_content, $args, $instance );
 		}
 	}
