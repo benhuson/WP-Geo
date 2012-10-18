@@ -51,11 +51,11 @@ class WPGeo_Recent_Locations_Widget extends WPGeo_Widget {
 					'meta_compare' => '!=',
 					'post_type'    => $instance['post_type']
 				) );
-				$args = wp_parse_args( $instance, array(
+				$map_args = wp_parse_args( $instance, array(
 					'id'    => $args['widget_id'] . '-map',
 					'posts' => $posts
 				) );
-				$map_content = $this->add_widget_map( $args );
+				$map_content = $this->add_widget_map( $map_args );
 				echo $this->wrap_content( $map_content, $args, $instance );
 			}
 		}

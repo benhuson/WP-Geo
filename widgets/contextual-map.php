@@ -40,11 +40,11 @@ class WPGeo_Contextual_Map_Widget extends WPGeo_Widget {
 			$instance = $this->validate_display_instance( $instance );
 			
 			// Start write widget
-			$args = wp_parse_args( $instance, array(
+			$map_args = wp_parse_args( $instance, array(
 				'id'    => $args['widget_id'] . '-map',
 				'posts' => $posts
 			) );
-			$map_content = $this->add_widget_map( $args );
+			$map_content = $this->add_widget_map( $map_args );
 			echo $this->wrap_content( $map_content, $args, $instance );
 		}
 	}
