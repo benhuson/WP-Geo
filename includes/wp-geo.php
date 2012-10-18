@@ -7,7 +7,7 @@
 class WPGeo {
 	
 	// Version Information
-	var $version    = '3.2.7';
+	var $version    = '3.2.7.1';
 	var $db_version = 1;
 	
 	var $admin;

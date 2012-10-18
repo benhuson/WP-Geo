@@ -4,7 +4,7 @@ Donate link: http://www.wpgeo.com/donate
 Tags: maps, map, geo, geocoding, google, location, georss
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 3.2.7
+Stable tag: 3.2.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,10 @@ Not yet but a future version of WP Geo will support it.
 4. Widget Settings
 
 == Changelog ==
+
+= WP Geo 3.2.7.1 =
+
+* Fixed widget title and arguments conflict. Props NotIanAshworth.
 
 = WP Geo 3.2.7 =
 
