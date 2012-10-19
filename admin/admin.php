@@ -189,7 +189,11 @@ class WPGeo_Admin {
 		$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
 		$title     = get_post_meta( $post->ID, WPGEO_TITLE_META, true );
 		$marker    = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
-		$settings  = get_post_meta( $post->ID, WPGEO_MAP_SETTINGS_META, true );
+		$settings  = wp_parse_args( get_post_meta( $post->ID, WPGEO_MAP_SETTINGS_META, true ), array(
+			'zoom'   => '',
+			'type'   => '',
+			'centre' => ''
+		) );
 		
 		$wpgeo_map_settings_zoom = '';
 		$wpgeo_map_settings_type = '';
@@ -206,21 +210,21 @@ class WPGeo_Admin {
 			'option_none_value' => ''
 		);
 		
-		if ( isset( $settings['zoom'] ) && ! empty( $settings['zoom'] ) ) {
+		if ( ! empty( $settings['zoom'] ) ) {
 			$wpgeo_map_settings_zoom = $settings['zoom'];
 			$wpgeo_map_settings_zoom_checked = checked( true, true, false );
 		} elseif ( $wp_geo_options['save_post_zoom'] == 'Y' ) {
 			$wpgeo_map_settings_zoom = $wp_geo_options['save_post_zoom'];
 			$wpgeo_map_settings_zoom_checked = checked( true, true, false );
 		}
-		if ( isset( $settings['type'] ) && ! empty( $settings['type'] ) ) {
+		if ( ! empty( $settings['type'] ) ) {
 			$wpgeo_map_settings_type = $settings['type'];
 			$wpgeo_map_settings_type_checked = checked( true, true, false );
 		} elseif ( $wp_geo_options['save_post_map_type'] == 'Y' ) {
 			$wpgeo_map_settings_type = $wp_geo_options['save_post_map_type'];
 			$wpgeo_map_settings_type_checked = checked( true, true, false );
 		}
-		if ( isset( $settings['centre'] ) && ! empty( $settings['centre'] ) ) {
+		if ( ! empty( $settings['centre'] ) ) {
 			$wpgeo_map_settings_centre = $settings['centre'];
 			$wpgeo_map_settings_centre_checked = checked( true, true, false );
 		} elseif ( $wp_geo_options['save_post_centre_point'] == 'Y' ) {
