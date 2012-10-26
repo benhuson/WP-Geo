@@ -35,7 +35,38 @@ class WPGeo_Settings {
  		add_settings_field( 'feeds', __( 'Feeds', 'wp-geo' ), array( $this, 'feeds_field' ), 'wp_geo_options', 'wpgeo_general' );
  		
  		// Register Settings
- 		register_setting( 'wp_geo_options', 'wp_geo_options' );
+ 		register_setting( 'wp_geo_options', 'wp_geo_options', array( $this, 'wp_geo_options_validation' ) );
+	}
+	
+	/**
+	 * Options Validation
+	 */
+	function wp_geo_options_validation( $input ) {
+		// Ensure unchecked checkboxes are set to 'N'
+		$input = wp_parse_args( $input, array(
+			'show_map_type_normal'          => 'N',
+			'show_map_type_satellite'       => 'N',
+			'show_map_type_hybrid'          => 'N',
+			'show_map_type_physical'        => 'N',
+			'show_map_scale'                => 'N',
+			'show_map_overview'             => 'N',
+			'save_post_zoom'                => 'N',
+			'save_post_map_type'            => 'N',
+			'save_post_centre_point'        => 'N',
+			'show_polylines'                => 'N',
+			'show_maps_on_home'             => 'N',
+			'show_maps_on_pages'            => 'N',
+			'show_maps_on_posts'            => 'N',
+			'show_maps_in_datearchives'     => 'N',
+			'show_maps_in_categoryarchives' => 'N',
+			'show_maps_in_tagarchives'      => 'N',
+			'show_maps_in_taxarchives'      => 'N',
+			'show_maps_in_authorarchives'   => 'N',
+			'show_maps_in_searchresults'    => 'N',
+			'show_maps_on_excerpts'         => 'N',
+			'add_geo_information_to_rss'    => 'N'
+		) );
+		return $input;
 	}
 
 	/**
