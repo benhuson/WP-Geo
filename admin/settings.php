@@ -19,8 +19,11 @@ class WPGeo_Settings {
 	function register_settings() {
 		
 		// General Settings
-		add_settings_section( 'wpgeo_general', __( 'General Settings', 'wp-geo' ), array( $this, 'wp_mailfrom_settings_section' ), 'wp_geo_options' );
-		add_settings_field( 'google_api_key', __( 'Google API Key', 'wp-geo' ), array( $this, 'google_api_key_field' ), 'wp_geo_options', 'wpgeo_general' );
+		add_settings_section( 'wpgeo_api', __( 'API Settings', 'wp-geo' ), array( $this, 'api_settings_section' ), 'wp_geo_options' );
+		add_settings_field( 'public_api', __( 'Public API', 'wp-geo' ), array( $this, 'public_api_field' ), 'wp_geo_options', 'wpgeo_api' );
+		add_settings_field( 'admin_api', __( 'Admin API', 'wp-geo' ), array( $this, 'admin_api_field' ), 'wp_geo_options', 'wpgeo_api' );
+		add_settings_field( 'google_api_key', __( 'Google API Key', 'wp-geo' ), array( $this, 'google_api_key_field' ), 'wp_geo_options', 'wpgeo_api' );
+		add_settings_section( 'wpgeo_general', __( 'General Settings', 'wp-geo' ), array( $this, 'general_settings_section' ), 'wp_geo_options' );
 		add_settings_field( 'google_map_type', __( 'Map Type', 'wp-geo' ), array( $this, 'google_map_type_field' ), 'wp_geo_options', 'wpgeo_general' );
  		add_settings_field( 'show_post_map', __( 'Show Post Map', 'wp-geo' ), array( $this, 'show_post_map_field' ), 'wp_geo_options', 'wpgeo_general' );
  		add_settings_field( 'default_map_location', __( 'Default Map Location', 'wp-geo' ), array( $this, 'default_map_location_field' ), 'wp_geo_options', 'wpgeo_general' );
@@ -68,15 +71,34 @@ class WPGeo_Settings {
 		) );
 		return $input;
 	}
+	
+	/**
+	 * API Settings Section
+	 */
+	function api_settings_section() {
+		echo '';
+	}
 
 	/**
-	 * Mail From Settings Section
+	 * Public API Field
 	 */
-	function wp_mailfrom_settings_section() {
-		echo '<p>'
-			. sprintf( __( "For more information and documentation about this plugin please visit the <a %s>WP Geo Plugin</a> home page.", 'wp-geo' ), 'href="http://www.benhuson.co.uk/wordpress-plugins/wp-geo/"' ) . '<br />'
-			. sprintf( __( "If you experience any problems/bugs with the plugin, please <a %s>log it here</a>.", 'wp-geo' ), 'href="http://code.google.com/p/wp-geo/issues/list"' ) . 
-			'</p>';
+	function public_api_field() {
+		$options = get_option( 'wp_geo_options' );
+		echo '<select name="wp_geo_options[public_api]" id="public_api">
+				<option value="googlemapsv2" ' . selected( 'googlemapsv2', $options['public_api'], false ) . '>' . __( 'Google Maps v2', 'wp-geo' ) . '</option>
+				<option value="googlemapsv3" ' . selected( 'googlemapsv3', $options['public_api'], false ) . '>' . __( 'Google Maps v3', 'wp-geo' ) . '</option>
+			</select>';
+	}
+
+	/**
+	 * Admin API Field
+	 */
+	function admin_api_field() {
+		$options = get_option( 'wp_geo_options' );
+		echo '<select name="wp_geo_options[admin_api]" id="admin_api">
+				<option value="googlemapsv2" ' . selected( 'googlemapsv2', $options['admin_api'], false ) . '>' . __( 'Google Maps v2', 'wp-geo' ) . '</option>
+				<option value="googlemapsv3" ' . selected( 'googlemapsv3', $options['admin_api'], false ) . '>' . __( 'Google Maps v3', 'wp-geo' ) . '</option>
+			</select>';
 	}
 
 	/**
@@ -85,6 +107,16 @@ class WPGeo_Settings {
 	function google_api_key_field() {
 		$options = get_option( 'wp_geo_options' );
 		echo '<input name="wp_geo_options[google_api_key]" type="text" id="google_api_key" value="' . $options['google_api_key'] . '" class="regular-text" />';
+	}
+
+	/**
+	 * General Settings Section
+	 */
+	function general_settings_section() {
+		echo '<p>'
+			. sprintf( __( "For more information and documentation about this plugin please visit the <a %s>WP Geo Plugin</a> home page.", 'wp-geo' ), 'href="http://www.benhuson.co.uk/wordpress-plugins/wp-geo/"' ) . '<br />'
+			. sprintf( __( "If you experience any problems/bugs with the plugin, please <a %s>log it here</a>.", 'wp-geo' ), 'href="http://code.google.com/p/wp-geo/issues/list"' ) . 
+			'</p>';
 	}
 
 	/**

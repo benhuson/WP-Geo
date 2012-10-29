@@ -354,7 +354,7 @@ class WPGeo_Admin {
 			$settings['zoom'] = $_POST['wpgeo_map_settings_zoom'];
 		}
 		if ( isset( $_POST['wpgeo_map_settings_type'] ) && ! empty( $_POST['wpgeo_map_settings_type'] ) ) {
-			$settings['type'] = $_POST['wpgeo_map_settings_type'];
+			$settings['type'] = $wpgeo->decode_api_string( $_POST['wpgeo_map_settings_type'], 'maptype' );
 		}
 		if ( isset( $_POST['wpgeo_map_settings_centre'] ) && ! empty( $_POST['wpgeo_map_settings_centre'] ) ) {
 			$settings['centre'] = $_POST['wpgeo_map_settings_centre'];

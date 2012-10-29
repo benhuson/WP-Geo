@@ -1,96 +1,98 @@
 
-/**
- * ----- WP Geo Admin Post -----
- * JavaScript for the WP Go Google Maps interface
- * when editing posts and pages.
- */
-
-var map = null;
-var geocoder = null;
-var marker = null;
-
-function wpgeo_updatedLatLngFields() {
-	var latitude  = jQuery("input#wp_geo_latitude").val();
-	var longitude = jQuery("input#wp_geo_longitude").val();
+(function($){
 	
-	if ( latitude == '' || longitude == '' ) {
-		marker.hide();
-	} else {
-		var point = new GLatLng(latitude, longitude);
-		map.setCenter(point);
-		marker.setPoint(point);
-		marker.show();
-	}
-}
-
-jQuery(document).ready(function() {
-	
-	// Latitude field updated
-	jQuery("#wp_geo_latitude").keyup(function() {
-		wpgeo_updatedLatLngFields();
-	});
-	
-	// Longitude field updated
-	jQuery("#wp_geo_longitude").keyup(function() {
-		wpgeo_updatedLatLngFields();
-	});
-	
-	// Clear location fields
-	jQuery("#wpgeo_location a.wpgeo-clear-location-fields").click(function(e) {
-		jQuery("input#wp_geo_search").val('');
-		jQuery("input#wp_geo_latitude").val('');
-		jQuery("input#wp_geo_longitude").val('');
-		marker.hide();
-		return false;
-	});
-	
-	// Centre Location
-	jQuery("#wpgeo_location a.wpgeo-centre-location").click(function(e) {
-		map.setCenter(marker.getLatLng());
-		return false;
-	});
-	
-	// Location search
-	jQuery("#wpgeo_location #wp_geo_search_button").click(function(e) {
-		var latitude  = jQuery("input#wp_geo_latitude").val();
-		var longitude = jQuery("input#wp_geo_longitude").val();
-		var address = jQuery("input#wp_geo_search").val();
-		var geocoder = new GClientGeocoder();
+	/**
+	 * Post Admin
+	 */
+	 $(document).ready(function() {
 		
-		// Set default base country for search
-		if ( jQuery("input#wp_geo_base_country_code").length > 0 ) {
-			var base_country_code = jQuery("input#wp_geo_base_country_code").val();
-			geocoder.setBaseCountryCode(base_country_code);
-		}
+		/**
+		 * Events
+		 */
+		 
+		// Centre location
+		$("#wpgeo_location a.wpgeo-centre-location").click(function(e) {
+			$('#wpgeo_location').trigger('WPGeo_centerLocation');
+			e.preventDefault();
+		});
+	
+		// Clear location fields
+		$("#wpgeo_location a.wpgeo-clear-location-fields").click(function(e) {
+			$('#wpgeo_location').trigger('WPGeo_clearLocationFields');
+			e.preventDefault();
+		});
 		
-		if ( geocoder ) {
-			geocoder.getLatLng(
-				address,
-				function(point) {
-					if ( !point ) {
-						alert(address + " not found");
-					} else {
-						map.setCenter(point);
-						marker.setPoint(point);
-						marker.show();
-						jQuery("input#wp_geo_latitude").val(point.lat());
-						jQuery("input#wp_geo_longitude").val(point.lng());
-					}
+		// Location search
+		$("#wpgeo_location #wp_geo_search_button").click(function(e) {
+			$(this).closest('#wpgeo_location').trigger({
+				type              : 'WPGeo_searchLocation',
+				address           : $("input#wp_geo_search").val(),
+				base_country_code : $("input#wp_geo_base_country_code").val()
+			});
+			e.preventDefault();
+		});
+	
+		// Latitude field updated
+		$("#wp_geo_latitude").keyup(function() {
+			$("#wpgeo_location").trigger({
+				type : 'WPGeo_updateLatLngField',
+				lat  : $("input#wp_geo_latitude").val(),
+				lng  : $("input#wp_geo_longitude").val(),
+			});
+		});
+		
+		// Longitude field updated
+		$("#wp_geo_longitude").keyup(function() {
+			$("#wpgeo_location").trigger({
+				type : 'WPGeo_updateLatLngField',
+				lat  : $("input#wp_geo_latitude").val(),
+				lng  : $("input#wp_geo_longitude").val(),
+			});
+		});
+		
+		// Prevent search <enter> from submitting post
+		$(window).keydown(function(e) {
+			if ($("#wpgeo_location input:focus").length > 0) {
+				if (e.keyCode == 13) {
+					e.preventDefault();
+					return false;
 				}
-			);
-		}
-		
-		return false;
-	});
-	
-	// Prevent enter from submitting post
-	jQuery(window).keydown(function(event){
-		if (jQuery("#wpgeo_location input:focus").length > 0) {
-			if (event.keyCode == 13) {
-				event.preventDefault();
-				return false;
 			}
-		}
-	});
-	
-});
+		});
+		
+		/**
+		 * Event Handlers
+		 */
+		
+		// Update lat/lng fields
+		$("#wpgeo_location").bind("WPGeo_updateMarkerLatLng", function(e) {
+			$("#wp_geo_latitude").val(e.lat);
+			$("#wp_geo_longitude").val(e.lng);
+		});
+		
+		// Update zoom
+		$("#wpgeo_location").bind("WPGeo_updateMapZoom", function(e) {
+			$("#wpgeo_map_settings_zoom").val(e.zoom);
+		});
+		
+		// Update map type
+		$("#wpgeo_location").bind("WPGeo_updateMapType", function(e) {
+			$("#wpgeo_map_settings_type").val(e.mapType);
+		});
+		
+		// Update center
+		$("#wpgeo_location").bind("WPGeo_updateMapCenter", function(e) {
+			$("#wpgeo_map_settings_centre").val(e.latLng.lat() + "," + e.latLng.lng());
+		});
+		
+		// Clear location fields handler
+		$('#wpgeo_location').bind('WPGeo_clearLocationFields', function(e) {
+			$(this).find("input#wp_geo_search").val('');
+			$(this).find("input#wp_geo_latitude").val('');
+			$(this).find("input#wp_geo_longitude").val('');
+			$('#wpgeo_location').trigger('WPGeo_hideMarker');
+		});
+	 	
+	 });
+	 
+})(jQuery);
