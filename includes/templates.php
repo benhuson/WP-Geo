@@ -270,6 +270,7 @@ function get_wpgeo_map( $query, $options = null ) {
 				map.setCenter(new GLatLng(' . $wp_geo_options['default_map_latitude'] . ', ' . $wp_geo_options['default_map_longitude'] . '), ' . $wp_geo_options['default_map_zoom'] . ');';
 	}
 	$output .= '
+				' . apply_filters( 'wpgeo_map_js_preoverlays', '', 'map' ) . '
 			}
 		} );
 		-->

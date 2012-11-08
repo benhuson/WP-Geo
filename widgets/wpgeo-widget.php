@@ -252,6 +252,8 @@ class WPGeo_Widget extends WP_Widget {
 								zoom = ' . $args['zoom'] . ';
 							}
 							map.setCenter(center, zoom);
+							
+							' . apply_filters( 'wpgeo_map_js_preoverlays', '', 'map' ) . '
 						}
 					}
 					
