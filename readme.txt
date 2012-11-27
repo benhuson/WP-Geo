@@ -4,7 +4,7 @@ Donate link: http://www.wpgeo.com/donate
 Tags: maps, map, geo, geocoding, google, location, georss
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 3.2.7.1
+Stable tag: 3.2.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,14 @@ Not yet but a future version of WP Geo will support it.
 4. Widget Settings
 
 == Changelog ==
+
+= WP Geo 3.2.7.2 =
+
+* Update settings link on plugins page.
+* Add 'wpgeo_map_js_preoverlays' filter to widgets and mashup map.
+* Ensure unchecked checkboxes are saved as 'N'.
+* Ensure default post settings are set.
+* Prevent some other PHP warnings.
 
 = WP Geo 3.2.7.1 =
 
