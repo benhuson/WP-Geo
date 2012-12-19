@@ -97,16 +97,21 @@ class WPGeo_Map {
 		
 		// Markers
 		$js_markers = '';
+		$js_markers_v3 = '';
 		if ( count( $this->points ) > 0 ) {
 			for ( $i = 0; $i < count( $this->points ); $i++ ) {
 				$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', $this->points[$i]['icon'], $this->id, 'wpgeo_map' );
 				$js_markers .= 'var marker_' . $map_id .'_' . $i . ' = new wpgeo_createMarker2(map_' . $map_id . ', new GLatLng(' . $this->points[$i]['latitude'] . ', ' . $this->points[$i]['longitude'] . '), ' . $icon . ', \'' . addslashes( __( $this->points[$i]['title'] ) ) . '\', \'' . $this->points[$i]['link'] . '\');' . "\n";
 				$js_markers .= 'bounds.extend(new GLatLng(' . $this->points[$i]['latitude'] . ', ' . $this->points[$i]['longitude'] . '));';
+				// @todo Tooltip, icon and link for v3
+				$js_markers_v3 .= 'var marker_' . $map_id .'_' . $i . ' = new google.maps.Marker({ position:new google.maps.LatLng(' . $this->points[$i]['latitude'] . ', ' . $this->points[$i]['longitude'] . '), map:map_' . $map_id . ', icon: ' . $icon . ' });' . "\n";
+				$js_markers_v3 .= 'bounds.extend(new google.maps.LatLng(' . $this->points[$i]['latitude'] . ', ' . $this->points[$i]['longitude'] . '));' . "\n";
 			}
 		}
 		
 		// Show Polyline
 		$js_polyline = '';
+		$js_polyline_v3 = '';
 		if ( $wp_geo_options['show_polylines'] == 'Y' ) {
 			if ( $this->show_polyline ) {
 				if ( count( $this->points ) > 1 ) {
@@ -117,6 +122,19 @@ class WPGeo_Map {
 						$polyline->add_coord( $this->points[$i]['latitude'], $this->points[$i]['longitude'] );
 					}
 					$js_polyline .= WPGeo_API_GMap2::render_map_overlay( 'map_' . $map_id, WPGeo_API_GMap2::render_polyline( $polyline ) );
+					// v3
+					$polyline_js_3_coords = array();
+					foreach ( $polyline->coords as $c ) {
+						$polyline_js_3_coords[] = 'new google.maps.LatLng(' . $c->latitude . ', ' . $c->longitude . ')';
+					}
+					$js_polyline_v3 = 'var polyline = new google.maps.Polyline({
+							path: [' . implode( ',', $polyline_js_3_coords ) . '],
+							strokeColor: "' . $polyline->color . '",
+							strokeOpacity: ' . $polyline->opacity . ',
+							strokeWeight: ' . $polyline->thickness . ',
+							geodesic : ' . $polyline->geodesic . '
+						});
+						polyline.setMap(map);';
 				}
 			}
 		}
@@ -140,34 +158,61 @@ class WPGeo_Map {
 			$js_controls .= WPGeo_API_GMap2::render_map_control( 'map_' . $map_id, 'GOverviewMapControl' );
 		
 		// Map Javascript
-		$js = '
-			if (document.getElementById("' . $div . '"))
-			{
-				var bounds = new GLatLngBounds();
-    
-				map_' . $map_id . ' = new GMap2(document.getElementById("' . $div . '"));
-				var center = new GLatLng(' . $this->points[0]['latitude'] . ', ' . $this->points[0]['longitude'] . ');
-				map_' . $map_id . '.setCenter(center, ' . $this->zoom . ');
-				
-				' . $js_maptypes . '
-				map_' . $map_id . '.setMapType(' . $this->maptype . ');
-				
-				' . WPGeo_API_GMap2::render_map_control( 'map_' . $map_id, 'GMapTypeControl' );
-		if ( $this->mapcontrol != "" ) {
-			$js .= WPGeo_API_GMap2::render_map_control( 'map_' . $map_id, $this->mapcontrol );
-		}
-		$js .= '
-				var center_' . $map_id .' = new GLatLng(' . $this->points[0]['latitude'] . ', ' . $this->points[0]['longitude'] . ');
-				
-				' . apply_filters( 'wpgeo_map_js_preoverlays', '', 'map_' . $map_id ) . '
-				
-				' . $js_markers . '
-				' . $js_polyline . '
-    			' . $js_zoom . '
-    			' . $js_controls . '
-    			
-			}';
+		if ( 'googlemapsv3' == $wp_geo_options['admin_api'] ) {
+			$js = '
+				if (document.getElementById("' . $div . '")) {
+					var bounds = new google.maps.LatLngBounds();
+					
+					var mapOptions = {
+						center    : new google.maps.LatLng(' . $this->points[0]['latitude'] . ', ' . $this->points[0]['longitude'] . '),
+						zoom      : ' . $this->zoom . ',
+						// @todo Map Types
+						mapTypeId : ' . apply_filters( 'wpgeo_api_string', 'ROADMAP', $this->maptype, 'maptype' ) . ',
+						// @todo Map Control
+					};
+					map_' . $map_id . ' = new google.maps.Map(document.getElementById("' . $div . '"), mapOptions);
+					' . apply_filters( 'wpgeo_map_js_preoverlays', '', 'map_' . $map_id ) . '
+					' . $js_markers_v3 . '
+					' . $js_polyline_v3 . '
+					var center = bounds.getCenter();
+					var zoom = map_' . $map_id . '.getBounds(bounds);
+					if (zoom > ' . $this->zoom . ') {
+						zoom = ' . $this->zoom . ';
+					}
+					map_' . $map_id . '.setCenter(center);
+					if (zoom) {
+						map_' . $map_id . '.setZoom(zoom);
+					}
+				}
+				';
+		} else {
+			$js = '
+				if (document.getElementById("' . $div . '")) {
+					var bounds = new GLatLngBounds();
 		
+					map_' . $map_id . ' = new GMap2(document.getElementById("' . $div . '"));
+					var center = new GLatLng(' . $this->points[0]['latitude'] . ', ' . $this->points[0]['longitude'] . ');
+					map_' . $map_id . '.setCenter(center, ' . $this->zoom . ');
+					
+					' . $js_maptypes . '
+					map_' . $map_id . '.setMapType(' . $this->maptype . ');
+					
+					' . WPGeo_API_GMap2::render_map_control( 'map_' . $map_id, 'GMapTypeControl' );
+			if ( $this->mapcontrol != "" ) {
+				$js .= WPGeo_API_GMap2::render_map_control( 'map_' . $map_id, $this->mapcontrol );
+			}
+			$js .= '
+					var center_' . $map_id .' = new GLatLng(' . $this->points[0]['latitude'] . ', ' . $this->points[0]['longitude'] . ');
+					
+					' . apply_filters( 'wpgeo_map_js_preoverlays', '', 'map_' . $map_id ) . '
+					
+					' . $js_markers . '
+					' . $js_polyline . '
+					' . $js_zoom . '
+					' . $js_controls . '
+					
+				}';
+		}
 		return $js;
 	}
 	

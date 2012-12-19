@@ -230,49 +230,107 @@ function get_wpgeo_map( $query, $options = null ) {
 	$output = '
 		<div id="' . $id . '" class="wpgeo_map" style="width:' . $r['width'] . '; height:' . $r['height'] . ';float:' . $r['align'] . '"></div>
 		<script type="text/javascript">
-		<!--
-		jQuery(window).load( function() {
-			if ( GBrowserIsCompatible() ) {
-				var bounds = new GLatLngBounds();
-				map = new GMap2(document.getElementById("' . $id . '"));
-				' . WPGeo_API_GMap2::render_map_control( 'map', 'GLargeMapControl3D' ) . '
-				map.setMapType(' . $r['type'] . ');
-				';
-	if ( $posts ) {
-		$polyline = new WPGeo_Polyline( array(
-			'color' => $r['polyline_colour']
-		) );
-		foreach ( $posts as $post ) {
-			$latitude  = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
-			$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
-			if ( wpgeo_is_valid_geo_coord( $latitude, $longitude ) ) {
-				$marker = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
-				if ( empty( $marker ) )
-					$marker = $r['markers'];
-				$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', $marker, $post, 'wpgeo_map' );
-				$polyline->add_coord( $latitude, $longitude );
-				$output .= '
-					var center = new GLatLng(' . $latitude . ',' . $longitude . ');
-					var marker = new wpgeo_createMarker2(map, center, ' . $icon . ', \'' . esc_js( $post->post_title ) . '\', \'' . get_permalink( $post->ID ) . '\');
-					bounds.extend(center);
-					';
-			}
-		}
-		if ( $r['polylines'] == 'Y' ) {
-			$output .= WPGeo_API_GMap2::render_map_overlay( 'map', WPGeo_API_GMap2::render_polyline( $polyline ) );
-		}
+		<!--';
+	if ( 'googlemapsv3' == $wp_geo_options['admin_api'] ) {
 		$output .= '
-			zoom = map.getBoundsZoomLevel(bounds);
-			map.setCenter(bounds.getCenter(), zoom);
-			';
+			function createMap() {
+				var mapOptions = {
+					center    : new google.maps.LatLng(' . $wp_geo_options['default_map_latitude'] . ', ' . $wp_geo_options['default_map_longitude'] . '),
+					zoom      : ' . $wp_geo_options['default_map_zoom'] . ',
+					mapTypeId : ' . apply_filters( 'wpgeo_api_string', 'ROADMAP',  $r['type'], 'maptype' ) . ',
+					// @todo mapTypeControl
+				};
+				var bounds = new google.maps.LatLngBounds();
+				map_t = new google.maps.Map(document.getElementById("' . $id . '"), mapOptions);
+				';
+		if ( $posts ) {
+			$polyline = new WPGeo_Polyline( array(
+				'color' => $r['polyline_colour']
+			) );
+			foreach ( $posts as $post ) {
+				$latitude  = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
+				$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
+				if ( wpgeo_is_valid_geo_coord( $latitude, $longitude ) ) {
+					$marker = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
+					if ( empty( $marker ) )
+						$marker = $r['markers'];
+					$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', $marker, $post, 'wpgeo_map' );
+					$polyline->add_coord( $latitude, $longitude );
+					$output .= '
+						// @todo Tooltip link
+						var marker = new google.maps.Marker({ position:new google.maps.LatLng(' . $latitude . ',' . $longitude . '), map:map_t, icon: ' . $icon . ' });
+						bounds.extend(new google.maps.LatLng(' . $latitude . ',' . $longitude . '));
+						';
+				}
+			}
+			if ( $r['polylines'] == 'Y' ) {
+				$polyline_js_3_coords = array();
+				foreach ( $polyline->coords as $c ) {
+					$polyline_js_3_coords[] = 'new google.maps.LatLng(' . $c->latitude . ', ' . $c->longitude . ')';
+				}
+				$output .= 'var polyline = new google.maps.Polyline({
+						path: [' . implode( ',', $polyline_js_3_coords ) . '],
+						strokeColor: "' . $polyline->color . '",
+						strokeOpacity: ' . $polyline->opacity . ',
+						strokeWeight: ' . $polyline->thickness . ',
+						geodesic : ' . $polyline->geodesic . '
+					});
+					polyline.setMap(map_t);';
+			}
+			$output .= '
+				map_t.fitBounds(bounds);
+				';
+		}
+		$output .= apply_filters( 'wpgeo_map_js_preoverlays', '', 'map_t' ) . '
+			}
+			google.maps.event.addDomListener(window, "load", createMap);
+		';
 	} else {
 		$output .= '
-				map.setCenter(new GLatLng(' . $wp_geo_options['default_map_latitude'] . ', ' . $wp_geo_options['default_map_longitude'] . '), ' . $wp_geo_options['default_map_zoom'] . ');';
+			jQuery(window).load( function() {
+				if ( GBrowserIsCompatible() ) {
+					var bounds = new GLatLngBounds();
+					map = new GMap2(document.getElementById("' . $id . '"));
+					' . WPGeo_API_GMap2::render_map_control( 'map', 'GLargeMapControl3D' ) . '
+					map.setMapType(' . $r['type'] . ');
+					';
+					if ( $posts ) {
+						$polyline = new WPGeo_Polyline( array(
+							'color' => $r['polyline_colour']
+						) );
+						foreach ( $posts as $post ) {
+							$latitude  = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
+							$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
+							if ( wpgeo_is_valid_geo_coord( $latitude, $longitude ) ) {
+								$marker = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
+								if ( empty( $marker ) )
+									$marker = $r['markers'];
+								$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', $marker, $post, 'wpgeo_map' );
+								$polyline->add_coord( $latitude, $longitude );
+								$output .= '
+									var center = new GLatLng(' . $latitude . ',' . $longitude . ');
+									var marker = new wpgeo_createMarker2(map, center, ' . $icon . ', \'' . esc_js( $post->post_title ) . '\', \'' . get_permalink( $post->ID ) . '\');
+									bounds.extend(center);
+									';
+							}
+						}
+						if ( $r['polylines'] == 'Y' ) {
+							$output .= WPGeo_API_GMap2::render_map_overlay( 'map', WPGeo_API_GMap2::render_polyline( $polyline ) );
+						}
+						$output .= '
+							zoom = map.getBoundsZoomLevel(bounds);
+							map.setCenter(bounds.getCenter(), zoom);
+							';
+					} else {
+						$output .= '
+						map.setCenter(new GLatLng(' . $wp_geo_options['default_map_latitude'] . ', ' . $wp_geo_options['default_map_longitude'] . '), ' . $wp_geo_options['default_map_zoom'] . ');';
+					}
+					$output .= '
+					' . apply_filters( 'wpgeo_map_js_preoverlays', '', 'map' ) . '
+				}
+			} );';
 	}
 	$output .= '
-				' . apply_filters( 'wpgeo_map_js_preoverlays', '', 'map' ) . '
-			}
-		} );
 		-->
 		</script>
 		';

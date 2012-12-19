@@ -271,15 +271,6 @@ class WPGeo_Widget extends WP_Widget {
 							}
 							
 							' . apply_filters( 'wpgeo_map_js_preoverlays', '', 'map' ) . '
-						
-							/*
-								// Add the markers	
-								'.	$markers_js .'
-								
-								// Draw the polygonal lines between points
-								' . $polyline_js . '
-							
-							*/
 						}
 						google.maps.event.addDomListener(window, "load", createMapWidget3);
 						
