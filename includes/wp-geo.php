@@ -731,7 +731,7 @@ class WPGeo {
 			}
 			if ( ! empty( $settings['centre'] ) ) {
 				$new_mapcentre = explode( ',', $settings['centre'] );
-				if ( wpgeo_is_valid_geo_coord( $new_mapcentre[0], $new_mapcentre[1] ) ) {
+				if ( count( $new_mapcentre ) > 1 && wpgeo_is_valid_geo_coord( $new_mapcentre[0], $new_mapcentre[1] ) ) {
 					$mapcentre = $new_mapcentre;
 				}
 			}
