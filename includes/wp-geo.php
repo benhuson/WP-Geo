@@ -585,7 +585,11 @@ class WPGeo {
 		$http = is_ssl() ? 'https' : 'http';
 		
 		wp_register_script( 'wpgeo_tooltip', WPGEO_URL . 'js/tooltip.js', array( 'jquery' ), $this->version );
-		wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.js', array( 'jquery', 'wpgeo_tooltip' ), $this->version );
+		if ( 'googlemapsv3' == $wp_geo_options['admin_api'] ) {
+			wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.v3.js', array( 'jquery', 'wpgeo_tooltip' ), $this->version );
+		} else {
+			wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.js', array( 'jquery', 'wpgeo_tooltip' ), $this->version );
+		}
 		wp_register_script( 'wpgeo_admin_post', WPGEO_URL . 'js/admin-post.js', array( 'jquery', 'wpgeo' ), $this->version );
 		
 		// Select API to use...
