@@ -536,11 +536,15 @@ class WPGeo_Polyline {
 	/**
 	 * Add Coord
 	 *
-	 * @param float $latitude Latitude.
-	 * @param float $longitude Longitude.
+	 * @param float $coord WPGeo_Coord object (or deprecated Latitude).
+	 * @param float $longitude Longitude (deprecated).
 	 */
-	function add_coord( $latitude, $longitude ) {
-		$this->coords[] = new WPGeo_Coord( $latitude, $longitude );
+	function add_coord( $coord, $longitude = null ) {
+		if ( is_object( $coord ) && get_class( $coord ) == 'WPGeo_Coord' ) {
+			$this->coords[] = $coord;
+		} else {
+			$this->coords[] = new WPGeo_Coord( $coord, $longitude );
+		}
 	}
 	
 }
