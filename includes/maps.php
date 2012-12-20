@@ -54,11 +54,17 @@ class WPGeo_Maps {
 class WPGeo_Map {
 	
 	var $id;
+	var $width = '100%';
+	var $height = '350';
+	
 	var $points;
+	var $polylines;
+	var $maptypes;
+	
 	var $zoom = 5;
 	var $maptype = 'G_NORMAL_MAP';
-	var $maptypes;
 	var $mapcentre;
+	
 	var $mapcontrol = 'GLargeMapControl3D';
 	var $show_map_scale = false;
 	var $show_map_overview = false;
@@ -70,9 +76,13 @@ class WPGeo_Map {
 	 * @param string $id Map ID.
 	 */
 	function WPGeo_Map( $id = 0 ) {
+		$wp_geo_options = get_option( 'wp_geo_options' );
+		
 		$this->id = $id;
-		$this->maptypes = array();
-		$this->points = array();
+		$this->points    = array();
+		$this->polylines = array();
+		$this->maptypes  = array();
+		$this->mapcentre = new WPGeo_Coord( $wp_geo_options['default_map_latitude'], $wp_geo_options['default_map_longitude'] );
 	}
 	
 	/**
@@ -87,7 +97,7 @@ class WPGeo_Map {
 		
 		// ID of div for map output
 		$map_id = $map_id ? $map_id : $this->id;
-		$div = 'wp_geo_map_' . $map_id;
+		$div = 'wpgeo_map_' . $map_id;
 		
 		// Map Types
 		$maptypes = $this->maptypes;
@@ -145,8 +155,8 @@ class WPGeo_Map {
 			$js_zoom .= 'map_' . $map_id . '.setCenter(bounds.getCenter(), map_' . $map_id . '.getBoundsZoomLevel(bounds));';
 		}
 		if ( count( $this->points ) == 1 ) {
-			if ( wpgeo_is_valid_geo_coord( $this->mapcentre['latitude'], $this->mapcentre['longitude'] ) ) {
-				$js_zoom .= 'map_' . $map_id . '.setCenter(new GLatLng(' . $this->mapcentre['latitude'] . ', ' . $this->mapcentre['longitude'] . '));';
+			if ( wpgeo_is_valid_geo_coord( $this->mapcentre->latitude, $this->mapcentre->longitude ) ) {
+				$js_zoom .= 'map_' . $map_id . '.setCenter(new GLatLng(' . $this->mapcentre->latitude . ', ' . $this->mapcentre->longitude . '));';
 			}
 		}
 		
@@ -216,25 +226,53 @@ class WPGeo_Map {
 		return $js;
 	}
 	
+	function set_size( $w, $h ) {
+		$this->set_width( $w );
+		$this->set_height( $h );
+	}
+	
+	function set_width( $w ) {
+		$this->width = $w;
+	}
+	
+	function set_height( $h ) {
+		$this->height = $h;
+	}
+	
+	function get_dom_id() {
+		return 'wpgeo_map_' . $this->id;
+	}
+	
 	/**
 	 * Get the HTML for a map.
 	 *
+	 * @todo Implement attributes
 	 * @return string HTML.
 	 */
-	function get_map_html() {
-		$wp_geo_options = get_option('wp_geo_options');
-		
-		// Extract args
-		$allowed_args = array(
-			'width'  => $wp_geo_options['default_map_width'],
-			'height' => $wp_geo_options['default_map_height']
-		);
-		$args = wp_parse_args( $args, $allowed_args );
-		
-		$map_width  = wpgeo_css_dimension( $allowed_args['default_map_width'] );
-		$map_height = wpgeo_css_dimension( $allowed_args['default_map_height'] );
-		
-		return '<div class="wpgeo_map" id="wpgeo_map_' . $this->id . '" style="width:' . $map_width . '; height:' . $map_height . ';"></div>';
+	function get_map_html( $atts = null ) {
+		$atts = wp_parse_args( $atts, array(
+			'classes' => array(),
+			'styles'  => array(),
+			'content' => ''
+		) );
+		if ( ! is_array( $atts['classes'] ) ) {
+			$atts['classes'] = array( $atts['classes'] );
+		}
+		$atts['classes'][] = 'wpgeo_map';
+		$atts['classes'][] = 'wp_geo_map'; // For legacy compatibility
+		$atts['classes'] = array_unique( $atts['classes'] );
+		$atts['styles'] = wp_parse_args( $atts['styles'], array(
+			'width'  => $this->width,
+			'height' => $this->height
+		) );
+		$styles = '';
+		foreach ( $atts['styles'] as $style => $value) {
+			if ( in_array( $style, array( 'width', 'height' ) ) ) {
+				$value = wpgeo_css_dimension( $value );
+			}
+			$styles .= $style . ':' . $value . ';';
+		}
+		return sprintf( '<div id="%s" class="%s" style="%s">%s</div>', esc_attr( $this->get_dom_id() ), esc_attr( implode( ' ', $atts['classes'] ) ), esc_attr( $styles ), $atts['content'] );
 	}
 	
 	/**
@@ -305,10 +343,7 @@ class WPGeo_Map {
 	 * @param float $longitude Longitude.
 	 */
 	function setMapCentre( $latitude, $longitude ) {
-		$this->mapcentre = array(
-			'latitude'  => $latitude,
-			'longitude' => $longitude
-		);
+		$this->mapcentre = new WPGeo_Coord( $latitude, $longitude );
 	}
 	
 	/**
@@ -479,14 +514,13 @@ class WPGeo_Polyline {
 	 * @param array $args Args.
 	 */
 	function WPGeo_Polyline( $args = null ) {
-		$defaults = array(
+		$args = wp_parse_args( $args, array(
 			'coords'    => $this->coords,
 			'geodesic'  => $this->geodesic,
 			'color'     => $this->color,
 			'thickness' => $this->thickness,
 			'opacity'   => $this->opacity
-		);
-		$args = wp_parse_args( $args, $defaults );
+		) );
 		$this->coords    = $args['coords'];
 		$this->geodesic  = $args['geodesic'];
 		$this->color     = $args['color'];

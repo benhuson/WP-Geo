@@ -232,6 +232,18 @@ class WPGeo_Admin {
 			$wpgeo_map_settings_centre_checked = checked( true, true, false );
 		}
 		
+		$map = new WPGeo_Map( 'admin_post' ); // wp_geo_map
+		$map_html = $map->get_map_html( array(
+			'classes' => array( 'wp_geo_map' ),
+			'styles'  => array(
+				'width'   => '100%',
+				'height'  => 300,
+				'padding' => '0px',
+				'margin'  => '0px'
+			),
+			'content' => __( 'Loading Google map, please wait...', 'wp-geo' )
+		) );
+		
 		// Use nonce for verification
 		echo '<input type="hidden" name="wpgeo_location_noncename" id="wpgeo_location_noncename" value="' . wp_create_nonce( 'wpgeo_edit_post' ) . '" />';
 		
@@ -244,11 +256,7 @@ class WPGeo_Admin {
 					<span class="submit"><input type="button" id="wp_geo_search_button" name="wp_geo_search_button" value="' . __( 'Search', 'wp-geo' ) . '" /></span></td>
 			</tr>
 			<tr>
-				<td colspan="2">
-				<div id="wp_geo_map" style="height:300px; width:100%; padding:0px; margin:0px;">
-					' . __( 'Loading Google map, please wait...', 'wp-geo' ) . '
-				</div>
-				</td>
+				<td colspan="2">' . $map_html . '</td>
 			</tr>
 			<tr>
 				<th scope="row">' . __( 'Latitude', 'wp-geo' ) . ', ' . __( 'Longitude', 'wp-geo' ) . '</th>

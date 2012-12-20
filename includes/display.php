@@ -49,7 +49,7 @@ class WPGeo_Display {
 					';
 			foreach ( $this->maps as $map ) {
 				echo '
-					map = new GMap2(document.getElementById("wpgeo-' . $map['id'] . '"));
+					map = new GMap2(document.getElementById("wpgeo_map_' . $map['id'] . '"));
 					map.setCenter(new GLatLng(41.875696,-87.624207), 3);
 					geoXml = new GGeoXml("' . $map['rss'] . '");
 					GEvent.addListener(geoXml, "load", function() {
@@ -100,7 +100,12 @@ class WPGeo_Display {
 			);
 			$this->addMap( $map );
 			$wp_geo_options = get_option( 'wp_geo_options' );
-			return '<div id="wpgeo-' . $id . '" class="wpgeo wpgeo-rss" style="width:' . $wp_geo_options['default_map_width'] . '; height:' . $wp_geo_options['default_map_height'] . ';">' . $rss . '</div>';
+			
+			$map = new WPGeo_Map( $id ); // 'wpgeo-' . $id
+			return $map->get_map_html( array(
+				'classes' => array( 'wpgeo', 'wpgeo-rss' ),
+				'content' => $rss
+			) );
 		}
 		return '';
 	}

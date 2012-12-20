@@ -252,7 +252,7 @@ class WPGeo_Widget extends WP_Widget {
 								mapTypeId : google.maps.MapTypeId.ROADMAP
 							};
 							var bounds = new google.maps.LatLngBounds();
-							map = new google.maps.Map(document.getElementById("' . $args['id'] . '"), mapOptions);
+							map = new google.maps.Map(document.getElementById("wpgeo_map_' . $args['id'] . '"), mapOptions);
 							
 							// Add the markers	
 							'.	$markers_js_3 .'
@@ -296,7 +296,7 @@ class WPGeo_Widget extends WP_Widget {
 						// Create the map
 						function createMapWidget() {
 							if (GBrowserIsCompatible()) {
-								map = new GMap2(document.getElementById("' . $args['id'] . '"));
+								map = new GMap2(document.getElementById("wpgeo_map_' . $args['id'] . '"));
 								' . WPGeo_API_GMap2::render_map_control( 'map', 'GSmallZoomControl3D' ) . '
 								map.setCenter(new GLatLng(0, 0), 0);
 								map.setMapType(' . $args['maptype'] . ');
@@ -324,7 +324,14 @@ class WPGeo_Widget extends WP_Widget {
 						</script>';
 				}
 				
-				$html_js .= '<div class="wp_geo_map" id="' . $args['id'] . '" style="width:' . wpgeo_css_dimension( $args['width'] ) . '; height:' . wpgeo_css_dimension( $args['height'] ) . ';"></div>';
+				$map = new WPGeo_Map( $args['id'] ); // $args['id']
+				$html_js .= $map->get_map_html( array(
+					'classes' => array( 'wp_geo_map' ),
+					'styles'  => array(
+						'width'  => $args['width'],
+						'height' => $args['height']
+					)
+				) );
 			}
 			return $html_js;
 		}

@@ -173,10 +173,8 @@ function get_wpgeo_post_map( $post_id = 0 ) {
 	
 	if ( $post_id > 0 && ! is_feed() ) {
 		if ( $wpgeo->show_maps() && $show_post_map != 'TOP' && $show_post_map != 'BOTTOM' && $wpgeo->checkGoogleAPIKey() ) {
-			$map_width  = wpgeo_css_dimension( $wp_geo_options['default_map_width'] );
-			$map_height = wpgeo_css_dimension( $wp_geo_options['default_map_height'] );
-			
-			return '<div class="wp_geo_map" id="wp_geo_map_' . $post_id . '" style="width:' . $map_width . '; height:' . $map_height . ';"></div>';
+			$map = new WPGeo_Map( $post_id ); // 'wp_geo_map_' . $post_id
+			return $map->get_map_html();
 		}
 	}
 	return '';
@@ -227,9 +225,10 @@ function get_wpgeo_map( $query, $options = null ) {
 	
 	$posts = get_posts( $r );
 	
-	$output = '
-		<div id="' . $id . '" class="wpgeo_map" style="width:' . $r['width'] . '; height:' . $r['height'] . ';float:' . $r['align'] . '"></div>
-		<script type="text/javascript">
+	$map = new WPGeo_Map( 'id_' . $wpgeo_map_id );
+	$map->set_size( $r['width'], $r['height'] );
+	$output = $map->get_map_html( array( 'styles' => array( 'float' => $r['align'] ) ) ) . 
+		'<script type="text/javascript">
 		<!--';
 	if ( 'googlemapsv3' == $wp_geo_options['admin_api'] ) {
 		$output .= '

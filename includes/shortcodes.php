@@ -138,11 +138,19 @@ if ( ! function_exists( 'shortcode_wpgeo_map' ) ) {
 		
 			// To Do: Add in lon/lat check and output map if needed
 			
-			$map_width  = wpgeo_css_dimension( $atts['width'] );
-			$map_height = wpgeo_css_dimension( $atts['height'] );
-			$float = in_array( strtolower( $atts['align'] ), array( 'left', 'right' ) ) ? 'float:' . strtolower( $atts['align'] ) . ';' : '';
-			
-			return '<div class="wp_geo_map" id="wp_geo_map_' . $post->ID . '" style="' . $float . 'width:' . $map_width . '; height:' . $map_height . ';">' . $content . '</div>';
+			$map = new WPGeo_Map( $post->ID ); // 'wp_geo_map_' . $post->ID
+			$styles = array(
+				'width'  => $atts['width'],
+				'height' => $atts['height']
+			);
+			if ( in_array( strtolower( $atts['align'] ), array( 'left', 'right' ) ) ) {
+				$styles['float'] = strtolower( $atts['align'] );
+			}
+			return $map->get_map_html( array(
+				'classes' => array( 'wp_geo_map' ),
+				'styles'  => $styles,
+				'content' => $content
+			) );
 		}
 		return '';
 	}
