@@ -178,15 +178,16 @@ class WPGeo_Widget extends WP_Widget {
 				$post 		= $args['posts'][$i];
 				$latitude 	= get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
 				$longitude 	= get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
+				$coord      = new WPGeo_Coord( $latitude, $longitude );
 				$post_id 	= get_post( $post->ID );
 				$title 	    = get_post_meta( $post->ID, WPGEO_TITLE_META, true );
 				if ( empty( $title ) )
 					$title = $post->post_title;
-				if ( wpgeo_is_valid_geo_coord( $latitude, $longitude ) ) {
+				if ( $coord->is_valid_coord() ) {
 					array_push( $coords, array(
 						'id' 		=> $post->ID,
-						'latitude' 	=> $latitude,
-						'longitude' => $longitude,
+						'latitude' 	=> $coord->latitude(),
+						'longitude' => $coord->longitude(),
 						'title' 	=> $title,
 						'post'		=> $post
 					) );

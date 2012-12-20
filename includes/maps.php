@@ -155,8 +155,8 @@ class WPGeo_Map {
 			$js_zoom .= 'map_' . $map_id . '.setCenter(bounds.getCenter(), map_' . $map_id . '.getBoundsZoomLevel(bounds));';
 		}
 		if ( count( $this->points ) == 1 ) {
-			if ( wpgeo_is_valid_geo_coord( $this->mapcentre->latitude, $this->mapcentre->longitude ) ) {
-				$js_zoom .= 'map_' . $map_id . '.setCenter(new GLatLng(' . $this->mapcentre->latitude . ', ' . $this->mapcentre->longitude . '));';
+			if ( $this->mapcentre->is_valid_coord() ) {
+				$js_zoom .= 'map_' . $map_id . '.setCenter(new GLatLng(' . $this->mapcentre->latitude() . ', ' . $this->mapcentre->longitude() . '));';
 			}
 		}
 		
@@ -246,7 +246,7 @@ class WPGeo_Map {
 	/**
 	 * Get the HTML for a map.
 	 *
-	 * @todo Implement attributes
+	 * @param array $atts Optional. Array of attributes and content for the map <div>.
 	 * @return string HTML.
 	 */
 	function get_map_html( $atts = null ) {
@@ -255,12 +255,16 @@ class WPGeo_Map {
 			'styles'  => array(),
 			'content' => ''
 		) );
+		
+		// Classes
 		if ( ! is_array( $atts['classes'] ) ) {
 			$atts['classes'] = array( $atts['classes'] );
 		}
 		$atts['classes'][] = 'wpgeo_map';
 		$atts['classes'][] = 'wp_geo_map'; // For legacy compatibility
 		$atts['classes'] = array_unique( $atts['classes'] );
+		
+		// Styles
 		$atts['styles'] = wp_parse_args( $atts['styles'], array(
 			'width'  => $this->width,
 			'height' => $this->height
@@ -272,6 +276,7 @@ class WPGeo_Map {
 			}
 			$styles .= $style . ':' . $value . ';';
 		}
+		
 		return sprintf( '<div id="%s" class="%s" style="%s">%s</div>', esc_attr( $this->get_dom_id() ), esc_attr( implode( ' ', $atts['classes'] ) ), esc_attr( $styles ), $atts['content'] );
 	}
 	
@@ -557,6 +562,37 @@ class WPGeo_Coord {
 	function WPGeo_Coord( $latitude, $longitude ) {
 		$this->latitude  = $latitude;
 		$this->longitude = $longitude;
+	}
+
+	/**
+	 * Is Valid Geo Coord
+	 *
+	 * @param float $lat Latitude.
+	 * @param float $long Longitude.
+	 * @return bool
+	 */
+	function is_valid_coord() {
+		if ( is_numeric( $this->latitude ) && is_numeric( $this->longitude ) )
+			return true;
+		return false;
+	}
+
+	/**
+	 * Get Longitude
+	 *
+	 * @return float
+	 */
+	function latitude() {
+		return $this->latitude;
+	}
+
+	/**
+	 * Get Longitude
+	 *
+	 * @return float
+	 */
+	function longitude() {
+		return $this->longitude;
 	}
 	
 }

@@ -8,10 +8,8 @@
  * @return bool
  */
 function wpgeo_is_valid_geo_coord( $lat, $lng ) {
-	if ( is_numeric( $lat ) && is_numeric( $lng ) ) {
-		return true;
-	}
-	return false;
+	$coord = new WPGeo_Coord( $lat, $lng );
+	return $coord->is_valid_coord();
 }
 
 /**

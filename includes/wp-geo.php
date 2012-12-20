@@ -269,7 +269,8 @@ class WPGeo {
 			$post = $posts[$i];
 			$latitude  = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
 			$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
-			if ( wpgeo_is_valid_geo_coord( $latitude, $longitude ) ) {
+			$coord = new WPGeo_Coord( $latitude, $longitude );
+			if ( $coord->is_valid_coord() ) {
 				$showmap = true;
 			}
 		}
@@ -297,17 +298,18 @@ class WPGeo {
 		if ( is_single() ) {
 			$lat   = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
 			$long  = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
+			$coord = new WPGeo_Coord( $lat, $long );
 			$title = get_post_meta( $post->ID, WPGEO_TITLE_META, true );
 			$nl = "\n";
 			
-			if ( wpgeo_is_valid_geo_coord( $lat, $long ) ) {
-				echo '<meta name="geo.position" content="' . $lat . ';' . $long . '" />' . $nl; // Geo-Tag: Latitude and longitude
+			if ( $coord->is_valid_coord() ) {
+				echo '<meta name="geo.position" content="' . $coord->latitude() . ';' . $coord->longitude() . '" />' . $nl; // Geo-Tag: Latitude and longitude
 				//echo '<meta name="geo.region" content="DE-BY" />' . $nl;                      // Geo-Tag: Country code (ISO 3166-1) and regional code (ISO 3166-2)
 				//echo '<meta name="geo.placename" content="MÙnchen" />' . $nl;                 // Geo-Tag: City or the nearest town
 				if ( ! empty( $title ) ) {
 					echo '<meta name="DC.title" content="' . $title . '" />' . $nl;             // Dublin Core Meta Tag Title (used by some geo databases)
 				}
-				echo '<meta name="ICBM" content="' . $lat . ', ' . $long . '" />' . $nl;        // ICBM Tag (prior existing equivalent to the geo.position)
+				echo '<meta name="ICBM" content="' . $coord->latitude() . ', ' . $coord->longitude() . '" />' . $nl;        // ICBM Tag (prior existing equivalent to the geo.position)
 			}
 		}
 	}
@@ -381,6 +383,7 @@ class WPGeo {
 				$post      = $posts[$i];
 				$latitude  = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
 				$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
+				$coord     = new WPGeo_Coord( $latitude, $longitude );
 				$title     = get_wpgeo_title( $post->ID );
 				$marker    = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
 				$settings  = get_post_meta( $post->ID, WPGEO_MAP_SETTINGS_META, true );
@@ -394,11 +397,11 @@ class WPGeo {
 					$mymapzoom = $settings['zoom'];
 				}
 				
-				if ( wpgeo_is_valid_geo_coord( $latitude, $longitude ) ) {
+				if ( $coord->is_valid_coord() ) {
 					$push = array(
 						'id'        => $post->ID,
-						'latitude'  => $latitude,
-						'longitude' => $longitude,
+						'latitude'  => $coord->latitude(),
+						'longitude' => $coord->longitude(),
 						'title'     => $title,
 						'link'      => get_permalink( $post->ID ),
 						'post'      => $post
@@ -411,7 +414,7 @@ class WPGeo {
 					// Add point
 					$marker_large = empty( $marker ) ? 'large' : $marker;
 					$icon = apply_filters( 'wpgeo_marker_icon', $marker_large, $post, 'post' );
-					$map->addPoint( $latitude, $longitude, $icon, $title, get_permalink( $post->ID ) );
+					$map->addPoint( $coord->latitude(), $coord->longitude(), $icon, $title, get_permalink( $post->ID ) );
 					$map->setMapZoom( $mymapzoom );
 					$map->setMapType( $mymaptype );
 					
@@ -420,10 +423,10 @@ class WPGeo {
 						if ( is_array( $centre ) && count( $centre ) == 2 ) {
 							$map->setMapCentre( $centre[0], $centre[1] );
 						} else {
-							$map->setMapCentre( $latitude, $longitude );
+							$map->setMapCentre( $coord->latitude(), $coord->longitude() );
 						}
 					} else {
-						$map->setMapCentre( $latitude, $longitude );
+						$map->setMapCentre( $coord->latitude(), $coord->longitude() );
 					}
 					
 					if ( $wp_geo_options['show_map_type_physical'] == 'Y' )
@@ -719,16 +722,18 @@ class WPGeo {
 		
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		$maptype = empty( $wp_geo_options['google_map_type'] ) ? 'G_NORMAL_MAP' : $wp_geo_options['google_map_type'];	
+		$coord = new WPGeo_Coord( $latitude, $longitude );
 		
 		// Centre on London
-		if ( ! wpgeo_is_valid_geo_coord( $latitude, $longitude ) ) {
+		if ( ! $coord->is_valid_coord() ) {
 			$latitude    = $wp_geo_options['default_map_latitude'];
 			$longitude   = $wp_geo_options['default_map_longitude'];
+			$coord       = new WPGeo_Coord( $latitude, $longitude );
 			$zoom        = $wp_geo_options['default_map_zoom'];
 			$panel_open  = true;
 			$hide_marker = true;
 		}
-		$mapcentre = array( $latitude, $longitude );
+		$mapcentre = array( $coord->latitude(), $coord->longitude() );
 		
 		if ( is_numeric( $post->ID ) && $post->ID > 0 ) {
 			$settings = get_post_meta( $post->ID, WPGEO_MAP_SETTINGS_META, true );
@@ -740,7 +745,8 @@ class WPGeo {
 			}
 			if ( ! empty( $settings['centre'] ) ) {
 				$new_mapcentre = explode( ',', $settings['centre'] );
-				if ( count( $new_mapcentre ) > 1 && wpgeo_is_valid_geo_coord( $new_mapcentre[0], $new_mapcentre[1] ) ) {
+				$new_mapcentre_coord = new WPGeo_Coord( $new_mapcentre[0], $new_mapcentre[1] );
+				if ( count( $new_mapcentre ) > 1 && $new_mapcentre_coord->is_valid_coord() ) {
 					$mapcentre = $new_mapcentre;
 				}
 			}
@@ -764,8 +770,8 @@ class WPGeo {
 				mapCentreX : ' . $mapcentre[0] . ',
 				mapCentreY : ' . $mapcentre[1] . ',
 				mapType    : ' . $this->api_string( $maptype, 'maptype' ) . ',
-				latitude   : ' . $latitude . ',
-				longitude  : ' . $longitude . ',
+				latitude   : ' . $coord->latitude() . ',
+				longitude  : ' . $coord->longitude() . ',
 				hideMarker : ' . absint( $hide_marker ) . '
 			};
 			jQuery(document).ready(function($) {
@@ -812,9 +818,10 @@ class WPGeo {
 			// Get latitude and longitude
 			$latitude  = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
 			$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
+			$coord     = new WPGeo_Coord( $latitude, $longitude );
 			
 			// Need a map?
-			if ( wpgeo_is_valid_geo_coord( $latitude, $longitude ) ) {
+			if ( $coord->is_valid_coord() ) {
 				$map = new WPGeo_Map( $id ); // 'wp_geo_map_' . $id
 				$new_content .= $map->get_map_html( array(
 					'classes' => array( 'wp_geo_map' ),

@@ -328,11 +328,12 @@ class WPGeo_Admin {
 			delete_post_meta( $post_id, WPGEO_LATITUDE_META );
 			delete_post_meta( $post_id, WPGEO_LONGITUDE_META );
 			
-			if ( wpgeo_is_valid_geo_coord( $_POST['wp_geo_latitude'], $_POST['wp_geo_longitude'] ) ) {
-				add_post_meta( $post_id, WPGEO_LATITUDE_META, $_POST['wp_geo_latitude'] );
-				add_post_meta( $post_id, WPGEO_LONGITUDE_META, $_POST['wp_geo_longitude'] );
-				$mydata[WPGEO_LATITUDE_META]  = $_POST['wp_geo_latitude'];
-				$mydata[WPGEO_LONGITUDE_META] = $_POST['wp_geo_longitude'];
+			$coord = new WPGeo_Coord( $_POST['wp_geo_latitude'], $_POST['wp_geo_longitude'] );
+			if ( $coord->is_valid_coord() ) {
+				add_post_meta( $post_id, WPGEO_LATITUDE_META, $coord->latitude() );
+				add_post_meta( $post_id, WPGEO_LONGITUDE_META, $coord->longitude() );
+				$mydata[WPGEO_LATITUDE_META]  = $coord->latitude();
+				$mydata[WPGEO_LONGITUDE_META] = $coord->longitude();
 			}
 		}
 		

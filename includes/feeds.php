@@ -99,12 +99,13 @@ class WPGeo_Feeds {
 			$id = $post->ID;
 			$latitude  = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
 			$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
+			$coord = new WPGeo_Coord( $latitude, $longitude );
 			
 			// Need a map?
-			if ( wpgeo_is_valid_geo_coord( $latitude, $longitude ) ) {
-				echo '<georss:point>' . $latitude . ' ' . $longitude . '</georss:point>';
-				echo '<geo:lat>' . $latitude . '</geo:lat>';
-				echo '<geo:long>' . $longitude . '</geo:long>';
+			if ( $coord->is_valid_coord() ) {
+				echo '<georss:point>' . $coord->latitude() . ' ' . $coord->longitude() . '</georss:point>';
+				echo '<geo:lat>' . $coord->latitude() . '</geo:lat>';
+				echo '<geo:long>' . $coord->longitude() . '</geo:long>';
 			}
 		}
 	}
