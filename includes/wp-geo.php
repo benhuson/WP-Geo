@@ -267,9 +267,7 @@ class WPGeo {
 		
 		for ( $i = 0; $i < count( $posts ); $i++ ) {
 			$post = $posts[$i];
-			$latitude  = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
-			$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
-			$coord = new WPGeo_Coord( $latitude, $longitude );
+			$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
 			if ( $coord->is_valid_coord() ) {
 				$showmap = true;
 			}
@@ -296,9 +294,7 @@ class WPGeo {
 	function meta_tags() {
 		global $post;
 		if ( is_single() ) {
-			$lat   = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
-			$long  = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
-			$coord = new WPGeo_Coord( $lat, $long );
+			$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
 			$title = get_post_meta( $post->ID, WPGEO_TITLE_META, true );
 			$nl = "\n";
 			
@@ -380,13 +376,11 @@ class WPGeo {
 			// Coords to show on map?
 			$coords = array();
 			for ( $i = 0; $i < count( $posts ); $i++ ) {
-				$post      = $posts[$i];
-				$latitude  = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
-				$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
-				$coord     = new WPGeo_Coord( $latitude, $longitude );
-				$title     = get_wpgeo_title( $post->ID );
-				$marker    = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
-				$settings  = get_post_meta( $post->ID, WPGEO_MAP_SETTINGS_META, true );
+				$post     = $posts[$i];
+				$coord    = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
+				$title    = get_wpgeo_title( $post->ID );
+				$marker   = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
+				$settings = get_post_meta( $post->ID, WPGEO_MAP_SETTINGS_META, true );
 				
 				$mymaptype = $maptype;
 				if ( isset( $settings['type'] ) && ! empty( $settings['type'] ) ) {
@@ -399,12 +393,11 @@ class WPGeo {
 				
 				if ( $coord->is_valid_coord() ) {
 					$push = array(
-						'id'        => $post->ID,
-						'latitude'  => $coord->latitude(),
-						'longitude' => $coord->longitude(),
-						'title'     => $title,
-						'link'      => get_permalink( $post->ID ),
-						'post'      => $post
+						'id'    => $post->ID,
+						'coord' => $coord,
+						'title' => $title,
+						'link'  => get_permalink( $post->ID ),
+						'post'  => $post
 					);
 					array_push( $coords, $push );
 					
@@ -460,7 +453,7 @@ class WPGeo {
 				for ( $j = 0; $j < count( $coords ); $j++ ) {
 					$marker_small = empty( $marker ) ? 'small' : $marker;
 					$icon = apply_filters( 'wpgeo_marker_icon', $marker_small, $coords[$j]['post'], 'multiple' );
-					$map->addPoint( $coords[$j]['latitude'], $coords[$j]['longitude'], $icon, $coords[$j]['title'], $coords[$j]['link'] );
+					$map->addPoint( $coords[$j]['coord']->latitude(), $coords[$j]['coord']->longitude(), $icon, $coords[$j]['title'], $coords[$j]['link'] );
 				}
 				
 				$map->setMapZoom( $mapzoom );
@@ -726,14 +719,12 @@ class WPGeo {
 		
 		// Centre on London
 		if ( ! $coord->is_valid_coord() ) {
-			$latitude    = $wp_geo_options['default_map_latitude'];
-			$longitude   = $wp_geo_options['default_map_longitude'];
-			$coord       = new WPGeo_Coord( $latitude, $longitude );
+			$coord       = new WPGeo_Coord( $wp_geo_options['default_map_latitude'], $wp_geo_options['default_map_longitude'] );
 			$zoom        = $wp_geo_options['default_map_zoom'];
 			$panel_open  = true;
 			$hide_marker = true;
 		}
-		$mapcentre = array( $coord->latitude(), $coord->longitude() );
+		$map_center_coord = new WPGeo_Coord( $coord->latitude(), $coord->longitude() );
 		
 		if ( is_numeric( $post->ID ) && $post->ID > 0 ) {
 			$settings = get_post_meta( $post->ID, WPGEO_MAP_SETTINGS_META, true );
@@ -744,10 +735,10 @@ class WPGeo {
 				$maptype = $settings['type'];
 			}
 			if ( ! empty( $settings['centre'] ) ) {
-				$new_mapcentre = explode( ',', $settings['centre'] );
-				$new_mapcentre_coord = new WPGeo_Coord( $new_mapcentre[0], $new_mapcentre[1] );
-				if ( count( $new_mapcentre ) > 1 && $new_mapcentre_coord->is_valid_coord() ) {
-					$mapcentre = $new_mapcentre;
+				$map_center = explode( ',', $settings['centre'] );
+				$new_mapcentre_coord = new WPGeo_Coord( $map_center[0], $map_center[1] );
+				if ( $new_mapcentre_coord->is_valid_coord() ) {
+					$map_center_coord = $new_mapcentre_coord;
 				}
 			}
 		}
@@ -767,8 +758,8 @@ class WPGeo {
 				map        : null,
 				marker     : null,
 				zoom       : ' . $zoom . ',
-				mapCentreX : ' . $mapcentre[0] . ',
-				mapCentreY : ' . $mapcentre[1] . ',
+				mapCentreX : ' . $map_center_coord->latitude() . ',
+				mapCentreY : ' . $map_center_coord->longitude() . ',
 				mapType    : ' . $this->api_string( $maptype, 'maptype' ) . ',
 				latitude   : ' . $coord->latitude() . ',
 				longitude  : ' . $coord->longitude() . ',
@@ -812,17 +803,11 @@ class WPGeo {
 		if ( $wpgeo->show_maps() && ! is_feed() ) {
 			$wp_geo_options = get_option( 'wp_geo_options' );
 			
-			// Get the post
-			$id = $post->ID;
-		
-			// Get latitude and longitude
-			$latitude  = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
-			$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
-			$coord     = new WPGeo_Coord( $latitude, $longitude );
+			$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
 			
 			// Need a map?
 			if ( $coord->is_valid_coord() ) {
-				$map = new WPGeo_Map( $id ); // 'wp_geo_map_' . $id
+				$map = new WPGeo_Map( $post->ID ); // 'wp_geo_map_' . $id
 				$new_content .= $map->get_map_html( array(
 					'classes' => array( 'wp_geo_map' ),
 					'styles'  => array(
@@ -834,7 +819,7 @@ class WPGeo {
 			}
 			
 			// Add map to content
-			$show_post_map = apply_filters( 'wpgeo_show_post_map', $wp_geo_options['show_post_map'], $id );
+			$show_post_map = apply_filters( 'wpgeo_show_post_map', $wp_geo_options['show_post_map'], $post->ID );
 			
 			// Show at top/bottom of post
 			if ( $show_post_map == 'TOP' ) {
@@ -1153,13 +1138,14 @@ class WPGeo {
 		while ( $custom_posts->have_posts() ) {
 			$custom_posts->the_post();
 			$id   = get_the_ID();
-			$long = get_post_custom_values( WPGEO_LONGITUDE_META );
-			$lat  = get_post_custom_values( WPGEO_LATITUDE_META );
-			$points[] = array(
-				'id'   => $id,
-				'long' => $long,
-				'lat'  => $lat
-			);
+			$coord = new WPGeo_Coord( get_post_custom_values( WPGEO_LONGITUDE_META ), get_post_custom_values( WPGEO_LATITUDE_META ) );
+			if ( $coord->is_valid_coord() ) {
+				$points[] = array(
+					'id'   => $id,
+					'lat'  => $coord->latitude(),
+					'long' => $coord->longitude()
+				);
+			}
 		}
 		return $points;
 	}

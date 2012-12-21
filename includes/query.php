@@ -40,13 +40,12 @@ class WPGeo_Query {
  */
 function wpgeo_setup_postdata( $post ) {
 	global $wpgeo_latitude, $wpgeo_longitude;
-
-	$wpgeo_latitude = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
-	$wpgeo_longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
 	
-	if ( ! empty( $wpgeo_latitude ) && ! empty( $wpgeo_longitude ) ) {
-		$wpgeo_latitude  = floatval( $wpgeo_latitude );
-		$wpgeo_longitude = floatval( $wpgeo_longitude );
+	$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
+	
+	if ( $coord->is_valid_coord() ) {
+		$wpgeo_latitude  = $coord->latitude();
+		$wpgeo_longitude = $coord->longitude();
 	}
 }
 

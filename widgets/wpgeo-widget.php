@@ -175,21 +175,18 @@ class WPGeo_Widget extends WP_Widget {
 			// Find the coordinates for the posts
 			$coords = array();
 			for ( $i = 0; $i < count( $args['posts'] ); $i++ ) {
-				$post 		= $args['posts'][$i];
-				$latitude 	= get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
-				$longitude 	= get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
-				$coord      = new WPGeo_Coord( $latitude, $longitude );
-				$post_id 	= get_post( $post->ID );
-				$title 	    = get_post_meta( $post->ID, WPGEO_TITLE_META, true );
+				$post    = $args['posts'][$i];
+				$coord   = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
+				$post_id = get_post( $post->ID );
+				$title   = get_post_meta( $post->ID, WPGEO_TITLE_META, true );
 				if ( empty( $title ) )
 					$title = $post->post_title;
 				if ( $coord->is_valid_coord() ) {
 					array_push( $coords, array(
-						'id' 		=> $post->ID,
-						'latitude' 	=> $coord->latitude(),
-						'longitude' => $coord->longitude(),
-						'title' 	=> $title,
-						'post'		=> $post
+						'id'    => $post->ID,
+						'coord' => $coord,
+						'title' => $title,
+						'post'  => $post
 					) );
 				}
 			}
@@ -203,19 +200,19 @@ class WPGeo_Widget extends WP_Widget {
 						'color' => $wp_geo_options['polyline_colour']
 					) );
 					for ( $i = 0; $i < count( $coords ); $i++ ) {
-						$polyline->add_coord( $coords[$i]['latitude'], $coords[$i]['longitude'] );
+						$polyline->add_coord( $coords[$i]['coord'] );
 					}
 					$polyline_js = WPGeo_API_GMap2::render_map_overlay( 'map', WPGeo_API_GMap2::render_polyline( $polyline ) );
 					$polyline_js_3_coords = array();
 					foreach ( $polyline->coords as $c ) {
-						$polyline_js_3_coords[] = 'new google.maps.LatLng(' . $c->latitude . ', ' . $c->longitude . ')';
+						$polyline_js_3_coords[] = 'new google.maps.LatLng(' . $c->latitude() . ', ' . $c->longitude() . ')';
 					}
 					$polyline_js_3 = 'var polyline = new google.maps.Polyline({
-							path: [' . implode( ',', $polyline_js_3_coords ) . '],
-							strokeColor: "' . $polyline->color . '",
-							strokeOpacity: ' . $polyline->opacity . ',
-							strokeWeight: ' . $polyline->thickness . ',
-							geodesic : ' . $polyline->geodesic . '
+							path          : [' . implode( ',', $polyline_js_3_coords ) . '],
+							strokeColor   : "' . $polyline->color . '",
+							strokeOpacity : ' . $polyline->opacity . ',
+							strokeWeight  : ' . $polyline->thickness . ',
+							geodesic      : ' . $polyline->geodesic . '
 						});
 						polyline.setMap(map);';
 				}
@@ -223,10 +220,10 @@ class WPGeo_Widget extends WP_Widget {
 				// Markers
 				for ( $i = 0; $i < count( $coords ); $i++ ) {
 					$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', 'small', $coords[$i]['post'], 'widget' );
-					$markers_js .= 'marker' . $i . ' = wpgeo_createMarker(new GLatLng(' . $coords[$i]['latitude'] . ', ' . $coords[$i]['longitude'] . '), ' . $icon . ', "' . addslashes( __( $coords[$i]['title'] ) ) . '", "' . get_permalink( $coords[$i]['id'] ) . '");' . "\n";
+					$markers_js .= 'marker' . $i . ' = wpgeo_createMarker(new GLatLng(' . $coords[$i]['coord']->latitude() . ', ' . $coords[$i]['coord']->longitude() . '), ' . $icon . ', "' . addslashes( __( $coords[$i]['title'] ) ) . '", "' . get_permalink( $coords[$i]['id'] ) . '");' . "\n";
 					// @todo Tooltip and link for v3
-					$markers_js_3 .= 'var marker' . $i . ' = new google.maps.Marker({ position:new google.maps.LatLng(' . $coords[$i]['latitude'] . ', ' . $coords[$i]['longitude'] . '), map:map, icon: ' . $icon . ' });' . "\n";
-					$markers_js_3 .= 'bounds.extend(new google.maps.LatLng(' . $coords[$i]['latitude'] . ', ' . $coords[$i]['longitude'] . '));' . "\n";
+					$markers_js_3 .= 'var marker' . $i . ' = new google.maps.Marker({ position:new google.maps.LatLng(' . $coords[$i]['coord']->latitude() . ', ' . $coords[$i]['coord']->longitude() . '), map:map, icon: ' . $icon . ' });' . "\n";
+					$markers_js_3 .= 'bounds.extend(new google.maps.LatLng(' . $coords[$i]['coord']->latitude() . ', ' . $coords[$i]['coord']->longitude() . '));' . "\n";
 				}
 				
 				$wpgeo->includeGoogleMapsJavaScriptAPI();
@@ -244,13 +241,13 @@ class WPGeo_Widget extends WP_Widget {
 						var marker = null;
 						function createMapWidget3() {
 							var mapOptions = {
-								center    : new google.maps.LatLng(0,0),
-								zoom      : 0,
-								mapTypeId : ' . apply_filters( 'wpgeo_api_string', 'ROADMAP', $args['maptype'], 'maptype' ) . ',
-								mapTypeControl : false,
+								center            : new google.maps.LatLng(0,0),
+								zoom              : 0,
+								mapTypeId         : ' . apply_filters( 'wpgeo_api_string', 'ROADMAP', $args['maptype'], 'maptype' ) . ',
+								mapTypeControl    : false,
 								streetViewControl : false,
-								center    : new google.maps.LatLng(-34.397, 150.644),
-								mapTypeId : google.maps.MapTypeId.ROADMAP
+								center            : new google.maps.LatLng(-34.397, 150.644),
+								mapTypeId         : google.maps.MapTypeId.ROADMAP
 							};
 							var bounds = new google.maps.LatLngBounds();
 							map = new google.maps.Map(document.getElementById("wpgeo_map_' . $args['id'] . '"), mapOptions);

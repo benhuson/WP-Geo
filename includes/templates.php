@@ -101,31 +101,27 @@ function get_wpgeo_title( $post_id = 0, $default_to_post_title = true ) {
 function wpgeo_map_link( $args = null ) {
 	global $post;
 	
-	$defaults = array(
+	// Validate Args
+	$r = wp_parse_args( $args, array(
 		'post_id'   => $post->ID,
 		'latitude'  => null,
 		'longitude' => null,
 		'zoom'      => 5,
 		'echo'      => 1
-	);
+	) );
+	$r['post_id'] = absint( $r['post_id'] );
+	$r['zoom']    = absint( $r['zoom'] );
+	$r['echo']    = absint( $r['echo'] );
 	
-	// Validate Args
-	$r = wp_parse_args( $args, $defaults );
-	$r['post_id']   = absint( $r['post_id'] );
-	$r['latitude']  = (float) $r['latitude'];
-	$r['longitude'] = (float) $r['longitude'];
-	$r['zoom']      = absint( $r['zoom'] );
-	$r['echo']      = absint( $r['echo'] );
+	$coord = new WPGeo_Coord( $r['latitude'], $r['longitude'] );
 	
 	// If a post is specified override lat/lng...
-	if ( ! $r['latitude'] && ! $r['longitude'] ) {
-		$r['latitude']  = get_wpgeo_latitude( $r['post_id'] );
-		$r['longitude'] = get_wpgeo_longitude( $r['post_id'] );
+	if ( ! $coord->is_valid_coord() ) {
+		$coord = new WPGeo_Coord( get_wpgeo_latitude( $r['post_id'] ), get_wpgeo_longitude( $r['post_id'] ) );
 	}
 	
 	// If lat/lng...
 	$url = '';
-	$coord = new WPGeo_Coord( $r['latitude'], $r['longitude'] );
 	if ( $coord->is_valid_coord() ) {
 		$url = 'http://maps.google.co.uk/maps';
 		$url = add_query_arg( 'q', $coord->latitude() . ',' . $coord->longitude(), $url );
@@ -135,9 +131,8 @@ function wpgeo_map_link( $args = null ) {
 	}
 	
 	// Output
-	if ( $r['echo'] == 0 ) {
+	if ( $r['echo'] == 0 )
 		return $url;
-	}
 	echo $url;
 }
 
@@ -167,9 +162,7 @@ function get_wpgeo_post_map( $post_id = 0 ) {
 	
 	$show_post_map = apply_filters( 'wpgeo_show_post_map', $wp_geo_options['show_post_map'], $post_id );
 	
-	$latitude  = get_post_meta( $post_id, WPGEO_LATITUDE_META, true );
-	$longitude = get_post_meta( $post_id, WPGEO_LONGITUDE_META, true );
-	$coord = new WPGeo_Coord( $latitude, $longitude );
+	$coord = new WPGeo_Coord( get_post_meta( $post_id, WPGEO_LATITUDE_META, true ), get_post_meta( $post_id, WPGEO_LONGITUDE_META, true ) );
 	if ( ! $coord->is_valid_coord() )
 		return '';
 	
@@ -249,9 +242,7 @@ function get_wpgeo_map( $query, $options = null ) {
 				'color' => $r['polyline_colour']
 			) );
 			foreach ( $posts as $post ) {
-				$latitude  = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
-				$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
-				$coord = new WPGeo_Coord( $latitude, $longitude );
+				$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
 				if ( $coord->is_valid_coord() ) {
 					$marker = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
 					if ( empty( $marker ) )
@@ -301,9 +292,7 @@ function get_wpgeo_map( $query, $options = null ) {
 							'color' => $r['polyline_colour']
 						) );
 						foreach ( $posts as $post ) {
-							$latitude  = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
-							$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
-							$coord = new WPGeo_Coord( $latitude, $longitude );
+							$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
 							if ( $coord->is_valid_coord() ) {
 								$marker = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
 								if ( empty( $marker ) )
@@ -379,9 +368,7 @@ function get_wpgeo_post_static_map( $post_id = 0, $query = null ) {
 	if ( ! $post_id || is_feed() || ! $wpgeo->show_maps() || ! $wpgeo->checkGoogleAPIKey() )
 		return '';
 	
-	$latitude  = get_post_meta( $post_id, WPGEO_LATITUDE_META, true );
-	$longitude = get_post_meta( $post_id, WPGEO_LONGITUDE_META, true );
-	$coord = new WPGeo_Coord( $latitude, $longitude );
+	$coord = new WPGeo_Coord( get_post_meta( $post_id, WPGEO_LATITUDE_META, true ), get_post_meta( $post_id, WPGEO_LONGITUDE_META, true ) );
 	if ( ! $coord->is_valid_coord() )
 		return '';
 	
@@ -413,6 +400,7 @@ function get_wpgeo_post_static_map( $post_id = 0, $query = null ) {
 	// Center on location marker by default
 	$centerLatitude  = $coord->latitude();
 	$centerLongitude = $coord->longitude();
+	$center_coord = new WPGeo_Coord( $coord->latitude(), $coord->longitude() );
 
 	// Custom map settings?
 	if ( isset( $settings['zoom'] ) && is_numeric( $settings['zoom'] ) ) {
@@ -422,11 +410,12 @@ function get_wpgeo_post_static_map( $post_id = 0, $query = null ) {
 		$options['maptype'] = $settings['type'];
 	}
 	if ( ! empty( $settings['centre'] ) ) {
-		list( $centerLatitude, $centerLongitude ) = explode( ',', $settings['centre'] );
+		$center = explode( ',', $settings['centre'] );
+		$center_coord = new WPGeo_Coord( $center[0], $center[1] );
 	}
 	
 	$url = add_query_arg( array(
-		'center'  => $centerLatitude . ',' . $centerLongitude,
+		'center'  => $center_coord->latitude() . ',' . $center_coord->longitude(),
 		'zoom'    => $options['zoom'],
 		'size'    => $options['width'] . 'x' . $options['height'],
 		'maptype' => $types[$options['maptype']],

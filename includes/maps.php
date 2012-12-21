@@ -151,8 +151,10 @@ class WPGeo_Map {
 		
 		// Zoom
 		$js_zoom = '';
+		$js_center_v3 = 'var center = new google.maps.LatLng(' . $this->mapcentre->latitude() . ', ' . $this->mapcentre->longitude() . ');';
 		if ( count( $this->points ) > 1 ) {
 			$js_zoom .= 'map_' . $map_id . '.setCenter(bounds.getCenter(), map_' . $map_id . '.getBoundsZoomLevel(bounds));';
+			$js_center_v3 = 'var center = bounds.getCenter();';
 		}
 		if ( count( $this->points ) == 1 ) {
 			if ( $this->mapcentre->is_valid_coord() ) {
@@ -184,7 +186,7 @@ class WPGeo_Map {
 					' . apply_filters( 'wpgeo_map_js_preoverlays', '', 'map_' . $map_id ) . '
 					' . $js_markers_v3 . '
 					' . $js_polyline_v3 . '
-					var center = bounds.getCenter();
+					' . $js_center_v3 . '
 					var zoom = map_' . $map_id . '.getBounds(bounds);
 					if (zoom > ' . $this->zoom . ') {
 						zoom = ' . $this->zoom . ';
@@ -566,6 +568,10 @@ class WPGeo_Coord {
 	function WPGeo_Coord( $latitude, $longitude ) {
 		$this->latitude  = $latitude;
 		$this->longitude = $longitude;
+		if ( $this->is_valid_coord() ) {
+			$this->latitude  = floatval( $this->latitude );
+			$this->longitude = floatval( $this->longitude );
+		}
 	}
 
 	/**

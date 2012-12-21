@@ -96,10 +96,7 @@ class WPGeo_Feeds {
 		global $wpgeo, $post;
 		
 		if ( $wpgeo->show_maps() ) {
-			$id = $post->ID;
-			$latitude  = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
-			$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
-			$coord = new WPGeo_Coord( $latitude, $longitude );
+			$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
 			
 			// Need a map?
 			if ( $coord->is_valid_coord() ) {

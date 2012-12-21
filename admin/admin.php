@@ -92,18 +92,13 @@ class WPGeo_Admin {
 		
 		// Only load if on a post or page
 		if ( $wpgeo->show_maps() ) {
-			
-			// Get post location
-			$latitude  = get_post_meta( $post_ID, WPGEO_LATITUDE_META, true );
-			$longitude = get_post_meta( $post_ID, WPGEO_LONGITUDE_META, true );
-			$default_latitude  = $latitude;
-			$default_longitude = $longitude;
+			$coord = new WPGeo_Coord( get_post_meta( $post_ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post_ID, WPGEO_LONGITUDE_META, true ) );
 			$default_zoom = 13;
 			$panel_open   = false;
 			$hide_marker  = false;
 			
 			if ( ! $wpgeo->show_maps_external ) {
-				echo $wpgeo->mapScriptsInit( $default_latitude, $default_longitude, $default_zoom, $panel_open, $hide_marker );
+				echo $wpgeo->mapScriptsInit( $coord->latitude(), $coord->longitude(), $default_zoom, $panel_open, $hide_marker );
 			}
 		}
 	}
@@ -184,12 +179,11 @@ class WPGeo_Admin {
 		
 		$wp_geo_options = get_option('wp_geo_options');
 		
-		$search    = '';
-		$latitude  = get_post_meta( $post->ID, WPGEO_LATITUDE_META, true );
-		$longitude = get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true );
-		$title     = get_post_meta( $post->ID, WPGEO_TITLE_META, true );
-		$marker    = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
-		$settings  = wp_parse_args( get_post_meta( $post->ID, WPGEO_MAP_SETTINGS_META, true ), array(
+		$search   = '';
+		$coord    = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ),get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
+		$title    = get_post_meta( $post->ID, WPGEO_TITLE_META, true );
+		$marker   = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
+		$settings = wp_parse_args( get_post_meta( $post->ID, WPGEO_MAP_SETTINGS_META, true ), array(
 			'zoom'   => '',
 			'type'   => '',
 			'centre' => ''
@@ -260,8 +254,8 @@ class WPGeo_Admin {
 			</tr>
 			<tr>
 				<th scope="row">' . __( 'Latitude', 'wp-geo' ) . ', ' . __( 'Longitude', 'wp-geo' ) . '</th>
-				<td><input name="wp_geo_latitude" type="text" size="25" id="wp_geo_latitude" value="' . $latitude . '" /><br />
-					<input name="wp_geo_longitude" type="text" size="25" id="wp_geo_longitude" value="' . $longitude . '" /><br />
+				<td><input name="wp_geo_latitude" type="text" size="25" id="wp_geo_latitude" value="' . $coord->latitude() . '" /><br />
+					<input name="wp_geo_longitude" type="text" size="25" id="wp_geo_longitude" value="' . $coord->longitude() . '" /><br />
 					<a href="#" class="wpgeo-clear-location-fields">' . __( 'clear location', 'wp-geo' ) . '</a> | <a href="#" class="wpgeo-centre-location">' . __( 'centre location', 'wp-geo' ) . '</a>
 				</td>
 			</tr>

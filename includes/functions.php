@@ -3,6 +3,8 @@
 /**
  * Is Valid Geo Coord
  *
+ * @todo This function can be deprecated.
+ *
  * @param float $lat Latitude.
  * @param float $long Longitude.
  * @return bool
