@@ -736,9 +736,11 @@ class WPGeo {
 			}
 			if ( ! empty( $settings['centre'] ) ) {
 				$map_center = explode( ',', $settings['centre'] );
-				$new_mapcentre_coord = new WPGeo_Coord( $map_center[0], $map_center[1] );
-				if ( $new_mapcentre_coord->is_valid_coord() ) {
-					$map_center_coord = $new_mapcentre_coord;
+				if ( count( $map_center ) == 2 ) {
+					$new_mapcentre_coord = new WPGeo_Coord( $map_center[0], $map_center[1] );
+					if ( $new_mapcentre_coord->is_valid_coord() ) {
+						$map_center_coord = $new_mapcentre_coord;
+					}
 				}
 			}
 		}
