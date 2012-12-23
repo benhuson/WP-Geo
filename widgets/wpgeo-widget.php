@@ -163,11 +163,13 @@ class WPGeo_Widget extends WP_Widget {
 			'maptype'       => empty( $wp_geo_options['google_map_type'] ) ? 'G_NORMAL_MAP' : $wp_geo_options['google_map_type'],
 			'show_polylines' => false,
 			'zoom'          => $wp_geo_options['default_map_zoom'],
-			'id'            => 'wpgeo_widget_map',
+			'id'            => 'widget_map',
 			'posts'         => null
 		) );
 		if ( ! $args['posts'] )
 			return $html_js;
+		
+		$map = new WPGeo_Map( 'wpgeo_map_' . $args['id'] );
 		
 		// If Google API Key...
 		if ( $wpgeo->checkGoogleAPIKey() ) {
@@ -235,7 +237,7 @@ class WPGeo_Widget extends WP_Widget {
 						//<![CDATA[
 						
 						/**
-						 * Widget Map (' . $args['id'] . ')
+						 * Widget Map (' . $map->id . ')
 						 */
 						var map = null;
 						var marker = null;
@@ -250,7 +252,7 @@ class WPGeo_Widget extends WP_Widget {
 								mapTypeId         : google.maps.MapTypeId.ROADMAP
 							};
 							var bounds = new google.maps.LatLngBounds();
-							map = new google.maps.Map(document.getElementById("wpgeo_map_' . $args['id'] . '"), mapOptions);
+							map = new google.maps.Map(document.getElementById("' . $map->id . '"), mapOptions);
 							
 							// Add the markers	
 							'.	$markers_js_3 .'
@@ -280,7 +282,7 @@ class WPGeo_Widget extends WP_Widget {
 						//<![CDATA[
 						
 						/**
-						 * Widget Map (' . $args['id'] . ')
+						 * Widget Map (' . $map->id . ')
 						 */
 						
 						// Define variables
@@ -294,7 +296,7 @@ class WPGeo_Widget extends WP_Widget {
 						// Create the map
 						function createMapWidget() {
 							if (GBrowserIsCompatible()) {
-								map = new GMap2(document.getElementById("wpgeo_map_' . $args['id'] . '"));
+								map = new GMap2(document.getElementById("' . $map->id . '"));
 								' . WPGeo_API_GMap2::render_map_control( 'map', 'GSmallZoomControl3D' ) . '
 								map.setCenter(new GLatLng(0, 0), 0);
 								map.setMapType(' . $args['maptype'] . ');
@@ -322,7 +324,7 @@ class WPGeo_Widget extends WP_Widget {
 						</script>';
 				}
 				
-				$map = new WPGeo_Map( $args['id'] ); // $args['id']
+				$map = new WPGeo_Map( $args['id'] );
 				$html_js .= $map->get_map_html( array(
 					'classes' => array( 'wp_geo_map' ),
 					'styles'  => array(

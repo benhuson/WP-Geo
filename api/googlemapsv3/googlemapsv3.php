@@ -11,6 +11,7 @@ class WPGeo_API_GoogleMapsV3 {
 	function WPGeo_API_GoogleMapsV3() {
 		add_filter( 'wpgeo_api_string', array( $this, 'wpgeo_api_string' ), 10, 3 );
 		add_filter( 'wpgeo_decode_api_string', array( $this, 'wpgeo_decode_api_string' ), 10, 3 );
+		add_action( 'wpgeo_api_googlemapsv3_js', array( $this, 'wpgeo_js' ) );
 	}
 	
 	/**
@@ -50,6 +51,41 @@ class WPGeo_API_GoogleMapsV3 {
 			}
 		}
 		return $string;
+	}
+	
+	function wpgeo_js( $maps ) {
+		echo '
+			<script type="text/javascript">
+			//<![CDATA[
+			function wpgeo_render_maps() {
+				';
+		foreach ( $maps as $map ) {
+			echo '
+				if (document.getElementById("' . $map->get_dom_id() . '")) {
+					var mapOptions = {
+						center : new google.maps.LatLng(41.875696,-87.624207),
+						zoom   : 3
+					};
+					map_' . $map->id . ' = new google.maps.Map(document.getElementById("' . $map->get_dom_id() . '"), mapOptions);
+				
+				
+					/*
+					geoXml = new GGeoXml("' . $map->feeds[0] . '");
+					GEvent.addListener(geoXml, "load", function() {
+						geoXml.gotoDefaultViewport(map);
+					});
+					map_' . $map->id . '.addOverlay(geoXml);
+					*/
+				
+				
+				
+				}';
+		}
+		echo '
+			}
+			google.maps.event.addDomListener(window, "load", wpgeo_render_maps);
+			//]]>
+			</script>';
 	}
 	
 }

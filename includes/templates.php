@@ -168,7 +168,7 @@ function get_wpgeo_post_map( $post_id = 0 ) {
 	
 	if ( $post_id > 0 && ! is_feed() ) {
 		if ( $wpgeo->show_maps() && $show_post_map != 'TOP' && $show_post_map != 'BOTTOM' && $wpgeo->checkGoogleAPIKey() ) {
-			$map = new WPGeo_Map( $post_id ); // 'wp_geo_map_' . $post_id
+			$map = new WPGeo_Map( $post_id );
 			return $map->get_map_html();
 		}
 	}

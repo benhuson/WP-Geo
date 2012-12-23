@@ -60,6 +60,7 @@ class WPGeo_Map {
 	var $points;
 	var $polylines;
 	var $maptypes;
+	var $feeds;
 	
 	var $zoom = 5;
 	var $maptype = 'G_NORMAL_MAP';
@@ -78,11 +79,29 @@ class WPGeo_Map {
 	function WPGeo_Map( $id = 0 ) {
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		
-		$this->id = $id;
+		$this->id        = $this->validate_map_id( $id );
 		$this->points    = array();
 		$this->polylines = array();
 		$this->maptypes  = array();
+		$this->feeds     = array();
 		$this->mapcentre = new WPGeo_Coord( $wp_geo_options['default_map_latitude'], $wp_geo_options['default_map_longitude'] );
+	}
+	
+	/**
+	 * Validate Map ID
+	 *
+	 * @param string $id The map ID.
+	 * @return string Map ID.
+	 */
+	function validate_map_id( $id ) {
+		return str_replace( '-', '_', sanitize_html_class( $id ) );
+	}
+	
+	/**
+	 * Add Feed
+	 */
+	function add_feed( $url ) {
+		$this->feeds[] = $url;
 	}
 	
 	/**

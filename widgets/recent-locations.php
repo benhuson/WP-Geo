@@ -52,7 +52,7 @@ class WPGeo_Recent_Locations_Widget extends WPGeo_Widget {
 					'post_type'    => $instance['post_type']
 				) );
 				$map_args = wp_parse_args( $instance, array(
-					'id'    => $args['widget_id'] . '-map',
+					'id'    => $args['widget_id'],
 					'posts' => $posts
 				) );
 				$map_content = $this->add_widget_map( $map_args );

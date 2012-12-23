@@ -138,7 +138,7 @@ if ( ! function_exists( 'shortcode_wpgeo_map' ) ) {
 		
 			// To Do: Add in lon/lat check and output map if needed
 			
-			$map = new WPGeo_Map( $post->ID ); // 'wp_geo_map_' . $post->ID
+			$map = new WPGeo_Map( $post->ID );
 			$styles = array(
 				'width'  => $atts['width'],
 				'height' => $atts['height']

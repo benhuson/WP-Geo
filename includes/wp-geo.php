@@ -275,7 +275,7 @@ class WPGeo {
 		
 		if ( $showmap && ! is_feed() && $this->checkGoogleAPIKey() ) {
 		
-			$map = new WPGeo_Map( 'visible' ); // wp_geo_map_visible
+			$map = new WPGeo_Map( 'visible' );
 			echo $map->get_map_html( array(
 				'classes' => array( 'wp_geo_map' ),
 				'styles'  => array(
@@ -792,6 +792,19 @@ class WPGeo {
 	}
 	
 	/**
+	 * Get API String
+	 */
+	function get_api_string( $str ) {
+		$wp_geo_options = get_option( 'wp_geo_options' );
+		if ( is_admin() ) {
+			$str = sprintf( $str, $wp_geo_options['admin_api'] );
+		} else {
+			$str = sprintf( $str, $wp_geo_options['public_api'] );
+		}
+		return $str;
+	}
+	
+	/**
 	 * The Content
 	 * Output Map placeholders in the content area if set to automatically.
 	 *
@@ -809,7 +822,7 @@ class WPGeo {
 			
 			// Need a map?
 			if ( $coord->is_valid_coord() ) {
-				$map = new WPGeo_Map( $post->ID ); // 'wp_geo_map_' . $id
+				$map = new WPGeo_Map( $post->ID );
 				$new_content .= $map->get_map_html( array(
 					'classes' => array( 'wp_geo_map' ),
 					'styles'  => array(

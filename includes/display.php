@@ -14,6 +14,10 @@ class WPGeo_Display {
 	 */
 	function WPGeo_Display() {
 		$this->maps = array();
+		
+		// Hooks
+		add_action( 'wp_footer', array( $this, 'wpgeo_footer' ) );
+		add_shortcode( 'wpgeo', array( $this, 'shortcode_wpgeo' ) );
 	}
 	
 	/**
@@ -21,7 +25,7 @@ class WPGeo_Display {
 	 *
 	 * @return int Numeric ID.
 	 */
-	function getID() {
+	function get_id() {
 		$this->n++;
 		return $this->n;
 	}
@@ -31,46 +35,19 @@ class WPGeo_Display {
 	 *
 	 * @param array $args Map configuration.
 	 */
-	function addMap( $args ) {
-		$this->maps[] = $args;
+	function add_map( $map ) {
+		$this->maps[$map->id] = $map;
 	}
 	
 	/**
-	 * Render
+	 * WP Geo Footer
 	 * Outputs the javascript to display the maps.
 	 */
-	function render() {
+	function wpgeo_footer() {
+		global $wpgeo;
+		
 		if ( count( $this->maps ) > 0 ) {
-			echo '
-				<script type="text/javascript">
-				
-				function renderWPGeo() {
-					if (GBrowserIsCompatible()) {
-					';
-			foreach ( $this->maps as $map ) {
-				echo '
-					map = new GMap2(document.getElementById("wpgeo_map_' . $map['id'] . '"));
-					map.setCenter(new GLatLng(41.875696,-87.624207), 3);
-					geoXml = new GGeoXml("' . $map['rss'] . '");
-					GEvent.addListener(geoXml, "load", function() {
-						geoXml.gotoDefaultViewport(map);
-					});
-					' . WPGeo_API_GMap2::render_map_overlay( 'map', 'geoXml' ) . '
-					';
-			}
-			echo '}
-				}
-			
-				if (document.all&&window.attachEvent) { // IE-Win
-					window.attachEvent("onload", function () { renderWPGeo(); });
-					window.attachEvent("onunload", GUnload);
-				} else if (window.addEventListener) { // Others
-					window.addEventListener("load", function () { renderWPGeo(); }, false);
-					window.addEventListener("unload", GUnload, false);
-				}
-				
-				</script>
-				';
+			do_action( $wpgeo->get_api_string( 'wpgeo_api_%s_js' ), $this->maps );
 		}
 	}
 	
@@ -93,15 +70,11 @@ class WPGeo_Display {
 			$rss = $kml;
 		}
 		if ( $rss != null ) {
-			$id = $this->getID();
-			$map = array(
-				'id'  => $id,
-				'rss' => $rss
-			);
-			$this->addMap( $map );
+			$map = new WPGeo_Map( $this->get_id() );
+			$map->add_feed( $rss );
+			$this->add_map( $map );
 			$wp_geo_options = get_option( 'wp_geo_options' );
 			
-			$map = new WPGeo_Map( $id ); // 'wpgeo-' . $id
 			return $map->get_map_html( array(
 				'classes' => array( 'wpgeo', 'wpgeo-rss' ),
 				'content' => $rss
@@ -114,9 +87,5 @@ class WPGeo_Display {
 
 global $wpgeo_display;
 $wpgeo_display = new WPGeo_Display();
-
-// Hooks
-add_action( 'wp_footer', array( $wpgeo_display, 'render' ) );
-add_shortcode( 'wpgeo', array( $wpgeo_display, 'shortcode_wpgeo' ) );
 
 ?>

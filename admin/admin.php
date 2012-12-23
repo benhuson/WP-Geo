@@ -226,7 +226,7 @@ class WPGeo_Admin {
 			$wpgeo_map_settings_centre_checked = checked( true, true, false );
 		}
 		
-		$map = new WPGeo_Map( 'admin_post' ); // wp_geo_map
+		$map = new WPGeo_Map( 'admin_post' );
 		$map_html = $map->get_map_html( array(
 			'classes' => array( 'wp_geo_map' ),
 			'styles'  => array(
