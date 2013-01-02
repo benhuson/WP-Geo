@@ -35,7 +35,7 @@ class WPGeo {
 		
 		// API
 		$wp_geo_options = get_option( 'wp_geo_options' );
-		if ( ( is_admin() && 'googlemapsv3' == $wp_geo_options['admin_api'] ) || ( ! is_admin() && 'googlemapsv3' == $wp_geo_options['public_api'] ) ) {
+		if ( 'googlemapsv3' == $this->get_api_string() ) {
 			include_once( WPGEO_DIR . 'api/googlemapsv3/googlemapsv3.php' );
 			$this->api = new WPGeo_API_GoogleMapsV3();
 		} else {
@@ -488,7 +488,7 @@ class WPGeo {
 						
 				// Script
 				$wpgeo->includeGoogleMapsJavaScriptAPI();
-				if ( 'googlemapsv3' == $wp_geo_options['public_api'] ) {
+				if ( 'googlemapsv3' == $this->get_api_string() ) {
 					
 					// Google Maps v3
 					$html_content = '
@@ -590,7 +590,8 @@ class WPGeo {
 		$http = is_ssl() ? 'https' : 'http';
 		
 		wp_register_script( 'wpgeo_tooltip', WPGEO_URL . 'js/tooltip.js', array( 'jquery' ), $this->version );
-		if ( 'googlemapsv3' == $wp_geo_options['admin_api'] ) {
+		
+		if ( 'googlemapsv3' == $this->get_api_string() ) {
 			wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.v3.js', array( 'jquery', 'wpgeo_tooltip' ), $this->version );
 		} else {
 			wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.js', array( 'jquery', 'wpgeo_tooltip' ), $this->version );
@@ -599,7 +600,8 @@ class WPGeo {
 		
 		// Select API to use...
 		if ( ( $wpgeo->show_maps() || $wpgeo->widget_is_active() ) ) {
-			if ( ( is_admin() && 'googlemapsv3' == $wp_geo_options['admin_api'] ) || ( ! is_admin() && 'googlemapsv3' == $wp_geo_options['public_api'] ) ) {
+		
+			if ( 'googlemapsv3' == $this->get_api_string() ) {
 				
 				// Google Maps v3
 				if ( $wpgeo->checkGoogleAPIKey() ) {
@@ -756,7 +758,7 @@ class WPGeo {
 			<script type="text/javascript">
 			//<![CDATA[
 			var WPGeo_Admin = {
-				api        : "' . $wp_geo_options['admin_api'] . '",
+				api        : "' . $this->get_api_string() . '",
 				map        : null,
 				marker     : null,
 				zoom       : ' . $zoom . ',
@@ -794,7 +796,7 @@ class WPGeo {
 	/**
 	 * Get API String
 	 */
-	function get_api_string( $str ) {
+	function get_api_string( $str = '%s' ) {
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		if ( is_admin() ) {
 			$str = sprintf( $str, $wp_geo_options['admin_api'] );

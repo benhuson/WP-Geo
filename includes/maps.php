@@ -112,6 +112,7 @@ class WPGeo_Map {
 	 * @return string JavaScript.
 	 */
 	function renderMapJS( $map_id = false ) {
+		global $wpgeo;
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		
 		// ID of div for map output
@@ -189,7 +190,7 @@ class WPGeo_Map {
 			$js_controls .= WPGeo_API_GMap2::render_map_control( 'map_' . $map_id, 'GOverviewMapControl' );
 		
 		// Map Javascript
-		if ( 'googlemapsv3' == $wp_geo_options['admin_api'] ) {
+		if ( 'googlemapsv3' == $wpgeo->get_api_string() ) {
 			$js = '
 				if (document.getElementById("' . $div . '")) {
 					var bounds = new google.maps.LatLngBounds();

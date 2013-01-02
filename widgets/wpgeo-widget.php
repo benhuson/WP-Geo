@@ -231,7 +231,7 @@ class WPGeo_Widget extends WP_Widget {
 				$wpgeo->includeGoogleMapsJavaScriptAPI();
 				$small_marker = $wpgeo->markers->get_marker_by_id( 'small' );
 				
-				if ( 'googlemapsv3' == $wp_geo_options['admin_api'] ) {
+				if ( 'googlemapsv3' == $wpgeo->get_api_string() ) {
 					$html_js .= '
 						<script type="text/javascript">
 						//<![CDATA[

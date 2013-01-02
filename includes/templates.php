@@ -183,7 +183,7 @@ function get_wpgeo_post_map( $post_id = 0 ) {
  * @return string Output.
  */
 function get_wpgeo_map( $query, $options = null ) {
-	global $wpgeo_map_id;
+	global $wpgeo, $wpgeo_map_id;
 	
 	$wpgeo_map_id++;
 	$id = 'wpgeo_map_id_' . $wpgeo_map_id;
@@ -225,7 +225,7 @@ function get_wpgeo_map( $query, $options = null ) {
 	$output = $map->get_map_html( array( 'styles' => array( 'float' => $r['align'] ) ) ) . 
 		'<script type="text/javascript">
 		<!--';
-	if ( 'googlemapsv3' == $wp_geo_options['admin_api'] ) {
+	if ( 'googlemapsv3' == $wpgeo->get_api_string() ) {
 		$output .= '
 			function createMap() {
 				var mapOptions = {

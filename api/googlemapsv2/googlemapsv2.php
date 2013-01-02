@@ -9,7 +9,24 @@ class WPGeo_API_GoogleMapsV2 {
 	 * Constructor
 	 */
 	function WPGeo_API_GoogleMapsV2() {
+		add_filter( 'wpgeo_api_string', array( $this, 'wpgeo_api_string' ), 10, 3 );
 		add_action( 'wpgeo_api_googlemapsv2_js', array( $this, 'wpgeo_js' ) );
+	}
+	
+	/**
+	 * API String
+	 */
+	function wpgeo_api_string( $string, $key, $context ) {
+		if ( 'maptype' == $context ) {
+			switch ( strtolower( $key ) ) {
+				case 'g_physical_map'  : return 'G_PHYSICAL_MAP';
+				case 'g_satellite_map' : return 'G_SATELLITE_MAP';
+				case 'g_hybrid_map'    : return 'G_HYBRID_MAP';
+				case 'g_normal_map'    :
+				default                : return 'G_NORMAL_MAP';
+			}
+		}
+		return $string;
 	}
 	
 	function wpgeo_js( $maps ) {
