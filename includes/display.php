@@ -70,7 +70,7 @@ class WPGeo_Display {
 			$rss = $kml;
 		}
 		if ( $rss != null ) {
-			$map = new WPGeo_Map( $this->get_id() );
+			$map = new WPGeo_Map( 'shortcode_' . $this->get_id() );
 			$map->add_feed( $rss );
 			$this->add_map( $map );
 			$wp_geo_options = get_option( 'wp_geo_options' );

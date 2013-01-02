@@ -63,22 +63,20 @@ class WPGeo_API_GoogleMapsV3 {
 			echo '
 				if (document.getElementById("' . $map->get_dom_id() . '")) {
 					var mapOptions = {
-						center : new google.maps.LatLng(41.875696,-87.624207),
-						zoom   : 3
+						center    : new google.maps.LatLng(41.875696,-87.624207),
+						zoom      : 3,
+						mapTypeId : google.maps.MapTypeId.ROADMAP,
 					};
 					map_' . $map->id . ' = new google.maps.Map(document.getElementById("' . $map->get_dom_id() . '"), mapOptions);
-				
-				
-					/*
-					geoXml = new GGeoXml("' . $map->feeds[0] . '");
-					GEvent.addListener(geoXml, "load", function() {
-						geoXml.gotoDefaultViewport(map);
-					});
-					map_' . $map->id . '.addOverlay(geoXml);
-					*/
-				
-				
-				
+					';
+			if ( count( $map->feeds ) > 0 ) {
+				echo '
+						var kmlLayer = new google.maps.KmlLayer({
+							url : "' . $map->feeds[0] . '",
+							map : map_' . $map->id . '
+						});';
+			}
+			echo '
 				}';
 		}
 		echo '
