@@ -77,8 +77,13 @@ function get_wpgeo_longitude( $post_id = 0 ) {
 function get_wpgeo_title( $post_id = 0, $default_to_post_title = true ) {
 	global $post;
 	
-	$post_id = absint( $post_id );
-	$post_id = $post_id > 0 ? $post_id : $post->ID;
+	if ( 'object' == gettype( $post_id ) && 'WP_Post' == get_class( $post_id ) ) {
+		$post_id = $post_id->ID;
+	} else {
+		$post_id = absint( $post_id );
+		$post_id = $post_id > 0 ? $post_id : $post->ID;
+	}
+	
 	if ( $post_id > 0 ) {
 		$title = get_post_meta( $post_id, WPGEO_TITLE_META, true );
 		if ( empty( $title ) && $default_to_post_title ) {
@@ -124,7 +129,7 @@ function wpgeo_map_link( $args = null ) {
 	$url = '';
 	if ( $coord->is_valid_coord() ) {
 		$url = 'http://maps.google.co.uk/maps';
-		$url = add_query_arg( 'q', $coord->latitude() . ',' . $coord->longitude(), $url );
+		$url = add_query_arg( 'q', $coord->get_delimited(), $url );
 		if ( $r['zoom'] )
 			$url = add_query_arg( 'z', $r['zoom'], $url );
 		$url = apply_filters( 'wpgeo_map_link', $url, $r );
@@ -248,11 +253,11 @@ function get_wpgeo_map( $query, $options = null ) {
 					if ( empty( $marker ) )
 						$marker = $r['markers'];
 					$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', $marker, $post, 'wpgeo_map' );
-					$polyline->add_coord( $coord->latitude(), $coord->longitude() );
+					$polyline->add_coord( $coord );
 					$output .= '
 						// @todo Tooltip link
-						var marker = new google.maps.Marker({ position:new google.maps.LatLng(' . $coord->latitude() . ',' . $coord->longitude() . '), map:map_t, icon: ' . $icon . ' });
-						bounds.extend(new google.maps.LatLng(' . $coord->latitude() . ',' . $coord->longitude() . '));
+						var marker = new google.maps.Marker({ position:new google.maps.LatLng(' . $coord->get_delimited() . '), map:map_t, icon: ' . $icon . ' });
+						bounds.extend(new google.maps.LatLng(' . $coord->get_delimited() . '));
 						';
 				}
 			}
@@ -298,9 +303,9 @@ function get_wpgeo_map( $query, $options = null ) {
 								if ( empty( $marker ) )
 									$marker = $r['markers'];
 								$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', $marker, $post, 'wpgeo_map' );
-								$polyline->add_coord( $coord->latitude(), $coord->longitude() );
+								$polyline->add_coord( $coord );
 								$output .= '
-									var center = new GLatLng(' . $coord->latitude() . ',' . $coord->longitude() . ');
+									var center = new GLatLng(' . $coord->get_delimited() . ');
 									var marker = new wpgeo_createMarker2(map, center, ' . $icon . ', \'' . esc_js( $post->post_title ) . '\', \'' . get_permalink( $post->ID ) . '\');
 									bounds.extend(center);
 									';
@@ -398,8 +403,6 @@ function get_wpgeo_post_static_map( $post_id = 0, $query = null ) {
 	);	
 
 	// Center on location marker by default
-	$centerLatitude  = $coord->latitude();
-	$centerLongitude = $coord->longitude();
 	$center_coord = new WPGeo_Coord( $coord->latitude(), $coord->longitude() );
 
 	// Custom map settings?
@@ -415,11 +418,11 @@ function get_wpgeo_post_static_map( $post_id = 0, $query = null ) {
 	}
 	
 	$url = add_query_arg( array(
-		'center'  => $center_coord->latitude() . ',' . $center_coord->longitude(),
+		'center'  => $center_coord->get_delimited(),
 		'zoom'    => $options['zoom'],
 		'size'    => $options['width'] . 'x' . $options['height'],
 		'maptype' => $types[$options['maptype']],
-		'markers' => 'color:red%7C' . $coord->latitude() . ',' . $coord->longitude(),
+		'markers' => 'color:red%7C' . $coord->get_delimited(),
 		'sensor'  => 'false'
 	), 'http://maps.googleapis.com/maps/api/staticmap' );
 	

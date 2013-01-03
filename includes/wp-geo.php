@@ -299,13 +299,13 @@ class WPGeo {
 			$nl = "\n";
 			
 			if ( $coord->is_valid_coord() ) {
-				echo '<meta name="geo.position" content="' . $coord->latitude() . ';' . $coord->longitude() . '" />' . $nl; // Geo-Tag: Latitude and longitude
+				echo '<meta name="geo.position" content="' . $coord->get_delimited( ';' ) . '" />' . $nl; // Geo-Tag: Latitude and longitude
 				//echo '<meta name="geo.region" content="DE-BY" />' . $nl;                      // Geo-Tag: Country code (ISO 3166-1) and regional code (ISO 3166-2)
 				//echo '<meta name="geo.placename" content="MÙnchen" />' . $nl;                 // Geo-Tag: City or the nearest town
 				if ( ! empty( $title ) ) {
 					echo '<meta name="DC.title" content="' . $title . '" />' . $nl;             // Dublin Core Meta Tag Title (used by some geo databases)
 				}
-				echo '<meta name="ICBM" content="' . $coord->latitude() . ', ' . $coord->longitude() . '" />' . $nl;        // ICBM Tag (prior existing equivalent to the geo.position)
+				echo '<meta name="ICBM" content="' . $coord->get_delimited() . '" />' . $nl;        // ICBM Tag (prior existing equivalent to the geo.position)
 			}
 		}
 	}
@@ -407,7 +407,7 @@ class WPGeo {
 					// Add point
 					$marker_large = empty( $marker ) ? 'large' : $marker;
 					$icon = apply_filters( 'wpgeo_marker_icon', $marker_large, $post, 'post' );
-					$map->add_marker( $coord, array(
+					$map->add_point( $coord, array(
 						'icon'  => $icon,
 						'title' => $title,
 						'link'  => get_permalink( $post->ID )
@@ -457,7 +457,7 @@ class WPGeo {
 				for ( $j = 0; $j < count( $coords ); $j++ ) {
 					$marker_small = empty( $marker ) ? 'small' : $marker;
 					$icon = apply_filters( 'wpgeo_marker_icon', $marker_small, $coords[$j]['post'], 'multiple' );
-					$map->add_marker( $coords[$j]['coord'], array(
+					$map->add_point( $coords[$j]['coord'], array(
 						'icon'  => $icon,
 						'title' => $coords[$j]['title'],
 						'link'  => $coords[$j]['link']

@@ -130,12 +130,12 @@ class WPGeo_Map {
 		$js_markers_v3 = '';
 		if ( count( $this->points ) > 0 ) {
 			for ( $i = 0; $i < count( $this->points ); $i++ ) {
-				$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', $this->points[$i]['icon'], $this->id, 'wpgeo_map' );
-				$js_markers .= 'var marker_' . $map_id .'_' . $i . ' = new wpgeo_createMarker2(map_' . $map_id . ', new GLatLng(' . $this->points[$i]['latitude'] . ', ' . $this->points[$i]['longitude'] . '), ' . $icon . ', \'' . addslashes( __( $this->points[$i]['title'] ) ) . '\', \'' . $this->points[$i]['link'] . '\');' . "\n";
-				$js_markers .= 'bounds.extend(new GLatLng(' . $this->points[$i]['latitude'] . ', ' . $this->points[$i]['longitude'] . '));';
+				$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', $this->points[$i]->icon, $this->id, 'wpgeo_map' );
+				$js_markers .= 'var marker_' . $map_id .'_' . $i . ' = new wpgeo_createMarker2(map_' . $map_id . ', new GLatLng(' . $this->points[$i]->coord->get_delimited() . '), ' . $icon . ', \'' . addslashes( __( $this->points[$i]->title ) ) . '\', \'' . $this->points[$i]->link . '\');' . "\n";
+				$js_markers .= 'bounds.extend(new GLatLng(' . $this->points[$i]->coord->get_delimited() . '));';
 				// @todo Tooltip, icon and link for v3
-				$js_markers_v3 .= 'var marker_' . $map_id .'_' . $i . ' = new google.maps.Marker({ position:new google.maps.LatLng(' . $this->points[$i]['latitude'] . ', ' . $this->points[$i]['longitude'] . '), map:map_' . $map_id . ', icon: ' . $icon . ' });' . "\n";
-				$js_markers_v3 .= 'bounds.extend(new google.maps.LatLng(' . $this->points[$i]['latitude'] . ', ' . $this->points[$i]['longitude'] . '));' . "\n";
+				$js_markers_v3 .= 'var marker_' . $map_id .'_' . $i . ' = new google.maps.Marker({ position:new google.maps.LatLng(' . $this->points[$i]->coord->get_delimited() . '), map:map_' . $map_id . ', icon: ' . $icon . ' });' . "\n";
+				$js_markers_v3 .= 'bounds.extend(new google.maps.LatLng(' . $this->points[$i]->coord->get_delimited() . '));' . "\n";
 			}
 		}
 		
@@ -149,7 +149,7 @@ class WPGeo_Map {
 						'color' => $wp_geo_options['polyline_colour']
 					) );
 					for ( $i = 0; $i < count( $this->points ); $i++ ) {
-						$polyline->add_coord( $this->points[$i]['latitude'], $this->points[$i]['longitude'] );
+						$polyline->add_coord( $this->points[$i]->coord );
 					}
 					$js_polyline .= WPGeo_API_GMap2::render_map_overlay( 'map_' . $map_id, WPGeo_API_GMap2::render_polyline( $polyline ) );
 					// v3
@@ -171,14 +171,14 @@ class WPGeo_Map {
 		
 		// Zoom
 		$js_zoom = '';
-		$js_center_v3 = 'var center = new google.maps.LatLng(' . $this->mapcentre->latitude() . ', ' . $this->mapcentre->longitude() . ');';
+		$js_center_v3 = 'var center = new google.maps.LatLng(' . $this->mapcentre->get_delimited() . ');';
 		if ( count( $this->points ) > 1 ) {
 			$js_zoom .= 'map_' . $map_id . '.setCenter(bounds.getCenter(), map_' . $map_id . '.getBoundsZoomLevel(bounds));';
 			$js_center_v3 = 'var center = bounds.getCenter();';
 		}
 		if ( count( $this->points ) == 1 ) {
 			if ( $this->mapcentre->is_valid_coord() ) {
-				$js_zoom .= 'map_' . $map_id . '.setCenter(new GLatLng(' . $this->mapcentre->latitude() . ', ' . $this->mapcentre->longitude() . '));';
+				$js_zoom .= 'map_' . $map_id . '.setCenter(new GLatLng(' . $this->mapcentre->get_delimited() . '));';
 			}
 		}
 		
@@ -196,7 +196,7 @@ class WPGeo_Map {
 					var bounds = new google.maps.LatLngBounds();
 					
 					var mapOptions = {
-						center    : new google.maps.LatLng(' . $this->points[0]['latitude'] . ', ' . $this->points[0]['longitude'] . '),
+						center    : new google.maps.LatLng(' . $this->points[0]->coord->get_delimited() . '),
 						zoom      : ' . $this->zoom . ',
 						// @todo Map Types
 						mapTypeId : ' . apply_filters( 'wpgeo_api_string', 'ROADMAP', $this->maptype, 'maptype' ) . ',
@@ -223,7 +223,7 @@ class WPGeo_Map {
 					var bounds = new GLatLngBounds();
 		
 					map_' . $map_id . ' = new GMap2(document.getElementById("' . $div . '"));
-					var center = new GLatLng(' . $this->points[0]['latitude'] . ', ' . $this->points[0]['longitude'] . ');
+					var center = new GLatLng(' . $this->points[0]->coord->get_delimited() . ');
 					map_' . $map_id . '.setCenter(center, ' . $this->zoom . ');
 					
 					' . $js_maptypes . '
@@ -234,7 +234,7 @@ class WPGeo_Map {
 				$js .= WPGeo_API_GMap2::render_map_control( 'map_' . $map_id, $this->mapcontrol );
 			}
 			$js .= '
-					var center_' . $map_id .' = new GLatLng(' . $this->points[0]['latitude'] . ', ' . $this->points[0]['longitude'] . ');
+					var center_' . $map_id .' = new GLatLng(' . $this->points[0]->coord->get_delimited() . ');
 					
 					' . apply_filters( 'wpgeo_map_js_preoverlays', '', 'map_' . $map_id ) . '
 					
@@ -315,25 +315,18 @@ class WPGeo_Map {
 	}
 	
 	/**
-	 * Add a Marker to this map.
+	 * Add a Point (Marker) to this map.
 	 *
 	 * @param object $coord WPGeo_Coord.
 	 * @param array $args (optional) Array of marker options.
 	 */
-	function add_marker( $coord, $args = null ) {
-		$marker = new WPGeo_Point( $coord, $args );
-		$this->points[] = array(
-			'latitude'  => $marker->coord->latitude(), 
-			'longitude' => $marker->coord->longitude(),
-			'icon'      => $marker->icon,
-			'title'     => $marker->title,
-			'link'      => $marker->link,
-		);
+	function add_point( $coord, $args = null ) {
+		$this->points[] = new WPGeo_Point( $coord, $args );
 	}
 	// @todo Deprecate
 	function addPoint( $lat, $long, $icon = 'large', $title = '', $link = '' ) {
 		$coord = new WPGeo_Coord( $lat, $long );
-		$this->add_marker( $coord, array(
+		$this->add_point( $coord, array(
 			'icon'  => $icon,
 			'title' => $title,
 			'link'  => $link
@@ -347,6 +340,15 @@ class WPGeo_Map {
 	 */
 	function showPolyline( $bool = true ) {
 		$this->show_polyline = $bool;
+	}
+	
+	/**
+	 * Add Polyline
+	 *
+	 * @param object $polyline WPGeo_Polyline.
+	 */
+	function add_polyline( $polyline ) {
+		$this->polylines[] = $polyline;
 	}
 	
 	/**
@@ -623,6 +625,7 @@ class WPGeo_Polyline {
 class WPGeo_Point {
 	
 	var $coord = null;
+	var $args  = null;
 	var $icon  = 'large';
 	var $title = '';
 	var $link  = '';
@@ -640,6 +643,7 @@ class WPGeo_Point {
 			'link'  => ''
 		) );
 		$this->coord = $coord;
+		$this->args  = $args;
 		$this->icon  = $args['icon'];
 		$this->title = $args['title'];
 		$this->link  = $args['link'];

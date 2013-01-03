@@ -100,7 +100,7 @@ class WPGeo_Feeds {
 			
 			// Need a map?
 			if ( $coord->is_valid_coord() ) {
-				echo '<georss:point>' . $coord->latitude() . ' ' . $coord->longitude() . '</georss:point>';
+				echo '<georss:point>' . $coord->get_delimited( ' ' ) . '</georss:point>';
 				echo '<geo:lat>' . $coord->latitude() . '</geo:lat>';
 				echo '<geo:long>' . $coord->longitude() . '</geo:long>';
 			}

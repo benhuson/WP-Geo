@@ -179,62 +179,73 @@ class WPGeo_Widget extends WP_Widget {
 		// If Google API Key...
 		if ( $wpgeo->checkGoogleAPIKey() ) {
 			
-			// Find the coordinates for the posts
-			$coords = array();
-			for ( $i = 0; $i < count( $args['posts'] ); $i++ ) {
-				$post    = $args['posts'][$i];
-				$coord   = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
-				$post_id = get_post( $post->ID );
-				$title   = get_post_meta( $post->ID, WPGEO_TITLE_META, true );
-				if ( empty( $title ) )
-					$title = $post->post_title;
+			// Add points (from posts) to map
+			foreach ( $args['posts'] as $post ) {
+				$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
 				if ( $coord->is_valid_coord() ) {
-					array_push( $coords, array(
-						'id'    => $post->ID,
-						'coord' => $coord,
-						'title' => $title,
+					$map->add_point( $coord, array(
+						'icon'  => apply_filters( 'wpgeo_marker_icon', 'small', $post, 'widget' ),
+						'title' => get_wpgeo_title( $post->ID ),
 						'post'  => $post
 					) );
 				}
 			}
 			
 			// Only show map widget if there are coords to show
-			if ( count( $coords ) > 0 ) {
+			if ( count( $map->points ) > 0 ) {
 				
-				// Polylines
+				// Add polylines to map
 				if ( $args['show_polylines'] ) {
 					$polyline = new WPGeo_Polyline( array(
 						'color' => $wp_geo_options['polyline_colour']
 					) );
-					for ( $i = 0; $i < count( $coords ); $i++ ) {
-						$polyline->add_coord( $coords[$i]['coord'] );
+					foreach ( $map->points as $point ) {
+						$polyline->add_coord( $point->coord );
 					}
-					$polyline_js = WPGeo_API_GMap2::render_map_overlay( 'map', WPGeo_API_GMap2::render_polyline( $polyline ) );
-					$polyline_js_3_coords = array();
-					foreach ( $polyline->coords as $c ) {
-						$polyline_js_3_coords[] = 'new google.maps.LatLng(' . $c->latitude() . ', ' . $c->longitude() . ')';
+					$map->add_polyline( $polyline );
+				}
+				
+				// Polylines
+				if ( count( $map->polylines ) > 0 ) {
+					foreach ( $map->polylines as $polyline ) {
+					
+						// v2 Polyline
+						$coords = array();
+						foreach ( $polyline->coords as $coord ) {
+							$coords[] = 'new GLatLng(' . $coord->get_delimited() . ')';
+						}
+						$options = array();
+						if ( $polyline->geodesic ) {
+							$options[] = 'geodesic:true';
+						}
+						$polyline_js = 'map.addOverlay(new GPolyline([' . implode( ',', $coords ) . '],"' . $polyline->color . '",' . $polyline->thickness . ',' . $polyline->opacity . ',{' . implode( ',', $options ) . '}));';
+						
+						// v3 Polyline
+						$polyline_js_3_coords = array();
+						foreach ( $polyline->coords as $c ) {
+							$polyline_js_3_coords[] = 'new google.maps.LatLng(' . $c->get_delimited() . ')';
+						}
+						$polyline_js_3 = 'var polyline = new google.maps.Polyline({
+								path          : [' . implode( ',', $polyline_js_3_coords ) . '],
+								strokeColor   : "' . $polyline->color . '",
+								strokeOpacity : ' . $polyline->opacity . ',
+								strokeWeight  : ' . $polyline->thickness . ',
+								geodesic      : ' . $polyline->geodesic . '
+							});
+							polyline.setMap(map);';
 					}
-					$polyline_js_3 = 'var polyline = new google.maps.Polyline({
-							path          : [' . implode( ',', $polyline_js_3_coords ) . '],
-							strokeColor   : "' . $polyline->color . '",
-							strokeOpacity : ' . $polyline->opacity . ',
-							strokeWeight  : ' . $polyline->thickness . ',
-							geodesic      : ' . $polyline->geodesic . '
-						});
-						polyline.setMap(map);';
 				}
 				
 				// Markers
-				for ( $i = 0; $i < count( $coords ); $i++ ) {
-					$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', 'small', $coords[$i]['post'], 'widget' );
-					$markers_js .= 'marker' . $i . ' = wpgeo_createMarker(new GLatLng(' . $coords[$i]['coord']->latitude() . ', ' . $coords[$i]['coord']->longitude() . '), ' . $icon . ', "' . addslashes( __( $coords[$i]['title'] ) ) . '", "' . get_permalink( $coords[$i]['id'] ) . '");' . "\n";
+				for ( $i = 0; $i < count( $map->points ); $i++ ) {
+					$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', 'small', $map->points[$i]->args['post'], 'widget' );
+					$markers_js .= 'marker' . $i . ' = wpgeo_createMarker(new GLatLng(' . $map->points[$i]->coord->get_delimited() . '), ' . $icon . ', "' . addslashes( __( $map->points[$i]->title ) ) . '", "' . get_permalink( $map->points[$i]->args['post']->ID ) . '");' . "\n";
 					// @todo Tooltip and link for v3
-					$markers_js_3 .= 'var marker' . $i . ' = new google.maps.Marker({ position:new google.maps.LatLng(' . $coords[$i]['coord']->latitude() . ', ' . $coords[$i]['coord']->longitude() . '), map:map, icon: ' . $icon . ' });' . "\n";
-					$markers_js_3 .= 'bounds.extend(new google.maps.LatLng(' . $coords[$i]['coord']->latitude() . ', ' . $coords[$i]['coord']->longitude() . '));' . "\n";
+					$markers_js_3 .= 'var marker' . $i . ' = new google.maps.Marker({ position:new google.maps.LatLng(' . $map->points[$i]->coord->get_delimited() . '), map:map, icon: ' . $icon . ' });' . "\n";
+					$markers_js_3 .= 'bounds.extend(new google.maps.LatLng(' . $map->points[$i]->coord->get_delimited() . '));' . "\n";
 				}
 				
 				$wpgeo->includeGoogleMapsJavaScriptAPI();
-				$small_marker = $wpgeo->markers->get_marker_by_id( 'small' );
 				$center_coord = $map->get_map_centre();
 				
 				if ( 'googlemapsv3' == $wpgeo->get_api_string() ) {
