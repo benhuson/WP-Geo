@@ -407,7 +407,11 @@ class WPGeo {
 					// Add point
 					$marker_large = empty( $marker ) ? 'large' : $marker;
 					$icon = apply_filters( 'wpgeo_marker_icon', $marker_large, $post, 'post' );
-					$map->addPoint( $coord->latitude(), $coord->longitude(), $icon, $title, get_permalink( $post->ID ) );
+					$map->add_marker( $coord, array(
+						'icon'  => $icon,
+						'title' => $title,
+						'link'  => get_permalink( $post->ID )
+					) );
 					$map->setMapZoom( $mymapzoom );
 					$map->setMapType( $mymaptype );
 					
@@ -453,7 +457,11 @@ class WPGeo {
 				for ( $j = 0; $j < count( $coords ); $j++ ) {
 					$marker_small = empty( $marker ) ? 'small' : $marker;
 					$icon = apply_filters( 'wpgeo_marker_icon', $marker_small, $coords[$j]['post'], 'multiple' );
-					$map->addPoint( $coords[$j]['coord']->latitude(), $coords[$j]['coord']->longitude(), $icon, $coords[$j]['title'], $coords[$j]['link'] );
+					$map->add_marker( $coords[$j]['coord'], array(
+						'icon'  => $icon,
+						'title' => $coords[$j]['title'],
+						'link'  => $coords[$j]['link']
+					) );
 				}
 				
 				$map->setMapZoom( $mapzoom );
@@ -1201,7 +1209,7 @@ class WPGeo {
 		$js = $this->maps2->get_maps_javascript();
 		if ( ! empty( $js ) ) {
 			echo '<script type="text/javascript">
-				<!--
+				<!-----
 				' . $js . '
 				-->
 				</script>

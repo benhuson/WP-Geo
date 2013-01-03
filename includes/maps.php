@@ -315,22 +315,29 @@ class WPGeo_Map {
 	}
 	
 	/**
-	 * Add a point (marker) to this map.
+	 * Add a Marker to this map.
 	 *
-	 * @param float $lat Latitude.
-	 * @param float $long Longitude.
-	 * @param string $icon (optional) Icon type.
-	 * @param string $title (optional) Display title.
-	 * @param string $link (optional) URL to link to when point is clicked.
+	 * @param object $coord WPGeo_Coord.
+	 * @param array $args (optional) Array of marker options.
 	 */
-	function addPoint( $lat, $long, $icon = 'large', $title = '', $link = '' ) {
+	function add_marker( $coord, $args = null ) {
+		$marker = new WPGeo_Point( $coord, $args );
 		$this->points[] = array(
-			'latitude'  => $lat, 
-			'longitude' => $long,
-			'icon'      => $icon,
-			'title'     => $title,
-			'link'      => $link,
+			'latitude'  => $marker->coord->latitude(), 
+			'longitude' => $marker->coord->longitude(),
+			'icon'      => $marker->icon,
+			'title'     => $marker->title,
+			'link'      => $marker->link,
 		);
+	}
+	// @todo Deprecate
+	function addPoint( $lat, $long, $icon = 'large', $title = '', $link = '' ) {
+		$coord = new WPGeo_Coord( $lat, $long );
+		$this->add_marker( $coord, array(
+			'icon'  => $icon,
+			'title' => $title,
+			'link'  => $link
+		) );
 	}
 	
 	/**
@@ -357,20 +364,46 @@ class WPGeo_Map {
 	 *
 	 * @param string $maptype Type of map.
 	 */
-	function setMapType( $maptype = 'G_NORMAL_MAP' ) {
+	function set_map_type( $maptype = 'G_NORMAL_MAP' ) {
 		if ( $this->is_valid_map_type( $maptype ) ) {
 			$this->maptype = $maptype;
 		}
+	}
+	// @todo Deprecate
+	function setMapType( $maptype = 'G_NORMAL_MAP' ) {
+		$this->set_map_type( $maptype );
+	}
+	
+	/**
+	 * get the type of map
+	 *
+	 * @return string Type of map.
+	 */
+	function get_map_type() {
+		return $this->maptype;
 	}
 	
 	/**
 	 * Set the centre point of the map
 	 *
-	 * @param float $latitude Latitude.
-	 * @param float $longitude Longitude.
+	 * @param object $coord WPGeo_Coord.
 	 */
+	function set_map_centre( $coord ) {
+		$this->mapcentre = $coord;
+	}
+	// @todo Deprecate
 	function setMapCentre( $latitude, $longitude ) {
-		$this->mapcentre = new WPGeo_Coord( $latitude, $longitude );
+		$coord = new WPGeo_Coord( $latitude, $longitude );
+		$this->set_map_centre( $coord );
+	}
+	
+	/**
+	 * Get the centre point of the map
+	 *
+	 * @param return WPGeo_Coord.
+	 */
+	function get_map_centre() {
+		return $this->mapcentre;
 	}
 	
 	/**
@@ -406,8 +439,21 @@ class WPGeo_Map {
 	 *
 	 * @param int $zoom Zoom.
 	 */
-	function setMapZoom( $zoom = 5 ) {
+	function set_map_zoom( $zoom = 5 ) {
 		$this->zoom = absint( $zoom );
+	}
+	// @todo Deprecate
+	function setMapZoom( $zoom = 5 ) {
+		$this->set_map_zoom( $zoom );
+	}
+	
+	/**
+	 * Get the default zoom of this map
+	 *
+	 * @return int Zoom.
+	 */
+	function get_map_zoom() {
+		return $this->zoom;
 	}
 	
 	/**
@@ -572,6 +618,36 @@ class WPGeo_Polyline {
 }
 
 /**
+ * Point Class
+ */
+class WPGeo_Point {
+	
+	var $coord = null;
+	var $icon  = 'large';
+	var $title = '';
+	var $link  = '';
+	
+	/**
+	 * Constructor
+	 *
+	 * @param float $latitude Latitude.
+	 * @param float $longitude Longitude.
+	 */
+	function WPGeo_Point( $coord, $args = null ) {
+		$args = wp_parse_args( $args, array(
+			'icon'  => 'large',
+			'title' => '',
+			'link'  => ''
+		) );
+		$this->coord = $coord;
+		$this->icon  = $args['icon'];
+		$this->title = $args['title'];
+		$this->link  = $args['link'];
+	}
+	
+}
+
+/**
  * Coord Class
  */
 class WPGeo_Coord {
@@ -623,6 +699,17 @@ class WPGeo_Coord {
 	 */
 	function longitude() {
 		return $this->longitude;
+	}
+	
+	/**
+	 * Get Delimited
+	 * Returns the latitude and longitude as a string.
+	 * By default the values are delimited by a comma.
+	 *
+	 * @return string Delimited coordinate string.
+	 */
+	function get_delimited( $delimiter = ',' ) {
+		return $this->latitude . $delimiter . $this->longitude; 
 	}
 	
 }
