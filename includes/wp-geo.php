@@ -441,6 +441,7 @@ class WPGeo {
 						$map->showMapOverview( true );
 					
 					$map->setMapControl( $wp_geo_options['default_map_control'] );
+					//$this->maps2->add_map( $map );
 					array_push( $this->maps, $map );
 					// ----------- End - Create maps for visible posts and pages -----------
 				}
@@ -540,10 +541,6 @@ class WPGeo {
 				
 				echo $html_content;
 			}
-	
-			// @todo Check if plugin head needed
-			// @todo Check for Google API key
-			// @todo Write Javascripts and CSS
 		}
 	}
 	

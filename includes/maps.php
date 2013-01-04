@@ -53,14 +53,10 @@ class WPGeo_Maps {
 	/**
 	 * Get the javascript to display all maps
 	 *
-	 * @return string JavaScript.
+	 * @todo Deprecate.
 	 */
 	function get_maps_javascript() {
-		$javascript = '';
-		foreach ( $this->maps as $map ) {
-			$javascript .= $map->get_map_javascript();
-		}
-		return $javascript;
+		return '';
 	}
 	
 }
@@ -144,7 +140,17 @@ class WPGeo_Map {
 		$maptypes = $this->maptypes;
 		$maptypes[] = $this->maptype;
 		$maptypes = array_unique( $maptypes );
-		$js_maptypes = WPGeo_API_GMap2::render_map_types( 'map_' . $map_id, $maptypes );
+		$js_maptypes = '';
+		if ( is_array( $maptypes ) ) {
+			if ( in_array( 'G_PHYSICAL_MAP', $maptypes ) )
+				$js_maptypes .= 'map_' . $map_id . '.addMapType(G_PHYSICAL_MAP);';
+			if ( ! in_array( 'G_NORMAL_MAP', $maptypes ) )
+				$js_maptypes .= 'map_' . $map_id . '.removeMapType(G_NORMAL_MAP);';
+			if ( ! in_array( 'G_SATELLITE_MAP', $maptypes ) )
+				$js_maptypes .= 'map_' . $map_id . '.removeMapType(G_SATELLITE_MAP);';
+			if ( ! in_array( 'G_HYBRID_MAP', $maptypes ) )
+				$js_maptypes .= 'map_' . $map_id . '.removeMapType(G_HYBRID_MAP);';
+		}
 		
 		// Markers
 		$js_markers = '';
@@ -172,11 +178,21 @@ class WPGeo_Map {
 					for ( $i = 0; $i < count( $this->points ); $i++ ) {
 						$polyline->add_coord( $this->points[$i]->coord );
 					}
-					$js_polyline .= WPGeo_API_GMap2::render_map_overlay( 'map_' . $map_id, WPGeo_API_GMap2::render_polyline( $polyline ) );
+					// Coords
+					$coords = array();
+					foreach ( $polyline->coords as $coord ) {
+						$coords[] = 'new GLatLng(' . $coord->get_delimited() . ')';
+					}
+					// Options
+					$options = array();
+					if ( $polyline->geodesic ) {
+						$options[] = 'geodesic:true';
+					}
+					$js_polyline .= 'map_' . $map_id . '.addOverlay(new GPolyline([' . implode( ',', $coords ) . '],"' . $polyline->color . '",' . $polyline->thickness . ',' . $polyline->opacity . ',{' . implode( ',', $options ) . '}));';
 					// v3
 					$polyline_js_3_coords = array();
 					foreach ( $polyline->coords as $c ) {
-						$polyline_js_3_coords[] = 'new google.maps.LatLng(' . $c->latitude . ', ' . $c->longitude . ')';
+						$polyline_js_3_coords[] = 'new google.maps.LatLng(' . $c->get_delimited() . ')';
 					}
 					$js_polyline_v3 = 'var polyline = new google.maps.Polyline({
 							path: [' . implode( ',', $polyline_js_3_coords ) . '],
@@ -206,9 +222,9 @@ class WPGeo_Map {
 		// Controls
 		$js_controls = '';
 		if ( $this->show_map_scale )
-			$js_controls .= WPGeo_API_GMap2::render_map_control( 'map_' . $map_id, 'GScaleControl' );
+			$js_controls .= 'map_' . $map_id . '.addControl(new GScaleControl());';
 		if ( $this->show_map_overview )
-			$js_controls .= WPGeo_API_GMap2::render_map_control( 'map_' . $map_id, 'GOverviewMapControl' );
+			$js_controls .= 'map_' . $map_id . '.addControl(new GOverviewMapControl());';
 		
 		// Map Javascript
 		if ( 'googlemapsv3' == $wpgeo->get_api_string() ) {
@@ -249,10 +265,10 @@ class WPGeo_Map {
 					
 					' . $js_maptypes . '
 					map_' . $map_id . '.setMapType(' . $this->maptype . ');
-					
-					' . WPGeo_API_GMap2::render_map_control( 'map_' . $map_id, 'GMapTypeControl' );
+					map_' . $map_id . '.addControl(new GMapTypeControl());
+					';
 			if ( $this->mapcontrol != "" ) {
-				$js .= WPGeo_API_GMap2::render_map_control( 'map_' . $map_id, $this->mapcontrol );
+				$js .= 'map_' . $map_id . '.addControl(new ' . $this->mapcontrol . '());';
 			}
 			$js .= '
 					var center_' . $map_id .' = new GLatLng(' . $this->points[0]->coord->get_delimited() . ');
@@ -330,13 +346,10 @@ class WPGeo_Map {
 	/**
 	 * Get the Javascript for a map.
 	 *
-	 * @return string JavaScript.
+	 * @todo Deprecate.
 	 */
 	function get_map_javascript() {
-		$js = '
-			' . $this->get_js_id() . ' = new GMap2(document.getElementById("' . $this->get_dom_id() . '"));
-			';
-		return $js;
+		return '';
 	}
 	
 	/**
@@ -501,98 +514,6 @@ class WPGeo_Map {
 	 */
 	function showMapOverview( $bool = true ) {
 		$this->show_map_overview = $bool;
-	}
-	
-}
-
-/**
- * WP Geo Map API
- * Renders various GMap objects.
- */
-class WPGeo_API_GMap2 {
-	
-	/**
-	 * Render Map Types
-	 *
-	 * @param string $map JavaScript map var.
-	 * @param array $maptypes Array of map types.
-	 * @return string JavaScript.
-	 */
-	function render_map_types( $map, $maptypes ) {
-		$output = '';
-		if ( is_array( $maptypes ) ) {
-			if ( in_array( 'G_PHYSICAL_MAP', $maptypes ) )
-				$output .= $map . '.addMapType(G_PHYSICAL_MAP);';
-			if ( ! in_array( 'G_NORMAL_MAP', $maptypes ) )
-				$output .= $map . '.removeMapType(G_NORMAL_MAP);';
-			if ( ! in_array( 'G_SATELLITE_MAP', $maptypes ) )
-				$output .= $map . '.removeMapType(G_SATELLITE_MAP);';
-			if ( ! in_array( 'G_HYBRID_MAP', $maptypes ) )
-				$output .= $map . '.removeMapType(G_HYBRID_MAP);';
-		}
-		return $output;
-	}
-	
-	/**
-	 * Render Map Overlay
-	 *
-	 * @param string $map JavaScript map var.
-	 * @param string $overlay Overlay var.
-	 * @return string JavaScript.
-	 */
-	function render_map_overlay( $map, $overlay ) {
-		if ( is_string( $overlay ) ) {
-			$output = $map . '.addOverlay(' . $overlay . ');';
-		} else {
-			$output = '';
-		}
-		return $output;
-	}
-	
-	/**
-	 * Render Map Control
-	 *
-	 * @param string $map JavaScript map var.
-	 * @param string $control Control class name.
-	 * @return string JavaScript.
-	 */
-	function render_map_control( $map, $control ) {
-		//if ( is_string( $control ) ) {
-			$output = $map . '.addControl(new ' . $control . '());';
-		//}
-		return $output;
-	}
-	
-	/**
-	 * Render Polyline
-	 *
-	 * @param string $polyline WPGeo_Polyline object.
-	 * @return string JavaScript.
-	 */
-	function render_polyline( $polyline ) {
-		
-		// Coords
-		$coords = array();
-		foreach ( $polyline->coords as $coord ) {
-			$coords[] = WPGeo_API_GMap2::render_coord( $coord );
-		}
-		
-		// Options
-		$options = array();
-		if ( $polyline->geodesic ) {
-			$options[] = 'geodesic:true';
-		}
-		return 'new GPolyline([' . implode( ',', $coords ) . '],"' . $polyline->color . '",' . $polyline->thickness . ',' . $polyline->opacity . ',{' . implode( ',', $options ) . '})';
-	}
-	
-	/**
-	 * Render Coord
-	 *
-	 * @param string $coord WPGeo_Coord object.
-	 * @return string JavaScript.
-	 */
-	function render_coord( $coord ) {
-		return 'new GLatLng(' . $coord->latitude . ',' . $coord->longitude . ')';
 	}
 	
 }

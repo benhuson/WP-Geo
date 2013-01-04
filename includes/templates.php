@@ -264,7 +264,7 @@ function get_wpgeo_map( $query, $options = null ) {
 			if ( $r['polylines'] == 'Y' ) {
 				$polyline_js_3_coords = array();
 				foreach ( $polyline->coords as $c ) {
-					$polyline_js_3_coords[] = 'new google.maps.LatLng(' . $c->latitude . ', ' . $c->longitude . ')';
+					$polyline_js_3_coords[] = 'new google.maps.LatLng(' . $c->get_delimited() . ')';
 				}
 				$output .= 'var polyline = new google.maps.Polyline({
 						path: [' . implode( ',', $polyline_js_3_coords ) . '],
@@ -289,7 +289,7 @@ function get_wpgeo_map( $query, $options = null ) {
 				if ( GBrowserIsCompatible() ) {
 					var bounds = new GLatLngBounds();
 					' . $map->get_js_id() . ' = new GMap2(document.getElementById("' . $map->get_dom_id() . '"));
-					' . WPGeo_API_GMap2::render_map_control( $map->get_js_id(), 'GLargeMapControl3D' ) . '
+					' . $map->get_js_id() . '.addControl(new GLargeMapControl3D());
 					' . $map->get_js_id() . '.setMapType(' . $r['type'] . ');
 					';
 					if ( $posts ) {
@@ -312,7 +312,15 @@ function get_wpgeo_map( $query, $options = null ) {
 							}
 						}
 						if ( $r['polylines'] == 'Y' ) {
-							$output .= WPGeo_API_GMap2::render_map_overlay( $map->get_js_id(), WPGeo_API_GMap2::render_polyline( $polyline ) );
+							$coords = array();
+							foreach ( $polyline->coords as $coord ) {
+								$coords[] = 'new GLatLng(' . $coord->get_delimited() . ')';
+							}
+							$options = array();
+							if ( $polyline->geodesic ) {
+								$options[] = 'geodesic:true';
+							}
+							$output .= $map->get_js_id() . '.addOverlay(new GPolyline([' . implode( ',', $coords ) . '],"' . $polyline->color . '",' . $polyline->thickness . ',' . $polyline->opacity . ',{' . implode( ',', $options ) . '}));';
 						}
 						$output .= '
 							zoom = ' . $map->get_js_id() . '.getBoundsZoomLevel(bounds);

@@ -86,7 +86,7 @@ function wpgeo_check_db_version( $version ) {
  * @return array|string Array or HTML select menu.
  */
 function wpgeo_show_polylines_options( $args = null ) {
-	$args = wp_parse_args( (array)$args, array(
+	$args = wp_parse_args( $args, array(
 		'id'       => 'show_polylines',
 		'name'     => 'show_polylines',
 		'return'   => 'array',

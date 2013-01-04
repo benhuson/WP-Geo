@@ -97,8 +97,6 @@ class WPGeo_Feeds {
 		
 		if ( $wpgeo->show_maps() ) {
 			$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
-			
-			// Need a map?
 			if ( $coord->is_valid_coord() ) {
 				echo '<georss:point>' . $coord->get_delimited( ' ' ) . '</georss:point>';
 				echo '<geo:lat>' . $coord->latitude() . '</geo:lat>';
