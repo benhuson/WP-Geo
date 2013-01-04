@@ -8,7 +8,7 @@ Version: 3.2.7.2
 Author: Ben Huson
 Author URI: http://www.benhuson.co.uk/
 Minimum WordPress Version Required: 3.0
-Tested up to: 3.4.1
+Tested up to: 3.5
 */
 
 // WP Geo plugin directory and url paths. props Alain (alm)
