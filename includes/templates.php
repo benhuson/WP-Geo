@@ -240,7 +240,7 @@ function get_wpgeo_map( $query, $options = null ) {
 					// @todo mapTypeControl
 				};
 				var bounds = new google.maps.LatLngBounds();
-				map_t = new google.maps.Map(document.getElementById("' . $id . '"), mapOptions);
+				' . $map->get_js_id() . ' = new google.maps.Map(document.getElementById("' . $map->get_dom_id() . '"), mapOptions);
 				';
 		if ( $posts ) {
 			$polyline = new WPGeo_Polyline( array(
@@ -256,7 +256,7 @@ function get_wpgeo_map( $query, $options = null ) {
 					$polyline->add_coord( $coord );
 					$output .= '
 						// @todo Tooltip link
-						var marker = new google.maps.Marker({ position:new google.maps.LatLng(' . $coord->get_delimited() . '), map:map_t, icon: ' . $icon . ' });
+						var marker = new google.maps.Marker({ position:new google.maps.LatLng(' . $coord->get_delimited() . '), map:' . $map->get_js_id() . ', icon: ' . $icon . ' });
 						bounds.extend(new google.maps.LatLng(' . $coord->get_delimited() . '));
 						';
 				}
@@ -273,13 +273,13 @@ function get_wpgeo_map( $query, $options = null ) {
 						strokeWeight: ' . $polyline->thickness . ',
 						geodesic : ' . $polyline->geodesic . '
 					});
-					polyline.setMap(map_t);';
+					polyline.setMap(' . $map->get_js_id() . ');';
 			}
 			$output .= '
-				map_t.fitBounds(bounds);
+				' . $map->get_js_id() . '.fitBounds(bounds);
 				';
 		}
-		$output .= apply_filters( 'wpgeo_map_js_preoverlays', '', 'map_t' ) . '
+		$output .= apply_filters( 'wpgeo_map_js_preoverlays', '', $map->get_js_id() ) . '
 			}
 			google.maps.event.addDomListener(window, "load", createMap);
 		';
@@ -288,9 +288,9 @@ function get_wpgeo_map( $query, $options = null ) {
 			jQuery(window).load( function() {
 				if ( GBrowserIsCompatible() ) {
 					var bounds = new GLatLngBounds();
-					map = new GMap2(document.getElementById("' . $id . '"));
-					' . WPGeo_API_GMap2::render_map_control( 'map', 'GLargeMapControl3D' ) . '
-					map.setMapType(' . $r['type'] . ');
+					' . $map->get_js_id() . ' = new GMap2(document.getElementById("' . $map->get_dom_id() . '"));
+					' . WPGeo_API_GMap2::render_map_control( $map->get_js_id(), 'GLargeMapControl3D' ) . '
+					' . $map->get_js_id() . '.setMapType(' . $r['type'] . ');
 					';
 					if ( $posts ) {
 						$polyline = new WPGeo_Polyline( array(
@@ -306,24 +306,24 @@ function get_wpgeo_map( $query, $options = null ) {
 								$polyline->add_coord( $coord );
 								$output .= '
 									var center = new GLatLng(' . $coord->get_delimited() . ');
-									var marker = new wpgeo_createMarker2(map, center, ' . $icon . ', \'' . esc_js( $post->post_title ) . '\', \'' . get_permalink( $post->ID ) . '\');
+									var marker = new wpgeo_createMarker2(' . $map->get_js_id() . ', center, ' . $icon . ', \'' . esc_js( $post->post_title ) . '\', \'' . get_permalink( $post->ID ) . '\');
 									bounds.extend(center);
 									';
 							}
 						}
 						if ( $r['polylines'] == 'Y' ) {
-							$output .= WPGeo_API_GMap2::render_map_overlay( 'map', WPGeo_API_GMap2::render_polyline( $polyline ) );
+							$output .= WPGeo_API_GMap2::render_map_overlay( $map->get_js_id(), WPGeo_API_GMap2::render_polyline( $polyline ) );
 						}
 						$output .= '
-							zoom = map.getBoundsZoomLevel(bounds);
-							map.setCenter(bounds.getCenter(), zoom);
+							zoom = ' . $map->get_js_id() . '.getBoundsZoomLevel(bounds);
+							' . $map->get_js_id() . '.setCenter(bounds.getCenter(), zoom);
 							';
 					} else {
 						$output .= '
-						map.setCenter(new GLatLng(' . $wp_geo_options['default_map_latitude'] . ', ' . $wp_geo_options['default_map_longitude'] . '), ' . $wp_geo_options['default_map_zoom'] . ');';
+						' . $map->get_js_id() . '.setCenter(new GLatLng(' . $wp_geo_options['default_map_latitude'] . ', ' . $wp_geo_options['default_map_longitude'] . '), ' . $wp_geo_options['default_map_zoom'] . ');';
 					}
 					$output .= '
-					' . apply_filters( 'wpgeo_map_js_preoverlays', '', 'map' ) . '
+					' . apply_filters( 'wpgeo_map_js_preoverlays', '', $map->get_js_id() ) . '
 				}
 			} );';
 	}
