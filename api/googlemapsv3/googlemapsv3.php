@@ -12,6 +12,19 @@ class WPGeo_API_GoogleMapsV3 {
 		add_filter( 'wpgeo_api_string', array( $this, 'wpgeo_api_string' ), 10, 3 );
 		add_filter( 'wpgeo_decode_api_string', array( $this, 'wpgeo_decode_api_string' ), 10, 3 );
 		add_action( 'wpgeo_api_googlemapsv3_js', array( $this, 'wpgeo_js' ) );
+		add_filter( 'wpgeo_api_googlemapsv3_markericon', array( $this, 'wpgeo_api_googlemapsv3_markericon' ), 10, 2 );
+	}
+	
+	/**
+	 * Marker Icon
+	 *
+	 * @param string $value Marker icon JavaScript.
+	 * @param object $marker WPGeo_Marker.
+	 * @return string Marker icon.
+	 */
+	function wpgeo_api_googlemapsv3_markericon( $value, $marker ) {
+		$value = "wpgeo_createIcon(" . $marker->width . ", " . $marker->height . ", " . $marker->anchorX . ", " . $marker->anchorY . ", '" . $marker->image . "', '" . $marker->shadow . "')";
+		return $value;
 	}
 	
 	/**

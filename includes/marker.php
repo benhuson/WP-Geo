@@ -107,7 +107,12 @@ class WPGeo_Marker {
 	 * @return string JavaScript.
 	 */
 	function get_javascript() {
-		return "var wpgeo_icon_" . $this->id . " = wpgeo_createIcon(" . $this->width . ", " . $this->height . ", " . $this->anchorX . ", " . $this->anchorY . ", '" . $this->image . "', '" . $this->shadow . "');";
+		global $wpgeo;
+		$icon = apply_filters( $wpgeo->get_api_string( 'wpgeo_api_%s_markericon' ), '', $this );
+		if ( ! empty( $icon ) ) {
+			return "var wpgeo_icon_" . $this->id . " = " . $icon . ";";
+		}
+		return $icon;
 	}		
 	
 	/**
