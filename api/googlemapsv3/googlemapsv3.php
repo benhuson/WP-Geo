@@ -53,31 +53,116 @@ class WPGeo_API_GoogleMapsV3 {
 		return $string;
 	}
 	
+	function get_markers_js( $map ) {
+		$markers = '';
+		for ( $i = 0; $i < count( $map->points ); $i++ ) {
+			$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', 'small', $map->points[$i]->args['post'], 'widget' );
+			$markers .= 'var marker_' . $i . ' = new google.maps.Marker({ position:new google.maps.LatLng(' . $map->points[$i]->coord->get_delimited() . '), map:' . $map->get_js_id() . ', icon: ' . $icon . ' });' . "\n";
+			if ( ! empty( $map->points[$i]->link ) ) {
+				$markers .= 'google.maps.event.addListener(marker_' . $i . ', "click", function() {
+						window.location.href = "' . $map->points[$i]->link . '";
+					});
+					';
+			}
+			if ( ! empty( $map->points[$i]->title ) ) {
+				$markers .= '
+					var tooltip_' . $i . ' = new Tooltip(marker_' . $i . ', \'' . esc_js( $map->points[$i]->title ) . '\');
+					google.maps.event.addListener(marker_' . $i . ', "mouseover", function() {
+						tooltip_' . $i . '.show();
+					});
+					google.maps.event.addListener(marker_' . $i . ', "mouseout", function() {
+						tooltip_' . $i . '.hide();
+					});
+					';
+			}
+			$markers .= 'bounds.extend(new google.maps.LatLng(' . $map->points[$i]->coord->get_delimited() . '));' . "\n";
+		}
+		return $markers;
+	}
+	
+	function get_polylines_js( $map ) {
+		$polylines = '';
+		if ( count( $map->polylines ) > 0 ) {
+			$count = 1;
+			foreach ( $map->polylines as $polyline ) {
+				$polyline_js_3_coords = array();
+				foreach ( $polyline->coords as $c ) {
+					$polyline_js_3_coords[] = 'new google.maps.LatLng(' . $c->get_delimited() . ')';
+				}
+				$polylines = 'var polyline_' . $count . ' = new google.maps.Polyline({
+						path          : [' . implode( ',', $polyline_js_3_coords ) . '],
+						strokeColor   : "' . $polyline->color . '",
+						strokeOpacity : ' . $polyline->opacity . ',
+						strokeWeight  : ' . $polyline->thickness . ',
+						geodesic      : ' . $polyline->geodesic . ',
+						map           : ' . $map->get_js_id() . '
+					});';
+				$count++;
+			}
+		}
+		return $polylines;
+	}
+	
+	function get_feeds_js( $map ) {
+		$feeds = '';
+		if ( count( $map->feeds ) > 0 ) {
+			$count = 1;
+			foreach ( $map->feeds as $feed ) {
+				$feeds .= '
+					var kmlLayer_' . $count . ' = new google.maps.KmlLayer({
+						url : "' . $feed . '",
+						map : ' . $map->get_js_id() . '
+					});';
+				$count++;
+			}
+		}
+		return $feeds;
+	}
+	
 	function wpgeo_js( $maps ) {
+		if ( ! is_array( $maps ) ) {
+			$maps = array( $maps );
+		}
 		echo '
 			<script type="text/javascript">
 			//<![CDATA[
 			function wpgeo_render_maps() {
 				';
 		foreach ( $maps as $map ) {
+			$center_coord = $map->get_map_centre();
 			echo '
 				if (document.getElementById("' . $map->get_dom_id() . '")) {
+					var bounds = new google.maps.LatLngBounds();
 					var mapOptions = {
-						center    : new google.maps.LatLng(41.875696,-87.624207),
-						zoom      : 3,
-						mapTypeId : google.maps.MapTypeId.ROADMAP,
+						center            : new google.maps.LatLng(' . $center_coord->get_delimited() . '),
+						zoom              : 0,
+						mapTypeId         : ' . apply_filters( 'wpgeo_api_string', 'google.maps.MapTypeId.ROADMAP', $map->get_map_type(), 'maptype' ) . ',
+						mapTypeControl    : false, // @todo
+						streetViewControl : false // @todo
 					};
-					map_' . $map->id . ' = new google.maps.Map(document.getElementById("' . $map->get_dom_id() . '"), mapOptions);
+					' . $map->get_js_id() . ' = new google.maps.Map(document.getElementById("' . $map->get_dom_id() . '"), mapOptions);
+					
+					// Add the markers and polylines
+					' . $this->get_markers_js( $map ) . '
+					' . $this->get_polylines_js( $map ) . '
+					
+					// Center
+					var center = bounds.getCenter();
+					var zoom = ' . $map->get_js_id() . '.getBounds(bounds);
+					if (zoom > ' . $map->zoom . ') {
+						zoom = ' . $map->zoom . ';
+					}
+					' . $map->get_js_id() . '.setCenter(center);
+					if (zoom) {
+						' . $map->get_js_id() . '.setZoom(zoom);
+					}
+					
+					' . apply_filters( 'wpgeo_map_js_preoverlays', '', $map->get_js_id() ) . '
+					' . $this->get_feeds_js( $map ) . '
 					';
-			if ( count( $map->feeds ) > 0 ) {
-				echo '
-						var kmlLayer = new google.maps.KmlLayer({
-							url : "' . $map->feeds[0] . '",
-							map : map_' . $map->id . '
-						});';
-			}
 			echo '
-				}';
+				}
+				';
 		}
 		echo '
 			}

@@ -29,7 +29,55 @@ class WPGeo_API_GoogleMapsV2 {
 		return $string;
 	}
 	
+	function get_markers_js( $map ) {
+		$markers = '';
+		for ( $i = 0; $i < count( $map->points ); $i++ ) {
+			$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', 'small', $map->points[$i]->args['post'], 'widget' );
+			$markers .= 'var marker_' . $i . ' = wpgeoCreateMapMarker(' . $map->get_js_id() . ', new GLatLng(' . $map->points[$i]->coord->get_delimited() . '), ' . $icon . ', "' . addslashes( __( $map->points[$i]->title ) ) . '", "' . get_permalink( $map->points[$i]->args['post']->ID ) . '");' . "\n";
+		}
+		return $markers;
+	}
+	
+	function get_polylines_js( $map ) {
+		$polylines = '';
+		if ( count( $map->polylines ) > 0 ) {
+			foreach ( $map->polylines as $polyline ) {
+				$coords = array();
+				foreach ( $polyline->coords as $coord ) {
+					$coords[] = 'new GLatLng(' . $coord->get_delimited() . ')';
+				}
+				$options = array();
+				if ( $polyline->geodesic ) {
+					$options[] = 'geodesic:true';
+				}
+				$polylines = $map->get_js_id() . '.addOverlay(new GPolyline([' . implode( ',', $coords ) . '],"' . $polyline->color . '",' . $polyline->thickness . ',' . $polyline->opacity . ',{' . implode( ',', $options ) . '}));';
+			}
+		}
+		return $polylines;
+	}
+	
+	function get_feeds_js( $map ) {
+		$feeds = '';
+		if ( count( $map->feeds ) > 0 ) {
+			$count = 1;
+			foreach ( $map->feeds as $feed ) {
+				$feeds = '
+					kmlLayer_' . $count . ' = new GGeoXml("' . $feed . '");
+					GEvent.addListener(kmlLayer_' . $count . ', "load", function() {
+						kmlLayer_' . $count . '.gotoDefaultViewport(' . $map->get_js_id() . ');
+					});
+					' . $map->get_js_id() . '.addOverlay(kmlLayer_' . $count . ');
+					';
+				$count++;
+			}
+		}
+		return $feeds;
+	}
+	
 	function wpgeo_js( $maps ) {
+		if ( ! is_array( $maps ) ) {
+			$maps = array( $maps );
+		}
 		echo '
 			<script type="text/javascript">
 			
@@ -37,19 +85,29 @@ class WPGeo_API_GoogleMapsV2 {
 				if (GBrowserIsCompatible()) {
 				';
 		foreach ( $maps as $map ) {
+			$center_coord = $map->get_map_centre();
 			echo '
-				map_' . $map->id . ' = new GMap2(document.getElementById("' . $map->get_dom_id() . '"));
-				map_' . $map->id . '.setCenter(new GLatLng(41.875696,-87.624207), 3);
+				' . $map->get_js_id() . ' = new GMap2(document.getElementById("' . $map->get_dom_id() . '"));
+				' . $map->get_js_id() . '.addControl(new GSmallZoomControl3D()); // @todo
+				' . $map->get_js_id() . '.setCenter(new GLatLng(' . $center_coord->get_delimited() . '), 0);
+				' . $map->get_js_id() . '.setMapType(' . $map->get_map_type() . ');
+				bounds = new GLatLngBounds();
+				
+				// Add the markers and polylines
+				' . $this->get_markers_js( $map ) . '
+				' . $this->get_polylines_js( $map ) . '
+	
+				// Center the map to show all markers
+				var center = bounds.getCenter();
+				var zoom = ' . $map->get_js_id() . '.getBoundsZoomLevel(bounds)
+				if (zoom > ' . $map->get_map_zoom() . ') {
+					zoom = ' . $map->get_map_zoom() . ';
+				}
+				' . $map->get_js_id() . '.setCenter(center, zoom);
+				
+				' . apply_filters( 'wpgeo_map_js_preoverlays', '', $map->get_js_id() ) . '
+				' . $this->get_feeds_js( $map ) . '
 				';
-			if ( count( $map->feeds ) > 0 ) {
-				echo '
-					kmlLayer = new GGeoXml("' . $map->feeds[0] . '");
-					GEvent.addListener(kmlLayer, "load", function() {
-						kmlLayer.gotoDefaultViewport(map_' . $map->id . ');
-					});
-					map_' . $map->id . '.addOverlay(kmlLayer);
-					';
-			}
 		}
 		echo '}
 			}

@@ -198,4 +198,40 @@ if ( ! function_exists( 'shortcode_wpgeo_mashup' ) ) {
 	add_shortcode( 'wpgeo_mashup', 'shortcode_wpgeo_mashup' );
 }
 
+/**
+ * Shortcode [wpgeo]
+ * Used to manually display a map in a post.
+ *
+ * @param array $atts Array of attributes.
+ * @param array $content Content between tags.
+ * @return string HTML Output.
+ */
+if ( ! function_exists( 'shortcode_wpgeo' ) ) {
+	function shortcode_wpgeo( $atts, $content = null ) {
+		global $wpgeo;
+		$allowed_atts = array(
+			'rss' => null,
+			'kml' => null
+		);
+		extract( shortcode_atts( $allowed_atts, $atts ) );
+		
+		if ( $kml != null ) {
+			$rss = $kml;
+		}
+		if ( $rss != null ) {
+			$map = new WPGeo_Map( 'shortcode' );
+			$map->add_feed( $rss );
+			$wpgeo->maps2->add_map( $map );
+			$wp_geo_options = get_option( 'wp_geo_options' );
+			
+			return $map->get_map_html( array(
+				'classes' => array( 'wpgeo', 'wpgeo-rss' ),
+				'content' => $rss
+			) );
+		}
+		return '';
+	}
+	add_shortcode( 'wpgeo', 'shortcode_wpgeo' );
+}
+
 ?>

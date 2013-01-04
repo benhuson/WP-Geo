@@ -1206,15 +1206,7 @@ class WPGeo {
 	 * WP Footer
 	 */
 	function wp_footer() {
-		$js = $this->maps2->get_maps_javascript();
-		if ( ! empty( $js ) ) {
-			echo '<script type="text/javascript">
-				<!-----
-				' . $js . '
-				-->
-				</script>
-				';
-		}
+		do_action( $this->get_api_string( 'wpgeo_api_%s_js' ), $this->maps2->maps );
 	}
 	
 }
