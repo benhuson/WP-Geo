@@ -51,6 +51,36 @@ function wpgeo_createMarker(latlng, icon, title, link) {
 /**
  * Create a marker for the map
  */
+function wpgeoCreateMapMarker(map, latlng, icon, title, link) {
+	var tooltip;
+	var marker = new GMarker(latlng, icon);
+	
+	// Create a custom tooltip
+	if (title) {
+		tooltip = new Tooltip(marker, title)
+	}
+	
+	marker.latlng = latlng;
+	marker.tooltip = tooltip;
+	marker.title = title;
+	marker.link = link;
+	
+	if (tooltip) {
+		GEvent.addListener(marker, "mouseover", wpgeo_markerOverHandler);
+		GEvent.addListener(marker, "mouseout", wpgeo_markerOutHandler);
+	}
+	if (link) {
+		GEvent.addListener(marker, "click", wpgeo_markerClickHandler);
+	}
+	
+	map.addOverlay(marker);
+	bounds.extend(marker.getPoint());
+	return marker;
+}
+
+/**
+ * Create a marker for the map
+ */
 function wpgeo_createMarker2(map, latlng, icon, title, link) {
 	var tooltip;
 	var marker = new GMarker(latlng, icon);

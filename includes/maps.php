@@ -265,6 +265,10 @@ class WPGeo_Map {
 		return 'wpgeo_map_' . $this->id;
 	}
 	
+	function get_js_id() {
+		return 'wpgeo_map_' . $this->id;
+	}
+	
 	/**
 	 * Get the HTML for a map.
 	 *

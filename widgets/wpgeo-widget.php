@@ -186,6 +186,7 @@ class WPGeo_Widget extends WP_Widget {
 					$map->add_point( $coord, array(
 						'icon'  => apply_filters( 'wpgeo_marker_icon', 'small', $post, 'widget' ),
 						'title' => get_wpgeo_title( $post->ID ),
+						'link'  => get_permalink( $post ),
 						'post'  => $post
 					) );
 				}
@@ -194,7 +195,7 @@ class WPGeo_Widget extends WP_Widget {
 			// Only show map widget if there are coords to show
 			if ( count( $map->points ) > 0 ) {
 				
-				// Add polylines to map
+				// Add polylines (to connect points) to map
 				if ( $args['show_polylines'] ) {
 					$polyline = new WPGeo_Polyline( array(
 						'color' => $wp_geo_options['polyline_colour']
@@ -218,7 +219,7 @@ class WPGeo_Widget extends WP_Widget {
 						if ( $polyline->geodesic ) {
 							$options[] = 'geodesic:true';
 						}
-						$polyline_js = 'map.addOverlay(new GPolyline([' . implode( ',', $coords ) . '],"' . $polyline->color . '",' . $polyline->thickness . ',' . $polyline->opacity . ',{' . implode( ',', $options ) . '}));';
+						$polyline_js = $map->get_js_id() . '.addOverlay(new GPolyline([' . implode( ',', $coords ) . '],"' . $polyline->color . '",' . $polyline->thickness . ',' . $polyline->opacity . ',{' . implode( ',', $options ) . '}));';
 						
 						// v3 Polyline
 						$polyline_js_3_coords = array();
@@ -232,16 +233,32 @@ class WPGeo_Widget extends WP_Widget {
 								strokeWeight  : ' . $polyline->thickness . ',
 								geodesic      : ' . $polyline->geodesic . '
 							});
-							polyline.setMap(map);';
+							polyline.setMap(' . $map->get_js_id() . ');';
 					}
 				}
 				
 				// Markers
 				for ( $i = 0; $i < count( $map->points ); $i++ ) {
 					$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', 'small', $map->points[$i]->args['post'], 'widget' );
-					$markers_js .= 'marker' . $i . ' = wpgeo_createMarker(new GLatLng(' . $map->points[$i]->coord->get_delimited() . '), ' . $icon . ', "' . addslashes( __( $map->points[$i]->title ) ) . '", "' . get_permalink( $map->points[$i]->args['post']->ID ) . '");' . "\n";
-					// @todo Tooltip and link for v3
-					$markers_js_3 .= 'var marker' . $i . ' = new google.maps.Marker({ position:new google.maps.LatLng(' . $map->points[$i]->coord->get_delimited() . '), map:map, icon: ' . $icon . ' });' . "\n";
+					$markers_js .= 'var marker_' . $i . ' = wpgeoCreateMapMarker(' . $map->get_js_id() . ', new GLatLng(' . $map->points[$i]->coord->get_delimited() . '), ' . $icon . ', "' . addslashes( __( $map->points[$i]->title ) ) . '", "' . get_permalink( $map->points[$i]->args['post']->ID ) . '");' . "\n";
+					$markers_js_3 .= 'var marker_' . $i . ' = new google.maps.Marker({ position:new google.maps.LatLng(' . $map->points[$i]->coord->get_delimited() . '), map:' . $map->get_js_id() . ', icon: ' . $icon . ' });' . "\n";
+					if ( ! empty( $map->points[$i]->link ) ) {
+						$markers_js_3 .= 'google.maps.event.addListener(marker_' . $i . ', "click", function() {
+								window.location.href = "' . $map->points[$i]->link . '";
+							});
+							';
+					}
+					if ( ! empty( $map->points[$i]->title ) ) {
+						$markers_js_3 .= '
+							var tooltip_' . $i . ' = new Tooltip(marker_' . $i . ', \'' . esc_js( $map->points[$i]->title ) . '\');
+							google.maps.event.addListener(marker_' . $i . ', "mouseover", function() {
+								tooltip_' . $i . '.show();
+							});
+							google.maps.event.addListener(marker_' . $i . ', "mouseout", function() {
+								tooltip_' . $i . '.hide();
+							});
+							';
+					}
 					$markers_js_3 .= 'bounds.extend(new google.maps.LatLng(' . $map->points[$i]->coord->get_delimited() . '));' . "\n";
 				}
 				
@@ -256,9 +273,9 @@ class WPGeo_Widget extends WP_Widget {
 						/**
 						 * Widget Map (' . $map->get_dom_id() . ')
 						 */
-						var map = null;
+						var ' . $map->get_js_id() . ' = null;
 						var marker = null;
-						function createMapWidget3_' . $map->id . '() {
+						function createMapWidget3_' . $map->get_js_id() . '() {
 							var mapOptions = {
 								center            : new google.maps.LatLng(' . $center_coord->get_delimited() . '),
 								zoom              : 0,
@@ -267,7 +284,7 @@ class WPGeo_Widget extends WP_Widget {
 								streetViewControl : false
 							};
 							var bounds = new google.maps.LatLngBounds();
-							map = new google.maps.Map(document.getElementById("' . $map->get_dom_id() . '"), mapOptions);
+							' . $map->get_js_id() . ' = new google.maps.Map(document.getElementById("' . $map->get_dom_id() . '"), mapOptions);
 							
 							// Add the markers	
 							'.	$markers_js_3 .'
@@ -276,18 +293,18 @@ class WPGeo_Widget extends WP_Widget {
 							' . $polyline_js_3 . '
 							
 							var center = bounds.getCenter();
-							var zoom = map.getBounds(bounds);
+							var zoom = ' . $map->get_js_id() . '.getBounds(bounds);
 							if (zoom > ' . $map->get_map_zoom() . ') {
 								zoom = ' . $map->get_map_zoom() . ';
 							}
-							map.setCenter(center);
+							' . $map->get_js_id() . '.setCenter(center);
 							if (zoom) {
-								map.setZoom(zoom);
+								' . $map->get_js_id() . '.setZoom(zoom);
 							}
 							
-							' . apply_filters( 'wpgeo_map_js_preoverlays', '', 'map' ) . '
+							' . apply_filters( 'wpgeo_map_js_preoverlays', '', $map->get_js_id() ) . '
 						}
-						google.maps.event.addDomListener(window, "load", createMapWidget3_' . $map->id . ');
+						google.maps.event.addDomListener(window, "load", createMapWidget3_' . $map->get_js_id() . ');
 						
 						//]]>
 						</script>';
@@ -301,20 +318,20 @@ class WPGeo_Widget extends WP_Widget {
 						 */
 						
 						// Define variables
-						var map = "";
+						var ' . $map->get_js_id() . ' = "";
 						var bounds = "";
 						
 						// Add events to load the map
-						GEvent.addDomListener(window, "load", createMapWidget_' . $map->id . ');
+						GEvent.addDomListener(window, "load", createMapWidget_' . $map->get_js_id() . ');
 						GEvent.addDomListener(window, "unload", GUnload);
 						
 						// Create the map
-						function createMapWidget_' . $map->id . '() {
+						function createMapWidget_' . $map->get_js_id() . '() {
 							if (GBrowserIsCompatible()) {
-								map = new GMap2(document.getElementById("' . $map->get_dom_id() . '"));
-								map.addControl(new GSmallZoomControl3D());
-								map.setCenter(new GLatLng(' . $center_coord->get_delimited() . '), 0);
-								map.setMapType(' . $map->get_map_type() . ');
+								' . $map->get_js_id() . ' = new GMap2(document.getElementById("' . $map->get_dom_id() . '"));
+								' . $map->get_js_id() . '.addControl(new GSmallZoomControl3D());
+								' . $map->get_js_id() . '.setCenter(new GLatLng(' . $center_coord->get_delimited() . '), 0);
+								' . $map->get_js_id() . '.setMapType(' . $map->get_map_type() . ');
 								bounds = new GLatLngBounds();
 								
 								// Add the markers	
@@ -325,13 +342,13 @@ class WPGeo_Widget extends WP_Widget {
 								
 								// Center the map to show all markers
 								var center = bounds.getCenter();
-								var zoom = map.getBoundsZoomLevel(bounds)
+								var zoom = ' . $map->get_js_id() . '.getBoundsZoomLevel(bounds)
 								if (zoom > ' . $map->get_map_zoom() . ') {
 									zoom = ' . $map->get_map_zoom() . ';
 								}
-								map.setCenter(center, zoom);
+								' . $map->get_js_id() . '.setCenter(center, zoom);
 								
-								' . apply_filters( 'wpgeo_map_js_preoverlays', '', 'map' ) . '
+								' . apply_filters( 'wpgeo_map_js_preoverlays', '', $map->get_js_id() ) . '
 							}
 						}
 						

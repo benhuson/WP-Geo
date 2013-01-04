@@ -414,7 +414,10 @@ function get_wpgeo_post_static_map( $post_id = 0, $query = null ) {
 	}
 	if ( ! empty( $settings['centre'] ) ) {
 		$center = explode( ',', $settings['centre'] );
-		$center_coord = new WPGeo_Coord( $center[0], $center[1] );
+		$maybe_center_coord = new WPGeo_Coord( $center[0], $center[1] );
+		if ( $maybe_center_coord->is_valid_coord() ) {
+			$center_coord = $maybe_center_coord;
+		}
 	}
 	
 	$url = add_query_arg( array(
