@@ -54,6 +54,7 @@ class WPGeo {
 		add_action( 'wp_enqueue_scripts', array( $this, 'includeGoogleMapsJavaScriptAPI' ) );
 		add_action( 'wp_head', array( $this, 'wp_head' ) );
 		add_action( 'wp_footer', array( $this, 'wp_footer' ) );
+		add_action( 'admin_footer', array( $this, 'wp_footer' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		
 		// Filters
@@ -764,6 +765,7 @@ class WPGeo {
 			//<![CDATA[
 			var WPGeo_Admin = {
 				api        : "' . $this->get_api_string() . '",
+				map_dom_id : "' . $this->admin->map->get_dom_id() . '",
 				map        : null,
 				marker     : null,
 				zoom       : ' . $zoom . ',

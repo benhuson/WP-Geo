@@ -9,7 +9,7 @@
 		$(document).ready(function($) {
 			
 			// If maps compatible...
-			if (GBrowserIsCompatible() && document.getElementById("wpgeo_map_admin_post")) {
+			if (GBrowserIsCompatible() && document.getElementById(WPGeo_Admin.map_dom_id)) {
 			
 				// Define map
 				var center = new GLatLng(WPGeo_Admin.mapCentreX, WPGeo_Admin.mapCentreY);
@@ -19,7 +19,7 @@
 				WPGeo_Admin.marker = new GMarker(point, {draggable: true});
 				
 				// Map
-				WPGeo_Admin.map = new GMap2(document.getElementById("wpgeo_map_admin_post"));
+				WPGeo_Admin.map = new GMap2(document.getElementById(WPGeo_Admin.map_dom_id));
 				WPGeo_Admin.map.setCenter(center, WPGeo_Admin.zoom);
 				WPGeo_Admin.map.addMapType(G_PHYSICAL_MAP);
 				WPGeo_Admin.map.addControl(new GLargeMapControl3D());

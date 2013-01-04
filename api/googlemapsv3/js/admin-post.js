@@ -9,7 +9,7 @@
 		$(document).ready(function($) {
 			
 			// Define map
-			WPGeo_Admin.map = new google.maps.Map(document.getElementById("wpgeo_map_admin_post"), {
+			WPGeo_Admin.map = new google.maps.Map(document.getElementById(WPGeo_Admin.map_dom_id), {
 				zoom           : WPGeo_Admin.zoom,
 				center         : new google.maps.LatLng(WPGeo_Admin.mapCentreX, WPGeo_Admin.mapCentreY),
 				mapTypeId      : WPGeo_Admin.mapType,

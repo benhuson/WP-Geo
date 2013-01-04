@@ -7,6 +7,7 @@ class WPGeo_Admin {
 
 	var $settings;
 	var $editor;
+	var $map;
 	var $plugin_message = '';
 	
 	function WPGeo_Admin() {
@@ -31,6 +32,8 @@ class WPGeo_Admin {
 		
 		// Register Settings
 		$this->settings = new WPGeo_Settings();
+		
+		$this->map = new WPGeo_Map( 'admin_post' );
 		
 		add_action( 'admin_enqueue_scripts', array( $wpgeo, 'includeGoogleMapsJavaScriptAPI' ) );
 		
@@ -226,9 +229,8 @@ class WPGeo_Admin {
 			$wpgeo_map_settings_centre_checked = checked( true, true, false );
 		}
 		
-		$map = new WPGeo_Map( 'admin_post' );
-		$map_html = $map->get_map_html( array(
-			'classes' => array( 'wp_geo_map' ),
+		$map_html = $this->map->get_map_html( array(
+			'classes' => array( 'wp_geo_map', 'wpgeo_map_admin_post' ),
 			'styles'  => array(
 				'width'   => '100%',
 				'height'  => 300,
