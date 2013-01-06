@@ -47,8 +47,8 @@ class WPGeo_Category_Map_Widget extends WPGeo_Widget {
 			$posts = get_posts( array(
 				'numberposts'  => -1,
 				'meta_key'     => WPGEO_LATITUDE_META,
-				'meta_value'   => 0,
-				'meta_compare' => '>',
+				'meta_value'   => '',
+				'meta_compare' => '!=',
 				'category'     => $post_cat_id
 			) );
 			$map_args = wp_parse_args( $instance, array(
