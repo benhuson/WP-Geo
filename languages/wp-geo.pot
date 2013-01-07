@@ -52,7 +52,7 @@ msgstr ""
 msgid "WP Geo Options"
 msgstr ""
 
-#. #-#-#-#-#  plugin.pot (WP Geo 3.2.7)  #-#-#-#-#
+#. #-#-#-#-#  plugin.pot (WP Geo 3.2.7.2)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: admin/admin.php:117
 msgid "WP Geo"
@@ -123,67 +123,67 @@ msgstr ""
 msgid "WP Geo Location"
 msgstr ""
 
-#: admin/admin.php:205
+#: admin/admin.php:209
 msgid "Use Default"
 msgstr ""
 
-#: admin/admin.php:237
+#: admin/admin.php:241
 msgid "Search for location"
 msgstr ""
 
-#: admin/admin.php:237
+#: admin/admin.php:241
 msgid "town, postcode or address"
 msgstr ""
 
-#: admin/admin.php:240
+#: admin/admin.php:244
 msgid "Search"
 msgstr ""
 
-#: admin/admin.php:245
+#: admin/admin.php:249
 msgid "Loading Google map, please wait..."
 msgstr ""
 
-#: admin/admin.php:250 admin/settings.php:84
+#: admin/admin.php:254 admin/settings.php:115
 msgid "Latitude"
 msgstr ""
 
-#: admin/admin.php:250 admin/settings.php:85
+#: admin/admin.php:254 admin/settings.php:116
 msgid "Longitude"
 msgstr ""
 
-#: admin/admin.php:253
+#: admin/admin.php:257
 msgid "clear location"
 msgstr ""
 
-#: admin/admin.php:253
+#: admin/admin.php:257
 msgid "centre location"
 msgstr ""
 
-#: admin/admin.php:257
+#: admin/admin.php:261
 msgid "Marker Title"
 msgstr ""
 
-#: admin/admin.php:257
+#: admin/admin.php:261
 msgid "optional"
 msgstr ""
 
-#: admin/admin.php:261
+#: admin/admin.php:265
 msgid "Marker Image"
 msgstr ""
 
-#: admin/admin.php:265
+#: admin/admin.php:269
 msgid "Map Settings"
 msgstr ""
 
-#: admin/admin.php:267 admin/settings.php:137
+#: admin/admin.php:271 admin/settings.php:168
 msgid "Save custom map zoom for this post"
 msgstr ""
 
-#: admin/admin.php:268 admin/settings.php:138
+#: admin/admin.php:272 admin/settings.php:169
 msgid "Save custom map type for this post"
 msgstr ""
 
-#: admin/admin.php:269 admin/settings.php:139
+#: admin/admin.php:273 admin/settings.php:170
 msgid "Save map centre point for this post"
 msgstr ""
 
@@ -219,7 +219,7 @@ msgstr ""
 msgid "General Settings"
 msgstr ""
 
-#: admin/settings.php:24 widgets/wpgeo-widget.php:295
+#: admin/settings.php:24 widgets/wpgeo-widget.php:297
 msgid "Map Type"
 msgstr ""
 
@@ -251,7 +251,7 @@ msgstr ""
 msgid "Default Post Options"
 msgstr ""
 
-#: admin/settings.php:32 widgets/wpgeo-widget.php:296
+#: admin/settings.php:32 widgets/wpgeo-widget.php:298
 msgid "Polylines"
 msgstr ""
 
@@ -267,109 +267,109 @@ msgstr ""
 msgid "Feeds"
 msgstr ""
 
-#: admin/settings.php:46
+#: admin/settings.php:77
 msgid ""
 "For more information and documentation about this plugin please visit the <a "
 "%s>WP Geo Plugin</a> home page."
 msgstr ""
 
-#: admin/settings.php:47
+#: admin/settings.php:78
 msgid ""
 "If you experience any problems/bugs with the plugin, please <a %s>log it "
 "here</a>."
 msgstr ""
 
-#: admin/settings.php:75
+#: admin/settings.php:106
 msgid "Show on excerpts"
 msgstr ""
 
-#: admin/settings.php:83
+#: admin/settings.php:114
 msgid ""
 "When creating a new post, the map will default to focussing on this area for "
 "you to position a marker."
 msgstr ""
 
-#: admin/settings.php:120
+#: admin/settings.php:151
 msgid "Map Type Controls"
 msgstr ""
 
-#: admin/settings.php:121
+#: admin/settings.php:152
 msgid "You must select at least 2 map types for the control to show."
 msgstr ""
 
-#: admin/settings.php:122
+#: admin/settings.php:153
 msgid "Normal map"
 msgstr ""
 
-#: admin/settings.php:123 includes/wp-geo.php:1026
+#: admin/settings.php:154 includes/wp-geo.php:1046
 msgid "Satellite (photographic map)"
 msgstr ""
 
-#: admin/settings.php:124 includes/wp-geo.php:1027
+#: admin/settings.php:155 includes/wp-geo.php:1047
 msgid "Hybrid (photographic map with normal features)"
 msgstr ""
 
-#: admin/settings.php:125 includes/wp-geo.php:1028
+#: admin/settings.php:156 includes/wp-geo.php:1048
 msgid "Physical (terrain map)"
 msgstr ""
 
-#: admin/settings.php:126
+#: admin/settings.php:157
 msgid "Other Controls"
 msgstr ""
 
-#: admin/settings.php:127
+#: admin/settings.php:158
 msgid "Show map scale"
 msgstr ""
 
-#: admin/settings.php:128
+#: admin/settings.php:159
 msgid "Show collapsible overview map (in the corner of the map)"
 msgstr ""
 
-#: admin/settings.php:149
+#: admin/settings.php:180
 msgid "Show polylines (to connect multiple points on a single map)"
 msgstr ""
 
-#: admin/settings.php:167
+#: admin/settings.php:198
 msgid "Pages"
 msgstr ""
 
-#: admin/settings.php:168
+#: admin/settings.php:199
 msgid "Posts (single posts)"
 msgstr ""
 
-#: admin/settings.php:169
-msgid "Posts home page"
+#: admin/settings.php:200
+msgid "Posts archive/home page"
 msgstr ""
 
-#: admin/settings.php:170
+#: admin/settings.php:201
 msgid "Posts in date archives"
 msgstr ""
 
-#: admin/settings.php:171
+#: admin/settings.php:202
 msgid "Posts in category archives"
 msgstr ""
 
-#: admin/settings.php:172
+#: admin/settings.php:203
 msgid "Posts in tag archives"
 msgstr ""
 
-#: admin/settings.php:173
+#: admin/settings.php:204
 msgid "Posts in taxonomy archives"
 msgstr ""
 
-#: admin/settings.php:174
+#: admin/settings.php:205
 msgid "Posts in author archives"
 msgstr ""
 
-#: admin/settings.php:175
+#: admin/settings.php:206
 msgid "Search Results"
 msgstr ""
 
-#: admin/settings.php:202
+#: admin/settings.php:233
 msgid "Add geographic information"
 msgstr ""
 
-#: admin/settings.php:222 widgets/wpgeo-widget.php:294
+#: admin/settings.php:253 widgets/wpgeo-widget.php:296
 msgid "Settings"
 msgstr ""
 
@@ -415,51 +415,51 @@ msgstr ""
 msgid "View Larger Map"
 msgstr ""
 
-#: includes/wp-geo.php:919
+#: includes/wp-geo.php:939
 msgid "Large 3D pan/zoom control"
 msgstr ""
 
-#: includes/wp-geo.php:920
+#: includes/wp-geo.php:940
 msgid "Large pan/zoom control"
 msgstr ""
 
-#: includes/wp-geo.php:921
+#: includes/wp-geo.php:941
 msgid "Smaller pan/zoom control"
 msgstr ""
 
-#: includes/wp-geo.php:922
+#: includes/wp-geo.php:942
 msgid "Small 3D zoom control (no panning controls)"
 msgstr ""
 
-#: includes/wp-geo.php:923
+#: includes/wp-geo.php:943
 msgid "Small zoom control (no panning controls)"
 msgstr ""
 
-#: includes/wp-geo.php:924
+#: includes/wp-geo.php:944
 msgid "No pan/zoom controls"
 msgstr ""
 
-#: includes/wp-geo.php:965
+#: includes/wp-geo.php:985
 msgid "Zoomed Out"
 msgstr ""
 
-#: includes/wp-geo.php:984
+#: includes/wp-geo.php:1004
 msgid "Zoomed In"
 msgstr ""
 
-#: includes/wp-geo.php:1025
+#: includes/wp-geo.php:1045
 msgid "Normal"
 msgstr ""
 
-#: includes/wp-geo.php:1058
+#: includes/wp-geo.php:1078
 msgid "At top of post"
 msgstr ""
 
-#: includes/wp-geo.php:1059
+#: includes/wp-geo.php:1079
 msgid "At bottom of post"
 msgstr ""
 
-#: includes/wp-geo.php:1060
+#: includes/wp-geo.php:1080
 msgid "Manually"
 msgstr ""
 
@@ -503,23 +503,23 @@ msgstr ""
 msgid "Please update your WP Geo settings"
 msgstr ""
 
-#: widgets/wpgeo-widget.php:277
+#: widgets/wpgeo-widget.php:279
 msgid "Title"
 msgstr ""
 
-#: widgets/wpgeo-widget.php:278
+#: widgets/wpgeo-widget.php:280
 msgid "Width"
 msgstr ""
 
-#: widgets/wpgeo-widget.php:279
+#: widgets/wpgeo-widget.php:281
 msgid "Height"
 msgstr ""
 
-#: widgets/wpgeo-widget.php:292
+#: widgets/wpgeo-widget.php:294
 msgid "Zoom"
 msgstr ""
 
-#: widgets/wpgeo-widget.php:293
+#: widgets/wpgeo-widget.php:295
 msgid ""
 "If not all markers fit, the map will automatically be zoomed so they do."
 msgstr ""
