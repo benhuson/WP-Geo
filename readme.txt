@@ -94,6 +94,11 @@ Not yet but a future version of WP Geo will support it.
 
 == Changelog ==
 
+= WP Geo 3.2.7.3 =
+
+* Fix category map widget not showing points in southern hemisphere.
+* Updated German translation.
+
 = WP Geo 3.2.7.2 =
 
 * Checked compatibility with WordPress 3.5.
