@@ -163,6 +163,23 @@ class WPGeo_Map {
 				// @todo Tooltip, icon and link for v3
 				$js_markers_v3 .= 'var marker_' . $map_id .'_' . $i . ' = new google.maps.Marker({ position:new google.maps.LatLng(' . $this->points[$i]->coord->get_delimited() . '), map:map_' . $map_id . ', icon: ' . $icon . ' });' . "\n";
 				$js_markers_v3 .= 'bounds.extend(new google.maps.LatLng(' . $this->points[$i]->coord->get_delimited() . '));' . "\n";
+				if ( ! empty( $this->points[$i]->link ) ) {
+					$js_markers_v3 .= 'google.maps.event.addListener(marker_' . $map_id .'_' . $i . ', "click", function() {
+							window.location.href = "' . $this->points[$i]->link . '";
+						});
+						';
+				}
+				if ( ! empty( $this->points[$i]->title ) ) {
+					$js_markers_v3 .= '
+						var tooltip_' . $map_id .'_' . $i . ' = new Tooltip(marker_' . $map_id .'_' . $i . ', \'' . esc_js( $this->points[$i]->title ) . '\');
+						google.maps.event.addListener(marker_' . $map_id .'_' . $i . ', "mouseover", function() {
+							tooltip_' . $map_id .'_' . $i . '.show();
+						});
+						google.maps.event.addListener(marker_' . $map_id .'_' . $i . ', "mouseout", function() {
+							tooltip_' . $map_id .'_' . $i . '.hide();
+						});
+						';
+				}
 			}
 		}
 		
