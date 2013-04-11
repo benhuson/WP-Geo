@@ -1,35 +1,35 @@
 
 (function($){
-	
+
 	/**
 	 * Google API v3
 	 */
 	function wpgeo_init_admin_post_map() {
-		
+
 		$(document).ready(function($) {
-			
+
 			// Define map
 			WPGeo_Admin.map = new google.maps.Map(document.getElementById(WPGeo_Admin.map_dom_id), {
-				zoom           : WPGeo_Admin.zoom,
+				zoom           : parseInt(WPGeo_Admin.zoom, 10),
 				center         : new google.maps.LatLng(WPGeo_Admin.mapCentreX, WPGeo_Admin.mapCentreY),
 				mapTypeId      : WPGeo_Admin.mapType,
 				zoomControl    : true,
 				mapTypeControl : true
 			});
-			
+
 			// Define marker
 			WPGeo_Admin.marker = new google.maps.Marker({
 				position  : new google.maps.LatLng(WPGeo_Admin.latitude, WPGeo_Admin.longitude),
 				map       : WPGeo_Admin.map,
 				draggable : true
 			});
-			
+
 			// Update marker location
 			$("#wpgeo_location").bind("WPGeo_updateMarkerLatLng", function(e) {
 				WPGeo_Admin.marker.setPosition(e.latLng);
 				WPGeo_Admin.marker.setVisible(true);
 			});
-			
+
 			// Update location field
 			$("#wpgeo_location").bind("WPGeo_updateLatLngField", function(e) {
 				if ( e.lat == '' || e.lng == '' ) {
@@ -47,7 +47,7 @@
 					});
 				}
 			});
-			
+
 			// Click on map
 			google.maps.event.addListener(WPGeo_Admin.map, "click", function(e) {
 				$("#wpgeo_location").trigger({
@@ -57,7 +57,7 @@
 					lng    : e.latLng.lng()
 				});
 			});
-			
+
 			// Update map type
 			google.maps.event.addListener(WPGeo_Admin.map, "maptypeid_changed", function() {
 				var type = WPGeo_Admin.map.getMapTypeId();
@@ -80,7 +80,7 @@
 					mapType : type
 				});
 			});
-			
+
 			// Update zoom
 			google.maps.event.addListener(WPGeo_Admin.map, "zoom_changed", function() {
 				$("#wpgeo_location").trigger({
@@ -88,7 +88,7 @@
 					zoom : WPGeo_Admin.map.getZoom()
 				});
 			});
-			
+
 			// Update center
 			google.maps.event.addListener(WPGeo_Admin.map, "dragend", function() {
 				$("#wpgeo_location").trigger({
@@ -98,7 +98,7 @@
 					lng    : WPGeo_Admin.map.getCenter().lng(),
 				});
 			});
-			
+
 			// Update marker location after drag
 			google.maps.event.addListener(WPGeo_Admin.marker, "dragend", function(event) {
 				$("#wpgeo_location").trigger({
@@ -108,17 +108,17 @@
 					lng    : WPGeo_Admin.marker.getPosition().lng(),
 				});
 			});
-			
+
 			// Hide marker?
 			$("#wpgeo_location").bind("WPGeo_hideMarker", function(e){
 				WPGeo_Admin.marker.setVisible(false);
 			});
-			
+
 			// Move to center marker
 			$("#wpgeo_location").bind("WPGeo_centerLocation", function(e){
 				WPGeo_Admin.map.setCenter(WPGeo_Admin.marker.getPosition());
 			});
-			
+
 			// Search Location
 			$("#wpgeo_location").bind("WPGeo_searchLocation", function(e){
 				var geocoder = new google.maps.Geocoder();
@@ -135,7 +135,7 @@
 								type   : 'WPGeo_updateMarkerLatLng',
 								latLng : results[0].geometry.location,
 								lat    : results[0].geometry.location.lat(),
-								lng    : results[0].geometry.location.lng(),
+								lng    : results[0].geometry.location.lng()
 							});
 						} else {
 							alert(e.address + " not found");
@@ -143,10 +143,10 @@
 					});
 				}
 			});
-			
+
 			// Show/hide marker by default?
 			WPGeo_Admin.marker.setVisible(WPGeo_Admin.hideMarker);
-			
+
 			// Map ready, do other stuff if needed
 			$("#wpgeo_location").trigger("WPGeo_adminPostMapReady");
 		});
