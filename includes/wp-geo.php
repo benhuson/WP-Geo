@@ -610,8 +610,12 @@ class WPGeo {
 	function get_api_string( $str = '%s' ) {
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		if ( is_admin() ) {
+			if ( empty( $wp_geo_options['admin_api'] ) )
+				$wp_geo_options['admin_api'] = 'googlemapsv3';
 			$str = sprintf( $str, $wp_geo_options['admin_api'] );
 		} else {
+			if ( empty( $wp_geo_options['public_api'] ) )
+				$wp_geo_options['public_api'] = 'googlemapsv3';
 			$str = sprintf( $str, $wp_geo_options['public_api'] );
 		}
 		return $str;
