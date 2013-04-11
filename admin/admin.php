@@ -95,6 +95,7 @@ class WPGeo_Admin {
 	
 	/**
 	 * Admin Head
+	 * @todo Refactor mapScriptsInit()
 	 */
 	function admin_head() {
 		global $wpgeo, $post_ID;
@@ -102,12 +103,8 @@ class WPGeo_Admin {
 		// Only load if on a post or page
 		if ( $wpgeo->show_maps() ) {
 			$coord = new WPGeo_Coord( get_post_meta( $post_ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post_ID, WPGEO_LONGITUDE_META, true ) );
-			$default_zoom = 13;
-			$panel_open   = false;
-			$hide_marker  = false;
-			
 			if ( ! $wpgeo->show_maps_external ) {
-				echo $wpgeo->mapScriptsInit( $coord->latitude(), $coord->longitude(), $default_zoom, $panel_open, $hide_marker );
+				echo $wpgeo->mapScriptsInit( $coord, 13, false, false );
 			}
 		}
 	}

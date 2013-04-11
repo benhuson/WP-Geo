@@ -698,19 +698,17 @@ class WPGeo {
 	 * Map Scripts Init
 	 * Output Javascripts to display maps.
 	 *
-	 * @param float $latitude Latitude.
-	 * @param float $longitude Longitude.
+	 * @param object $coord WPGeo_Coord.
 	 * @param int $zoom Zoom.
 	 * @param bool $panel_open Admin panel open?
 	 * @param bool $hide_marker Hide marker?
 	 * @return string HTML content.
 	 */
-	function mapScriptsInit( $latitude, $longitude, $zoom = 5, $panel_open = false, $hide_marker = false ) {
+	function mapScriptsInit( $coord, $zoom = 5, $panel_open = false, $hide_marker = false ) {
 		global $wpgeo, $post;
 		
 		$wp_geo_options = get_option( 'wp_geo_options' );
-		$maptype = empty( $wp_geo_options['google_map_type'] ) ? 'G_NORMAL_MAP' : $wp_geo_options['google_map_type'];	
-		$coord = new WPGeo_Coord( $latitude, $longitude );
+		$maptype = empty( $wp_geo_options['google_map_type'] ) ? 'G_NORMAL_MAP' : $wp_geo_options['google_map_type'];
 		
 		// Centre on London
 		if ( ! $coord->is_valid_coord() ) {
@@ -759,7 +757,6 @@ class WPGeo {
 		
 		// Script
 		// @todo Maps API needs changing
-		$wpgeo->includeGoogleMapsJavaScriptAPI();
 		return '
 			<script type="text/javascript">
 			var WPGeo_Admin = ' . json_encode( $wpgeo_admin_vars ) . ';
