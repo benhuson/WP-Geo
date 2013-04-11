@@ -152,7 +152,7 @@ class WPGeo_API_GoogleMapsV3 {
 					var bounds = new google.maps.LatLngBounds();
 					var mapOptions = {
 						center            : new google.maps.LatLng(' . $center_coord->get_delimited() . '),
-						zoom              : 0,
+						zoom              : ' . $map->get_map_zoom() . ',
 						mapTypeId         : ' . apply_filters( 'wpgeo_api_string', 'google.maps.MapTypeId.ROADMAP', $map->get_map_type(), 'maptype' ) . ',
 						mapTypeControl    : false, // @todo
 						streetViewControl : false // @todo
@@ -162,18 +162,11 @@ class WPGeo_API_GoogleMapsV3 {
 					// Add the markers and polylines
 					' . $this->get_markers_js( $map ) . '
 					' . $this->get_polylines_js( $map ) . '
-					
-					// Center
-					var center = bounds.getCenter();
-					var zoom = ' . $map->get_js_id() . '.getBounds(bounds);
-					if (zoom > ' . $map->zoom . ') {
-						zoom = ' . $map->zoom . ';
-					}
-					' . $map->get_js_id() . '.setCenter(center);
-					if (zoom) {
-						' . $map->get_js_id() . '.setZoom(zoom);
-					}
-					
+					';
+				if ( count( $map->points ) > 1 ) {
+					echo $map->get_js_id() . '.fitBounds(bounds);';
+				}
+				echo '
 					' . apply_filters( 'wpgeo_map_js_preoverlays', '', $map->get_js_id() ) . '
 					' . $this->get_feeds_js( $map ) . '
 					';

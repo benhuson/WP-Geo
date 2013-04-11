@@ -100,6 +100,8 @@ function get_wpgeo_title( $post_id = 0, $default_to_post_title = true ) {
  * WP Geo Map Link
  * Gets a link to an external map.
  *
+ * @todo This should probably use API but fallback to Google Maps.
+ *
  * @param array $args (optional) Array of arguments.
  * @return string Map URL.
  */
@@ -202,6 +204,7 @@ function get_wpgeo_map( $query, $options = null ) {
 		'polyline_colour' => $wp_geo_options['polyline_colour'],
 		'align'           => 'none',
 		'numberposts'     => -1,
+		'posts_per_page'  => -1,
 		'post_type'       => 'post',
 		'post_status'     => 'publish',
 		'orderby'         => 'post_date',
@@ -222,6 +225,10 @@ function get_wpgeo_map( $query, $options = null ) {
 	$r = wp_parse_args( $query, $defaults );
 	$r['width']  = wpgeo_css_dimension( $r['width'] );
 	$r['height'] = wpgeo_css_dimension( $r['height'] );
+	
+	if ( $r['posts_per_page'] < $r['numberposts'] ) {
+		$r['posts_per_page'] = $r['numberposts'];
+	}
 	
 	$posts = get_posts( $r );
 	
@@ -265,138 +272,8 @@ function get_wpgeo_map( $query, $options = null ) {
 	
 	$center_coord = $map->get_map_centre();
 	
-	$output = $map->get_map_html( array( 'styles' => array( 'float' => $r['align'] ) ) ) . 
-		'<script type="text/javascript">
-		<!--';
-	if ( 'googlemapsv3' == $wpgeo->get_api_string() ) {
-		$output .= '
-			function createMap() {
-				var mapOptions = {
-					center    : new google.maps.LatLng(' . $center_coord->get_delimited() . '),
-					zoom      : ' . $map->zoom . ',
-					mapTypeId : ' . apply_filters( 'wpgeo_api_string', 'google.maps.MapTypeId.ROADMAP', $map->get_map_type(), 'maptype' ) . ',
-					// @todo mapTypeControl
-				};
-				var bounds = new google.maps.LatLngBounds();
-				' . $map->get_js_id() . ' = new google.maps.Map(document.getElementById("' . $map->get_dom_id() . '"), mapOptions);
-				';
-		if ( count( $map->points ) > 0 ) {
-			
-			// Markers
-			$markers = '';
-			for ( $i = 0; $i < count( $map->points ); $i++ ) {
-				$marker = get_post_meta( $map->points[$i]->args['post']->ID, WPGEO_MARKER_META, true );
-				if ( empty( $marker ) )
-					$marker = $r['markers'];
-				$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', $marker, $map->points[$i]->args['post'], 'wpgeo_map' );
-				$markers .= 'var marker_' . $i . ' = new google.maps.Marker({ position:new google.maps.LatLng(' . $map->points[$i]->coord->get_delimited() . '), map:' . $map->get_js_id() . ', icon: ' . $icon . ' });' . "\n";
-				if ( ! empty( $map->points[$i]->link ) ) {
-					$markers .= 'google.maps.event.addListener(marker_' . $i . ', "click", function() {
-							window.location.href = "' . $map->points[$i]->link . '";
-						});
-						';
-				}
-				if ( ! empty( $map->points[$i]->title ) ) {
-					$markers .= '
-						var tooltip_' . $i . ' = new Tooltip(marker_' . $i . ', \'' . esc_js( $map->points[$i]->title ) . '\');
-						google.maps.event.addListener(marker_' . $i . ', "mouseover", function() {
-							tooltip_' . $i . '.show();
-						});
-						google.maps.event.addListener(marker_' . $i . ', "mouseout", function() {
-							tooltip_' . $i . '.hide();
-						});
-						';
-				}
-				$markers .= 'bounds.extend(new google.maps.LatLng(' . $map->points[$i]->coord->get_delimited() . '));' . "\n";
-			}
-			$output .= $markers;
-			
-			// Polylines
-			if ( count( $map->polylines ) > 0 ) {
-				$count = 1;
-				foreach ( $map->polylines as $polyline ) {
-					$polyline_js_3_coords = array();
-					foreach ( $polyline->coords as $c ) {
-						$polyline_js_3_coords[] = 'new google.maps.LatLng(' . $c->get_delimited() . ')';
-					}
-					$output .= 'var polyline_' . $count . ' = new google.maps.Polyline({
-							path          : [' . implode( ',', $polyline_js_3_coords ) . '],
-							strokeColor   : "' . $polyline->color . '",
-							strokeOpacity : ' . $polyline->opacity . ',
-							strokeWeight  : ' . $polyline->thickness . ',
-							geodesic      : ' . $polyline->geodesic . ',
-							map           : ' . $map->get_js_id() . '
-						});';
-					$count++;
-				}
-			}
-			
-			$output .= '
-				' . $map->get_js_id() . '.fitBounds(bounds);
-				';
-		}
-		$output .= apply_filters( 'wpgeo_map_js_preoverlays', '', $map->get_js_id() ) . '
-			}
-			google.maps.event.addDomListener(window, "load", createMap);
-		';
-	} else {
-		$output .= '
-			jQuery(window).load( function() {
-				if ( GBrowserIsCompatible() ) {
-					var bounds = new GLatLngBounds();
-					' . $map->get_js_id() . ' = new GMap2(document.getElementById("' . $map->get_dom_id() . '"));
-					' . $map->get_js_id() . '.addControl(new GLargeMapControl3D());
-					' . $map->get_js_id() . '.setMapType(' . $r['type'] . ');
-					';
-					if ( count( $map->points ) > 0 ) {
-			
-						// Markers
-						$markers = '';
-						for ( $i = 0; $i < count( $map->points ); $i++ ) {
-							$marker = get_post_meta( $map->points[$i]->args['post']->ID, WPGEO_MARKER_META, true );
-							if ( empty( $marker ) )
-								$marker = $r['markers'];
-							$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', $marker, $map->points[$i]->args['post'], 'wpgeo_map' );
-							$output .= '
-								var center = new GLatLng(' . $map->points[$i]->coord->get_delimited() . ');
-								var marker = new wpgeo_createMarker2(' . $map->get_js_id() . ', center, ' . $icon . ', \'' . esc_js( $map->points[$i]->args['post']->post_title ) . '\', \'' . get_permalink( $map->points[$i]->args['post']->ID ) . '\');
-								bounds.extend(center);
-								';
-						}
-						$output .= $markers;
-						
-						// Polylines
-						if ( count( $map->polylines ) > 0 ) {
-							foreach ( $map->polylines as $polyline ) {
-								$coords = array();
-								foreach ( $polyline->coords as $coord ) {
-									$coords[] = 'new GLatLng(' . $coord->get_delimited() . ')';
-								}
-								$options = array();
-								if ( $polyline->geodesic ) {
-									$options[] = 'geodesic:true';
-								}
-								$output .= $map->get_js_id() . '.addOverlay(new GPolyline([' . implode( ',', $coords ) . '],"' . $polyline->color . '",' . $polyline->thickness . ',' . $polyline->opacity . ',{' . implode( ',', $options ) . '}));';
-							}
-						}
-						$output .= '
-							zoom = ' . $map->get_js_id() . '.getBoundsZoomLevel(bounds);
-							' . $map->get_js_id() . '.setCenter(bounds.getCenter(), zoom);
-							';
-					} else {
-						$output .= '
-						' . $map->get_js_id() . '.setCenter(new GLatLng(' . $center_coord->get_delimited() . '), ' . $map->zoom . ');';
-					}
-					$output .= '
-					' . apply_filters( 'wpgeo_map_js_preoverlays', '', $map->get_js_id() ) . '
-				}
-			} );';
-	}
-	$output .= '
-		-->
-		</script>
-		';
-	return $output;
+	$wpgeo->maps2->add_map( $map );
+	return $map->get_map_html( array( 'styles' => array( 'float' => $r['align'] ) ) );
 }
 
 /**
@@ -424,6 +301,8 @@ function wpgeo_post_static_map( $post_id = 0, $query = null ) {
 /**
  * Get WP Geo Post Static Map
  * Gets the HTML for a static post map.
+ *
+ * @todo Should be implemented via API but fallback to Google Static Maps.
  *
  * @param int $post_id (optional) Post ID.
  * @param array $query (optional) Parameters.

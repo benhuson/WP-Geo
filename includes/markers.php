@@ -160,6 +160,8 @@ class WPGeo_Markers {
 	/**
 	 * WP Head
 	 * Output HTML header.
+	 *
+	 * @todo Once all map JS in footer, this can be moved there also.
 	 */
 	function wp_head() {
 		$js = '';
