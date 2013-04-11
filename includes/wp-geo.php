@@ -87,8 +87,8 @@ class WPGeo {
 	 */
 	function default_option_values() {
 		return array(
-			'public_api'                    => 'googlemapsv2',
-			'admin_api'                     => 'googlemapsv2',
+			'public_api'                    => 'googlemapsv3',
+			'admin_api'                     => 'googlemapsv3',
 			'google_api_key'                => '', 
 			'google_map_type'               => 'G_NORMAL_MAP', 
 			'show_post_map'                 => 'TOP', 
