@@ -10,7 +10,7 @@
 			
 			// Define map
 			WPGeo_Admin.map = new google.maps.Map(document.getElementById(WPGeo_Admin.map_dom_id), {
-				zoom           : WPGeo_Admin.zoom,
+				zoom           : parseInt(WPGeo_Admin.zoom, 10),
 				center         : new google.maps.LatLng(WPGeo_Admin.mapCentreX, WPGeo_Admin.mapCentreY),
 				mapTypeId      : WPGeo_Admin.mapType,
 				zoomControl    : true,
@@ -135,7 +135,7 @@
 								type   : 'WPGeo_updateMarkerLatLng',
 								latLng : results[0].geometry.location,
 								lat    : results[0].geometry.location.lat(),
-								lng    : results[0].geometry.location.lng(),
+								lng    : results[0].geometry.location.lng()
 							});
 						} else {
 							alert(e.address + " not found");
