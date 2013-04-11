@@ -180,9 +180,13 @@ class WPGeo_Widget extends WP_Widget {
 		if ( $wpgeo->checkGoogleAPIKey() ) {
 			
 			// Add points (from posts) to map
+			$count = 0;
 			foreach ( $args['posts'] as $post ) {
 				$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
 				if ( $coord->is_valid_coord() ) {
+					$count++;
+					if ( count( $count ) == 1 )
+						$map->set_map_centre( $coord );
 					$map->add_point( $coord, array(
 						'icon'  => apply_filters( 'wpgeo_marker_icon', 'small', $post, 'widget' ),
 						'title' => get_wpgeo_title( $post->ID ),
