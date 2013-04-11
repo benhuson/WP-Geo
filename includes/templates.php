@@ -237,8 +237,11 @@ function get_wpgeo_map( $query, $options = null ) {
 		foreach ( $posts as $post ) {
 			$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
 			if ( $coord->is_valid_coord() ) {
+				$marker = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
+				if ( empty( $marker ) )
+					$marker = $r['markers'];
 				$map->add_point( $coord, array(
-					'icon'  => apply_filters( 'wpgeo_marker_icon', 'small', $post, 'template' ),
+					'icon'  => apply_filters( 'wpgeo_marker_icon', $marker, $post, 'template' ),
 					'title' => get_wpgeo_title( $post->ID ),
 					'link'  => get_permalink( $post ),
 					'post'  => $post

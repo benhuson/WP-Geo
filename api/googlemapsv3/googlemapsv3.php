@@ -69,9 +69,10 @@ class WPGeo_API_GoogleMapsV3 {
 	function get_markers_js( $map ) {
 		$markers = '';
 		for ( $i = 0; $i < count( $map->points ); $i++ ) {
-			$icon = 'wpgeo_icon_small';
+			$post_icon = isset( $map->points[$i]->icon ) ? $map->points[$i]->icon : 'small';
+			$icon = 'wpgeo_icon_' . $post_icon;
 			if ( isset( $map->points[$i]->args['post'] ) ) {
-				$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', 'small', $map->points[$i]->args['post'], 'widget' );
+				$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', $post_icon, $map->points[$i]->args['post'], 'widget' );
 			}
 			$markers .= 'var marker_' . $i . ' = new google.maps.Marker({ position:new google.maps.LatLng(' . $map->points[$i]->coord->get_delimited() . '), map:' . $map->get_js_id() . ', icon: ' . $icon . ' });' . "\n";
 			if ( ! empty( $map->points[$i]->link ) ) {

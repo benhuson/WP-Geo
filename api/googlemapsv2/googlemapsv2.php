@@ -45,7 +45,11 @@ class WPGeo_API_GoogleMapsV2 {
 	function get_markers_js( $map ) {
 		$markers = '';
 		for ( $i = 0; $i < count( $map->points ); $i++ ) {
-			$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', 'small', $map->points[$i]->args['post'], 'widget' );
+			$post_icon = isset( $map->points[$i]->icon ) ? $map->points[$i]->icon : 'small';
+			$icon = 'wpgeo_icon_' . $post_icon;
+			if ( isset( $map->points[$i]->args['post'] ) ) {
+				$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', $post_icon, $map->points[$i]->args['post'], 'widget' );
+			}
 			$markers .= 'var marker_' . $i . ' = wpgeoCreateMapMarker(' . $map->get_js_id() . ', new GLatLng(' . $map->points[$i]->coord->get_delimited() . '), ' . $icon . ', "' . addslashes( __( $map->points[$i]->title ) ) . '", "' . get_permalink( $map->points[$i]->args['post']->ID ) . '");' . "\n";
 		}
 		return $markers;
