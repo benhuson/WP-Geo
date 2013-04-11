@@ -26,13 +26,6 @@ class WPGeo {
 	 */
 	function WPGeo() {
 		
-		// Version
-		$wp_geo_version = get_option( 'wp_geo_version' );
-		if ( empty( $wp_geo_version ) || version_compare( $wp_geo_version, $this->version, '<' ) ) {
-			//update_option( 'wp_geo_show_version_msg', 'Y' );
-			update_option( 'wp_geo_version', $this->version );
-		}
-		
 		// API
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		if ( 'googlemapsv3' == $this->get_api_string() ) {
@@ -49,6 +42,7 @@ class WPGeo {
 		$this->feeds   = new WPGeo_Feeds();
 		
 		// Action Hooks
+		add_action( 'plugins_loaded', array( $this, '_maybe_upgrade' ), 5 );
 		add_action( 'init', array( $this, 'init' ) );
 		add_action( 'init', array( $this, 'init_later' ), 10000 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'includeGoogleMapsJavaScriptAPI' ) );
@@ -124,27 +118,25 @@ class WPGeo {
 	}
 	
 	/**
-	 * Register Activation
-	 * Runs when the plugin is activated - creates options etc.
+	 * Maybe Upgrade
+	 * Checks on each admin page load wether the plugin upgrade routine should
+	 * be run to create options etc.
 	 */
-	function register_activation() {
-		$wpgeo = new WPGeo();
-		
-		$options = $this->default_option_values();
-		// @todo Rather than add_option() check values and use update?
-		add_option( 'wp_geo_options', $options );
-		$wp_geo_options = get_option( 'wp_geo_options' );
-		foreach ( $options as $key => $val ) {
-			if ( ! isset( $wp_geo_options[$key] ) ) {
-				$wp_geo_options[$key] = $options[$key];
-			} elseif ( empty( $wp_geo_options[$key] ) && in_array( $key, array( 'default_map_latitude', 'default_map_longitude' ) ) ) {
-				$wp_geo_options[$key] = $options[$key];
-			}
+	function _maybe_upgrade() {
+		$wp_geo_version = get_option( 'wp_geo_version', 0 );
+		if ( empty( $wp_geo_version ) || version_compare( $wp_geo_version, $this->version, '<' ) ) {
+			//update_option( 'wp_geo_show_version_msg', 'Y' );
+			update_option( 'wp_geo_version', $this->version );
+			
+			// Update Options
+			$default_options = $this->default_option_values();
+			$options = get_option( 'wp_geo_options', $default_options );
+			$options = wp_parse_args( $options, $default_options );
+			update_option( 'wp_geo_options', $options );
+			
+			// Files
+			$this->markers->register_activation();
 		}
-		update_option( 'wp_geo_options', $wp_geo_options );
-		
-		// Files
-		$wpgeo->markers->register_activation();
 	}
 	
 	/**

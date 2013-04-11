@@ -44,6 +44,3 @@ include_once( WPGEO_DIR . 'widgets/recent-locations.php' );
 // Init.
 global $wpgeo;
 $wpgeo = new WPGeo();
-
-// Activation Hook
-register_activation_hook( __FILE__, array( $wpgeo, 'register_activation' ) );
