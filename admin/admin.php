@@ -163,8 +163,6 @@ class WPGeo_Admin {
 		if ( ! $wpgeo->checkGoogleAPIKey() )
 			return;
 		
-		$wp_geo_options = get_option( 'wp_geo_options' );
-		
 		add_meta_box( 'wpgeo_location', __( 'WP Geo Location', 'wpgeo' ), array( $this, 'wpgeo_location_inner_custom_box' ), 'post', 'advanced' );
 		add_meta_box( 'wpgeo_location', __( 'WP Geo Location', 'wpgeo' ), array( $this, 'wpgeo_location_inner_custom_box' ), 'page', 'advanced' );
 		
