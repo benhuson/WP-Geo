@@ -137,17 +137,13 @@ if ( ! function_exists( 'shortcode_wpgeo_map' ) ) {
 				return '[wpgeo_map]';
 		
 			// To Do: Add in lon/lat check and output map if needed
-			
-			$map = new WPGeo_Map( $post->ID );
-			$styles = array(
-				'width'  => $atts['width'],
-				'height' => $atts['height']
-			);
+			$styles = array();
 			if ( in_array( strtolower( $atts['align'] ), array( 'left', 'right' ) ) ) {
 				$styles['float'] = strtolower( $atts['align'] );
 			}
-			return $map->get_map_html( array(
-				'classes' => array( 'wp_geo_map' ),
+			return get_wpgeo_post_map( $post->ID, array(
+				'width'   => $atts['width'],
+				'height'  => $atts['height'],
 				'styles'  => $styles,
 				'content' => $content
 			) );
