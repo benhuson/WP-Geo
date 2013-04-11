@@ -55,7 +55,6 @@ class WPGeo {
 		add_action( 'wp_head', array( $this, 'wp_head' ) );
 		add_action( 'wp_footer', array( $this, 'wp_footer' ) );
 		add_action( 'admin_footer', array( $this, 'wp_footer' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		
 		// Filters
 		add_filter( 'the_content', array( $this, 'the_content' ) );
@@ -312,14 +311,6 @@ class WPGeo {
 	}
 	
 	/**
-	 * Enqueue scripts and styles
-	 */
-	function enqueue_scripts() {
-		wp_register_style( 'wpgeo', WPGEO_URL . 'css/wp-geo.css' );
-		wp_enqueue_style( 'wpgeo' );
-	}
-	
-	/**
 	 * WP Head
 	 * Outputs HTML and JavaScript to the header.
 	 */
@@ -498,7 +489,6 @@ class WPGeo {
 				}
 						
 				// Script
-				$wpgeo->includeGoogleMapsJavaScriptAPI();
 				if ( 'googlemapsv3' == $this->get_api_string() ) {
 					
 					// Google Maps v3
@@ -583,7 +573,7 @@ class WPGeo {
 		// Add extra markers
 		$this->markers->add_extra_markers();
 	}
-	
+
 	/**
 	 * Include Google Maps JavaScript API
 	 * Queue JavaScripts required by WP Geo.
@@ -592,65 +582,61 @@ class WPGeo {
 	 */
 	function includeGoogleMapsJavaScriptAPI() {
 		global $wpgeo;
-		
+
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		$http = is_ssl() ? 'https' : 'http';
-		
+
+		// Styles
+		wp_register_style( 'wpgeo', WPGEO_URL . 'css/wp-geo.css', null, $this->version );
+
+		// Scripts
 		wp_register_script( 'wpgeo_tooltip', WPGEO_URL . 'js/tooltip.js', array( 'jquery' ), $this->version );
-		
-		if ( 'googlemapsv3' == $this->get_api_string() ) {
-			wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.v3.js', array( 'jquery', 'wpgeo_tooltip' ), $this->version );
-		} else {
-			wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.js', array( 'jquery', 'wpgeo_tooltip' ), $this->version );
-		}
 		wp_register_script( 'wpgeo_admin_post', WPGEO_URL . 'js/admin-post.js', array( 'jquery', 'wpgeo' ), $this->version );
-		
-		// Select API to use...
-		if ( ( $wpgeo->show_maps() || $wpgeo->widget_is_active() ) ) {
-		
-			if ( 'googlemapsv3' == $this->get_api_string() ) {
-				
+		if ( 'googlemapsv3' == $this->get_api_string() ) {
+			$googlemaps_js = add_query_arg( array(
+				'region' => $wpgeo->get_googlemaps_locale(),
+				'key'    => $wpgeo->get_google_api_key(),
+				'sensor' => 'false'
+			), $http . '://maps.googleapis.com/maps/api/js' );
+			wp_register_script( 'googlemaps3', $googlemaps_js, false, $this->version );
+			wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.v3.js', array( 'jquery', 'wpgeo_tooltip' ), $this->version );
+			wp_register_script( 'wpgeo_admin_post_googlemaps3', WPGEO_URL . 'api/googlemapsv3/js/admin-post.js', array( 'jquery', 'wpgeo_admin_post', 'googlemaps3' ), $this->version );
+		} else {
+			$googlemaps_js = add_query_arg( array(
+				'v'      => 2,
+				'hl'     => $wpgeo->get_googlemaps_locale(),
+				'key'    => $wpgeo->get_google_api_key(),
+				'sensor' => 'false'
+			), $http . '://maps.google.com/maps?file=api' );
+			wp_register_script( 'googlemaps2', $googlemaps_js, false, $this->version );
+			wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.js', array( 'jquery', 'wpgeo_tooltip' ), $this->version );
+			wp_register_script( 'wpgeo_admin_post_googlemaps2', WPGEO_URL . 'api/googlemapsv2/js/admin-post.js', array( 'jquery', 'wpgeo_admin_post', 'googlemaps2' ), $this->version );
+		}
+
+		// Enqueue depending on API in use...
+		wp_enqueue_style( 'wpgeo' );
+		if ( ( $wpgeo->show_maps() || $wpgeo->widget_is_active() ) && $wpgeo->checkGoogleAPIKey() ) {
+			switch ( $this->get_api_string() ) {
+
 				// Google Maps v3
-				if ( $wpgeo->checkGoogleAPIKey() ) {
-					$googlemaps_js = add_query_arg( array(
-						'region' => $wpgeo->get_googlemaps_locale(),
-						'key'    => $wpgeo->get_google_api_key(),
-						'sensor' => 'false'
-					), $http . '://maps.googleapis.com/maps/api/js' );
-					
-					wp_register_script( 'googlemaps3', $googlemaps_js, false, $this->version );
-					wp_register_script( 'wpgeo_admin_post_googlemaps3', WPGEO_URL . 'api/googlemapsv3/js/admin-post.js', array( 'jquery', 'wpgeo_admin_post', 'googlemaps3' ), $this->version );
-					
+				case 'googlemapsv3':
 					wp_enqueue_script( 'wpgeo' );
 					wp_enqueue_script( 'googlemaps3' );
-					if ( is_admin() ) {
+					if ( is_admin() )
 						 wp_enqueue_script( 'wpgeo_admin_post_googlemaps3' );
-					}
-				}
-			} else {
-				
+					break;
+
 				// Google Maps v2
-				if ( $wpgeo->checkGoogleAPIKey() ) {
-					$googlemaps_js = add_query_arg( array(
-						'v'      => 2,
-						'hl'     => $wpgeo->get_googlemaps_locale(),
-						'key'    => $wpgeo->get_google_api_key(),
-						'sensor' => 'false'
-					), $http . '://maps.google.com/maps?file=api' );
-					
-					wp_register_script( 'googlemaps2', $googlemaps_js, false, $this->version );
-					wp_register_script( 'wpgeo_admin_post_googlemaps2', WPGEO_URL . 'api/googlemapsv2/js/admin-post.js', array( 'jquery', 'wpgeo_admin_post', 'googlemaps2' ), $this->version );
-					
+				default:
 					wp_enqueue_script( 'wpgeo' );
 					wp_enqueue_script( 'googlemaps2' );
-					if ( is_admin() ) {
+					if ( is_admin() )
 						 wp_enqueue_script( 'wpgeo_admin_post_googlemaps2' );
-					}
-				}
+					break;
 			}
 		}
 	}
-	
+
 	/**
 	 * Get Google Maps Locale
 	 * See http://code.google.com/apis/maps/faq.html#languagesupport for link to updated languages codes.
