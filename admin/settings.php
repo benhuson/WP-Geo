@@ -251,7 +251,7 @@ class WPGeo_Settings {
 				}
 			}
 			if ( ! empty( $custom_post_type_checkboxes ) ) {
-				echo '<strong>Custom Post Types</strong><br />' . $custom_post_type_checkboxes;
+				echo '<strong>' . __( 'Custom Post Types', 'wp-geo' ) . '</strong><br />' . $custom_post_type_checkboxes;
 			}
 		}
 	}
