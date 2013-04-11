@@ -74,21 +74,21 @@ class WPGeo_API_GoogleMapsV3 {
 			if ( isset( $map->points[$i]->args['post'] ) ) {
 				$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', $post_icon, $map->points[$i]->args['post'], 'widget' );
 			}
-			$markers .= 'var marker_' . $i . ' = new google.maps.Marker({ position:new google.maps.LatLng(' . $map->points[$i]->coord->get_delimited() . '), map:' . $map->get_js_id() . ', icon: ' . $icon . ' });' . "\n";
+			$markers .= 'var marker_' . $i . '_' . $map->get_js_id() . ' = new google.maps.Marker({ position:new google.maps.LatLng(' . $map->points[$i]->coord->get_delimited() . '), map:' . $map->get_js_id() . ', icon: ' . $icon . ' });' . "\n";
 			if ( ! empty( $map->points[$i]->link ) ) {
-				$markers .= 'google.maps.event.addListener(marker_' . $i . ', "click", function() {
+				$markers .= 'google.maps.event.addListener(marker_' . $i . '_' . $map->get_js_id() . ', "click", function() {
 						window.location.href = "' . $map->points[$i]->link . '";
 					});
 					';
 			}
 			if ( ! empty( $map->points[$i]->title ) ) {
 				$markers .= '
-					var tooltip_' . $i . ' = new Tooltip(marker_' . $i . ', \'' . esc_js( $map->points[$i]->title ) . '\');
-					google.maps.event.addListener(marker_' . $i . ', "mouseover", function() {
-						tooltip_' . $i . '.show();
+					var tooltip_' . $i . '_' . $map->get_js_id() . ' = new Tooltip(marker_' . $i . '_' . $map->get_js_id() . ', \'' . esc_js( $map->points[$i]->title ) . '\');
+					google.maps.event.addListener(marker_' . $i . '_' . $map->get_js_id() . ', "mouseover", function() {
+						tooltip_' . $i . '_' . $map->get_js_id() . '.show();
 					});
-					google.maps.event.addListener(marker_' . $i . ', "mouseout", function() {
-						tooltip_' . $i . '.hide();
+					google.maps.event.addListener(marker_' . $i . '_' . $map->get_js_id() . ', "mouseout", function() {
+						tooltip_' . $i . '_' . $map->get_js_id() . '.hide();
 					});
 					';
 			}
@@ -106,7 +106,7 @@ class WPGeo_API_GoogleMapsV3 {
 				foreach ( $polyline->coords as $c ) {
 					$polyline_js_3_coords[] = 'new google.maps.LatLng(' . $c->get_delimited() . ')';
 				}
-				$polylines = 'var polyline_' . $count . ' = new google.maps.Polyline({
+				$polylines = 'var polyline_' . $count . '_' . $map->get_js_id() . ' = new google.maps.Polyline({
 						path          : [' . implode( ',', $polyline_js_3_coords ) . '],
 						strokeColor   : "' . $polyline->color . '",
 						strokeOpacity : ' . $polyline->opacity . ',
