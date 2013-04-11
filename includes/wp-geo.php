@@ -757,32 +757,34 @@ class WPGeo {
 		$google_maps_api_key = $wpgeo->get_google_api_key();
 		$panel_open = ! $hide_marker || $panel_open ? '.removeClass("closed")' : '';
 		
+		$wpgeo_admin_vars = array(
+			'api'        => $this->get_api_string(),
+			'map_dom_id' => $this->admin->map->get_dom_id(),
+			'map'        => null,
+			'marker'     => null,
+			'zoom'       => intval( $zoom ),
+			'mapCentreX' => $map_center_coord->latitude(),
+			'mapCentreY' => $map_center_coord->longitude(),
+			'latitude'   => $coord->latitude(),
+			'longitude'  => $coord->longitude(),
+			'hideMarker' => absint( $hide_marker )
+		);
+		
 		// Script
 		// @todo Maps API needs changing
 		$wpgeo->includeGoogleMapsJavaScriptAPI();
 		return '
 			<script type="text/javascript">
-			//<![CDATA[
-			var WPGeo_Admin = {
-				api        : "' . $this->get_api_string() . '",
-				map_dom_id : "' . $this->admin->map->get_dom_id() . '",
-				map        : null,
-				marker     : null,
-				zoom       : ' . $zoom . ',
-				mapCentreX : ' . $map_center_coord->latitude() . ',
-				mapCentreY : ' . $map_center_coord->longitude() . ',
-				mapType    : ' . $this->api_string( $maptype, 'maptype' ) . ',
-				latitude   : ' . $coord->latitude() . ',
-				longitude  : ' . $coord->longitude() . ',
-				hideMarker : ' . absint( $hide_marker ) . '
-			};
+			var WPGeo_Admin = ' . json_encode( $wpgeo_admin_vars ) . ';
+			WPGeo_Admin.mapType = ' . $this->api_string( $maptype, 'maptype' ) . ';
+			
 			jQuery(document).ready(function($) {
 				$("#wpgeo_location")' . $panel_open . '.bind("WPGeo_adminPostMapReady", function(e){
 					' . apply_filters( 'wpgeo_map_js_preoverlays', '', 'WPGeo_Admin.map' ) . '
 				});
 			});
-			//]]>
-			</script>';
+			</script>
+			';
 	}
 	
 	/**
