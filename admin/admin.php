@@ -18,6 +18,7 @@ class WPGeo_Admin {
 		add_action( 'save_post', array( $this, 'wpgeo_location_save_postdata' ) );
 		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 		add_action( 'after_plugin_row', array( $this, 'after_plugin_row' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 	}
 	
 	/**
@@ -86,12 +87,17 @@ class WPGeo_Admin {
 	}
 	
 	/**
+	 * Admin Enqueue Scripts & Styles
+	 */
+	function admin_enqueue_scripts() {
+		wp_enqueue_style( 'wpgeo_admin', WPGEO_URL . 'css/wp-geo.css' );
+	}
+	
+	/**
 	 * Admin Head
 	 */
 	function admin_head() {
 		global $wpgeo, $post_ID;
-		
-		echo '<link rel="stylesheet" href="' . WPGEO_URL . 'css/wp-geo.css" type="text/css" />';
 		
 		// Only load if on a post or page
 		if ( $wpgeo->show_maps() ) {
