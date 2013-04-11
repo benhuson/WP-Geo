@@ -493,5 +493,3 @@ function get_wpgeo_post_static_map( $post_id = 0, $query = null ) {
 	
 	return '<img id="wp_geo_static_map_' . $post_id . '" src="' . $url . '" class="wp_geo_static_map" />';
 }
-
-?>

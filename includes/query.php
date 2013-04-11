@@ -48,5 +48,3 @@ function wpgeo_setup_postdata( $post ) {
 		$wpgeo_longitude = $coord->longitude();
 	}
 }
-
-?>

@@ -130,5 +130,3 @@ class WPGeo_Recent_Locations_Widget extends WPGeo_Widget {
 
 // Widget Hook
 add_action( 'widgets_init', create_function( '', 'return register_widget( "WPGeo_Recent_Locations_Widget" );' ) );
-
-?>

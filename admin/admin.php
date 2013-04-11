@@ -385,5 +385,3 @@ class WPGeo_Admin {
 	}
 	
 }
-
-?>

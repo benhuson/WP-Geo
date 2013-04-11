@@ -53,5 +53,3 @@ class WPGeo_Editor {
 	}
 	
 }
-
-?>

@@ -290,5 +290,3 @@ class WPGeo_Settings {
 	}
 	
 }
-
-?>

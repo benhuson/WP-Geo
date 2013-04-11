@@ -233,5 +233,3 @@ if ( ! function_exists( 'shortcode_wpgeo' ) ) {
 	}
 	add_shortcode( 'wpgeo', 'shortcode_wpgeo' );
 }
-
-?>

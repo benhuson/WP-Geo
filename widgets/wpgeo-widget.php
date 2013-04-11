@@ -253,5 +253,3 @@ class WPGeo_Widget extends WP_Widget {
 	}
 	
 }
-
-?>

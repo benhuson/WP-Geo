@@ -112,5 +112,3 @@ function wpgeo_show_polylines_options( $args = null ) {
 	
 	return $map_type_array;
 }
-
-?>

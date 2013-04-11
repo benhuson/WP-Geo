@@ -47,5 +47,3 @@ $wpgeo = new WPGeo();
 
 // Activation Hook
 register_activation_hook( __FILE__, array( $wpgeo, 'register_activation' ) );
-
-?>

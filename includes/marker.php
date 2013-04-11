@@ -134,5 +134,3 @@ class WPGeo_Marker {
 	}
 	
 }
-
-?>

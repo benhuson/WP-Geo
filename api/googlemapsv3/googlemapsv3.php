@@ -188,5 +188,3 @@ class WPGeo_API_GoogleMapsV3 {
 	}
 	
 }
-
-?>

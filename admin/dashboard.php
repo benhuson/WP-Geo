@@ -97,5 +97,3 @@ if ( ! class_exists( 'WPGeo_Dashboard' ) ) {
 	$wpgeo_dashboard = new WPGeo_Dashboard();
 	
 }
-
-?>
