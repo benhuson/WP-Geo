@@ -443,7 +443,7 @@ class WPGeo {
 					
 					$map->setMapControl( $wp_geo_options['default_map_control'] );
 					//$this->maps2->add_map( $map );
-					array_push( $this->maps, $map );
+					//array_push( $this->maps, $map );
 					// ----------- End - Create maps for visible posts and pages -----------
 				}
 			}
@@ -493,7 +493,8 @@ class WPGeo {
 				// Loop through maps to get Javascript
 				$js_map_writes = '';
 				foreach ( $this->maps as $map ) {
-					$js_map_writes .= $map->renderMapJS();
+					//$wpgeo->maps2->add_map( $map );
+					//$js_map_writes .= $map->renderMapJS();
 				}
 						
 				// Script
