@@ -466,8 +466,8 @@ class WPGeo {
 					) );
 				}
 				
-				$map->setMapZoom( $mapzoom );
-				$map->setMapType( $maptype );
+				$map->set_map_zoom( $mapzoom );
+				$map->set_map_type( $maptype );
 				
 				if ( $wp_geo_options['show_map_type_physical'] == 'Y' )
 					$map->addMapType( 'G_PHYSICAL_MAP' );
@@ -484,7 +484,7 @@ class WPGeo {
 					$map->showMapOverview( true );
 					
 				$map->setMapControl( $wp_geo_options['default_map_control'] );
-				array_push( $this->maps, $map );
+				$wpgeo->maps2->add_map( $map );
 				// ----------- End - Create map for visible posts and pages -----------
 				
 				$google_maps_api_key = $wpgeo->get_google_api_key();
