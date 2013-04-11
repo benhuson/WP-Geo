@@ -50,7 +50,7 @@ class WPGeo_API_GoogleMapsV2 {
 			if ( isset( $map->points[$i]->args['post'] ) ) {
 				$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', $post_icon, $map->points[$i]->args['post'], 'widget' );
 			}
-			$markers .= 'var marker_' . $i . ' = wpgeoCreateMapMarker(' . $map->get_js_id() . ', new GLatLng(' . $map->points[$i]->coord->get_delimited() . '), ' . $icon . ', "' . addslashes( __( $map->points[$i]->title ) ) . '", "' . get_permalink( $map->points[$i]->args['post']->ID ) . '");' . "\n";
+			$markers .= 'var marker_' . $i . ' = wpgeoCreateMapMarker(' . $map->get_js_id() . ', new GLatLng(' . $map->points[$i]->coord->get_delimited() . '), ' . $icon . ', "' . addslashes( __( $map->points[$i]->title ) ) . '", "' . $map->points[$i]->link . '");' . "\n";
 		}
 		return $markers;
 	}
