@@ -753,7 +753,7 @@ class WPGeo {
 				$post_type_object = get_post_type_object( $post_type );
 				if ( $post_type == 'post' ) {
 					return $this->show_maps_filter( true );
-				} elseif ( $wp_geo_options['show_maps_on_customposttypes'][$post_type] == 'Y' ) {
+				} elseif ( isset( $wp_geo_options['show_maps_on_customposttypes'][$post_type] ) && $wp_geo_options['show_maps_on_customposttypes'][$post_type] == 'Y' ) {
 					return $this->show_maps_filter( true );
 				} elseif ( ! $post_type_object->show_ui ) {
 					return $this->show_maps_filter( post_type_supports( $post_type, 'wpgeo' ) );
