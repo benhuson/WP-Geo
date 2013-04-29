@@ -95,50 +95,52 @@ class WPGeo_API_GoogleMapsV2 {
 		if ( ! is_array( $maps ) ) {
 			$maps = array( $maps );
 		}
-		echo '
-			<script type="text/javascript">
-			
-			function renderWPGeo() {
-				if (GBrowserIsCompatible()) {
-				';
-		foreach ( $maps as $map ) {
-			$center_coord = $map->get_map_centre();
+		if ( count( $maps ) > 0 ) {
 			echo '
-				' . $map->get_js_id() . ' = new GMap2(document.getElementById("' . $map->get_dom_id() . '"));
-				' . $map->get_js_id() . '.addControl(new GSmallZoomControl3D()); // @todo
-				' . $map->get_js_id() . '.setCenter(new GLatLng(' . $center_coord->get_delimited() . '), 0);
-				' . $map->get_js_id() . '.setMapType(' . $map->get_map_type() . ');
-				bounds = new GLatLngBounds();
+				<script type="text/javascript">
 				
-				// Add the markers and polylines
-				' . $this->get_markers_js( $map ) . '
-				' . $this->get_polylines_js( $map ) . '
-	
-				// Center the map to show all markers
-				var center = bounds.getCenter();
-				var zoom = ' . $map->get_js_id() . '.getBoundsZoomLevel(bounds)
-				if (zoom > ' . $map->get_map_zoom() . ') {
-					zoom = ' . $map->get_map_zoom() . ';
+				function renderWPGeo() {
+					if (GBrowserIsCompatible()) {
+					';
+			foreach ( $maps as $map ) {
+				$center_coord = $map->get_map_centre();
+				echo '
+					' . $map->get_js_id() . ' = new GMap2(document.getElementById("' . $map->get_dom_id() . '"));
+					' . $map->get_js_id() . '.addControl(new GSmallZoomControl3D()); // @todo
+					' . $map->get_js_id() . '.setCenter(new GLatLng(' . $center_coord->get_delimited() . '), 0);
+					' . $map->get_js_id() . '.setMapType(' . $map->get_map_type() . ');
+					bounds = new GLatLngBounds();
+					
+					// Add the markers and polylines
+					' . $this->get_markers_js( $map ) . '
+					' . $this->get_polylines_js( $map ) . '
+		
+					// Center the map to show all markers
+					var center = bounds.getCenter();
+					var zoom = ' . $map->get_js_id() . '.getBoundsZoomLevel(bounds)
+					if (zoom > ' . $map->get_map_zoom() . ') {
+						zoom = ' . $map->get_map_zoom() . ';
+					}
+					' . $map->get_js_id() . '.setCenter(center, zoom);
+					
+					' . apply_filters( 'wpgeo_map_js_preoverlays', '', $map->get_js_id() ) . '
+					' . $this->get_feeds_js( $map ) . '
+					';
+			}
+			echo '}
 				}
-				' . $map->get_js_id() . '.setCenter(center, zoom);
+			
+				if (document.all&&window.attachEvent) { // IE-Win
+					window.attachEvent("onload", function () { renderWPGeo(); });
+					window.attachEvent("onunload", GUnload);
+				} else if (window.addEventListener) { // Others
+					window.addEventListener("load", function () { renderWPGeo(); }, false);
+					window.addEventListener("unload", GUnload, false);
+				}
 				
-				' . apply_filters( 'wpgeo_map_js_preoverlays', '', $map->get_js_id() ) . '
-				' . $this->get_feeds_js( $map ) . '
+				</script>
 				';
 		}
-		echo '}
-			}
-		
-			if (document.all&&window.attachEvent) { // IE-Win
-				window.attachEvent("onload", function () { renderWPGeo(); });
-				window.attachEvent("onunload", GUnload);
-			} else if (window.addEventListener) { // Others
-				window.addEventListener("load", function () { renderWPGeo(); }, false);
-				window.addEventListener("unload", GUnload, false);
-			}
-			
-			</script>
-			';
 	}
 	
 }

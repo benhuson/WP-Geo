@@ -140,45 +140,47 @@ class WPGeo_API_GoogleMapsV3 {
 		if ( ! is_array( $maps ) ) {
 			$maps = array( $maps );
 		}
-		echo '
-			<script type="text/javascript">
-			//<![CDATA[
-			function wpgeo_render_maps() {
-				';
-		foreach ( $maps as $map ) {
-			$center_coord = $map->get_map_centre();
+		if ( count( $maps ) > 0 ) {
 			echo '
-				if (document.getElementById("' . $map->get_dom_id() . '")) {
-					var bounds = new google.maps.LatLngBounds();
-					var mapOptions = {
-						center            : new google.maps.LatLng(' . $center_coord->get_delimited() . '),
-						zoom              : ' . $map->get_map_zoom() . ',
-						mapTypeId         : ' . apply_filters( 'wpgeo_api_string', 'google.maps.MapTypeId.ROADMAP', $map->get_map_type(), 'maptype' ) . ',
-						mapTypeControl    : false, // @todo
-						streetViewControl : false // @todo
-					};
-					' . $map->get_js_id() . ' = new google.maps.Map(document.getElementById("' . $map->get_dom_id() . '"), mapOptions);
-					
-					// Add the markers and polylines
-					' . $this->get_markers_js( $map ) . '
-					' . $this->get_polylines_js( $map ) . '
+				<script type="text/javascript">
+				//<![CDATA[
+				function wpgeo_render_maps() {
 					';
-				if ( count( $map->points ) > 1 ) {
-					echo $map->get_js_id() . '.fitBounds(bounds);';
-				}
+			foreach ( $maps as $map ) {
+				$center_coord = $map->get_map_centre();
 				echo '
-					' . apply_filters( 'wpgeo_map_js_preoverlays', '', $map->get_js_id() ) . '
-					' . $this->get_feeds_js( $map ) . '
+					if (document.getElementById("' . $map->get_dom_id() . '")) {
+						var bounds = new google.maps.LatLngBounds();
+						var mapOptions = {
+							center            : new google.maps.LatLng(' . $center_coord->get_delimited() . '),
+							zoom              : ' . $map->get_map_zoom() . ',
+							mapTypeId         : ' . apply_filters( 'wpgeo_api_string', 'google.maps.MapTypeId.ROADMAP', $map->get_map_type(), 'maptype' ) . ',
+							mapTypeControl    : false, // @todo
+							streetViewControl : false // @todo
+						};
+						' . $map->get_js_id() . ' = new google.maps.Map(document.getElementById("' . $map->get_dom_id() . '"), mapOptions);
+						
+						// Add the markers and polylines
+						' . $this->get_markers_js( $map ) . '
+						' . $this->get_polylines_js( $map ) . '
+						';
+					if ( count( $map->points ) > 1 ) {
+						echo $map->get_js_id() . '.fitBounds(bounds);';
+					}
+					echo '
+						' . apply_filters( 'wpgeo_map_js_preoverlays', '', $map->get_js_id() ) . '
+						' . $this->get_feeds_js( $map ) . '
+						';
+				echo '
+					}
 					';
+			}
 			echo '
 				}
-				';
+				google.maps.event.addDomListener(window, "load", wpgeo_render_maps);
+				//]]>
+				</script>';
 		}
-		echo '
-			}
-			google.maps.event.addDomListener(window, "load", wpgeo_render_maps);
-			//]]>
-			</script>';
 	}
 	
 }
