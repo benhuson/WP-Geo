@@ -8,7 +8,7 @@ class WPGeo_Admin {
 	var $settings;
 	var $editor;
 	var $map;
-	var $plugin_message = '';
+	var $plugin_message = 'WP Geo 3.3 is a major upgrade which use Google Maps API v3. If you using a default installation of WP Geo hopefully things should just work. If you have used custom code or plugins which work with WP Geo you may need to update them to work with this version. Please <a href="https://github.com/benhuson/WP-Geo/issues">submit any bugs here...</a>';
 	
 	function WPGeo_Admin() {
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
@@ -76,11 +76,11 @@ class WPGeo_Admin {
 			}
 		}
 		// Version upgrade message
-		if ( in_array( $current_screen->id, array( 'settings_page_wp-geo', 'widgets' ) ) ) {
+		if ( in_array( $current_screen->id, array( 'settings_page_wp-geo', 'plugins' ) ) ) {
 			$wp_geo_show_version_msg = get_option( 'wp_geo_show_version_msg' );
 			if ( current_user_can( 'manage_options' ) && $wp_geo_show_version_msg == 'Y' ) {
 				echo '<div id="wpgeo_version_message" class="error below-h2" style="margin:5px 15px 2px 0px;">
-						<p>' . __( 'WP Geo has been updated to use the WordPress widgets API. You will need to re-add your widgets.', 'wp-geo' ) . ' <a href="' . wp_nonce_url( add_query_arg( 'wpgeo_action', 'dismiss-update-msg', $_SERVER['PHP_SELF'] ), 'wpgeo_dismiss_update_msg' ) . '">' . __( 'Dismiss', 'wp-geo' ) . '</a></p>
+						<p>' . __( 'WP Geo has been updated to use the Google Map API v3. You may need <a href="https://developers.google.com/maps/documentation/javascript/tutorial#api_key" target="_blank">create a new API key</a>, then update your WP Geo settings. If you have added custom code or plugins to work with WP Geo you may need to update them. Please <a href="https://github.com/benhuson/WP-Geo/issues">report bug issues here...</a>', 'wp-geo' ) . ' <a href="' . wp_nonce_url( add_query_arg( 'wpgeo_action', 'dismiss-update-msg', null ), 'wpgeo_dismiss_update_msg' ) . '">' . __( 'Dismiss', 'wp-geo' ) . '</a></p>
 					</div>';
 			}
 		}
@@ -380,7 +380,7 @@ class WPGeo_Admin {
 	 */
 	function after_plugin_row( $plugin ) {
 		if ( 'wp-geo/wp-geo.php' == $plugin && ! empty( $this->plugin_message ) ) {
-			//echo '<td colspan="5" class="plugin-update" style="line-height:1.2em;">' . $this->plugin_message . '</td>';
+			echo '<td colspan="3" class="plugin-update colspanchange" style="line-height:1.2em;"><div class="update-message" style="color:#CC0000;padding-top:3px;">' . $this->plugin_message . '</div></td>';
 			return;
 		}
 	}

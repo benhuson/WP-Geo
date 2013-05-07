@@ -2,9 +2,9 @@
 Contributors: husobj
 Donate link: http://www.wpgeo.com/donate
 Tags: maps, map, geo, geocoding, google, location, georss
-Requires at least: 3.0
-Tested up to: 3.4.2
-Stable tag: 3.2.7.1
+Requires at least: 3.1
+Tested up to: 3.5.1
+Stable tag: 3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,8 +82,7 @@ If upgrading from a previous version of the plugin:
 
 == Frequently Asked Questions ==
 
-= Can I use Google Maps API v3? =
-Not yet but a future version of WP Geo will support it.
+None at the moment.
 
 == Screenshots ==
 
@@ -93,6 +92,12 @@ Not yet but a future version of WP Geo will support it.
 4. Widget Settings
 
 == Changelog ==
+
+= WP Geo 3.3 =
+
+* Huge raft of changes for compatibility with Google Maps API v3.
+* If you have created custom code or use plugins that interface with WP Geo, you may need to update them.
+* $wpgeo->categoryMap() deprecated (use wpgeo_map() with custom query instead).
 
 = WP Geo 3.2.7.1 =
 
@@ -379,6 +384,9 @@ NOTE: You will need to re-add your widgets after upgrading!
 * Added option to set wether maps appear at the top or bottom of posts.
 
 == Upgrade Notice ==
+
+= 3.3 =
+Huge code changes for Google Maps API v3. You may need to update any custom code or plugins.
 
 = 3.2.7 =
 Various bug fixes. Two new shortcodes. A new category widget. 'wpgeo_show_maps' filter. Better CPT compatibility.
