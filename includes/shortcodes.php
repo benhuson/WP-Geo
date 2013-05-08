@@ -152,6 +152,7 @@ if ( ! function_exists( 'shortcode_wpgeo_map' ) ) {
 	}
 	add_shortcode( 'wpgeo_map', 'shortcode_wpgeo_map' );
 	// Deprecate this shortcode - standardised to the above.
+	// Requires changing editor button
 	add_shortcode( 'wp_geo_map', 'shortcode_wpgeo_map' );
 }
 

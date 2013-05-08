@@ -12,6 +12,9 @@ Adds location maps to your posts, pages and custom post types.
 
 == Description ==
 
+> **Important Note About WP Geo 3.3**  
+> This update now uses Google Maps API v3. While it should continue to work OK it you have simply installed and are using a previous version of WP Geo, if you have customised your templates or used any filters you may need to update your code to work with this version of Google's API. Please [submit any bugs or issues here...](https://github.com/benhuson/WP-Geo/issues)
+
 When editing a post or page, you will be able to set a physical location for that post and easily embed a Google map into your post. You can select the location by:
 
 1. Clicking on the map of the world to position the point.
