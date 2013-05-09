@@ -68,6 +68,17 @@ function get_wpgeo_longitude( $post_id = 0 ) {
 }
 
 /**
+ * Get WP Geo Coord
+ * Gets the post coordinates.
+ *
+ * @param int $post_id (optional) Post ID.
+ * @return object WPGeo_Coord.
+ */
+function get_wpgeo_coord( $post_id = 0 ) {
+	return new WPGeo_Coord( get_wpgeo_latitude( $post_id ), get_wpgeo_longitude( $post_id ) );
+}
+
+/**
  * Get WP Geo Title
  *
  * @param int $post_id (optional) Post ID.
