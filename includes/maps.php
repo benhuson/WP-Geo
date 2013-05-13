@@ -632,8 +632,8 @@ class WPGeo_Coord {
 		$this->latitude  = $latitude;
 		$this->longitude = $longitude;
 		if ( $this->is_valid_coord() ) {
-			$this->latitude  = floatval( $this->latitude );
-			$this->longitude = floatval( $this->longitude );
+			$this->latitude  = $this->sanitize_latlng( $this->latitude );
+			$this->longitude = $this->sanitize_latlng( $this->longitude );
 		}
 	}
 
@@ -648,6 +648,23 @@ class WPGeo_Coord {
 		if ( is_numeric( $this->latitude ) && is_numeric( $this->longitude ) )
 			return true;
 		return false;
+	}
+
+	/**
+	 * Sanitize Lat/Lng
+	 * Ensures the latitude or longitude is a floating number and that the decimal
+	 * point is a full stop rather than a comma created by floatval() in some locales.
+	 *
+	 * @param number $n Latitude or Longitude.
+	 * @return number
+	 */
+	function sanitize_latlng( $n ) {
+		$n = floatval( $n );
+		if ( defined( 'DECIMAL_POINT' ) ) {
+			$pt = nl_langinfo( DECIMAL_POINT );
+			$n = str_replace( $pt, '.', $n );
+		}
+		return $n;
 	}
 
 	/**
