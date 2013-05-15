@@ -218,7 +218,7 @@ if ( ! function_exists( 'shortcode_wpgeo' ) ) {
 		if ( $rss != null ) {
 			$map = new WPGeo_Map( 'shortcode' );
 			$map->add_feed( $rss );
-			$wpgeo->maps2->add_map( $map );
+			$wpgeo->maps->add_map( $map );
 			$wp_geo_options = get_option( 'wp_geo_options' );
 			
 			return $map->get_map_html( array(

@@ -111,7 +111,7 @@ class WPGeo_Map {
 	function validate_map_id( $id ) {
 		global $wpgeo;
 		$id = str_replace( '-', '_', sanitize_html_class( $id ) );
-		return $wpgeo->maps2->get_unique_map_id( $id );
+		return $wpgeo->maps->get_unique_map_id( $id );
 	}
 	
 	/**

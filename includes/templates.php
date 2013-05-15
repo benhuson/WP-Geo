@@ -230,7 +230,7 @@ function get_wpgeo_post_map( $post_id = 0, $args = null ) {
 			if ( ! empty( $args['height'] ) )
 				$map->set_height( $args['height'] );
 			
-			$map = $wpgeo->maps2->add_map( $map );
+			$map = $wpgeo->maps->add_map( $map );
 			return $map->get_map_html( $args );
 		}
 	}
@@ -281,7 +281,7 @@ function wpgeo_create_input_map( $options = null ) {
 		'icon'  => apply_filters( 'wpgeo_marker_icon', $r['markers'], 0, 'input' )
 	) );
 	
-	$wpgeo->maps2->add_map( $map );
+	$wpgeo->maps->add_map( $map );
 	return $map;
 }
 
@@ -375,7 +375,7 @@ function get_wpgeo_map( $query, $options = null ) {
 	
 	$center_coord = $map->get_map_centre();
 	
-	$wpgeo->maps2->add_map( $map );
+	$wpgeo->maps->add_map( $map );
 	return $map->get_map_html( array( 'styles' => array( 'float' => $r['align'] ) ) );
 }
 

@@ -217,7 +217,7 @@ class WPGeo_Widget extends WP_Widget {
 				) );
 			}
 			
-			$wpgeo->maps2->add_map( $map );
+			$wpgeo->maps->add_map( $map );
 			
 			return $html_js;
 		}

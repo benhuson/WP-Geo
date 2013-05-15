@@ -14,7 +14,7 @@ class WPGeo {
 	var $admin;
 	var $markers;
 	var $show_maps_external = false;
-	var $maps2;
+	var $maps;
 	var $feeds;
 	
 	var $default_map_latitude  = '51.492526418807465';
@@ -35,7 +35,7 @@ class WPGeo {
 			$this->api = new WPGeo_API_GoogleMapsV2();
 		}
 
-		$this->maps2   = new WPGeo_Maps();
+		$this->maps    = new WPGeo_Maps();
 		$this->markers = new WPGeo_Markers();
 		$this->feeds   = new WPGeo_Feeds();
 		
@@ -690,7 +690,7 @@ class WPGeo {
 				
 				$map->setMapControl( $wp_geo_options['default_map_control'] );
 
-				$wpgeo->maps2->add_map( $map );
+				$wpgeo->maps->add_map( $map );
 
 				$new_content .= $map->get_map_html( array(
 					'classes' => array( 'wp_geo_map' ),
@@ -1010,7 +1010,7 @@ class WPGeo {
 	 * WP Footer
 	 */
 	function wp_footer() {
-		do_action( $this->get_api_string( 'wpgeo_api_%s_js' ), $this->maps2->maps );
+		do_action( $this->get_api_string( 'wpgeo_api_%s_js' ), $this->maps->maps );
 	}
 	
 }
