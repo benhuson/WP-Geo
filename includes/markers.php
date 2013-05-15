@@ -192,13 +192,13 @@ class WPGeo_Markers {
 		}
 		return '<table class="form-table">' . $html . '</table>';
 	}
-	
+
 	/**
 	 * Dropdown Markers
 	 * Output marker select menu.
 	 *
-	 * @param array $args Args.
-	 * @return string Dropdown HTML.
+	 * @param   array  $args  Args.
+	 * @return  string        Dropdown HTML.
 	 */
 	function dropdown_markers( $args ) {
 		$defaults = array(
@@ -210,26 +210,26 @@ class WPGeo_Markers {
 			'option_none_value' => ''
 		);
 		$r = wp_parse_args( $args, $defaults );
-		
+
 		$output = '';
-		$name = esc_attr( $r['name'] );
-		
+		$name = $r['name'];
+
 		if ( empty( $r['id'] ) )
 			$r['id'] = $r['name'];
-		$id = esc_attr( $r['id'] );
-		
+		$id = $r['id'];
+
 		$options = array();
 		if ( ! empty( $r['show_option_none'] ) )
 			$options[$r['option_none_value']] = $r['show_option_none'];
 		foreach ( $this->markers as $marker ) {
 			$options[$marker->id] = $marker->name;
 		}
-		
+
 		$output .= wpgeo_select( $name, $options, $r['selected'], false, $id );
-		
+
 		if ( $r['echo'] )
 			echo $output;
 		return $output;
 	}
-	
+
 }

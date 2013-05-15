@@ -817,21 +817,21 @@ class WPGeo {
 	function options_checkbox( $name, $val, $checked, $disabled = false, $id = '' ) {
 		return wpgeo_checkbox( $name, $val, $checked, $disabled, $id );
 	}
-	
+
 	/**
 	 * Select Map Control
 	 * Map control array or menu.
 	 *
-	 * @param string $return (optional) Array or menu type.
-	 * @param string $selected (optional) Selected value.
-	 * @return array|string Array or menu HTML.
+	 * @param   string  $return    (optional) Array or menu type.
+	 * @param   string  $selected  (optional) Selected value.
+	 * @return  array|string       Array or menu HTML.
 	 */
 	function selectMapControl( $return = 'array', $selected = '', $args = null ) {
 		$args = wp_parse_args( (array)$args, array(
 			'name' => 'default_map_control',
 			'id'   => 'default_map_control'
 		) );
-		$map_type_array = array(
+		$menu_options = array(
 			'GLargeMapControl3D'  => __( 'Large 3D pan/zoom control', 'wp-geo' ),
 			'GLargeMapControl'    => __( 'Large pan/zoom control', 'wp-geo' ),
 			'GSmallMapControl'    => __( 'Smaller pan/zoom control', 'wp-geo' ),
@@ -839,23 +839,21 @@ class WPGeo {
 			'GSmallZoomControl'   => __( 'Small zoom control (no panning controls)', 'wp-geo' ),
 			''                    => __( 'No pan/zoom controls', 'wp-geo' )
 		);
-		
-		// Menu?
+
 		if ( $return = 'menu' ) {
-			return wpgeo_select( $args['name'], $map_type_array, $selected, false, $args['id'] );
+			return wpgeo_select( $args['name'], $menu_options, $selected, false, $args['id'] );
 		}
-		
-		return $map_type_array;
+		return $menu_options;
 	}
-	
+
 	/**
 	 * Select Map Zoom
 	 * Map zoom array or menu.
 	 *
-	 * @param string $return (optional) Array or menu type.
-	 * @param string $selected (optional) Selected value.
-	 * @param array $args (optional) Args.
-	 * @return array|string Array or menu HTML.
+	 * @param   string  $return    (optional) Array or menu type.
+	 * @param   string  $selected  (optional) Selected value.
+	 * @param   array   $args      (optional) Args.
+	 * @return  array|string       Array or menu HTML.
 	 */
 	function selectMapZoom( $return = 'array', $selected = '', $args = null ) {
 		$args = wp_parse_args( (array)$args, array(
@@ -864,15 +862,14 @@ class WPGeo {
 			'name'     => 'default_map_zoom',
 			'id'       => 'default_map_zoom'
 		) );
-		
+
 		// Deprecated compatibility
 		if ( $args['return'] == null ) 
 			$args['return'] = $return;
 		if ( $args['selected'] == null ) 
 			$args['selected'] = $selected;
-		
-		// Array
-		$map_type_array = array(
+
+		$menu_options = array(
 			'0'  => '0 - ' . __( 'Zoomed Out', 'wp-geo' ), 
 			'1'  => '1', 
 			'2'  => '2', 
@@ -894,23 +891,21 @@ class WPGeo {
 			'18' => '18', 
 			'19' => '19 - ' . __( 'Zoomed In', 'wp-geo' ), 
 		);
-		
-		// Menu?
+
 		if ( $return = 'menu' ) {
-			return wpgeo_select( $args['name'], $map_type_array, $args['selected'] );
+			return wpgeo_select( $args['name'], $menu_options, $args['selected'] );
 		}
-		
-		return $map_type_array;
+		return $menu_options;
 	}
-	
+
 	/**
 	 * Google Map Types
 	 * Map type array or menu.
 	 *
-	 * @param string $return (optional) Array or menu type.
-	 * @param string $selected (optional) Selected value.
-	 * @param array $args (optional) Args.
-	 * @return array|string Array or menu HTML.
+	 * @param   string  $return    (optional) Array or menu type.
+	 * @param   string  $selected  (optional) Selected value.
+	 * @param   array   $args      (optional) Args.
+	 * @return  array|string       Array or menu HTML.
 	 */
 	function google_map_types( $return = 'array', $selected = '', $args = null ) {
 		$args = wp_parse_args( (array)$args, array(
@@ -919,27 +914,24 @@ class WPGeo {
 			'name'     => 'google_map_type',
 			'id'       => 'google_map_type'
 		) );
-		
+
 		// Deprecated compatibility
 		if ( $args['return'] == null ) 
 			$args['return'] = $return;
 		if ( $args['selected'] == null ) 
 			$args['selected'] = $selected;
-		
-		// Array
-		$map_type_array = array(
-			'G_NORMAL_MAP' 		=> __( 'Normal', 'wp-geo' ), 
-			'G_SATELLITE_MAP' 	=> __( 'Satellite (photographic map)', 'wp-geo' ), 
-			'G_HYBRID_MAP' 		=> __( 'Hybrid (photographic map with normal features)', 'wp-geo' ),
-			'G_PHYSICAL_MAP' 	=> __( 'Physical (terrain map)', 'wp-geo' )
+
+		$menu_options = array(
+			'G_NORMAL_MAP'    => __( 'Normal', 'wp-geo' ), 
+			'G_SATELLITE_MAP' => __( 'Satellite (photographic map)', 'wp-geo' ), 
+			'G_HYBRID_MAP'    => __( 'Hybrid (photographic map with normal features)', 'wp-geo' ),
+			'G_PHYSICAL_MAP'  => __( 'Physical (terrain map)', 'wp-geo' )
 		);
-		
-		// Menu?
+
 		if ( $args['return'] = 'menu' ) {
-			return wpgeo_select( $args['name'], $map_type_array, $args['selected'], false, $args['id'] );
+			return wpgeo_select( $args['name'], $menu_options, $args['selected'], false, $args['id'] );
 		}
-		
-		return $map_type_array;
+		return $menu_options;
 	}
 
 	/**

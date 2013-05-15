@@ -82,8 +82,8 @@ function wpgeo_check_db_version( $version ) {
  * Show Polylines Options
  * Polylines options menu for the map.
  *
- * @param array $args Array of arguments.
- * @return array|string Array or HTML select menu.
+ * @param   array         $args  Array of arguments.
+ * @return  array|string         Array or HTML select menu.
  */
 function wpgeo_show_polylines_options( $args = null ) {
 	$args = wp_parse_args( $args, array(
@@ -92,20 +92,17 @@ function wpgeo_show_polylines_options( $args = null ) {
 		'return'   => 'array',
 		'selected' => null
 	) );
-	
-	// Menu Options
-	$map_type_array = array(
+
+	$menu_options = array(
 		''	=> __( 'Default', 'wp-geo' ),
 		'Y'	=> __( 'Show Polylines', 'wp-geo' ),
 		'N'	=> __( 'Hide Polylines', 'wp-geo' )
 	);
-	
-	// Menu?
+
 	if ( $args['return'] = 'menu' ) {
-		return wpgeo_select( $args['name'], $map_type_array, $args['selected'] );
+		return wpgeo_select( $args['name'], $menu_options, $args['selected'] );
 	}
-	
-	return $map_type_array;
+	return $menu_options;
 }
 
 /**

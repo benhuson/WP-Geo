@@ -84,11 +84,11 @@ class WPGeo_Settings {
 	 */
 	function public_api_field() {
 		$options = get_option( 'wp_geo_options' );
-		$options_array = array(
+		$menu_options = array(
 			'googlemapsv2' => __( 'Google Maps v2', 'wp-geo' ),
 			'googlemapsv3' => __( 'Google Maps v3', 'wp-geo' )
 		);
-		echo wpgeo_select( 'wp_geo_options[public_api]', $options_array, $options['public_api'], false, 'public_api' );
+		echo wpgeo_select( 'wp_geo_options[public_api]', $menu_options, $options['public_api'], false, 'public_api' );
 	}
 
 	/**
@@ -96,11 +96,11 @@ class WPGeo_Settings {
 	 */
 	function admin_api_field() {
 		$options = get_option( 'wp_geo_options' );
-		$options_array = array(
+		$menu_options = array(
 			'googlemapsv2' => __( 'Google Maps v2', 'wp-geo' ),
 			'googlemapsv3' => __( 'Google Maps v3', 'wp-geo' )
 		);
-		echo wpgeo_select( 'wp_geo_options[admin_api]', $options_array, $options['admin_api'], false, 'admin_api' );
+		echo wpgeo_select( 'wp_geo_options[admin_api]', $menu_options, $options['admin_api'], false, 'admin_api' );
 	}
 
 	/**
@@ -137,12 +137,12 @@ class WPGeo_Settings {
 		global $wpgeo;
 
 		$options = get_option( 'wp_geo_options' );
-		$menu_opts = array(
+		$menu_options = array(
 			'TOP'    => __( 'At top of post', 'wp-geo' ),
 			'BOTTOM' => __( 'At bottom of post', 'wp-geo' ),
 			'HIDE'   => __( 'Manually', 'wp-geo' )
 		);
-		echo wpgeo_select( 'wp_geo_options[show_post_map]', $menu_opts, $options['show_post_map'], false, 'show_post_map' ) . '<br />';
+		echo wpgeo_select( 'wp_geo_options[show_post_map]', $menu_options, $options['show_post_map'], false, 'show_post_map' ) . '<br />';
 		echo wpgeo_checkbox( 'wp_geo_options[show_maps_on_excerpts]', 'Y', $options['show_maps_on_excerpts'], false, 'show_maps_on_excerpts' ) . ' ' . __( 'Show on excerpts', 'wp-geo' );
 	}
 
