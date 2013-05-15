@@ -277,26 +277,29 @@ class WPGeo {
 			
 		}
 	}
-	
+
 	/**
 	 * Meta Tags
 	 * Outputs geo-related meta tags.
 	 */
 	function meta_tags() {
 		global $post;
+
 		if ( is_single() ) {
 			$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
-			$title = get_post_meta( $post->ID, WPGEO_TITLE_META, true );
-			$nl = "\n";
-			
 			if ( $coord->is_valid_coord() ) {
-				echo '<meta name="geo.position" content="' . $coord->get_delimited( ';' ) . '" />' . $nl; // Geo-Tag: Latitude and longitude
-				//echo '<meta name="geo.region" content="DE-BY" />' . $nl;                      // Geo-Tag: Country code (ISO 3166-1) and regional code (ISO 3166-2)
-				//echo '<meta name="geo.placename" content="MÙnchen" />' . $nl;                 // Geo-Tag: City or the nearest town
-				if ( ! empty( $title ) ) {
-					echo '<meta name="DC.title" content="' . $title . '" />' . $nl;             // Dublin Core Meta Tag Title (used by some geo databases)
-				}
-				echo '<meta name="ICBM" content="' . $coord->get_delimited() . '" />' . $nl;        // ICBM Tag (prior existing equivalent to the geo.position)
+
+				// Would make sense to look these up automatically from Google
+				//echo '<meta name="geo.region" content="DE-BY" />';                                // Geo-Tag: Country code (ISO 3166-1) and regional code (ISO 3166-2)
+				//echo '<meta name="geo.placename" content="MÙnchen" />';                           // Geo-Tag: City or the nearest town
+				echo '<meta name="geo.position" content="' . $coord->get_delimited( ';' ) . '" />'; // Geo-Tag: Latitude and longitude
+				echo '<meta name="ICBM" content="' . $coord->get_delimited() . '" />';              // ICBM Tag (prior existing equivalent to the geo.position)
+
+				// Dublin Core Meta Title Tag
+				// Some geo databases extract the web-page's title out of the DC.title tag
+				$title = get_post_meta( $post->ID, WPGEO_TITLE_META, true );
+				if ( ! empty( $title ) )
+					echo '<meta name="DC.title" content="' . esc_attr( $title ) . '" />';
 			}
 		}
 	}
