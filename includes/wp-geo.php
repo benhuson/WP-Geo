@@ -842,12 +842,7 @@ class WPGeo {
 		
 		// Menu?
 		if ( $return = 'menu' ) {
-			$menu = '';
-			foreach ( $map_type_array as $key => $val ) {
-				$menu .= '<option value="' . $key . '"' . selected( $selected, $key, false ) . '>' . $val . '</option>';
-			}
-			$menu = '<select name="' . $args['name'] . '" id="' . $args['id'] . '">' . $menu. '</select>';
-			return $menu;
+			return wpgeo_select( $args['name'], $map_type_array, $selected, false, $args['id'] );
 		}
 		
 		return $map_type_array;
@@ -902,12 +897,7 @@ class WPGeo {
 		
 		// Menu?
 		if ( $return = 'menu' ) {
-			$menu = '';
-			foreach ( $map_type_array as $key => $val ) {
-				$menu .= '<option value="' . $key . '"' . selected( $args['selected'], $key, false ) . '>' . $val . '</option>';
-			}
-			$menu = '<select name="' . $args['name'] . '" id="' . $args['id'] . '">' . $menu. '</select>';
-			return $menu;
+			return wpgeo_select( $args['name'], $map_type_array, $args['selected'] );
 		}
 		
 		return $map_type_array;
@@ -946,12 +936,7 @@ class WPGeo {
 		
 		// Menu?
 		if ( $args['return'] = 'menu' ) {
-			$menu = '';
-			foreach ( $map_type_array as $key => $val ) {
-				$menu .= '<option value="' . $key . '"' . selected( $args['selected'], $key, false ) . '>' . $val . '</option>';
-			}
-			$menu = '<select name="' . $args['name'] . '" id="' . $args['id'] . '">' . $menu. '</select>';
-			return $menu;
+			return wpgeo_select( $args['name'], $map_type_array, $args['selected'], false, $args['id'] );
 		}
 		
 		return $map_type_array;

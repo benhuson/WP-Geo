@@ -84,10 +84,11 @@ class WPGeo_Settings {
 	 */
 	function public_api_field() {
 		$options = get_option( 'wp_geo_options' );
-		echo '<select name="wp_geo_options[public_api]" id="public_api">
-				<option value="googlemapsv2" ' . selected( 'googlemapsv2', $options['public_api'], false ) . '>' . __( 'Google Maps v2', 'wp-geo' ) . '</option>
-				<option value="googlemapsv3" ' . selected( 'googlemapsv3', $options['public_api'], false ) . '>' . __( 'Google Maps v3', 'wp-geo' ) . '</option>
-			</select>';
+		$options_array = array(
+			'googlemapsv2' => __( 'Google Maps v2', 'wp-geo' ),
+			'googlemapsv3' => __( 'Google Maps v3', 'wp-geo' )
+		);
+		echo wpgeo_select( 'wp_geo_options[public_api]', $options_array, $options['public_api'], false, 'public_api' );
 	}
 
 	/**
@@ -95,10 +96,11 @@ class WPGeo_Settings {
 	 */
 	function admin_api_field() {
 		$options = get_option( 'wp_geo_options' );
-		echo '<select name="wp_geo_options[admin_api]" id="admin_api">
-				<option value="googlemapsv2" ' . selected( 'googlemapsv2', $options['admin_api'], false ) . '>' . __( 'Google Maps v2', 'wp-geo' ) . '</option>
-				<option value="googlemapsv3" ' . selected( 'googlemapsv3', $options['admin_api'], false ) . '>' . __( 'Google Maps v3', 'wp-geo' ) . '</option>
-			</select>';
+		$options_array = array(
+			'googlemapsv2' => __( 'Google Maps v2', 'wp-geo' ),
+			'googlemapsv3' => __( 'Google Maps v3', 'wp-geo' )
+		);
+		echo wpgeo_select( 'wp_geo_options[admin_api]', $options_array, $options['admin_api'], false, 'admin_api' );
 	}
 
 	/**
@@ -140,11 +142,7 @@ class WPGeo_Settings {
 			'BOTTOM' => __( 'At bottom of post', 'wp-geo' ),
 			'HIDE'   => __( 'Manually', 'wp-geo' )
 		);
-		echo '<select name="wp_geo_options[show_post_map]" id="show_post_map">';
-		foreach ( $menu_opts as $val => $label ) {
-			echo '<option value="' . $val . '"' . selected( $options['show_post_map'], $val, false ) . '>' . $label . '</option>';
-		}
-		echo '</select><br />';
+		echo wpgeo_select( 'wp_geo_options[show_post_map]', $menu_opts, $options['show_post_map'], false, 'show_post_map' ) . '<br />';
 		echo wpgeo_checkbox( 'wp_geo_options[show_maps_on_excerpts]', 'Y', $options['show_maps_on_excerpts'], false, 'show_maps_on_excerpts' ) . ' ' . __( 'Show on excerpts', 'wp-geo' );
 	}
 

@@ -102,12 +102,7 @@ function wpgeo_show_polylines_options( $args = null ) {
 	
 	// Menu?
 	if ( $args['return'] = 'menu' ) {
-		$menu = '';
-		foreach ( $map_type_array as $key => $val ) {
-			$menu .= '<option value="' . $key . '" ' . selected( $args['selected'], $key, false ) . '>' . $val . '</option>';
-		}
-		$menu = '<select name="' . $args['name'] . '" id="' . $args['id'] . '">' . $menu. '</select>';
-		return $menu;
+		return wpgeo_select( $args['name'], $map_type_array, $args['selected'] );
 	}
 	
 	return $map_type_array;
@@ -127,4 +122,24 @@ function wpgeo_checkbox( $name, $val, $checked, $disabled = false, $id = '' ) {
 	if ( empty( $id ) )
 		$id = $name;
 	return '<input name="' . esc_attr( $name ) . '" type="checkbox" id="' . esc_attr( $id ) . '" value="' . esc_attr( $val ) . '"' . checked( $val, $checked, false ) . disabled( true, $disabled, false ) . ' />';
+}
+
+/**
+ * Select HTML
+ *
+ * @param   string  $name      Field ID.
+ * @param   string  $options   Option values.
+ * @param   string  $selected  (optional) Select value.
+ * @param   bool    $disabled  (optional) Is disabled?
+ * @param   int     $id        (optional) Field ID. Defaults to $name.
+ * @return  string             Select HTML.
+ */
+function wpgeo_select( $name, $options, $selected = '', $disabled = false, $id = '' ) {
+	if ( empty( $id ) )
+		$id = $name;
+	$options_html = '';
+	foreach ( $options as $value => $label ) {
+		$options_html .= '<option value="' . esc_attr( $value ) . '"' . selected( $selected, $value, false ) . '>' . $label . '</option>';
+	}
+	return '<select name="' . esc_attr( $name ) . '" id="' . esc_attr( $id ) . '"' . disabled( true, $disabled, false ) . '>' . $options_html . '</select>';
 }

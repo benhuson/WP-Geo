@@ -218,13 +218,14 @@ class WPGeo_Markers {
 			$r['id'] = $r['name'];
 		$id = esc_attr( $r['id'] );
 		
-		$output = '<select name="' . $name . '" id="' . $id . '">';
+		$options = array();
 		if ( ! empty( $r['show_option_none'] ) )
-			$output .= '<option value="' . esc_attr( $r['option_none_value'] ) . '">' . $r['show_option_none'] . '</option>';
+			$options[$r['option_none_value']] = $r['show_option_none'];
 		foreach ( $this->markers as $marker ) {
-			$output .= '<option value="' . esc_attr( $marker->id ) . '" ' . selected( $r['selected'], $marker->id, false ) . '>' . $marker->name . '</option>';
+			$options[$marker->id] = $marker->name;
 		}
-		$output .= '</select>';
+		
+		$output .= wpgeo_select( $name, $options, $r['selected'], false, $id );
 		
 		if ( $r['echo'] )
 			echo $output;
