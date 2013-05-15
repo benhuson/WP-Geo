@@ -806,6 +806,8 @@ class WPGeo {
 	/**
 	 * Options Checkbox HTML
 	 *
+	 * @todo Deprecate this function.
+	 *
 	 * @param string $id Field ID.
 	 * @param string $val Field value.
 	 * @param string $checked Checked value.
@@ -813,9 +815,7 @@ class WPGeo {
 	 * @return string Checkbox HTML.
 	 */
 	function options_checkbox( $name, $val, $checked, $disabled = false, $id = '' ) {
-		if ( empty( $id ) )
-			$id = $name;
-		return '<input name="' . $name . '" type="checkbox" id="' . $id . '" value="' . $val . '" ' . checked( $val, $checked, false ) . ' ' . disabled( true, $disabled, false ) . '/>';
+		return wpgeo_checkbox( $name, $val, $checked, $disabled, $id );
 	}
 	
 	/**
@@ -956,39 +956,7 @@ class WPGeo {
 		
 		return $map_type_array;
 	}
-	
-	/**
-	 * Post Map Menu
-	 * Map position array or menu.
-	 *
-	 * @param string $return (optional) Array or menu type.
-	 * @param string $selected (optional) Selected value.
-	 * @return array|string Array or menu HTML.
-	 */
-	function post_map_menu( $return = 'array', $selected = '', $args = null ) {
-		$args = wp_parse_args( (array)$args, array(
-			'name' => 'show_post_map',
-			'id'   => 'show_post_map'
-		) );
-		$map_type_array = array(
-			'TOP'    => __( 'At top of post', 'wp-geo' ), 
-			'BOTTOM' => __( 'At bottom of post', 'wp-geo' ), 
-			'HIDE'   => __( 'Manually', 'wp-geo' )
-		);
-		
-		// Menu?
-		if ( $return = 'menu' ) {
-			$menu = '';
-			foreach ( $map_type_array as $key => $val ) {
-				$menu .= '<option value="' . $key . '"' . selected( $selected, $key, false ) . '>' . $val . '</option>';
-			}
-			$menu = '<select name="' . $args['name'] . '" id="' . $args['id'] . '">' . $menu. '</select>';
-			return $menu;
-		}
-		
-		return $map_type_array;
-	}
-	
+
 	/**
 	 * Get WP Geo Posts
 	 *

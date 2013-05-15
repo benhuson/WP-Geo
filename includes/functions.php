@@ -112,3 +112,19 @@ function wpgeo_show_polylines_options( $args = null ) {
 	
 	return $map_type_array;
 }
+
+/**
+ * Checkbox HTML
+ *
+ * @param   string  $name      Field ID.
+ * @param   string  $val       Field value.
+ * @param   string  $checked   Checked value.
+ * @param   bool    $disabled  (optional) Is disabled?
+ * @param   int     $id        (optional) Field ID. Defaults to $name.
+ * @return  string             Checkbox HTML.
+ */
+function wpgeo_checkbox( $name, $val, $checked, $disabled = false, $id = '' ) {
+	if ( empty( $id ) )
+		$id = $name;
+	return '<input name="' . esc_attr( $name ) . '" type="checkbox" id="' . esc_attr( $id ) . '" value="' . esc_attr( $val ) . '"' . checked( $val, $checked, false ) . disabled( true, $disabled, false ) . ' />';
+}

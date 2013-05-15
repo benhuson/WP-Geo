@@ -133,9 +133,19 @@ class WPGeo_Settings {
 	 */
 	function show_post_map_field() {
 		global $wpgeo;
+
 		$options = get_option( 'wp_geo_options' );
-		echo $wpgeo->post_map_menu( 'menu', $options['show_post_map'], array( 'id' => 'show_post_map', 'name' => 'wp_geo_options[show_post_map]' ) ) . '<br />';
-		echo $wpgeo->options_checkbox( 'wp_geo_options[show_maps_on_excerpts]', 'Y', $options['show_maps_on_excerpts'], false, 'show_maps_on_excerpts' ) . ' ' . __( 'Show on excerpts', 'wp-geo' );
+		$menu_opts = array(
+			'TOP'    => __( 'At top of post', 'wp-geo' ),
+			'BOTTOM' => __( 'At bottom of post', 'wp-geo' ),
+			'HIDE'   => __( 'Manually', 'wp-geo' )
+		);
+		echo '<select name="wp_geo_options[show_post_map]" id="show_post_map">';
+		foreach ( $menu_opts as $val => $label ) {
+			echo '<option value="' . $val . '"' . selected( $options['show_post_map'], $val, false ) . '>' . $label . '</option>';
+		}
+		echo '</select><br />';
+		echo wpgeo_checkbox( 'wp_geo_options[show_maps_on_excerpts]', 'Y', $options['show_maps_on_excerpts'], false, 'show_maps_on_excerpts' ) . ' ' . __( 'Show on excerpts', 'wp-geo' );
 	}
 
 	/**
@@ -182,13 +192,13 @@ class WPGeo_Settings {
 		echo $wpgeo->selectMapControl( 'menu', $options['default_map_control'], array( 'id' => 'default_map_control', 'name' => 'wp_geo_options[default_map_control]' )  ). '<br />';
 		echo '<p style="margin:1em 0 0 0;"><strong>' . __( 'Map Type Controls', 'wp-geo' ) . '</strong></p>';
 		echo '<p style="margin:0;">' . __( 'You must select at least 2 map types for the control to show.', 'wp-geo' ) . '</p>';
-		echo $wpgeo->options_checkbox( 'wp_geo_options[show_map_type_normal]', 'Y', $options['show_map_type_normal'], false, 'show_map_type_normal' ) . ' ' . __( 'Normal map', 'wp-geo' ) . '<br />';
-		echo $wpgeo->options_checkbox( 'wp_geo_options[show_map_type_satellite]', 'Y', $options['show_map_type_satellite'], false, 'show_map_type_satellite' ) . ' ' . __( 'Satellite (photographic map)', 'wp-geo' ) . '<br />';
-		echo $wpgeo->options_checkbox( 'wp_geo_options[show_map_type_hybrid]', 'Y', $options['show_map_type_hybrid'], false, 'show_map_type_hybrid' ) . ' ' . __( 'Hybrid (photographic map with normal features)', 'wp-geo' ) . '<br />';
-		echo $wpgeo->options_checkbox( 'wp_geo_options[show_map_type_physical]', 'Y', $options['show_map_type_physical'], false, 'show_map_type_physical' ) . ' ' . __( 'Physical (terrain map)', 'wp-geo' ) . '<br />';
+		echo wpgeo_checkbox( 'wp_geo_options[show_map_type_normal]', 'Y', $options['show_map_type_normal'], false, 'show_map_type_normal' ) . ' ' . __( 'Normal map', 'wp-geo' ) . '<br />';
+		echo wpgeo_checkbox( 'wp_geo_options[show_map_type_satellite]', 'Y', $options['show_map_type_satellite'], false, 'show_map_type_satellite' ) . ' ' . __( 'Satellite (photographic map)', 'wp-geo' ) . '<br />';
+		echo wpgeo_checkbox( 'wp_geo_options[show_map_type_hybrid]', 'Y', $options['show_map_type_hybrid'], false, 'show_map_type_hybrid' ) . ' ' . __( 'Hybrid (photographic map with normal features)', 'wp-geo' ) . '<br />';
+		echo wpgeo_checkbox( 'wp_geo_options[show_map_type_physical]', 'Y', $options['show_map_type_physical'], false, 'show_map_type_physical' ) . ' ' . __( 'Physical (terrain map)', 'wp-geo' ) . '<br />';
 		echo '<p style="margin:1em 0 0 0;"><strong>' . __( 'Other Controls', 'wp-geo' ) . '</strong></p>';
-		echo $wpgeo->options_checkbox( 'wp_geo_options[show_map_scale]', 'Y', $options['show_map_scale'], false, 'show_map_scale' ) . ' ' . __( 'Show map scale', 'wp-geo' ) . '<br />';
-		echo $wpgeo->options_checkbox( 'wp_geo_options[show_map_overview]', 'Y', $options['show_map_overview'], false, 'show_map_overview' ) . ' ' . __( 'Show collapsible overview map (in the corner of the map)', 'wp-geo' );
+		echo wpgeo_checkbox( 'wp_geo_options[show_map_scale]', 'Y', $options['show_map_scale'], false, 'show_map_scale' ) . ' ' . __( 'Show map scale', 'wp-geo' ) . '<br />';
+		echo wpgeo_checkbox( 'wp_geo_options[show_map_overview]', 'Y', $options['show_map_overview'], false, 'show_map_overview' ) . ' ' . __( 'Show collapsible overview map (in the corner of the map)', 'wp-geo' );
 	}
 
 	/**
@@ -197,9 +207,9 @@ class WPGeo_Settings {
 	function default_post_options_field() {
 		global $wpgeo;
 		$options = get_option( 'wp_geo_options' );
-		echo $wpgeo->options_checkbox( 'wp_geo_options[save_post_zoom]', 'Y', $options['save_post_zoom'], false, 'save_post_zoom' ) . ' ' . __( 'Save custom map zoom for this post', 'wp-geo' ) . '<br />';
-		echo $wpgeo->options_checkbox( 'wp_geo_options[save_post_map_type]', 'Y', $options['save_post_map_type'], false, 'save_post_map_type' ) . ' ' . __( 'Save custom map type for this post', 'wp-geo' ) . '<br />';
-		echo $wpgeo->options_checkbox( 'wp_geo_options[save_post_centre_point]', 'Y', $options['save_post_centre_point'], false, 'save_post_centre_point' ) . ' ' . __( 'Save map centre point for this post', 'wp-geo' );
+		echo wpgeo_checkbox( 'wp_geo_options[save_post_zoom]', 'Y', $options['save_post_zoom'], false, 'save_post_zoom' ) . ' ' . __( 'Save custom map zoom for this post', 'wp-geo' ) . '<br />';
+		echo wpgeo_checkbox( 'wp_geo_options[save_post_map_type]', 'Y', $options['save_post_map_type'], false, 'save_post_map_type' ) . ' ' . __( 'Save custom map type for this post', 'wp-geo' ) . '<br />';
+		echo wpgeo_checkbox( 'wp_geo_options[save_post_centre_point]', 'Y', $options['save_post_centre_point'], false, 'save_post_centre_point' ) . ' ' . __( 'Save map centre point for this post', 'wp-geo' );
 	
 	}
 
@@ -209,7 +219,7 @@ class WPGeo_Settings {
 	function show_polylines_field() {
 		global $wpgeo;
 		$options = get_option( 'wp_geo_options' );
-		echo $wpgeo->options_checkbox( 'wp_geo_options[show_polylines]', 'Y', $options['show_polylines'], false, 'show_polylines' ) . ' ' . __( 'Show polylines (to connect multiple points on a single map)', 'wp-geo' );
+		echo wpgeo_checkbox( 'wp_geo_options[show_polylines]', 'Y', $options['show_polylines'], false, 'show_polylines' ) . ' ' . __( 'Show polylines (to connect multiple points on a single map)', 'wp-geo' );
 					
 	}
 
@@ -227,15 +237,15 @@ class WPGeo_Settings {
 	function show_maps_on_field() {
 		global $wpgeo;
 		$options = get_option( 'wp_geo_options' );
-		echo $wpgeo->options_checkbox( 'wp_geo_options[show_maps_on_pages]', 'Y', $options['show_maps_on_pages'], false, 'show_maps_on_pages' ) . ' ' . __( 'Pages', 'wp-geo' ) . '<br />';
-		echo $wpgeo->options_checkbox( 'wp_geo_options[show_maps_on_posts]', 'Y', $options['show_maps_on_posts'], false, 'show_maps_on_posts' ) . ' ' . __( 'Posts (single posts)', 'wp-geo' ) . '<br />';
-		echo $wpgeo->options_checkbox( 'wp_geo_options[show_maps_on_home]', 'Y', $options['show_maps_on_home'], false, 'show_maps_on_home' ) . ' ' . __( 'Posts archive/home page', 'wp-geo' ) . '<br />';
-		echo $wpgeo->options_checkbox( 'wp_geo_options[show_maps_in_datearchives]', 'Y', $options['show_maps_in_datearchives'], false, 'show_maps_in_datearchives' ) . ' ' . __( 'Posts in date archives', 'wp-geo' ) . '<br />';
-		echo $wpgeo->options_checkbox( 'wp_geo_options[show_maps_in_categoryarchives]', 'Y', $options['show_maps_in_categoryarchives'], false, 'show_maps_in_categoryarchives' ) . ' ' . __( 'Posts in category archives', 'wp-geo' ) . '<br />';
-		echo $wpgeo->options_checkbox( 'wp_geo_options[show_maps_in_tagarchives]', 'Y', $options['show_maps_in_tagarchives'], false, 'show_maps_in_tagarchives' ) . ' ' . __( 'Posts in tag archives', 'wp-geo' ) . '<br />';
-		echo $wpgeo->options_checkbox( 'wp_geo_options[show_maps_in_taxarchives]', 'Y', $options['show_maps_in_taxarchives'], false, 'show_maps_in_taxarchives' ) . ' ' . __( 'Posts in taxonomy archives', 'wp-geo' ) . '<br />';
-		echo $wpgeo->options_checkbox( 'wp_geo_options[show_maps_in_authorarchives]', 'Y', $options['show_maps_in_authorarchives'], false, 'show_maps_in_authorarchives' ) . ' ' . __( 'Posts in author archives', 'wp-geo' ) . '<br />';
-		echo $wpgeo->options_checkbox( 'wp_geo_options[show_maps_in_searchresults]', 'Y', $options['show_maps_in_searchresults'], false, 'show_maps_in_searchresults' ) . ' ' . __( 'Search Results', 'wp-geo' ) . '<br />';
+		echo wpgeo_checkbox( 'wp_geo_options[show_maps_on_pages]', 'Y', $options['show_maps_on_pages'], false, 'show_maps_on_pages' ) . ' ' . __( 'Pages', 'wp-geo' ) . '<br />';
+		echo wpgeo_checkbox( 'wp_geo_options[show_maps_on_posts]', 'Y', $options['show_maps_on_posts'], false, 'show_maps_on_posts' ) . ' ' . __( 'Posts (single posts)', 'wp-geo' ) . '<br />';
+		echo wpgeo_checkbox( 'wp_geo_options[show_maps_on_home]', 'Y', $options['show_maps_on_home'], false, 'show_maps_on_home' ) . ' ' . __( 'Posts archive/home page', 'wp-geo' ) . '<br />';
+		echo wpgeo_checkbox( 'wp_geo_options[show_maps_in_datearchives]', 'Y', $options['show_maps_in_datearchives'], false, 'show_maps_in_datearchives' ) . ' ' . __( 'Posts in date archives', 'wp-geo' ) . '<br />';
+		echo wpgeo_checkbox( 'wp_geo_options[show_maps_in_categoryarchives]', 'Y', $options['show_maps_in_categoryarchives'], false, 'show_maps_in_categoryarchives' ) . ' ' . __( 'Posts in category archives', 'wp-geo' ) . '<br />';
+		echo wpgeo_checkbox( 'wp_geo_options[show_maps_in_tagarchives]', 'Y', $options['show_maps_in_tagarchives'], false, 'show_maps_in_tagarchives' ) . ' ' . __( 'Posts in tag archives', 'wp-geo' ) . '<br />';
+		echo wpgeo_checkbox( 'wp_geo_options[show_maps_in_taxarchives]', 'Y', $options['show_maps_in_taxarchives'], false, 'show_maps_in_taxarchives' ) . ' ' . __( 'Posts in taxonomy archives', 'wp-geo' ) . '<br />';
+		echo wpgeo_checkbox( 'wp_geo_options[show_maps_in_authorarchives]', 'Y', $options['show_maps_in_authorarchives'], false, 'show_maps_in_authorarchives' ) . ' ' . __( 'Posts in author archives', 'wp-geo' ) . '<br />';
+		echo wpgeo_checkbox( 'wp_geo_options[show_maps_in_searchresults]', 'Y', $options['show_maps_in_searchresults'], false, 'show_maps_in_searchresults' ) . ' ' . __( 'Search Results', 'wp-geo' ) . '<br />';
 		
 		// Custom Post Types
 		// Only works in WordPress 3.0+
@@ -244,10 +254,10 @@ class WPGeo_Settings {
 			$post_types = get_post_types( array( '_builtin' => false ), 'objects' );
 			foreach ( $post_types as $post_type ) {
 				if ( post_type_supports( $post_type->query_var, 'wpgeo' )) {
-					$custom_post_type_checkboxes .= $wpgeo->options_checkbox( 'wp_geo_options[show_maps_on_customposttypes][' . $post_type->query_var . ']', 'Y', 'Y', true ) . ' ' . __( $post_type->label, 'wp-geo' ) . '<br />';
+					$custom_post_type_checkboxes .= wpgeo_checkbox( 'wp_geo_options[show_maps_on_customposttypes][' . $post_type->query_var . ']', 'Y', 'Y', true ) . ' ' . __( $post_type->label, 'wp-geo' ) . '<br />';
 				} elseif ( $post_type->show_ui ) {
 					$custom_post_type_checkbox_value = isset( $options['show_maps_on_customposttypes'][$post_type->query_var] ) ? $options['show_maps_on_customposttypes'][$post_type->query_var] : '';
-					$custom_post_type_checkboxes .= $wpgeo->options_checkbox( 'wp_geo_options[show_maps_on_customposttypes][' . $post_type->query_var . ']', 'Y', $custom_post_type_checkbox_value, false ) . ' ' . __( $post_type->label, 'wp-geo' ) . '<br />';
+					$custom_post_type_checkboxes .= wpgeo_checkbox( 'wp_geo_options[show_maps_on_customposttypes][' . $post_type->query_var . ']', 'Y', $custom_post_type_checkbox_value, false ) . ' ' . __( $post_type->label, 'wp-geo' ) . '<br />';
 				}
 			}
 			if ( ! empty( $custom_post_type_checkboxes ) ) {
@@ -262,7 +272,7 @@ class WPGeo_Settings {
 	function feeds_field() {
 		global $wpgeo;
 		$options = get_option( 'wp_geo_options' );
-		echo $wpgeo->options_checkbox( 'wp_geo_options[add_geo_information_to_rss]', 'Y', $options['add_geo_information_to_rss'], false, 'add_geo_information_to_rss' ) . ' ' . __( 'Add geographic information', 'wp-geo' );
+		echo wpgeo_checkbox( 'wp_geo_options[add_geo_information_to_rss]', 'Y', $options['add_geo_information_to_rss'], false, 'add_geo_information_to_rss' ) . ' ' . __( 'Add geographic information', 'wp-geo' );
 	}
 	
 	/**
