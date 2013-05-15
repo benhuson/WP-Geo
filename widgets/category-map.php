@@ -43,20 +43,22 @@ class WPGeo_Category_Map_Widget extends WPGeo_Widget {
 
 			// Start write widget
 			$post_cats = get_the_category();
-			$post_cat_id = $post_cats[0]->cat_ID;
-			$posts = get_posts( array(
-				'numberposts'  => -1,
-				'meta_key'     => WPGEO_LATITUDE_META,
-				'meta_value'   => '',
-				'meta_compare' => '!=',
-				'category'     => $post_cat_id
-			) );
-			$map_args = wp_parse_args( $instance, array(
-				'id'    => $args['widget_id'],
-				'posts' => $posts
-			) );
-			$map_content = $this->add_widget_map( $map_args );
-			echo $this->wrap_content( $map_content, $args, $instance );
+			if ( count( $post_cats ) > 0 ) {
+				$post_cat_id = $post_cats[0]->cat_ID;
+				$posts = get_posts( array(
+					'numberposts'  => -1,
+					'meta_key'     => WPGEO_LATITUDE_META,
+					'meta_value'   => '',
+					'meta_compare' => '!=',
+					'category'     => $post_cat_id
+				) );
+				$map_args = wp_parse_args( $instance, array(
+					'id'    => $args['widget_id'],
+					'posts' => $posts
+				) );
+				$map_content = $this->add_widget_map( $map_args );
+				echo $this->wrap_content( $map_content, $args, $instance );
+			}
 		}
 	}
 	
