@@ -4,27 +4,27 @@
  * WP Geo Feeds
  */
 class WPGeo_Feeds {
-	
+
 	/**
 	 * Constructor
 	 */
 	function WPGeo_Feeds() {
 		add_action( 'init', array( $this, 'init' ) );
 	}
-	
+
 	/**
 	 * Initialise WP Geo feeds
 	 */
 	function init() {
-	
+
 		// Add GeoRSS Feed Type
 		add_feed( 'georss', array( 'WPGeo_Feeds', 'add_feed_georss' ) );
 		add_filter( 'feed_content_type', array( $this, 'feed_content_type' ), 100 );
 		add_filter( 'post_limits', array( $this, 'post_limits' ) );
-		
+
 		$this->add_feed_hooks();
 	}
-	
+
 	/**
 	 * Post Limits
 	 * Adjusts the post limits on feeds.
@@ -34,14 +34,13 @@ class WPGeo_Feeds {
 	 */
 	function post_limits( $limits ) {
 		global $wp_query;
-		
+
 		// If GeoRSS feed, return all...
-		if ( is_feed() && $wp_query->get( 'feed' ) == 'georss' ) {
+		if ( is_feed() && $wp_query->get( 'feed' ) == 'georss' )
 			return '';
-		}
 		return $limits;
 	}
-	
+
 	/**
 	 * Feed content type
 	 *
@@ -49,12 +48,11 @@ class WPGeo_Feeds {
 	 * @return string Content type.
 	 */
 	function feed_content_type( $type ) {
-		if ( $type == 'georss' ) {
+		if ( $type == 'georss' )
 			$type = 'application/rss+xml';
-		}
 		return $type;
 	}
-	
+
 	/**
 	 * Add GeoRSS Feed
 	 *
@@ -63,7 +61,7 @@ class WPGeo_Feeds {
 	function add_feed_georss() {
 		load_template( ABSPATH . 'wp-includes/feed-rss2.php' );
 	}
-	
+
 	/**
 	 * Add GeoRSS Feed Hooks
 	 */
@@ -76,25 +74,27 @@ class WPGeo_Feeds {
 		add_action( 'atom_entry', array( $this, 'georss_item' ) );
 		add_action( 'rdf_item', array( $this, 'georss_item' ) );
 	}
-	
+
 	/**
 	 * Add the GeoRSS namespace to the feed
 	 */
 	function georss_namespace() {
 		global $wpgeo;
-		
+
 		if ( $wpgeo->show_maps() ) {
-			echo 'xmlns:georss="http://www.georss.org/georss" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:ymaps="http://api.maps.yahoo.com/Maps/V2/AnnotatedMaps.xsd" ';
+			echo 'xmlns:georss="http://www.georss.org/georss" ';
+			echo 'xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" ';
+			echo 'xmlns:ymaps="http://api.maps.yahoo.com/Maps/V2/AnnotatedMaps.xsd" ';
  		}
 	}
-	
+
 	/**
 	 * GeoRSS Item
 	 * Adds geo RSS nodes to the feed item.
 	 */
 	function georss_item() {
 		global $wpgeo, $post;
-		
+
 		if ( $wpgeo->show_maps() ) {
 			$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
 			if ( $coord->is_valid_coord() ) {
@@ -104,5 +104,5 @@ class WPGeo_Feeds {
 			}
 		}
 	}
-	
+
 }
