@@ -14,7 +14,6 @@ class WPGeo {
 	var $admin;
 	var $markers;
 	var $show_maps_external = false;
-	var $maps;
 	var $maps2;
 	var $feeds;
 	
@@ -35,8 +34,7 @@ class WPGeo {
 			include_once( WPGEO_DIR . 'api/googlemapsv2/googlemapsv2.php' );
 			$this->api = new WPGeo_API_GoogleMapsV2();
 		}
-		
-		$this->maps    = array();
+
 		$this->maps2   = new WPGeo_Maps();
 		$this->markers = new WPGeo_Markers();
 		$this->feeds   = new WPGeo_Feeds();
