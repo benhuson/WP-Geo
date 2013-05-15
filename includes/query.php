@@ -41,7 +41,7 @@ class WPGeo_Query {
 function wpgeo_setup_postdata( $post ) {
 	global $wpgeo_latitude, $wpgeo_longitude;
 	
-	$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
+	$coord = get_wpgeo_post_coord( $post->ID );
 	
 	if ( $coord->is_valid_coord() ) {
 		$wpgeo_latitude  = $coord->latitude();

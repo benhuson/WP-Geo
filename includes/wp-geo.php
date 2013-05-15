@@ -258,7 +258,7 @@ class WPGeo {
 		
 		for ( $i = 0; $i < count( $posts ); $i++ ) {
 			$post = $posts[$i];
-			$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
+			$coord = get_wpgeo_post_coord( $post->ID );
 			if ( $coord->is_valid_coord() ) {
 				$showmap = true;
 			}
@@ -286,7 +286,7 @@ class WPGeo {
 		global $post;
 
 		if ( is_single() ) {
-			$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
+			$coord = get_wpgeo_post_coord( $post->ID );
 			if ( $coord->is_valid_coord() ) {
 
 				// Would make sense to look these up automatically from Google
@@ -638,7 +638,7 @@ class WPGeo {
 			$maptype = empty( $wp_geo_options['google_map_type'] ) ? 'G_NORMAL_MAP' : $wp_geo_options['google_map_type'];
 			$mapzoom = $wp_geo_options['default_map_zoom'];
 
-			$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
+			$coord    = get_wpgeo_post_coord( $post->ID );
 			$title    = get_wpgeo_title( $post->ID );
 			$marker   = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
 			$settings = get_post_meta( $post->ID, WPGEO_MAP_SETTINGS_META, true );
@@ -966,8 +966,8 @@ class WPGeo {
 		$points = array();
 		while ( $custom_posts->have_posts() ) {
 			$custom_posts->the_post();
-			$id   = get_the_ID();
-			$coord = new WPGeo_Coord( get_post_custom_values( WPGEO_LONGITUDE_META ), get_post_custom_values( WPGEO_LATITUDE_META ) );
+			$id = get_the_ID();
+			$coord = get_wpgeo_post_coord( $id );
 			if ( $coord->is_valid_coord() ) {
 				$points[] = array(
 					'id'   => $id,

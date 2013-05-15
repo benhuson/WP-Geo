@@ -182,7 +182,7 @@ class WPGeo_Widget extends WP_Widget {
 			// Add points (from posts) to map
 			$count = 0;
 			foreach ( $args['posts'] as $post ) {
-				$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
+				$coord = get_wpgeo_post_coord( $post->ID );
 				if ( $coord->is_valid_coord() ) {
 					$count++;
 					if ( count( $count ) == 1 )

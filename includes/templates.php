@@ -68,13 +68,13 @@ function get_wpgeo_longitude( $post_id = 0 ) {
 }
 
 /**
- * Get WP Geo Coord
+ * Get WP Geo Post Coord
  * Gets the post coordinates.
  *
  * @param int $post_id (optional) Post ID.
  * @return object WPGeo_Coord.
  */
-function get_wpgeo_coord( $post_id = 0 ) {
+function get_wpgeo_post_coord( $post_id = 0 ) {
 	return new WPGeo_Coord( get_wpgeo_latitude( $post_id ), get_wpgeo_longitude( $post_id ) );
 }
 
@@ -135,7 +135,7 @@ function wpgeo_map_link( $args = null ) {
 	
 	// If a post is specified override lat/lng...
 	if ( ! $coord->is_valid_coord() ) {
-		$coord = new WPGeo_Coord( get_wpgeo_latitude( $r['post_id'] ), get_wpgeo_longitude( $r['post_id'] ) );
+		$coord = get_wpgeo_post_coord( $r['post_id'] );
 	}
 	
 	// If lat/lng...
@@ -193,7 +193,7 @@ function get_wpgeo_post_map( $post_id = 0, $args = null ) {
 	
 	$show_post_map = apply_filters( 'wpgeo_show_post_map', $wp_geo_options['show_post_map'], $post_id );
 	
-	$coord = new WPGeo_Coord( get_post_meta( $post_id, WPGEO_LATITUDE_META, true ), get_post_meta( $post_id, WPGEO_LONGITUDE_META, true ) );
+	$coord = get_wpgeo_post_coord( $post_id );
 	if ( ! $coord->is_valid_coord() )
 		return '';
 	
@@ -345,7 +345,7 @@ function get_wpgeo_map( $query, $options = null ) {
 	// Points
 	if ( $posts ) {
 		foreach ( $posts as $post ) {
-			$coord = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
+			$coord = get_wpgeo_post_coord( $post->ID );
 			if ( $coord->is_valid_coord() ) {
 				$marker = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
 				if ( empty( $marker ) )
@@ -420,7 +420,7 @@ function get_wpgeo_post_static_map( $post_id = 0, $query = null ) {
 	if ( ! $post_id || is_feed() || ! $wpgeo->show_maps() || ! $wpgeo->checkGoogleAPIKey() )
 		return '';
 	
-	$coord = new WPGeo_Coord( get_post_meta( $post_id, WPGEO_LATITUDE_META, true ), get_post_meta( $post_id, WPGEO_LONGITUDE_META, true ) );
+	$coord = get_wpgeo_post_coord( $post_id );
 	if ( ! $coord->is_valid_coord() )
 		return '';
 	

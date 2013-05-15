@@ -102,7 +102,7 @@ class WPGeo_Admin {
 		
 		// Only load if on a post or page
 		if ( $wpgeo->show_maps() ) {
-			$coord = new WPGeo_Coord( get_post_meta( $post_ID, WPGEO_LATITUDE_META, true ), get_post_meta( $post_ID, WPGEO_LONGITUDE_META, true ) );
+			$coord = get_wpgeo_post_coord( $post_ID );
 			if ( ! $wpgeo->show_maps_external ) {
 				echo $wpgeo->mapScriptsInit( $coord, 13, false, false );
 			}
@@ -184,7 +184,7 @@ class WPGeo_Admin {
 		$wp_geo_options = get_option('wp_geo_options');
 		
 		$search   = '';
-		$coord    = new WPGeo_Coord( get_post_meta( $post->ID, WPGEO_LATITUDE_META, true ),get_post_meta( $post->ID, WPGEO_LONGITUDE_META, true ) );
+		$coord    = get_wpgeo_post_coord( $post->ID );
 		$title    = get_post_meta( $post->ID, WPGEO_TITLE_META, true );
 		$marker   = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
 		$settings = wp_parse_args( get_post_meta( $post->ID, WPGEO_MAP_SETTINGS_META, true ), array(
