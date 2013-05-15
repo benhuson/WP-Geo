@@ -3,7 +3,7 @@
 /**
  * WP Geo API: Google Maps v3
  */
-class WPGeo_API_GoogleMapsV3 {
+class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 	
 	/**
 	 * Constructor

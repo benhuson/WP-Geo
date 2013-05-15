@@ -31,6 +31,7 @@ load_plugin_textdomain( 'wp-geo', false, dirname( plugin_basename( __FILE__ ) ) 
 // Includes
 include_once( WPGEO_DIR . 'includes/wp-geo.php' );
 include_once( WPGEO_DIR . 'includes/query.php' );
+include_once( WPGEO_DIR . 'includes/api.php' );
 include_once( WPGEO_DIR . 'includes/marker.php' );
 include_once( WPGEO_DIR . 'includes/markers.php' );
 include_once( WPGEO_DIR . 'includes/maps.php' );
