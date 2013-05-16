@@ -113,41 +113,49 @@ function get_wpgeo_title( $post_id = 0, $default_to_post_title = true ) {
  *
  * @todo This should probably use API but fallback to Google Maps.
  *
- * @param array $args (optional) Array of arguments.
- * @return string Map URL.
+ * @param   array   $args  (optional) Array of arguments.
+ * @return  string         Map URL.
  */
 function wpgeo_map_link( $args = null ) {
-	global $post;
-	
+	global $wpgeo, $post;
+
 	// Validate Args
 	$r = wp_parse_args( $args, array(
 		'post_id'   => $post->ID,
 		'latitude'  => null,
 		'longitude' => null,
-		'zoom'      => 5,
+		'zoom'      => null,
 		'echo'      => 1
 	) );
 	$r['post_id'] = absint( $r['post_id'] );
-	$r['zoom']    = absint( $r['zoom'] );
 	$r['echo']    = absint( $r['echo'] );
-	
+
+	// Coord
 	$coord = new WPGeo_Coord( $r['latitude'], $r['longitude'] );
-	
-	// If a post is specified override lat/lng...
 	if ( ! $coord->is_valid_coord() ) {
 		$coord = get_wpgeo_post_coord( $r['post_id'] );
+		if ( ! $coord->is_valid_coord() )
+			return '';
 	}
-	
-	// If lat/lng...
-	$url = '';
-	if ( $coord->is_valid_coord() ) {
-		$url = 'http://maps.google.co.uk/maps';
-		$url = add_query_arg( 'q', $coord->get_delimited(), $url );
-		if ( $r['zoom'] )
-			$url = add_query_arg( 'z', $r['zoom'], $url );
-		$url = apply_filters( 'wpgeo_map_link', $url, $r );
+
+	// Fetch wp geo options & post settings
+	$wp_geo_options = get_option( 'wp_geo_options' );
+	$settings = get_post_meta( $r['post_id'], WPGEO_MAP_SETTINGS_META, true );
+
+	// Map Options
+	if ( is_null( $r['zoom'] ) || ! is_numeric( $r['zoom'] ) ) {
+		$r['zoom'] = isset( $settings['zoom'] ) && is_numeric( $settings['zoom'] ) ? $settings['zoom'] : $wp_geo_options['default_map_zoom'];
 	}
-	
+	$zoom = absint( $r['zoom'] );
+
+	// Map
+	$map = new WPGeo_Map();
+	$map->set_map_zoom( $zoom );
+	$map->add_point( $coord );
+
+	$url = $wpgeo->api->map_url( $map );
+	$url = apply_filters( 'wpgeo_map_link', $url, $r );
+
 	// Output
 	if ( $r['echo'] == 0 )
 		return $url;
