@@ -47,7 +47,7 @@ class WPGeo_API {
 			return '';
 
 		$center = $map->get_map_centre();
-		$types = $this->_static_map_types();
+		$types = $this->static_map_types();
 
 		$url = add_query_arg( array(
 			'center'  => $center->get_delimited(),
@@ -84,7 +84,7 @@ class WPGeo_API {
 	 *
 	 * @return  array Static map types.
 	 */
-	function _static_map_types() {
+	function static_map_types() {
 		return array(
 			'G_NORMAL_MAP'    => 'roadmap',
 			'G_SATELLITE_MAP' => 'satellite',
