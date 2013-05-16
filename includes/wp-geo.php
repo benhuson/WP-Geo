@@ -12,6 +12,7 @@ class WPGeo {
 	
 	var $api;
 	var $admin;
+	var $wpgeo_query;
 	var $markers;
 	var $show_maps_external = false;
 	var $maps;
@@ -37,9 +38,10 @@ class WPGeo {
 			$this->api = new WPGeo_API();
 		}
 
-		$this->maps    = new WPGeo_Maps();
-		$this->markers = new WPGeo_Markers();
-		$this->feeds   = new WPGeo_Feeds();
+		$this->wpgeo_query = new WPGeo_Query();
+		$this->maps        = new WPGeo_Maps();
+		$this->markers     = new WPGeo_Markers();
+		$this->feeds       = new WPGeo_Feeds();
 		
 		// Action Hooks
 		add_action( 'plugins_loaded', array( $this, '_maybe_upgrade' ), 5 );
@@ -54,9 +56,6 @@ class WPGeo {
 		// Filters
 		add_filter( 'the_content', array( $this, 'the_content' ) );
 		add_filter( 'get_the_excerpt', array( $this, 'get_the_excerpt' ) );
-		add_filter( 'post_limits', array( $this, 'post_limits' ) );
-		add_filter( 'posts_join', array( $this, 'posts_join' ) );
-		add_filter( 'posts_where', array( $this, 'posts_where' ) );
 		add_filter( 'option_wp_geo_options', array( $this, 'option_wp_geo_options' ) );
 		
 		// Admin
@@ -153,57 +152,7 @@ class WPGeo {
 		}
 		return false;
 	}
-	
-	/**
-	 * Post Limits
-	 * Removes limit on WP Geo feed to show all posts.
-	 *
-	 * @param int $limit Current limit.
-	 * @return int New Limit.
-	 */
-	function post_limits( $limit ) {
-		global $wpgeo;
-		
-		if ( $wpgeo->is_wpgeo_feed() ) {
-			if ( isset( $_GET['limit'] ) && is_numeric( $_GET['limit'] ) ) {
-				return 'LIMIT 0, ' . $_GET['limit'];
-			}
-		}
-		return $limit;
-	}
-	
-	/**
-	 * Posts Join
-	 * Joins the post meta tables onto the results of the posts table.
-	 *
-	 * @param string $join Current JOIN statement.
-	 * @return string Updated JOIN string.
-	 */
-	function posts_join( $join ) {
-		global $wpdb, $wpgeo;
-		
-		if ( $wpgeo->is_wpgeo_feed() ) {
-			$join .= " LEFT JOIN $wpdb->postmeta ON (" . $wpdb->posts . ".ID = $wpdb->postmeta.post_id)";
-		}
-		return $join;
-	}
-	
-	/**
-	 * Posts Where
-	 * Adds extra WHERE clause to the posts results to only include posts with longitude and latitude.
-	 *
-	 * @param string $where Current WHERE statement.
-	 * @return string Updated WHERE string.
-	 */
-	function posts_where( $where ) {
-		global $wpdb, $wpgeo;
-		
-		if ( $wpgeo->is_wpgeo_feed() ) {
-			$where .= " AND ($wpdb->postmeta.meta_key = '" . WPGEO_LATITUDE_META . "' OR $wpdb->postmeta.meta_key = '" . WPGEO_LONGITUDE_META . "')";
-		}
-		return $where;
-	}
-	
+
 	/**
 	 * Check Google API Key
 	 * Check that a Google API Key has been entered.
@@ -927,11 +876,11 @@ class WPGeo {
 		$customFields = "'" . WPGEO_LONGITUDE_META . "', '" . WPGEO_LATITUDE_META . "'";
 		
 		$custom_posts = new WP_Query();
-		add_filter( 'posts_join', array( $this, 'get_custom_field_posts_join' ) );
-		add_filter( 'posts_groupby', array( $this, 'get_custom_field_posts_group' ) );
+		add_filter( 'posts_join', array( $this->wpgeo_query, 'get_custom_field_posts_join' ) );
+		add_filter( 'posts_groupby', array( $this->wpgeo_query, 'get_custom_field_posts_group' ) );
 		$custom_posts->query( 'showposts=' . $numberposts );
-		remove_filter( 'posts_join', array( $this, 'get_custom_field_posts_join' ) );
-		remove_filter( 'posts_groupby', array( $this, 'get_custom_field_posts_group' ) );
+		remove_filter( 'posts_join', array( $this->wpgeo_query, 'get_custom_field_posts_join' ) );
+		remove_filter( 'posts_groupby', array( $this->wpgeo_query, 'get_custom_field_posts_group' ) );
 		
 		$points = array();
 		while ( $custom_posts->have_posts() ) {
@@ -948,34 +897,7 @@ class WPGeo {
 		}
 		return $points;
 	}
-	
-	/**
-	 * Get Custom Field Posts Join
-	 * Join custom fields on to results.
-	 *
-	 * @todo Use $wpdb->prepare();
-	 *
-	 * @param string $join JOIN statement.
-	 * @return string SQL.
-	 */
-	function get_custom_field_posts_join( $join ) {
-		global $wpdb, $customFields;
-		return $join . " JOIN $wpdb->postmeta postmeta ON (postmeta.post_id = $wpdb->posts.ID and postmeta.meta_key in ($customFields))";
-	}
-	
-	/**
-	 * Get Custom Field Posts Group
-	 * Group by post id.
-	 *
-	 * @param string $group GROUP BY statement.
-	 * @return string SQL.
-	 */
-	function get_custom_field_posts_group( $group ) {
-		global $wpdb;
-		$group .= " $wpdb->posts.ID ";
-		return $group;
-	}
-	
+
 	/**
 	 * WP Footer
 	 */
