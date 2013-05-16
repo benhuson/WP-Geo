@@ -288,7 +288,7 @@ function get_wpgeo_map( $query, $options = null ) {
 	$id = 'wpgeo_map_id_' . $wpgeo_map_id;
 	$wp_geo_options = get_option('wp_geo_options');
 	
-	$defaults = array(
+	$defaults = apply_filters( 'wpgeo_map_default_query_args', array(
 		'width'           => $wp_geo_options['default_map_width'],
 		'height'          => $wp_geo_options['default_map_height'],
 		'type'            => $wp_geo_options['google_map_type'],
@@ -311,7 +311,7 @@ function get_wpgeo_map( $query, $options = null ) {
         'meta_value'      => null,
         'post_mime_type'  => null,
         'post_parent'     => null
-	);
+	) );
 	
 	// Validate Args
 	$r = wp_parse_args( $query, $defaults );
