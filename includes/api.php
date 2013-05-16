@@ -93,4 +93,22 @@ class WPGeo_API {
 		);
 	}
 
+	/**
+	 * Zoom Values
+	 *
+	 * @return  array Zoom values.
+	 */
+	function zoom_values() {
+		$values = array();
+		for ( $i = 0; $i <= 19; $i++ ) {
+			$values[$i] = $i;
+			if ( $i == 0 ) {
+				$values[$i] .= ' - ' . __( 'Zoomed Out', 'wp-geo' );
+			} elseif ( $i == 19 ) {
+				$values[$i] .= ' - ' . __( 'Zoomed In', 'wp-geo' );
+			}
+		}
+		return $values;
+	}
+
 }
