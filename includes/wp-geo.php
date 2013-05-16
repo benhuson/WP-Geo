@@ -836,14 +836,7 @@ class WPGeo {
 			'name' => 'default_map_control',
 			'id'   => 'default_map_control'
 		) );
-		$menu_options = array(
-			'GLargeMapControl3D'  => __( 'Large 3D pan/zoom control', 'wp-geo' ),
-			'GLargeMapControl'    => __( 'Large pan/zoom control', 'wp-geo' ),
-			'GSmallMapControl'    => __( 'Smaller pan/zoom control', 'wp-geo' ),
-			'GSmallZoomControl3D' => __( 'Small 3D zoom control (no panning controls)', 'wp-geo' ),
-			'GSmallZoomControl'   => __( 'Small zoom control (no panning controls)', 'wp-geo' ),
-			''                    => __( 'No pan/zoom controls', 'wp-geo' )
-		);
+		$menu_options = $this->api->map_controls();
 
 		if ( $return = 'menu' ) {
 			return wpgeo_select( $args['name'], $menu_options, $selected, false, $args['id'] );

@@ -80,9 +80,36 @@ class WPGeo_API {
 	}
 
 	/**
+	 * Map Types
+	 *
+	 * @return  array  Map types.
+	 */
+	function map_types() {
+		$types = array(
+			'G_NORMAL_MAP' => array(
+				'label'  => __( 'Normal', 'wp-geo' ),
+				'option' => 'show_map_type_normal'
+			),
+			'G_SATELLITE_MAP' => array(
+				'label'  => __( 'Satellite (photographic map)', 'wp-geo' ),
+				'option' => 'show_map_type_satellite'
+			),
+			'G_HYBRID_MAP' => array(
+				'label'  => __( 'Hybrid (photographic map with normal features)', 'wp-geo' ),
+				'option' => 'show_map_type_hybrid'
+			),
+			'G_PHYSICAL_MAP' => array(
+				'label'  => __( 'Physical (terrain map)', 'wp-geo' ),
+				'option' => 'show_map_type_physical'
+			)
+		);
+		return $types;
+	}
+
+	/**
 	 * Static Map Types
 	 *
-	 * @return  array Static map types.
+	 * @return  array  Static map types.
 	 */
 	function static_map_types() {
 		return array(
@@ -94,9 +121,26 @@ class WPGeo_API {
 	}
 
 	/**
+	 * Map Controls
+	 *
+	 * @return  array  Map controls.
+	 */
+	function map_controls() {
+		$controls = array(
+			'GLargeMapControl3D'  => __( 'Large 3D pan/zoom control', 'wp-geo' ),
+			'GLargeMapControl'    => __( 'Large pan/zoom control', 'wp-geo' ),
+			'GSmallMapControl'    => __( 'Smaller pan/zoom control', 'wp-geo' ),
+			'GSmallZoomControl3D' => __( 'Small 3D zoom control (no panning controls)', 'wp-geo' ),
+			'GSmallZoomControl'   => __( 'Small zoom control (no panning controls)', 'wp-geo' ),
+			''                    => __( 'No pan/zoom controls', 'wp-geo' )
+		);
+		return $controls;
+	}
+
+	/**
 	 * Zoom Values
 	 *
-	 * @return  array Zoom values.
+	 * @return  array  Zoom values.
 	 */
 	function zoom_values() {
 		$values = array();
