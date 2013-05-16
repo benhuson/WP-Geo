@@ -130,6 +130,7 @@ class WPGeo_Map {
 	 */
 	function renderMapJS( $map_id = false ) {
 		global $wpgeo;
+
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		
 		// ID of div for map output
@@ -142,14 +143,11 @@ class WPGeo_Map {
 		$maptypes = array_unique( $maptypes );
 		$js_maptypes = '';
 		if ( is_array( $maptypes ) ) {
-			if ( in_array( 'G_PHYSICAL_MAP', $maptypes ) )
-				$js_maptypes .= 'map_' . $map_id . '.addMapType(G_PHYSICAL_MAP);';
-			if ( ! in_array( 'G_NORMAL_MAP', $maptypes ) )
-				$js_maptypes .= 'map_' . $map_id . '.removeMapType(G_NORMAL_MAP);';
-			if ( ! in_array( 'G_SATELLITE_MAP', $maptypes ) )
-				$js_maptypes .= 'map_' . $map_id . '.removeMapType(G_SATELLITE_MAP);';
-			if ( ! in_array( 'G_HYBRID_MAP', $maptypes ) )
-				$js_maptypes .= 'map_' . $map_id . '.removeMapType(G_HYBRID_MAP);';
+			$types = $wpgeo->api->map_types();
+			foreach ( $types as $key => $val ) {
+				if ( in_array( $key, $maptypes ) )
+					$js_maptypes .= 'map_' . $map_id . '.addMapType(' . $key . ');';
+			}
 		}
 		
 		// Markers
@@ -502,12 +500,9 @@ class WPGeo_Map {
 	 * @param string $maptype Type of map.
 	 */
 	function is_valid_map_type( $maptype ) {
-		$types = array(
-			'G_PHYSICAL_MAP',
-			'G_NORMAL_MAP',
-			'G_SATELLITE_MAP',
-			'G_HYBRID_MAP'
-		);
+		global $wpgeo;
+
+		$types = array_keys( $wpgeo->api->map_types() );
 		return in_array( $maptype, $types );
 	}
 	

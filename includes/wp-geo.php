@@ -345,15 +345,14 @@ class WPGeo {
 	 * @return  array Control type strings.
 	 */
 	function control_type_option_strings( $options ) {
+		global $wpgeo;
+
+		$map_type_options = $wpgeo->api->map_type_options();
 		$controltypes = array();
-		if ( $options['show_map_type_normal'] == 'Y' )
-			$controltypes[] = 'G_NORMAL_MAP';
-		if ( $options['show_map_type_satellite'] == 'Y' )
-			$controltypes[] = 'G_SATELLITE_MAP';
-		if ( $options['show_map_type_hybrid'] == 'Y' )
-			$controltypes[] = 'G_HYBRID_MAP';
-		if ( $options['show_map_type_physical'] == 'Y' )
-			$controltypes[] = 'G_PHYSICAL_MAP';
+		foreach ( $map_type_options as $key => $val ) {
+			if ( $options[$val] == 'Y' )
+				$controltypes[] = $key;
+		}
 		return $controltypes;
 	}
 
@@ -885,6 +884,8 @@ class WPGeo {
 	 * @return  array|string       Array or menu HTML.
 	 */
 	function google_map_types( $return = 'array', $selected = '', $args = null ) {
+		global $wpgeo;
+
 		$args = wp_parse_args( (array)$args, array(
 			'return'   => null,
 			'selected' => null,
@@ -898,12 +899,7 @@ class WPGeo {
 		if ( $args['selected'] == null ) 
 			$args['selected'] = $selected;
 
-		$menu_options = array(
-			'G_NORMAL_MAP'    => __( 'Normal', 'wp-geo' ), 
-			'G_SATELLITE_MAP' => __( 'Satellite (photographic map)', 'wp-geo' ), 
-			'G_HYBRID_MAP'    => __( 'Hybrid (photographic map with normal features)', 'wp-geo' ),
-			'G_PHYSICAL_MAP'  => __( 'Physical (terrain map)', 'wp-geo' )
-		);
+		$menu_options = $wpgeo->api->map_types();
 
 		if ( $args['return'] = 'menu' ) {
 			return wpgeo_select( $args['name'], $menu_options, $args['selected'], false, $args['id'] );

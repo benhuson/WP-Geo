@@ -86,22 +86,25 @@ class WPGeo_API {
 	 */
 	function map_types() {
 		$types = array(
-			'G_NORMAL_MAP' => array(
-				'label'  => __( 'Normal', 'wp-geo' ),
-				'option' => 'show_map_type_normal'
-			),
-			'G_SATELLITE_MAP' => array(
-				'label'  => __( 'Satellite (photographic map)', 'wp-geo' ),
-				'option' => 'show_map_type_satellite'
-			),
-			'G_HYBRID_MAP' => array(
-				'label'  => __( 'Hybrid (photographic map with normal features)', 'wp-geo' ),
-				'option' => 'show_map_type_hybrid'
-			),
-			'G_PHYSICAL_MAP' => array(
-				'label'  => __( 'Physical (terrain map)', 'wp-geo' ),
-				'option' => 'show_map_type_physical'
-			)
+			'G_NORMAL_MAP'    => __( 'Normal', 'wp-geo' ),
+			'G_SATELLITE_MAP' => __( 'Satellite (photographic map)', 'wp-geo' ),
+			'G_HYBRID_MAP'    => __( 'Hybrid (photographic map with normal features)', 'wp-geo' ),
+			'G_PHYSICAL_MAP'  => __( 'Physical (terrain map)', 'wp-geo' )
+		);
+		return $types;
+	}
+
+	/**
+	 * Map Type Options
+	 *
+	 * @return  array  Map type options.
+	 */
+	function map_type_options() {
+		$types = array(
+			'G_NORMAL_MAP'    => 'show_map_type_normal',
+			'G_SATELLITE_MAP' => 'show_map_type_satellite',
+			'G_HYBRID_MAP'    => 'show_map_type_hybrid',
+			'G_PHYSICAL_MAP'  => 'show_map_type_physical'
 		);
 		return $types;
 	}
