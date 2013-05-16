@@ -4,9 +4,9 @@
  * Shortcode [wpgeo_latitude]
  * Outputs the post latitude.
  *
- * @param array $atts Shortcode attributes.
- * @param string $content Content between shortcode tags.
- * @return float Latitude.
+ * @param   array   $atts     Shortcode attributes.
+ * @param   string  $content  Content between shortcode tags.
+ * @return  float             Latitude.
  */
 if ( ! function_exists( 'shortcode_wpgeo_latitude' ) ) {
 	function shortcode_wpgeo_latitude( $atts, $content = null ) {
@@ -20,9 +20,9 @@ if ( ! function_exists( 'shortcode_wpgeo_latitude' ) ) {
  * Shortcode [wpgeo_longitude]
  * Outputs the post longitude.
  *
- * @param array $atts Shortcode attributes.
- * @param string $content Content between shortcode tags.
- * @return float Longitude.
+ * @param   array   $atts     Shortcode attributes.
+ * @param   string  $content  Content between shortcode tags.
+ * @return  float             Longitude.
  */
 if ( ! function_exists( 'shortcode_wpgeo_longitude' ) ) {
 	function shortcode_wpgeo_longitude( $atts, $content = null ) {
@@ -36,14 +36,14 @@ if ( ! function_exists( 'shortcode_wpgeo_longitude' ) ) {
  * Shortcode [wpgeo_title]
  * Outputs the marker title.
  *
- * @param array $atts Shortcode attributes.
- * @param string $content Content between shortcode tags.
- * @return string Title
+ * @param   array   $atts     Shortcode attributes.
+ * @param   string  $content  Content between shortcode tags.
+ * @return  string            Title
  */
 if ( ! function_exists( 'shortcode_wpgeo_title' ) ) {
 	function shortcode_wpgeo_title( $atts, $content = null ) {
 		global $post;
-		
+
 		// Validate Args
 		$atts = wp_parse_args( $atts, array(
 			'default_to_post_title' => true
@@ -57,23 +57,23 @@ if ( ! function_exists( 'shortcode_wpgeo_title' ) ) {
  * Shortcode [wpgeo_map_link target="_self"]
  * Outputs a map link.
  *
- * @param array $atts Shortcode attributes.
- * @param string $content Content between shortcode tags.
- * @return string Map link
+ * @param   array   $atts     Shortcode attributes.
+ * @param   string  $content  Content between shortcode tags.
+ * @return  string            Map link
  */
 if ( ! function_exists( 'shortcode_wpgeo_map_link' ) ) {
 	function shortcode_wpgeo_map_link( $atts = null, $content = null ) {
-		
+
 		// Validate Args
 		$atts = wp_parse_args( $atts, array(
 			'target' => '_self'
 		) );
 		$atts['echo'] = 0;
-		
+
 		if ( ! $content )
 			$content = __( 'View Larger Map', 'wp-geo' );
-		
-		return '<a href="' . wpgeo_map_link( $atts ) . '" target="' . $atts['target'] . '">' . do_shortcode( $content ) . '</a>';
+
+		return sprintf( '<a href="%s" target="%s">%s</a>', esc_attr( wpgeo_map_link( $atts ) ), esc_attr( $atts['target'] ), do_shortcode( $content ) );
 	}
 	add_shortcode( 'wpgeo_map_link', 'shortcode_wpgeo_map_link' );
 }
@@ -82,16 +82,16 @@ if ( ! function_exists( 'shortcode_wpgeo_map_link' ) ) {
  * Shortcode [wpgeo_static_map post_id="" width="" height="" maptype="" zoom=""]
  * Outputs a map link.
  *
- * @param array $atts Shortcode attributes.
- * @param string $content Content between shortcode tags.
- * @return string Map link
+ * @param   array   $atts     Shortcode attributes.
+ * @param   string  $content  Content between shortcode tags.
+ * @return  string            Map link
  */
 if ( ! function_exists( 'shortcode_wpgeo_static_map' ) ) {
 	function shortcode_wpgeo_static_map( $atts = null, $content = null ) {
 		global $post;
-		
+
 		$wp_geo_options = get_option( 'wp_geo_options' );
-		
+
 		// Validate Args
 		$atts = wp_parse_args( $atts, array(
 			'post_id' => $post->ID,
@@ -100,7 +100,7 @@ if ( ! function_exists( 'shortcode_wpgeo_static_map' ) ) {
 			'maptype' => $wp_geo_options['google_map_type'],
 			'zoom'    => $wp_geo_options['default_map_zoom']
 		) );
-		
+
 		return get_wpgeo_post_static_map( $atts['post_id'], $atts );
 	}
 	add_shortcode( 'wpgeo_static_map', 'shortcode_wpgeo_static_map' );
@@ -110,17 +110,17 @@ if ( ! function_exists( 'shortcode_wpgeo_static_map' ) ) {
  * Shortcode [wpgeo_map width="" height="" align="" lat="" long="" type="G_NORMAL_MAP" escape=""]
  * Outputs the post map.
  *
- * @param array $atts Shortcode attributes.
- * @param string $content Content between shortcode tags.
- * @return string HTML required to display map.
+ * @param   array   $atts     Shortcode attributes.
+ * @param   string  $content  Content between shortcode tags.
+ * @return  string            HTML required to display map.
  */
 if ( ! function_exists( 'shortcode_wpgeo_map' ) ) {
 	function shortcode_wpgeo_map( $atts, $content = null ) {
 		global $post, $wpgeo;
-		
+
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		$show_post_map = apply_filters( 'wpgeo_show_post_map', $wp_geo_options['show_post_map'], $post->ID );
-		
+
 		if ( $wpgeo->show_maps() && ! is_feed() && $show_post_map != 'TOP' && $show_post_map != 'BOTTOM' && $wpgeo->checkGoogleAPIKey() ) {
 			$atts = wp_parse_args( $atts, array(
 				'width'  => $wp_geo_options['default_map_width'],
@@ -131,11 +131,11 @@ if ( ! function_exists( 'shortcode_wpgeo_map' ) ) {
 				'type'   => 'G_NORMAL_MAP',
 				'escape' => false
 			) );
-			
+
 			// Escape?
 			if ( $atts['escape'] == 'true' )
 				return '[wpgeo_map]';
-		
+
 			// To Do: Add in lon/lat check and output map if needed
 			$styles = array();
 			if ( in_array( strtolower( $atts['align'] ), array( 'left', 'right' ) ) ) {
@@ -152,7 +152,7 @@ if ( ! function_exists( 'shortcode_wpgeo_map' ) ) {
 	}
 	add_shortcode( 'wpgeo_map', 'shortcode_wpgeo_map' );
 	// Deprecate this shortcode - standardised to the above.
-	// Requires changing editor button
+	// @todo Requires changing editor button
 	add_shortcode( 'wp_geo_map', 'shortcode_wpgeo_map' );
 }
 
@@ -162,16 +162,16 @@ if ( ! function_exists( 'shortcode_wpgeo_map' ) ) {
  * Original function by RavanH (updated by Ben Huson)
  * See http://wordpress.org/extend/plugins/wp-geo-mashup-map/
  *
- * @param array $atts Shortcode attributes.
- * @param string $content Content between shortcode tags.
- * @return string HTML required to display map.
+ * @param   array   $atts     Shortcode attributes.
+ * @param   string  $content  Content between shortcode tags.
+ * @return  string            HTML required to display map.
  */
 if ( ! function_exists( 'shortcode_wpgeo_mashup' ) ) {
 	function shortcode_wpgeo_mashup( $atts, $content = null ) {
 		global $wpgeo;
-		
+
 		$wp_geo_options = get_option( 'wp_geo_options' );
-		
+
 		$atts = wp_parse_args( $atts, array(
 			'width'           => $wp_geo_options['default_map_width'],
 			'height'          => $wp_geo_options['default_map_height'],
@@ -187,7 +187,7 @@ if ( ! function_exists( 'shortcode_wpgeo_mashup' ) ) {
 			'order'           => 'DESC',
 			'markers'         => 'large'
 		) );
-		
+
 		if ( ! is_feed() && isset( $wpgeo ) && $wpgeo->show_maps() && $wpgeo->checkGoogleAPIKey() )
 			return get_wpgeo_map( $atts );
 		return '';
@@ -199,9 +199,9 @@ if ( ! function_exists( 'shortcode_wpgeo_mashup' ) ) {
  * Shortcode [wpgeo]
  * Used to manually display a map in a post.
  *
- * @param array $atts Array of attributes.
- * @param array $content Content between tags.
- * @return string HTML Output.
+ * @param   array  $atts     Array of attributes.
+ * @param   array  $content  Content between tags.
+ * @return  string           HTML Output.
  */
 if ( ! function_exists( 'shortcode_wpgeo' ) ) {
 	function shortcode_wpgeo( $atts, $content = null ) {
@@ -211,7 +211,7 @@ if ( ! function_exists( 'shortcode_wpgeo' ) ) {
 			'kml' => null
 		);
 		extract( shortcode_atts( $allowed_atts, $atts ) );
-		
+
 		if ( $kml != null ) {
 			$rss = $kml;
 		}
@@ -220,7 +220,7 @@ if ( ! function_exists( 'shortcode_wpgeo' ) ) {
 			$map->add_feed( $rss );
 			$wpgeo->maps->add_map( $map );
 			$wp_geo_options = get_option( 'wp_geo_options' );
-			
+
 			return $map->get_map_html( array(
 				'classes' => array( 'wpgeo', 'wpgeo-rss' ),
 				'content' => $rss
