@@ -314,7 +314,15 @@ class WPGeo_Map {
 	function set_height( $h ) {
 		$this->height = $h;
 	}
-	
+
+	function get_width() {
+		return $this->width;
+	}
+
+	function get_height() {
+		return $this->height;
+	}
+
 	function get_dom_id() {
 		return 'wpgeo_map_' . $this->id;
 	}
@@ -387,7 +395,19 @@ class WPGeo_Map {
 			'link'  => $link
 		) );
 	}
-	
+
+	/**
+	 * Get Point
+	 *
+	 * @param   int  $n  N-th point.
+	 * @return  object   WPGeo_Point.
+	 */
+	function get_point( $n = 0 ) {
+		if ( count( $this->points ) >= $n + 1 )
+			return $this->points[$n];
+		return false;
+	}
+
 	/**
 	 * Show polylines on this map?
 	 *

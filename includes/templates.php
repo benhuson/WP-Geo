@@ -394,8 +394,8 @@ function wpgeo_map( $query, $options = null ) {
  * WP Geo Post Static Map
  * Outputs the HTML for a static post map.
  *
- * @param int $post_id (optional) Post ID.
- * @param array $query (optional) Parameters.
+ * @param  int    $post_id  (optional) Post ID.
+ * @param  array  $query    (optional) Parameters.
  */
 function wpgeo_post_static_map( $post_id = 0, $query = null ) {
 	echo get_wpgeo_post_static_map( $post_id, $query );
@@ -405,60 +405,44 @@ function wpgeo_post_static_map( $post_id = 0, $query = null ) {
  * Get WP Geo Post Static Map
  * Gets the HTML for a static post map.
  *
- * @todo Should be implemented via API but fallback to Google Static Maps.
- *
- * @param int $post_id (optional) Post ID.
- * @param array $query (optional) Parameters.
- * @return string HTML.
+ * @param   int    $post_id  (optional) Post ID.
+ * @param   array  $query    (optional) Parameters.
+ * @return  string           HTML.
  */
 function get_wpgeo_post_static_map( $post_id = 0, $query = null ) {
 	global $post, $wpgeo;
-	
+
 	$post_id = absint( $post_id );
 	$post_id = $post_id > 0 ? $post_id : $post->ID;
 
+	// Show Map?
 	if ( ! $post_id || is_feed() || ! $wpgeo->show_maps() || ! $wpgeo->checkGoogleAPIKey() )
 		return '';
-	
+
 	$coord = get_wpgeo_post_coord( $post_id );
 	if ( ! $coord->is_valid_coord() )
 		return '';
-	
+
 	// Fetch wp geo options & post settings
 	$wp_geo_options = get_option( 'wp_geo_options' );
-	$settings  = get_post_meta( $post_id, WPGEO_MAP_SETTINGS_META, true );
-	
+	$settings = get_post_meta( $post_id, WPGEO_MAP_SETTINGS_META, true );
+
 	// Options
-	$defaults = array(
+	$options = wp_parse_args( $query, array(
 		'width'   => trim( $wp_geo_options['default_map_width'], 'px' ),
 		'height'  => trim( $wp_geo_options['default_map_height'], 'px' ),
 		'maptype' => $wp_geo_options['google_map_type'],
 		'zoom'    => $wp_geo_options['default_map_zoom'],
-	);
-	$options = wp_parse_args( $query, $defaults );
-	
-	// Can't do percentage sizes to abort
+	) );
+
+	// Can't do percentage sizes so abort
 	if ( strpos( $options['width'], '%' ) !== false || strpos( $options['height'], '%' ) !== false )
 		return '';
 
-	// Convert WP Geo map types to static map type url param
-	$types = array(
-		'G_NORMAL_MAP'    => 'roadmap',
-		'G_SATELLITE_MAP' => 'satellite',
-		'G_PHYSICAL_MAP'  => 'terrain',
-		'G_HYBRID_MAP'    => 'hybrid'
-	);	
-
-	// Center on location marker by default
+	// Map Options
+	$zoom = isset( $settings['zoom'] ) && is_numeric( $settings['zoom'] ) ? $settings['zoom'] : $options['zoom'];
+	$map_type = ! empty( $settings['type'] ) ? $settings['type'] : $options['maptype'];
 	$center_coord = new WPGeo_Coord( $coord->latitude(), $coord->longitude() );
-
-	// Custom map settings?
-	if ( isset( $settings['zoom'] ) && is_numeric( $settings['zoom'] ) ) {
-		$options['zoom'] = $settings['zoom'];
-	}
-	if ( ! empty( $settings['type'] ) ) {
-		$options['maptype'] = $settings['type'];
-	}
 	if ( ! empty( $settings['centre'] ) ) {
 		$center = explode( ',', $settings['centre'] );
 		$maybe_center_coord = new WPGeo_Coord( $center[0], $center[1] );
@@ -466,15 +450,16 @@ function get_wpgeo_post_static_map( $post_id = 0, $query = null ) {
 			$center_coord = $maybe_center_coord;
 		}
 	}
-	
-	$url = add_query_arg( array(
-		'center'  => $center_coord->get_delimited(),
-		'zoom'    => $options['zoom'],
-		'size'    => $options['width'] . 'x' . $options['height'],
-		'maptype' => $types[$options['maptype']],
-		'markers' => 'color:red%7C' . $coord->get_delimited(),
-		'sensor'  => 'false'
-	), 'http://maps.googleapis.com/maps/api/staticmap' );
-	
-	return '<img id="wp_geo_static_map_' . $post_id . '" src="' . $url . '" class="wp_geo_static_map" />';
+
+	// Map
+	$map = new WPGeo_Map();
+	$map->set_map_centre( $center_coord );
+	$map->set_map_zoom( $zoom );
+	$map->set_map_type( $map_type );
+	$map->set_size( $options['width'], $options['height'] );
+	$map->add_point( $coord );
+
+	$url = $wpgeo->api->static_map_url( $map );
+
+	return sprintf( '<img id="wp_geo_static_map_%s" src="%s" class="wp_geo_static_map" />', $post_id, esc_attr( $url ) );
 }

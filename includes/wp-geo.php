@@ -30,9 +30,11 @@ class WPGeo {
 		if ( 'googlemapsv3' == $this->get_api_string() ) {
 			include_once( WPGEO_DIR . 'api/googlemapsv3/googlemapsv3.php' );
 			$this->api = new WPGeo_API_GoogleMapsV3();
-		} else {
+		} elseif ( 'googlemapsv2' == $this->get_api_string() ) {
 			include_once( WPGEO_DIR . 'api/googlemapsv2/googlemapsv2.php' );
 			$this->api = new WPGeo_API_GoogleMapsV2();
+		} else {
+			$this->api = new WPGeo_API();
 		}
 
 		$this->maps    = new WPGeo_Maps();
