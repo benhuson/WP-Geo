@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Geo | V3.2.7.2\n"
+"Project-Id-Version: WP Geo | V3.3\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-geo\n"
 "POT-Creation-Date: 2012-08-26 20:09:37+00:00\n"
 "PO-Revision-Date: \n"
@@ -16,7 +16,7 @@ msgstr ""
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
 "X-Textdomain-Support: yes\n"
 "X-Poedit-Basepath: .\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.5\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: admin/admin.php:67
@@ -250,17 +250,17 @@ msgstr "Karteneinstellungen"
 # @ wp-geo
 #: admin/admin.php:267 admin/settings.php:137
 msgid "Save custom map zoom for this post"
-msgstr "Kartenzoom für diesen Artikel speichern"
+msgstr "Kartenzoom im Artikel speichern"
 
 # @ wp-geo
 #: admin/admin.php:268 admin/settings.php:138
 msgid "Save custom map type for this post"
-msgstr "Kartentyp für diesen Artikel speichern"
+msgstr "Kartentyp im Artikel speichern"
 
 # @ wp-geo
 #: admin/admin.php:269 admin/settings.php:139
 msgid "Save map centre point for this post"
-msgstr "Kartenzentrum für diesen Artikel speichern"
+msgstr "Kartenzentrum im Artikel speichern"
 
 #: admin/dashboard.php:71
 msgid "No recent updates."
@@ -400,8 +400,8 @@ msgid ""
 "When creating a new post, the map will default to focussing on this area for "
 "you to position a marker."
 msgstr ""
-"Beim Erstellen eines neuen Artikels, wird die Karte auf Ihre gewünschte "
-"geographische Lage positioniert."
+"Beim Erstellen eines Artikels wird auf die gewünschte geographische Lage "
+"fokussiert."
 
 #  Settings - Label for Default Map Controls fields
 # @ wp-geo
@@ -475,7 +475,7 @@ msgstr "Seiten"
 # @ wp-geo
 #: admin/settings.php:168
 msgid "Posts (single posts)"
-msgstr "Artikel"
+msgstr "Artikel (einzeln)"
 
 #  Settings - Show Maps On - Posts home page
 # @ wp-geo
