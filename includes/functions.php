@@ -36,7 +36,8 @@ function wpgeo_css_dimension( $str = false ) {
  * @return  boolean
  */
 function wpgeo_check_domain() {
-	$host = 'http://' . rtrim( $_SERVER["HTTP_HOST"], '/' );
+	$http = is_ssl() ? 'https' : 'http';
+	$host = $http . '://' . rtrim( $_SERVER["HTTP_HOST"], '/' );
 
 	// Blog might not be in site root so strip to domain
 	$blog = preg_replace( "/(http:\/\/[^\/]*).*/", "$1", get_bloginfo( 'url' ) );
