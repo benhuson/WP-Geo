@@ -321,7 +321,6 @@ function get_wpgeo_map( $query, $options = null ) {
 		'orderby'         => 'post_date',
 		'order'           => 'DESC',
 		'markers'         => 'large',
-        'markers'         => 'large',
         'offset'          => 0,
         'category'        => null,
         'include'         => null,
