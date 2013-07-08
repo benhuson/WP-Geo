@@ -3,8 +3,8 @@ Contributors: husobj
 Donate link: http://www.wpgeo.com/donate
 Tags: maps, map, geo, geocoding, google, location, georss
 Requires at least: 3.1
-Tested up to: 3.5.1
-Stable tag: 3.3
+Tested up to: 3.5.2
+Stable tag: 3.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,6 +95,17 @@ None at the moment.
 4. Widget Settings
 
 == Changelog ==
+
+= WP Geo 3.3.1 =
+
+* Allow for WPGEO_LATITUDE_META and WPGEO_LONGITUDE_META to be defined earlier.
+* Added 'wpgeo_map_default_query_args' filter.
+* Setup WPGeo_API class which can be extended for other APIs.
+* wpgeo_check_domain() now checks if SSL.
+* Remove duplicate 'markers' attribute from get_wpgeo_map() arguments array. Props max_Q
+* Ensure coords always use full stop rather than comma for decimal point when using floatval().
+* Fix undefined errors in category widget.
+* Replace URL encoded '&' in Google API URLs - Google doesn't like the encoded version.
 
 = WP Geo 3.3 =
 
@@ -387,6 +398,9 @@ NOTE: You will need to re-add your widgets after upgrading!
 * Added option to set wether maps appear at the top or bottom of posts.
 
 == Upgrade Notice ==
+
+= 3.3.1 =
+Some fixes including SSL support including Google sensor parameter on mobile.
 
 = 3.3 =
 Huge code changes for Google Maps API v3. You may need to update any custom code or plugins.
