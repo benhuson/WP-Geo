@@ -57,7 +57,8 @@ class WPGeo {
 		add_filter( 'the_content', array( $this, 'the_content' ) );
 		add_filter( 'get_the_excerpt', array( $this, 'get_the_excerpt' ) );
 		add_filter( 'option_wp_geo_options', array( $this, 'option_wp_geo_options' ) );
-		
+		add_filter( 'clean_url', array( $this, 'clean_googleapis_url' ), 99, 3 );
+
 		// Admin
 		if ( is_admin() ) {
 			include_once( WPGEO_DIR . 'admin/admin.php' );
@@ -341,6 +342,18 @@ class WPGeo {
 		
 		// Add extra markers
 		$this->markers->add_extra_markers();
+	}
+
+	/**
+	 * Clean Google APIs URL
+	 *
+	 * Replace '&#038;' with '&'
+	 * It's not standard but Google doesn;t seem to like '&#038;'
+	 */
+	function clean_googleapis_url( $url, $original_url, $_context ) {
+		if ( strstr( $url, 'googleapis.com' ) !== false )
+			$url = str_replace( '&#038;', '&', $url );
+		return $url;
 	}
 
 	/**
