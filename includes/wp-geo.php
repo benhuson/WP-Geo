@@ -552,7 +552,7 @@ class WPGeo {
 		return '
 			<script type="text/javascript">
 			var WPGeo_Admin = ' . json_encode( $wpgeo_admin_vars ) . ';
-			WPGeo_Admin.mapType = ' . $this->api_string( $maptype, 'maptype' ) . ';
+			WPGeo_Admin.mapType = "' . $this->api_string( $maptype, 'maptype' ) . '";
 			
 			jQuery(document).ready(function($) {
 				$("#wpgeo_location")' . $panel_open . '.bind("WPGeo_adminPostMapReady", function(e){

@@ -6,13 +6,11 @@
 	 */
 	function wpgeo_init_admin_post_map() {
 		
-		$(document).ready(function($) {
-			
 			// Define map
 			WPGeo_Admin.map = new google.maps.Map(document.getElementById(WPGeo_Admin.map_dom_id), {
 				zoom           : parseInt(WPGeo_Admin.zoom, 10),
 				center         : new google.maps.LatLng(WPGeo_Admin.mapCentreX, WPGeo_Admin.mapCentreY),
-				mapTypeId      : WPGeo_Admin.mapType,
+				mapTypeId      : eval(WPGeo_Admin.mapType),
 				zoomControl    : true,
 				mapTypeControl : true
 			});
@@ -149,8 +147,14 @@
 			
 			// Map ready, do other stuff if needed
 			$("#wpgeo_location").trigger("WPGeo_adminPostMapReady");
-		});
 	}
-	google.maps.event.addDomListener(window, "load", wpgeo_init_admin_post_map);
+
+
+        $(window).load(function() {
+                // Get the conf stocked in the data of a div
+                var conf = $('.wpgeo_conf').first().data();
+		if(conf)
+			wpgeo_load_api(conf.apiuri).done(wpgeo_init_admin_post_map);
+	});
 
 })(jQuery);

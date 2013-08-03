@@ -188,23 +188,29 @@ function wpgeo_render_map(mapElement, mapData, markers, polylines, feeds) {
 	 * @trigger Name of the event of the container that triggers the new display of the map or "none"
 	 */
 	window.wpgeo_render_static_map = function(map, api_uri, trigger) {
-		// We recompute the dimensions because Google can't bear dimension in percent
-		var src = map.data('staticmap').replace('@width@', map.width()).replace('@height@', map.height());
+		if(map.data('staticmap')) {
+			// We recompute the dimensions because Google can't bear dimension in percent
+			var src = map.data('staticmap').replace('@width@', map.width()).replace('@height@', map.height());
 
-		map.css({
-			width		   : map.width(),
-			height		   : map.height(),
-			'background-image' : 'url('+src+')'
-		});
+			map.css({
+				width		   : map.width(),
+				height		   : map.height(),
+				'background-image' : 'url('+src+')'
+			});
 
-		// Only use static maps if trigger is "none"
-		if(trigger != 'none') {
-			map.css('cursor', 'pointer').one(trigger, function() {
-				// Load the API if needed and then build and render the map
-				wpgeo_load_api(api_uri).done(function() {
-					map.css('background-image', 'none');
-					wpgeo_build_map(map);
+			// Only use static maps if trigger is "none"
+			if(trigger != 'none') {
+				map.css('cursor', 'pointer').one(trigger, function() {
+					// Load the API if needed and then build and render the map
+					wpgeo_load_api(api_uri).done(function() {
+						map.css('background-image', 'none');
+						wpgeo_build_map(map);
+					});
 				});
+			}
+		} else {
+			wpgeo_load_api(api_uri).done(function() {
+				wpgeo_build_map(map);
 			});
 		}
 	}
@@ -236,7 +242,8 @@ function wpgeo_render_map(mapElement, mapData, markers, polylines, feeds) {
 	window.wpgeo_load_api = function(api_uri) {
 		// Unique id in order to prevent the Google Maps API script to be loaded twice
 		var id = 'googlemaps3';
-		if (document.getElementById(id)) return api_loaded.resolve();
+		console.log(document.getElementById(id));
+		if (document.getElementById(id)) return api_loaded.state() == "resolved" ? api_loaded.resolve() : api_loaded;
 
 		// Create the script
 		var script = document.createElement("script");
