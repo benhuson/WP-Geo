@@ -474,7 +474,7 @@ class WPGeo_Map {
 			$feeds[] = sprintf( '<div %s></div>',  $this->format_html_attributes($feed_atts));
 		}
 
-		return $feeds;
+		return join('', $feeds);
 	}
 	
 	/*
