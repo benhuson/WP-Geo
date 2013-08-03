@@ -97,9 +97,11 @@ function wpgeo_render_map(mapElement, mapData, markers, polylines, feeds) {
 	var mapOptions = {
 		center            : new google.maps.LatLng(mapData.lat, mapData.lng),
 		zoom              : mapData.zoom,
-		mapTypeId         : eval(mapData.typeId),
-		mapTypeControl    : mapData.typeControl, 
-		streetViewControl : mapData.streetViewControl
+		mapTypeId         : eval(mapData.typeid),
+		mapTypeControl    : eval(mapData.typecontrol), 
+		streetViewControl : eval(mapData.streetviewcontrol),
+		overviewMapControl: eval(mapData.overview),
+		overviewMapControlOptions:{opened:true}
 	};
 
 	var map = new google.maps.Map(mapElement, mapOptions);
@@ -143,22 +145,10 @@ function wpgeo_render_map(mapElement, mapData, markers, polylines, feeds) {
 // jQuery wrapper
 (function($){
 	/**
-	 * Render all the maps on the page by reading through the DOM
+	 * Render a specific map by reading the DOM of its container
+	 * @param map container of the map
 	 */
-	window.wpgeo_render_maps_dom = function() {
-		// Enable visual refresh
-		google.maps.visualRefresh = true;
-
-
-		$('.wpgeo_icon').each(function() {
-			var icon = $(this).data();
-			icon = wpgeo_createIcon(icon.width, icon.height, icon.anchorx, icon.anchory, icon.image, icon.imageshadow);
-			// Stock the created icon in the DOM of the element
-			$(this).data('icon', icon);
-		});
-
-		$('.wpgeo_map').each(function() {
-			var map = $(this);
+	window.wpgeo_build_map = function(map) {
 			var mapData = map.data();
 
 			var markers = [];
@@ -184,29 +174,105 @@ function wpgeo_render_map(mapElement, mapData, markers, polylines, feeds) {
 			$('.wpgeo_feed', map).each(function(i, feed) {
 				feeds.push($(feed).data());
 			}); 
-			
+
 			wpgeo_render_map(map[0], mapData, markers, polylines, feeds);
+	}
+
+	/**
+	 * Render a map with Google Maps Static API
+	 *
+	 * When trigger is provided, triggers the display of a map using the api provided at api_uri.
+	 *
+	 * @param map container of the map
+	 * @api_uri URI of the API to use when the trigger event is triggered
+	 * @trigger Name of the event of the container that triggers the new display of the map or "none"
+	 */
+	window.wpgeo_render_static_map = function(map, api_uri, trigger) {
+		// We recompute the dimensions because Google can't bear dimension in percent
+		var src = map.data('staticmap').replace('@width@', map.width()).replace('@height@', map.height());
+
+		map.css({
+			width		   : map.width(),
+			height		   : map.height(),
+			'background-image' : 'url('+src+')'
 		});
+
+		// Only use static maps if trigger is "none"
+		if(trigger != 'none') {
+			map.css('cursor', 'pointer').one(trigger, function() {
+				// Load the API if needed and then build and render the map
+				wpgeo_load_api(api_uri).done(function() {
+					map.css('background-image', 'none');
+					wpgeo_build_map(map);
+				});
+			});
+		}
+	}
+
+	// We create a deferred object in order to chain calls when the API is loaded
+	var api_loaded = $.Deferred();
+	/**
+	 * Indicate that the API is initialized via the api_loader object
+	 */
+	window.wpgeo_api_loaded = function() {
+		// Enable visual refresh
+		google.maps.visualRefresh = true;
+
+		// Create wpgeo_icons for use in markers later
+		$('.wpgeo_icon').each(function() {
+			var icon = $(this).data();
+			icon = wpgeo_createIcon(icon.width, icon.height, icon.anchorx, icon.anchory, icon.image, icon.imageshadow);
+			// Stock the created icon in the DOM of the element
+			$(this).data('icon', icon);
+		});
+
+		// Indicate that the API is initialized
+		api_loaded.resolve();
+	}
+
+	/**
+	 * Load the Google Maps API
+	 */
+	window.wpgeo_load_api = function(api_uri) {
+		// Unique id in order to prevent the Google Maps API script to be loaded twice
+		var id = 'googlemaps3';
+		if (document.getElementById(id)) return api_loaded.resolve();
+
+		// Create the script
+		var script = document.createElement("script");
+		script.type = "text/javascript";
+		script.src = api_uri + "&callback=wpgeo_api_loaded";
+		script.id = id;
+		script.async = true;
+
+		// Insertion of the script with the others
+		var fjs = document.getElementsByTagName('script')[0];
+		fjs.parentNode.insertBefore(script, fjs);
+
+		return api_loaded;
 	}
 
 
 	$(window).load(function() {
-		var api_uri = $('.wpgeo_api_uri').first().data('uri');
-		if(api_uri) {
-			// Unique id in order to prevent the Google Maps API script to be loaded twice
-			var id = 'googlemaps3';
-			if (document.getElementById(id)) return;
+		// Get the conf stocked in the data of a div
+		var conf = $('.wpgeo_conf').first().data();
 
-			var script = document.createElement("script");
-			script.type = "text/javascript";
-			script.src = api_uri + "&callback=wpgeo_render_maps_dom";
-			script.id = id;
-			script.async = true;
-
-			// Insertion of the script with the others
-			var fjs = document.getElementsByTagName('script')[0];
-			fjs.parentNode.insertBefore(script, fjs);
+		// Prepare maps according to the trigger
+		switch(conf.trigger) {
+			case 'load':
+				// Trigger the building and rendering of all maps on load 
+				wpgeo_load_api(conf.apiuri).done(function() {
+					$('.wpgeo_map').each(function() {
+						wpgeo_build_map($(this));
+					});
+				});
+				break;
+			default:
+				// Use static map API, and render a real map when a specific is triggered on the div (except if trigger = none)
+				$('.wpgeo_map').each(function() {
+					wpgeo_render_static_map($(this), conf.apiuri, conf.trigger);
+				});
+				break;
 		}
 	});
-
 })(jQuery);

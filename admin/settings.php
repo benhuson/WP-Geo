@@ -25,6 +25,7 @@ class WPGeo_Settings {
 		add_settings_field( 'google_api_key', __( 'Google API Key', 'wp-geo' ), array( $this, 'google_api_key_field' ), 'wp_geo_options', 'wpgeo_api' );
 		add_settings_section( 'wpgeo_general', __( 'General Settings', 'wp-geo' ), array( $this, 'general_settings_section' ), 'wp_geo_options' );
 		add_settings_field( 'google_map_type', __( 'Map Type', 'wp-geo' ), array( $this, 'google_map_type_field' ), 'wp_geo_options', 'wpgeo_general' );
+ 		add_settings_field( 'trigger', __( 'Dynamic Map', 'wp-geo' ), array( $this, 'trigger_field' ), 'wp_geo_options', 'wpgeo_general' );
  		add_settings_field( 'show_post_map', __( 'Show Post Map', 'wp-geo' ), array( $this, 'show_post_map_field' ), 'wp_geo_options', 'wpgeo_general' );
  		add_settings_field( 'default_map_location', __( 'Default Map Location', 'wp-geo' ), array( $this, 'default_map_location_field' ), 'wp_geo_options', 'wpgeo_general' );
  		add_settings_field( 'default_map_width', __( 'Default Map Width', 'wp-geo' ), array( $this, 'default_map_width_field' ), 'wp_geo_options', 'wpgeo_general' );
@@ -199,6 +200,23 @@ class WPGeo_Settings {
 		echo wpgeo_checkbox( 'wp_geo_options[show_map_overview]', 'Y', $options['show_map_overview'], false, 'show_map_overview' ) . ' ' . __( 'Show collapsible overview map (in the corner of the map)', 'wp-geo' );
 	}
 
+	/**
+	 * Triggering of the rendering with the Maps API instead of Static Maps API
+	 */
+	function trigger_field() {
+		$options = get_option( 'wp_geo_options' );
+		$menu_options = array(
+			'load'                  => __( 'Always use dynamic maps', 'wp-geo'),
+			'none'                  => __( 'Use static pictures to render the maps', 'wp-geo' ),
+			'click touchstart'      => __( 'Use static pictures to render the maps, make it dynamic on mouse click', 'wp-geo' ),
+			'mouseenter touchstart' => __( 'Use static pictures to render the maps, make it dynamic when the mouse is over', 'wp-geo' ),
+		);
+		echo wpgeo_select( 'wp_geo_options[trigger]', $menu_options, $options['trigger'], false, 'trigger' );
+	}
+
+	/**
+	 * Google API Key Field
+	 */
 	/**
 	 * Default Post Options Field
 	 */

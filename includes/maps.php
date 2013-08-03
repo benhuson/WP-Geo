@@ -338,6 +338,8 @@ class WPGeo_Map {
 	 * @return string HTML.
 	 */
 	function get_map_html( $atts = null ) {
+		global $wpgeo;
+
 		$atts = wp_parse_args( $atts, array(
 			'classes' => array(),
 			'styles'  => array(),
@@ -374,10 +376,18 @@ class WPGeo_Map {
 			'data-lat' => $center_coord->latitude,
 			'data-lng' => $center_coord->longitude,
 			'data-zoom' => $this->get_map_zoom(),
-			'data-typeId' =>  apply_filters( 'wpgeo_api_string', 'google.maps.MapTypeId.ROADMAP', $this->get_map_type(), 'maptype' ),
-			'data-typeControl' => false, //@todo
-			'data-streetViewControl' => false, //@todo
+			'data-typeid' =>  apply_filters( 'wpgeo_api_string', 'google.maps.MapTypeId.ROADMAP', $this->get_map_type(), 'maptype' ),
+			'data-typecontrol' => 'false', //@todo
+			'data-streetviewcontrol' => 'false', //@todo
+			'data-overview' => $this->show_map_overview ? 'true' : 'false',
 		);
+		
+		// Size in URL will be computed in JavaScript to avoid the problem of using percent as measure
+		$map = clone $this;
+		$map->width = '@width@';
+		$map->height = '@height@';
+		$map_atts['data-staticmap'] = $wpgeo->api->static_map_url( $map );
+
 		$map_atts = $this->format_html_attributes($map_atts);
 
 		$map_contents = array($atts['content']);
@@ -385,6 +395,17 @@ class WPGeo_Map {
 		$map_contents[] = $this->get_markers_html();
 		$map_contents[] = $this->get_polylines_html();
 		$map_contents[] = $this->get_feeds_html();
+
+
+
+		$img_atts = array(
+			'class' => 'wp_geo_static_map',
+			'alt' => '',
+			'width' => $this->width,
+			'height' => $this->height,
+			'data-src' => $wpgeo->api->static_map_url( $map )
+		);
+		//$map_contents[] = sprintf( '<img %s />',  $this->format_html_attributes($img_atts));
 
 		return sprintf( '<div %s>%s</div>', $map_atts, join("\n", $map_contents) );
 

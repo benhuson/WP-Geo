@@ -84,7 +84,8 @@ class WPGeo {
 			'admin_api'                     => 'googlemapsv3',
 			'google_api_key'                => '', 
 			'google_map_type'               => 'G_NORMAL_MAP', 
-			'show_post_map'                 => 'TOP', 
+		        'trigger'			=> 'load',	
+			'show_post_map'                 => 'TOP',
 			'default_map_latitude'          => '51.492526418807465',
 			'default_map_longitude'         => '-0.15754222869873047',
 			'default_map_width'             => '100%', 
@@ -181,6 +182,24 @@ class WPGeo {
 		return apply_filters( 'wpgeo_google_api_key', $wp_geo_options['google_api_key'] );
 	}
 	
+	/**
+	 * Get the name of the event that triggers the rendering of the maps
+	 * By default, uses Static Map API and the maps are replaced when the trigger is triggered.
+	 * Values : 
+	 * - "none" : never render maps with GMaps3, only use Static Maps API
+	 * - "load" : only use GMaps3
+	 * - name of event(s) of the div container (click, tap, mouseenter, touchstart...) that
+	 *   will trigger the rendering with GMaps3
+	 *
+	 * Gets the trigger. Passes it through a filter so it can be overriden by another plugin.
+	 *
+	 * @return string API Key.
+	 */
+	function get_trigger() {
+		$wp_geo_options = get_option( 'wp_geo_options' );
+		return apply_filters( 'wpgeo_trigger', $wp_geo_options['trigger'] );
+	}
+
 	/**
 	 * Category Map
 	 * Outputs the HTML for a category map.
@@ -907,15 +926,15 @@ class WPGeo {
 	 */
 	function wp_footer() {
 		global $wpgeo;
-		if ( $wpgeo->show_maps() || $wpgeo->widget_is_active() ) {
-			$this->markers->wp_footer();
-		}
 		$googlemaps_js = add_query_arg( array(
 			'region' => $wpgeo->get_googlemaps_locale(),
 			'key'    => $wpgeo->get_google_api_key(),
 			'sensor' => 'false'
 		), '//maps.googleapis.com/maps/api/js' );
-		echo '<div class="wpgeo_data wpgeo_api_uri" data-uri="'.esc_attr($googlemaps_js).'"></div>';
+		echo '<div class="wpgeo_data wpgeo_conf" data-apiuri="'.esc_attr($googlemaps_js).'" data-trigger="'.esc_attr($wpgeo->get_trigger()).'"></div>';
+		if ( $wpgeo->show_maps() || $wpgeo->widget_is_active() ) {
+			$this->markers->wp_footer();
+		}
 
 		do_action( $this->get_api_string( 'wpgeo_api_%s_js' ), $this->maps->maps );
 	}
