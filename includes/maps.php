@@ -127,6 +127,8 @@ class WPGeo_Map {
 	 *
 	 * @param string $map_id The map ID.
 	 * @return string JavaScript.
+	 * @deprecated
+	 * @Todo deprecate
 	 */
 	function renderMapJS( $map_id = false ) {
 		global $wpgeo;
@@ -362,10 +364,141 @@ class WPGeo_Map {
 			}
 			$styles .= $style . ':' . $value . ';';
 		}
-		
-		return sprintf( '<div id="%s" class="%s" style="%s">%s</div>', esc_attr( $this->get_dom_id() ), esc_attr( implode( ' ', $atts['classes'] ) ), esc_attr( $styles ), $atts['content'] );
+
+		// Data of the map in HTML5 attributes
+		$center_coord = $this->get_map_centre();
+		$map_atts = array(
+			'id' =>  $this->get_dom_id(),
+			'class' => implode( ' ', $atts['classes']),
+			'style' => $styles,
+			'data-lat' => $center_coord->latitude,
+			'data-lng' => $center_coord->longitude,
+			'data-zoom' => $this->get_map_zoom(),
+			'data-typeId' =>  apply_filters( 'wpgeo_api_string', 'google.maps.MapTypeId.ROADMAP', $this->get_map_type(), 'maptype' ),
+			'data-typeControl' => false, //@todo
+			'data-streetViewControl' => false, //@todo
+		);
+		$map_atts = $this->format_html_attributes($map_atts);
+
+		$map_contents = array($atts['content']);
+
+		$map_contents[] = $this->get_markers_html();
+		$map_contents[] = $this->get_polylines_html();
+		$map_contents[] = $this->get_feeds_html();
+
+		return sprintf( '<div %s>%s</div>', $map_atts, join("\n", $map_contents) );
+
+	}
+
+	/**
+	 * Get the HTML for markers.
+	 *
+	 * @return string HTML.
+	 */
+	public function get_markers_html() {
+		$markers = array();
+
+		// Add the markers to the content
+		foreach( $this->points as $point ) {
+			$post_icon = isset($point->icon) ? $point->icon : 'small';
+			$icon = 'wpgeo_icon_' . $post_icon;
+
+			if ( isset( $point->args['post'] ) ) {
+				$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', $post_icon, $point->args['post'], 'widget' );
+			}
+
+			$marker_atts = array(
+				'class' => 'wpgeo_marker wpgeo_data',
+				'data-lat' => $point->coord->latitude,
+				'data-lng' => $point->coord->longitude,
+				'data-icon' => $icon,
+				'data-link' => $point->link,
+				'data-title' => $point->title,
+			);
+
+			$markers[] = sprintf( '<div %s></div>',  $this->format_html_attributes($marker_atts));
+		}
+
+		return join('', $markers);
+	}
+
+	/**
+	 * Get the HTML for polylines.
+	 *
+	 * @return string HTML.
+	 */
+	public function get_polylines_html() {
+		$polylines = array();
+
+		// Add the polylines to the content
+		foreach ( $this->polylines as $polyline ) {
+			$polyline_atts = array(
+				'class' => 'wpgeo_polyline wpgeo_data',
+				'data-color' => $polyline->color,
+				'data-opacity' => $polyline->opacity,
+				'data-thickness' =>  $polyline->thickness,
+				'data-geodesic' => $polyline->geodesic,
+			);
+
+			// Add the path of coords to the polyline
+			$polyline_content = array();
+			foreach ( $polyline->coords as $c ) {
+				$coord_atts = array(
+					'class' => 'wpgeo_polyline wpgeo_data',
+					'data-lng' => $c->longitude,
+					'data-latitude' => $c->latitude,
+				);
+				$polyline_content[] = sprintf( '<div %s></div>', $this->format_html_attributes($coord_atts));
+			}
+
+			$polylines[] = sprintf( '<div %s>%s</div>',  $this->format_html_attributes($polyline_atts), join('', $polyline_content));
+		}
+
+		return join('', $polylines);
+	}
+
+	/**
+	 * Get the HTML for feeds.
+	 *
+	 * @return string HTML.
+	 */
+	public function get_feeds_html() {
+		$feeds = array();
+
+		// Add the feed to the content
+		foreach($this->feeds as $feed) {
+			$feed_atts = array(
+				'class' => 'wpgeo_feed wpgeo_data',
+				'data-url' => $feed
+			);
+			$feeds[] = sprintf( '<div %s></div>',  $this->format_html_attributes($feed_atts));
+		}
+
+		return $feeds;
 	}
 	
+	/*
+	 * Format the HTML attributes in a string
+	 * 
+	 * @param array $atts Array of the attributes to format
+	 * @return string HTML part
+	 * @uses esc_attr
+	 */
+	public function format_html_attributes($atts) {
+		// Delete attributes with empty values
+		$atts = array_filter($atts);
+
+		// Apply esc_attr on all the values
+		array_walk(&$atts, array($this, 'format_html_attribute'));
+
+		// Join the formatted attributes
+		return join(' ', $atts);
+	}
+
+	public function format_html_attribute(&$value, $key) {
+		$value = $key.'="'.esc_attr($value).'"';
+	}
+
 	/**
 	 * Get the Javascript for a map.
 	 *

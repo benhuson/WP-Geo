@@ -49,7 +49,6 @@ class WPGeo {
 		add_action( 'init', array( $this, 'init_later' ), 10000 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'includeGoogleMapsJavaScriptAPI' ) );
 		add_action( 'wp_head', array( $this, 'meta_tags' ) );
-		add_action( 'wp_head', array( $this, 'wp_head' ) );
 		add_action( 'wp_footer', array( $this, 'wp_footer' ) );
 		add_action( 'admin_footer', array( $this, 'wp_footer' ) );
 		
@@ -259,12 +258,14 @@ class WPGeo {
 	/**
 	 * WP Head
 	 * Outputs HTML and JavaScript to the header.
+	 * @todo Deprecate, not used anymore...
 	 */
 	function wp_head() {
 		global $wpgeo;
 
 		$wp_geo_options = get_option( 'wp_geo_options' );
 
+		// @todo Delete this, it's not used anymore...
 		echo '
 			<script type="text/javascript">
 			//<![CDATA[
@@ -283,9 +284,6 @@ class WPGeo {
 			</script>
 			';
 
-		if ( $wpgeo->show_maps() || $wpgeo->widget_is_active() ) {
-			$this->markers->wp_head();
-		}
 	}
 
 	/**
@@ -381,7 +379,7 @@ class WPGeo {
 				'sensor' => 'false'
 			), $http . '://maps.googleapis.com/maps/api/js' );
 			wp_register_script( 'googlemaps3', $googlemaps_js, false, $this->version );
-			wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.v3.js', array( 'jquery', 'wpgeo_tooltip' ), $this->version );
+			wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.v3.js', array( 'jquery', 'wpgeo_tooltip', 'googlemaps3' ), $this->version );
 			wp_register_script( 'wpgeo_admin_post_googlemaps3', WPGEO_URL . 'api/googlemapsv3/js/admin-post.js', array( 'jquery', 'wpgeo_admin_post', 'googlemaps3' ), $this->version );
 		} else {
 			$googlemaps_js = add_query_arg( array(
@@ -915,6 +913,10 @@ class WPGeo {
 	 * WP Footer
 	 */
 	function wp_footer() {
+		global $wpgeo;
+		if ( $wpgeo->show_maps() || $wpgeo->widget_is_active() ) {
+			$this->markers->wp_footer();
+		}
 		do_action( $this->get_api_string( 'wpgeo_api_%s_js' ), $this->maps->maps );
 	}
 	

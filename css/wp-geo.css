@@ -144,3 +144,10 @@ div.tooltip{
 	font-size: 11px;
 	color:#000000;
 }
+
+/**
+ * HTML data maps
+ */
+.wpgeo_data {
+	display:none;
+}

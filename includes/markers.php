@@ -155,25 +155,18 @@ class WPGeo_Markers {
 	}
 
 	/**
-	 * WP Head
-	 * Output HTML header.
+	 * WP Footer
+	 * Output HTML 5 footer.
 	 *
-	 * @todo Once all map JS in footer, this can be moved there also.
 	 */
-	function wp_head() {
-		$js = '';
+	function wp_footer() {
+		$html = '';
 		foreach ( $this->markers as $m ) {
-			$js .= $m->get_javascript();
+			$html .= $m->get_html5();
 		}
 
-		echo '
-			<script type="text/javascript">
-			//<![CDATA[
-			// ----- WP Geo Marker Icons -----
-			' . $js . '
-			//]]>
-			</script>
-			';
+		echo '<!-- ----- WP Geo Marker Icons ----- -->';
+		echo $html;
 	}
 
 	/**
