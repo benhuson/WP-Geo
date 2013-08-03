@@ -21,7 +21,7 @@ body #wp_geo_map img {
 	padding: 0px;
 }
 
-/* Try to fix theme with max-width images */
+/* Try to fix theme with max-width, box-shadow images */
 div.wp_geo_map img,
 #content div.wp_geo_map img,
 #content .attachment div.wp_geo_map img,
@@ -31,6 +31,7 @@ div.wpgeo_map img,
 #content .attachment div.wpgeo_map img,
 #sidebar div.wpgeo_map img {
 	max-width:none;
+	box-shadow:none;
 }
 
 
@@ -143,4 +144,3 @@ div.tooltip{
 	font-size: 11px;
 	color:#000000;
 }
-
