@@ -102,15 +102,15 @@ class WPGeo_Marker {
 	}
 
 	/**
-	 * Get the JavaScript that defines a marker.
+	 * Get the HTML that defines a marker.
 	 *
 	 * @return  string  JavaScript.
 	 */
-	function get_javascript() {
+	function get_html5() {
 		global $wpgeo;
 		$icon = apply_filters( $wpgeo->get_api_string( 'wpgeo_api_%s_markericon' ), '', $this );
 		if ( ! empty( $icon ) )
-			return "var wpgeo_icon_" . $this->id . " = " . $icon . ";";
+			return '<div class="wpgeo_data wpgeo_icon wpgeo_icon_' . esc_attr($this->id) . '" data-width="'.$this->width.'" data-height="'.$this->height.'" data-anchorx="'.$this->anchorX.'" data-anchory="'.$this->anchorY.'" data-image="' . esc_attr($this->image) . '" data-imageshadow="'.esc_attr($this->shadow).'"></div>"';
 		return $icon;
 	}		
 

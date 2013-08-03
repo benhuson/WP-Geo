@@ -43,7 +43,7 @@ class WPGeo_API {
 	 */
 	function static_map_url( $map ) {
 		$point = $map->get_point();
-		if ( ! $point->coord->is_valid_coord() )
+		if ( !isset($point->coord) ||  ! $point->coord->is_valid_coord() )
 			return '';
 
 		$center = $map->get_map_centre();

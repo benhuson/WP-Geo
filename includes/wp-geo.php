@@ -49,7 +49,6 @@ class WPGeo {
 		add_action( 'init', array( $this, 'init_later' ), 10000 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'includeGoogleMapsJavaScriptAPI' ) );
 		add_action( 'wp_head', array( $this, 'meta_tags' ) );
-		add_action( 'wp_head', array( $this, 'wp_head' ) );
 		add_action( 'wp_footer', array( $this, 'wp_footer' ) );
 		add_action( 'admin_footer', array( $this, 'wp_footer' ) );
 		
@@ -85,7 +84,8 @@ class WPGeo {
 			'admin_api'                     => 'googlemapsv3',
 			'google_api_key'                => '', 
 			'google_map_type'               => 'G_NORMAL_MAP', 
-			'show_post_map'                 => 'TOP', 
+		        'trigger'			=> 'load',	
+			'show_post_map'                 => 'TOP',
 			'default_map_latitude'          => '51.492526418807465',
 			'default_map_longitude'         => '-0.15754222869873047',
 			'default_map_width'             => '100%', 
@@ -183,6 +183,24 @@ class WPGeo {
 	}
 	
 	/**
+	 * Get the name of the event that triggers the rendering of the maps
+	 * By default, uses Static Map API and the maps are replaced when the trigger is triggered.
+	 * Values : 
+	 * - "none" : never render maps with GMaps3, only use Static Maps API
+	 * - "load" : only use GMaps3
+	 * - name of event(s) of the div container (click, tap, mouseenter, touchstart...) that
+	 *   will trigger the rendering with GMaps3
+	 *
+	 * Gets the trigger. Passes it through a filter so it can be overriden by another plugin.
+	 *
+	 * @return string API Key.
+	 */
+	function get_trigger() {
+		$wp_geo_options = get_option( 'wp_geo_options' );
+		return apply_filters( 'wpgeo_trigger', $wp_geo_options['trigger'] );
+	}
+
+	/**
 	 * Category Map
 	 * Outputs the HTML for a category map.
 	 *
@@ -259,12 +277,14 @@ class WPGeo {
 	/**
 	 * WP Head
 	 * Outputs HTML and JavaScript to the header.
+	 * @todo Deprecate, not used anymore...
 	 */
 	function wp_head() {
 		global $wpgeo;
 
 		$wp_geo_options = get_option( 'wp_geo_options' );
 
+		// @todo Delete this, it's not used anymore...
 		echo '
 			<script type="text/javascript">
 			//<![CDATA[
@@ -283,9 +303,6 @@ class WPGeo {
 			</script>
 			';
 
-		if ( $wpgeo->show_maps() || $wpgeo->widget_is_active() ) {
-			$this->markers->wp_head();
-		}
 	}
 
 	/**
@@ -375,14 +392,8 @@ class WPGeo {
 		wp_register_script( 'wpgeo_tooltip', WPGEO_URL . 'js/tooltip.js', array( 'jquery' ), $this->version );
 		wp_register_script( 'wpgeo_admin_post', WPGEO_URL . 'js/admin-post.js', array( 'jquery', 'wpgeo' ), $this->version );
 		if ( 'googlemapsv3' == $this->get_api_string() ) {
-			$googlemaps_js = add_query_arg( array(
-				'region' => $wpgeo->get_googlemaps_locale(),
-				'key'    => $wpgeo->get_google_api_key(),
-				'sensor' => 'false'
-			), $http . '://maps.googleapis.com/maps/api/js' );
-			wp_register_script( 'googlemaps3', $googlemaps_js, false, $this->version );
 			wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.v3.js', array( 'jquery', 'wpgeo_tooltip' ), $this->version );
-			wp_register_script( 'wpgeo_admin_post_googlemaps3', WPGEO_URL . 'api/googlemapsv3/js/admin-post.js', array( 'jquery', 'wpgeo_admin_post', 'googlemaps3' ), $this->version );
+			wp_register_script( 'wpgeo_admin_post_googlemaps3', WPGEO_URL . 'api/googlemapsv3/js/admin-post.js', array( 'jquery', 'wpgeo_admin_post', 'wpgeo' ), $this->version );
 		} else {
 			$googlemaps_js = add_query_arg( array(
 				'v'      => 2,
@@ -403,7 +414,6 @@ class WPGeo {
 				// Google Maps v3
 				case 'googlemapsv3':
 					wp_enqueue_script( 'wpgeo' );
-					wp_enqueue_script( 'googlemaps3' );
 					if ( is_admin() )
 						 wp_enqueue_script( 'wpgeo_admin_post_googlemaps3' );
 					break;
@@ -542,7 +552,7 @@ class WPGeo {
 		return '
 			<script type="text/javascript">
 			var WPGeo_Admin = ' . json_encode( $wpgeo_admin_vars ) . ';
-			WPGeo_Admin.mapType = ' . $this->api_string( $maptype, 'maptype' ) . ';
+			WPGeo_Admin.mapType = "' . $this->api_string( $maptype, 'maptype' ) . '";
 			
 			jQuery(document).ready(function($) {
 				$("#wpgeo_location")' . $panel_open . '.bind("WPGeo_adminPostMapReady", function(e){
@@ -915,7 +925,18 @@ class WPGeo {
 	 * WP Footer
 	 */
 	function wp_footer() {
+		global $wpgeo;
+		$googlemaps_js = add_query_arg( array(
+			'region' => $wpgeo->get_googlemaps_locale(),
+			'key'    => $wpgeo->get_google_api_key(),
+			'sensor' => 'false'
+		), '//maps.googleapis.com/maps/api/js' );
+		echo '<div class="wpgeo_data wpgeo_conf" data-apiuri="'.esc_attr($googlemaps_js).'" data-trigger="'.esc_attr($wpgeo->get_trigger()).'"></div>';
+		if ( $wpgeo->show_maps() || $wpgeo->widget_is_active() ) {
+			$this->markers->wp_footer();
+		}
+
 		do_action( $this->get_api_string( 'wpgeo_api_%s_js' ), $this->maps->maps );
 	}
-	
+
 }
