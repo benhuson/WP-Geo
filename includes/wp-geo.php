@@ -373,14 +373,8 @@ class WPGeo {
 		wp_register_script( 'wpgeo_tooltip', WPGEO_URL . 'js/tooltip.js', array( 'jquery' ), $this->version );
 		wp_register_script( 'wpgeo_admin_post', WPGEO_URL . 'js/admin-post.js', array( 'jquery', 'wpgeo' ), $this->version );
 		if ( 'googlemapsv3' == $this->get_api_string() ) {
-			$googlemaps_js = add_query_arg( array(
-				'region' => $wpgeo->get_googlemaps_locale(),
-				'key'    => $wpgeo->get_google_api_key(),
-				'sensor' => 'false'
-			), $http . '://maps.googleapis.com/maps/api/js' );
-			wp_register_script( 'googlemaps3', $googlemaps_js, false, $this->version );
-			wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.v3.js', array( 'jquery', 'wpgeo_tooltip', 'googlemaps3' ), $this->version );
-			wp_register_script( 'wpgeo_admin_post_googlemaps3', WPGEO_URL . 'api/googlemapsv3/js/admin-post.js', array( 'jquery', 'wpgeo_admin_post', 'googlemaps3' ), $this->version );
+			wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.v3.js', array( 'jquery', 'wpgeo_tooltip' ), $this->version );
+			wp_register_script( 'wpgeo_admin_post_googlemaps3', WPGEO_URL . 'api/googlemapsv3/js/admin-post.js', array( 'jquery', 'wpgeo_admin_post', 'wpgeo' ), $this->version );
 		} else {
 			$googlemaps_js = add_query_arg( array(
 				'v'      => 2,
@@ -401,7 +395,6 @@ class WPGeo {
 				// Google Maps v3
 				case 'googlemapsv3':
 					wp_enqueue_script( 'wpgeo' );
-					wp_enqueue_script( 'googlemaps3' );
 					if ( is_admin() )
 						 wp_enqueue_script( 'wpgeo_admin_post_googlemaps3' );
 					break;
@@ -917,7 +910,14 @@ class WPGeo {
 		if ( $wpgeo->show_maps() || $wpgeo->widget_is_active() ) {
 			$this->markers->wp_footer();
 		}
+		$googlemaps_js = add_query_arg( array(
+			'region' => $wpgeo->get_googlemaps_locale(),
+			'key'    => $wpgeo->get_google_api_key(),
+			'sensor' => 'false'
+		), '//maps.googleapis.com/maps/api/js' );
+		echo '<div class="wpgeo_data wpgeo_api_uri" data-uri="'.esc_attr($googlemaps_js).'"></div>';
+
 		do_action( $this->get_api_string( 'wpgeo_api_%s_js' ), $this->maps->maps );
 	}
-	
+
 }

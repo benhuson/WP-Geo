@@ -140,21 +140,20 @@ function wpgeo_render_map(mapElement, mapData, markers, polylines, feeds) {
 	}
 }
 
+// jQuery wrapper
 (function($){
-	// Enable visual refresh
-	google.maps.visualRefresh = true;
-
 	/**
 	 * Render all the maps on the page by reading through the DOM
 	 */
-	function wpgeo_render_maps_dom() {
+	window.wpgeo_render_maps_dom = function() {
+		// Enable visual refresh
+		google.maps.visualRefresh = true;
+
 
 		$('.wpgeo_icon').each(function() {
 			var icon = $(this).data();
-			console.log('icon prepare', icon);
 			icon = wpgeo_createIcon(icon.width, icon.height, icon.anchorx, icon.anchory, icon.image, icon.imageshadow);
 			// Stock the created icon in the DOM of the element
-			console.log('icon prepare', icon);
 			$(this).data('icon', icon);
 		});
 
@@ -166,9 +165,7 @@ function wpgeo_render_map(mapElement, mapData, markers, polylines, feeds) {
 			$('.wpgeo_marker', map).each(function(i, marker) {
 				var data = $(marker).data();
 				// Get the icon stocked in the DOM
-				console.log('icon to use', data.icon);
 				data.icon = $('.'+data.icon).data('icon');
-				console.log('icon used', data.icon);
 				markers.push(data);
 			}); 
 
@@ -192,5 +189,24 @@ function wpgeo_render_map(mapElement, mapData, markers, polylines, feeds) {
 		});
 	}
 
-	google.maps.event.addDomListener(window, "load", wpgeo_render_maps_dom);	
+
+	$(window).load(function() {
+		var api_uri = $('.wpgeo_api_uri').first().data('uri');
+		if(api_uri) {
+			// Unique id in order to prevent the Google Maps API script to be loaded twice
+			var id = 'googlemaps3';
+			if (document.getElementById(id)) return;
+
+			var script = document.createElement("script");
+			script.type = "text/javascript";
+			script.src = api_uri + "&callback=wpgeo_render_maps_dom";
+			script.id = id;
+			script.async = true;
+
+			// Insertion of the script with the others
+			var fjs = document.getElementsByTagName('script')[0];
+			fjs.parentNode.insertBefore(script, fjs);
+		}
+	});
+
 })(jQuery);
