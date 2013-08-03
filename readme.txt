@@ -96,6 +96,23 @@ None at the moment.
 
 == Changelog ==
 
+= Pull request =
+
+* Suppress CTRL+M end lines and tries to fix themes using box-shadow on images
+  For example, with Twenty Twelve theme, all parts of the map is surrounded by box-shadows.
+* Replaces header and footer scripts by HTML5 data description and jQuery selectors to rebuild the maps in a generic way
+  This enhancement is offered to solve these issues :
+	. It separates the JavaScript from the PHP and the HTML (issue #18)
+	. No further use of the ids of the divs (issue #15 - the script was creating 2 script blocks for only one div)
+	. There is no inline <script> tag anymore, that permits plugins like wp-minify to minify all the script
+	. The script could then be deferred to raise the performance of the page
+* Async load of Google Maps API Script
+* Use of Static maps API to offer the admin user to :
+	. only use Static maps API to render the maps (complementary to #1)
+	. use Static maps API at first (for performance issues), and load Google Maps API on click or mouse over (issue #7)
+	. keep the current behaviour (no use of Static maps API)
+* Restore the overview option on GmapsV3
+
 = WP Geo 3.3 =
 
 * Huge raft of changes for compatibility with Google Maps API v3.
