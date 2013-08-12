@@ -501,7 +501,7 @@ class WPGeo {
 		}
 		$map_center_coord = new WPGeo_Coord( $coord->latitude(), $coord->longitude() );
 		
-		if ( is_numeric( $post->ID ) && $post->ID > 0 ) {
+		if ( isset( $post ) && is_numeric( $post->ID ) && $post->ID > 0 ) {
 			$settings = get_post_meta( $post->ID, WPGEO_MAP_SETTINGS_META, true );
 			if ( isset( $settings['zoom'] ) && is_numeric( $settings['zoom'] ) ) {
 				$zoom = $settings['zoom'];
