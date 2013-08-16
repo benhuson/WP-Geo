@@ -502,7 +502,7 @@ class WPGeo {
 		$map_center_coord = new WPGeo_Coord( $coord->latitude(), $coord->longitude() );
 		
 		if ( isset( $post ) && is_numeric( $post->ID ) && $post->ID > 0 ) {
-			$settings = get_post_meta( $post->ID, WPGEO_MAP_SETTINGS_META, true );
+			$settings = WPGeo::get_post_map_settings( $post->ID );
 			if ( isset( $settings['zoom'] ) && is_numeric( $settings['zoom'] ) ) {
 				$zoom = $settings['zoom'];
 			}
@@ -567,7 +567,24 @@ class WPGeo {
 		}
 		return $content;
 	}
-	
+
+	/**
+	 * Get Post Map Settings
+	 *
+	 * @since  3.3.2
+	 *
+	 * @param   int   $post_id  Post ID.
+	 * @return  array           Post map settings array.
+	 */
+	function get_post_map_settings( $post_id ) {
+		$settings = wp_parse_args( get_post_meta( $post_id, WPGEO_MAP_SETTINGS_META, true ), array(
+			'zoom'   => '',
+			'type'   => '',
+			'centre' => ''
+		) );
+		return $settings;
+	}
+
 	/**
 	 * Get API String
 	 */
@@ -604,7 +621,7 @@ class WPGeo {
 			$coord    = get_wpgeo_post_coord( $post->ID );
 			$title    = get_wpgeo_title( $post->ID );
 			$marker   = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
-			$settings = get_post_meta( $post->ID, WPGEO_MAP_SETTINGS_META, true );
+			$settings = WPGeo::get_post_map_settings( $post->ID );
 
 			$mymaptype = $maptype;
 			if ( isset( $settings['type'] ) && ! empty( $settings['type'] ) ) {

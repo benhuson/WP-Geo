@@ -187,11 +187,7 @@ class WPGeo_Admin {
 		$coord    = get_wpgeo_post_coord( $post->ID );
 		$title    = get_post_meta( $post->ID, WPGEO_TITLE_META, true );
 		$marker   = get_post_meta( $post->ID, WPGEO_MARKER_META, true );
-		$settings = wp_parse_args( get_post_meta( $post->ID, WPGEO_MAP_SETTINGS_META, true ), array(
-			'zoom'   => '',
-			'type'   => '',
-			'centre' => ''
-		) );
+		$settings = WPGeo::get_post_map_settings( $post->ID );
 		
 		$wpgeo_map_settings_zoom = '';
 		$wpgeo_map_settings_type = '';

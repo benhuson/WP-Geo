@@ -140,7 +140,7 @@ function wpgeo_map_link( $args = null ) {
 
 	// Fetch wp geo options & post settings
 	$wp_geo_options = get_option( 'wp_geo_options' );
-	$settings = get_post_meta( $r['post_id'], WPGEO_MAP_SETTINGS_META, true );
+	$settings = WPGeo::get_post_map_settings( $r['post_id'] );
 
 	// Map Options
 	if ( is_null( $r['zoom'] ) || ! is_numeric( $r['zoom'] ) ) {
@@ -207,7 +207,7 @@ function get_wpgeo_post_map( $post_id = 0, $args = null ) {
 	
 	if ( $post_id > 0 && ! is_feed() ) {
 		if ( $wpgeo->show_maps() && $show_post_map != 'TOP' && $show_post_map != 'BOTTOM' && $wpgeo->checkGoogleAPIKey() ) {
-			$meta = get_post_meta( $post_id, WPGEO_MAP_SETTINGS_META, true );
+			$meta = WPGeo::get_post_map_settings( $post_id );
 			$marker_meta = get_post_meta( $post_id, WPGEO_MARKER_META, true );
 			$marker_meta = empty( $marker_meta ) ? 'large' : $marker_meta;
 			$title_meta = get_post_meta( $post_id, WPGEO_TITLE_META, true );
@@ -432,7 +432,7 @@ function get_wpgeo_post_static_map( $post_id = 0, $query = null ) {
 
 	// Fetch wp geo options & post settings
 	$wp_geo_options = get_option( 'wp_geo_options' );
-	$settings = get_post_meta( $post_id, WPGEO_MAP_SETTINGS_META, true );
+	$settings = WPGeo::get_post_map_settings( $post_id );
 
 	// Options
 	$options = wp_parse_args( $query, array(
