@@ -21,7 +21,7 @@ if ( ! class_exists( 'WPGeo_Dashboard' ) ) {
 		 */
 		function register_widget() {
 			wp_add_dashboard_widget( 'wpgeo_dashboard', 'WP Geo',
-				array( &$this, 'widget' ),
+				array( $this, 'widget' ),
 				array(
 					'all_link'  => 'http://www.wpgeo.com/',
 					'feed_link' => 'http://www.wpgeo.com/feed/'

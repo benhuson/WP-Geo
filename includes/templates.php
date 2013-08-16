@@ -98,7 +98,7 @@ function get_wpgeo_title( $post_id = 0, $default_to_post_title = true ) {
 	if ( $post_id > 0 ) {
 		$title = get_post_meta( $post_id, WPGEO_TITLE_META, true );
 		if ( empty( $title ) && $default_to_post_title ) {
-			$p = &get_post( $post_id );
+			$p = get_post( $post_id );
 			$title = isset( $p->post_title ) ? $p->post_title : '';
 		}
 		$title = apply_filters( 'wpgeo_point_title', $title, $post_id );
