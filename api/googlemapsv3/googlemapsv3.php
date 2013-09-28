@@ -165,6 +165,14 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 						' . $this->get_polylines_js( $map ) . '
 						';
 					if ( count( $map->points ) > 1 ) {
+						echo '
+						// Adjust Zoom
+						google.maps.event.addListenerOnce(' . $map->get_js_id() . ', "bounds_changed", function() {
+							var oldZoom = ' . $map->get_js_id() . '.getZoom();
+							if ( ' . $map->get_map_zoom() . ' < oldZoom ) {
+								' . $map->get_js_id() . '.setZoom(' . $map->get_map_zoom() . ');
+							}
+						});';
 						echo $map->get_js_id() . '.fitBounds(bounds);';
 					}
 					echo '
