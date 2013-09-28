@@ -376,9 +376,9 @@ class WPGeo {
 		wp_register_script( 'wpgeo_admin_post', WPGEO_URL . 'js/admin-post.js', array( 'jquery', 'wpgeo' ), $this->version );
 		if ( 'googlemapsv3' == $this->get_api_string() ) {
 			$googlemaps_js = add_query_arg( array(
-				'region' => $wpgeo->get_googlemaps_locale(),
-				'key'    => $wpgeo->get_google_api_key(),
-				'sensor' => 'false'
+				'language' => $wpgeo->get_googlemaps_locale(),
+				'key'      => $wpgeo->get_google_api_key(),
+				'sensor'   => 'false'
 			), $http . '://maps.googleapis.com/maps/api/js' );
 			wp_register_script( 'googlemaps3', $googlemaps_js, false, $this->version );
 			wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.v3.js', array( 'jquery', 'wpgeo_tooltip' ), $this->version );
@@ -422,6 +422,7 @@ class WPGeo {
 	/**
 	 * Get Google Maps Locale
 	 * See http://code.google.com/apis/maps/faq.html#languagesupport for link to updated languages codes.
+	 * https://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1
 	 *
 	 * @author Alain Messin, tweaked by Ben :)
 	 *
