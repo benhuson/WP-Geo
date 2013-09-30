@@ -3,8 +3,8 @@ Contributors: husobj
 Donate link: http://www.wpgeo.com/donate
 Tags: maps, map, geo, geocoding, google, location, georss
 Requires at least: 3.1
-Tested up to: 3.5.2
-Stable tag: 3.3.1
+Tested up to: 3.6.1
+Stable tag: 3.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,6 +95,12 @@ None at the moment.
 4. Widget Settings
 
 == Changelog ==
+
+= WP Geo 3.3.2 =
+
+* Fix minimum zoom level when display map with multiple markers - including widgets.
+* Fix Google Maps localization - uses 'language' query in URL.
+* Added WPGeo::get_post_map_settings( $post_id ) for retrieving validated post map settings.
 
 = WP Geo 3.3.1 =
 
@@ -398,6 +404,9 @@ NOTE: You will need to re-add your widgets after upgrading!
 * Added option to set wether maps appear at the top or bottom of posts.
 
 == Upgrade Notice ==
+
+= 3.3.1 =
+Fixes minimum zoom levels for maps and widgets, and Google Maps localization.
 
 = 3.3.1 =
 Some fixes including SSL support including Google sensor parameter on mobile.
