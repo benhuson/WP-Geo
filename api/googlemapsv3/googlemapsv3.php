@@ -156,7 +156,7 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 							zoom               : ' . $map->get_map_zoom() . ',
 							mapTypeId          : ' . apply_filters( 'wpgeo_api_string', 'google.maps.MapTypeId.ROADMAP', $map->get_map_type(), 'maptype' ) . ',
 							mapTypeControl     : false, // @todo
-							streetViewControl  : false, // @todo
+							streetViewControl  : ' . (int) $map->show_control( 'streetview' ) . ',
 							scaleControl       : ' . (int) $map->show_control( 'scale' ) . ',
 							overviewMapControl : ' . (int) $map->show_control( 'overview' ) . ',
 							panControl         : ' . (int) $map->show_control( 'pan' ) . ',

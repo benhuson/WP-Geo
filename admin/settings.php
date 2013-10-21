@@ -53,6 +53,7 @@ class WPGeo_Settings {
 			'show_map_type_physical'        => 'N',
 			'show_map_scale'                => 'N',
 			'show_map_overview'             => 'N',
+			'show_streetview_control'       => 'N',
 			'save_post_zoom'                => 'N',
 			'save_post_map_type'            => 'N',
 			'save_post_centre_point'        => 'N',
@@ -196,7 +197,8 @@ class WPGeo_Settings {
 		echo wpgeo_checkbox( 'wp_geo_options[show_map_type_physical]', 'Y', $options['show_map_type_physical'], false, 'show_map_type_physical' ) . ' ' . __( 'Physical (terrain map)', 'wp-geo' ) . '<br />';
 		echo '<p style="margin:1em 0 0 0;"><strong>' . __( 'Other Controls', 'wp-geo' ) . '</strong></p>';
 		echo wpgeo_checkbox( 'wp_geo_options[show_map_scale]', 'Y', $options['show_map_scale'], false, 'show_map_scale' ) . ' ' . __( 'Show map scale', 'wp-geo' ) . '<br />';
-		echo wpgeo_checkbox( 'wp_geo_options[show_map_overview]', 'Y', $options['show_map_overview'], false, 'show_map_overview' ) . ' ' . __( 'Show collapsible overview map (in the corner of the map)', 'wp-geo' );
+		echo wpgeo_checkbox( 'wp_geo_options[show_map_overview]', 'Y', $options['show_map_overview'], false, 'show_map_overview' ) . ' ' . __( 'Show collapsible overview map (in the corner of the map)', 'wp-geo' ) . '<br />';
+		echo wpgeo_checkbox( 'wp_geo_options[show_streetview_control]', 'Y', $options['show_streetview_control'], false, 'show_streetview_control' ) . ' ' . __( 'Show Street View Control', 'wp-geo' );
 	}
 
 	/**

@@ -84,6 +84,7 @@ class WPGeo_Map {
 	var $mapcontrol = 'GLargeMapControl3D';
 	var $show_map_scale = false;
 	var $show_map_overview = false;
+	var $show_streetview_control = false;
 	var $show_polyline = false;
 
 	/**
@@ -549,6 +550,15 @@ class WPGeo_Map {
 	}
 
 	/**
+	 * Show Street View Control
+	 *
+	 * @param  bool  Show control?
+	 */
+	function show_streetview_control( $bool = true ) {
+		$this->show_streetview_control = $bool;
+	}
+
+	/**
 	 * Show Control
 	 *
 	 * @param   string  $control  Check wether control should show.
@@ -568,6 +578,8 @@ class WPGeo_Map {
 				if ( in_array( $this->mapcontrol, array( 'GLargeMapControl3D', 'GLargeMapControl', 'GSmallMapControl', 'GSmallZoomControl3D', 'GSmallZoomControl' ) ) ) {
 					return true;
 				}
+			case 'streetview' :
+				return $this->show_streetview_control;
 		}
 		return false;
 	}
