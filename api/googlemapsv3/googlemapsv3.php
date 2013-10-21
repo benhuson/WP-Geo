@@ -152,11 +152,15 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 					if (document.getElementById("' . $map->get_dom_id() . '")) {
 						var bounds = new google.maps.LatLngBounds();
 						var mapOptions = {
-							center            : new google.maps.LatLng(' . $center_coord->get_delimited() . '),
-							zoom              : ' . $map->get_map_zoom() . ',
-							mapTypeId         : ' . apply_filters( 'wpgeo_api_string', 'google.maps.MapTypeId.ROADMAP', $map->get_map_type(), 'maptype' ) . ',
-							mapTypeControl    : false, // @todo
-							streetViewControl : false // @todo
+							center             : new google.maps.LatLng(' . $center_coord->get_delimited() . '),
+							zoom               : ' . $map->get_map_zoom() . ',
+							mapTypeId          : ' . apply_filters( 'wpgeo_api_string', 'google.maps.MapTypeId.ROADMAP', $map->get_map_type(), 'maptype' ) . ',
+							mapTypeControl     : false, // @todo
+							streetViewControl  : false, // @todo
+							scaleControl       : ' . (int) $map->show_control( 'scale' ) . ',
+							overviewMapControl : ' . (int) $map->show_control( 'overview' ) . ',
+							panControl         : ' . (int) $map->show_control( 'pan' ) . ',
+							zoomControl        : ' . (int) $map->show_control( 'zoom' ) . '
 						};
 						' . $map->get_js_id() . ' = new google.maps.Map(document.getElementById("' . $map->get_dom_id() . '"), mapOptions);
 						

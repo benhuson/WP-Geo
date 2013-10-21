@@ -85,7 +85,7 @@ class WPGeo_Map {
 	var $show_map_scale = false;
 	var $show_map_overview = false;
 	var $show_polyline = false;
-	
+
 	/**
 	 * Constructor
 	 *
@@ -537,7 +537,7 @@ class WPGeo_Map {
 	function showMapScale( $bool = true ) {
 		$this->show_map_scale = $bool;
 	}
-	
+
 	/**
 	 * Show Map Overview
 	 * Show the mini overview map?
@@ -547,7 +547,31 @@ class WPGeo_Map {
 	function showMapOverview( $bool = true ) {
 		$this->show_map_overview = $bool;
 	}
-	
+
+	/**
+	 * Show Control
+	 *
+	 * @param   string  $control  Check wether control should show.
+	 * @return  bool              Show control?
+	 */
+	function show_control( $control ) {
+		switch ( $control ) {
+			case 'scale' :
+				return $this->show_map_scale;
+			case 'overview' :
+				return $this->show_map_overview;
+			case 'pan' :
+				if ( in_array( $this->mapcontrol, array( 'GLargeMapControl3D', 'GLargeMapControl', 'GSmallMapControl' ) ) ) {
+					return true;
+				}
+			case 'zoom' :
+				if ( in_array( $this->mapcontrol, array( 'GLargeMapControl3D', 'GLargeMapControl', 'GSmallMapControl', 'GSmallZoomControl3D', 'GSmallZoomControl' ) ) ) {
+					return true;
+				}
+		}
+		return false;
+	}
+
 }
 
 /**
