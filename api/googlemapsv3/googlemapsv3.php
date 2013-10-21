@@ -148,6 +148,12 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 					';
 			foreach ( $maps as $map ) {
 				$center_coord = $map->get_map_centre();
+				$map_types = $map->get_map_types();
+				$map_types[] = $map->get_map_type();
+				foreach ( $map_types as $key => $type ) {
+					$map_types[$key] = apply_filters( 'wpgeo_api_string', 'google.maps.MapTypeId.ROADMAP', $type, 'maptype' );
+				}
+				$map_type_control = count( $map_types ) > 1 ? 1 : 0;
 				echo '
 					if (document.getElementById("' . $map->get_dom_id() . '")) {
 						var bounds = new google.maps.LatLngBounds();
@@ -155,7 +161,10 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 							center             : new google.maps.LatLng(' . $center_coord->get_delimited() . '),
 							zoom               : ' . $map->get_map_zoom() . ',
 							mapTypeId          : ' . apply_filters( 'wpgeo_api_string', 'google.maps.MapTypeId.ROADMAP', $map->get_map_type(), 'maptype' ) . ',
-							mapTypeControl     : false, // @todo
+							mapTypeControl     : ' . $map_type_control . ',
+							mapTypeControlOptions : {
+								mapTypeIds : [' . implode( ', ', $map_types ) . ']
+							},
 							streetViewControl  : ' . (int) $map->show_control( 'streetview' ) . ',
 							scaleControl       : ' . (int) $map->show_control( 'scale' ) . ',
 							overviewMapControl : ' . (int) $map->show_control( 'overview' ) . ',

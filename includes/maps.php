@@ -458,7 +458,16 @@ class WPGeo_Map {
 	function get_map_type() {
 		return $this->maptype;
 	}
-	
+
+	/**
+	 * Get Map Types
+	 *
+	 * @return  array  Map types.
+	 */
+	function get_map_types() {
+		return $this->maptypes;
+	}
+
 	/**
 	 * Set the centre point of the map
 	 *
