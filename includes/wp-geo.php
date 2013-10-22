@@ -578,7 +578,7 @@ class WPGeo {
 	 * @param   int   $post_id  Post ID.
 	 * @return  array           Post map settings array.
 	 */
-	function get_post_map_settings( $post_id ) {
+	static function get_post_map_settings( $post_id ) {
 		$settings = wp_parse_args( get_post_meta( $post_id, WPGEO_MAP_SETTINGS_META, true ), array(
 			'zoom'   => '',
 			'type'   => '',
