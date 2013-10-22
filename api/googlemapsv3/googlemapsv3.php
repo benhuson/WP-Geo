@@ -168,6 +168,9 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 							streetViewControl  : ' . (int) $map->show_control( 'streetview' ) . ',
 							scaleControl       : ' . (int) $map->show_control( 'scale' ) . ',
 							overviewMapControl : ' . (int) $map->show_control( 'overview' ) . ',
+							overviewMapControlOptions : {
+								opened : ' . (int) $map->show_control( 'overview' ) . '
+							},
 							panControl         : ' . (int) $map->show_control( 'pan' ) . ',
 							zoomControl        : ' . (int) $map->show_control( 'zoom' ) . ',
 							scrollwheel        : false
