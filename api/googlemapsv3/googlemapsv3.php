@@ -169,7 +169,8 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 							scaleControl       : ' . (int) $map->show_control( 'scale' ) . ',
 							overviewMapControl : ' . (int) $map->show_control( 'overview' ) . ',
 							panControl         : ' . (int) $map->show_control( 'pan' ) . ',
-							zoomControl        : ' . (int) $map->show_control( 'zoom' ) . '
+							zoomControl        : ' . (int) $map->show_control( 'zoom' ) . ',
+							scrollwheel        : false
 						};
 						' . $map->get_js_id() . ' = new google.maps.Map(document.getElementById("' . $map->get_dom_id() . '"), mapOptions);
 						
