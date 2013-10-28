@@ -153,6 +153,7 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 				foreach ( $map_types as $key => $type ) {
 					$map_types[$key] = apply_filters( 'wpgeo_api_string', 'google.maps.MapTypeId.ROADMAP', $type, 'maptype' );
 				}
+				$map_types = array_unique( $map_types );
 				$map_type_control = count( $map_types ) > 1 ? 1 : 0;
 				echo '
 					if (document.getElementById("' . $map->get_dom_id() . '")) {
