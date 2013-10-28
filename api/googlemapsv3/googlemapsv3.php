@@ -173,6 +173,9 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 							},
 							panControl         : ' . (int) $map->show_control( 'pan' ) . ',
 							zoomControl        : ' . (int) $map->show_control( 'zoom' ) . ',
+							zoomControlOptions : {
+								' . $this->zoom_control_options_js( $map->mapcontrol ) . '
+							},
 							scrollwheel        : false
 						};
 						' . $map->get_js_id() . ' = new google.maps.Map(document.getElementById("' . $map->get_dom_id() . '"), mapOptions);
@@ -207,5 +210,15 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 				</script>';
 		}
 	}
-	
+
+	/**
+	 * Zoom Control Options JS
+	 */
+	function zoom_control_options_js( $mapcontrol ) {
+		if ( in_array( $mapcontrol, array( 'GSmallMapControl', 'GSmallZoomControl3D', 'GSmallZoomControl' ) ) ) {
+			return 'style: google.maps.ZoomControlStyle.SMALL';
+		}
+		return '';
+	}
+
 }
