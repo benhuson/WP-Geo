@@ -583,10 +583,12 @@ class WPGeo_Map {
 				if ( in_array( $this->mapcontrol, array( 'GLargeMapControl3D', 'GLargeMapControl', 'GSmallMapControl' ) ) ) {
 					return true;
 				}
+				break;
 			case 'zoom' :
 				if ( in_array( $this->mapcontrol, array( 'GLargeMapControl3D', 'GLargeMapControl', 'GSmallMapControl', 'GSmallZoomControl3D', 'GSmallZoomControl' ) ) ) {
 					return true;
 				}
+				break;
 			case 'streetview' :
 				return $this->show_streetview_control;
 		}
