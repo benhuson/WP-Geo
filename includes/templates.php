@@ -254,8 +254,7 @@ function wpgeo_create_input_map( $options = null ) {
 	$wpgeo_map_id++;
 	$id = 'wpgeo_map_id_' . $wpgeo_map_id;
 	$wp_geo_options = get_option('wp_geo_options');
-	
-	$query = array();
+
 	$defaults = array(
 		'latitude'        => $wp_geo_options['default_map_latitude'],
 		'longitude'       => $wp_geo_options['default_map_longitude'],
@@ -267,7 +266,7 @@ function wpgeo_create_input_map( $options = null ) {
 	);
 	
 	// Validate Args
-	$r = wp_parse_args( $query, $defaults );
+	$r = wp_parse_args( $options, $defaults );
 	$r['width']  = wpgeo_css_dimension( $r['width'] );
 	$r['height'] = wpgeo_css_dimension( $r['height'] );
 	
