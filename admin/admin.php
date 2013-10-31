@@ -8,7 +8,7 @@ class WPGeo_Admin {
 	var $settings;
 	var $editor;
 	var $map;
-	var $plugin_message = 'WP Geo 3.3 is a major upgrade which use Google Maps API v3. If you using a default installation of WP Geo hopefully things should just work. If you have used custom code or plugins which work with WP Geo you may need to update them to work with this version. Please <a href="https://github.com/benhuson/WP-Geo/issues">submit any bugs here...</a>';
+	var $plugin_message = '';
 	
 	function WPGeo_Admin() {
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
@@ -369,16 +369,16 @@ class WPGeo_Admin {
 	
 	/**
 	 * After Plugin Row
+	 *
 	 * This function can be used to insert text after the WP Geo plugin row on the plugins page.
 	 * Useful if you need to tell people something important before they upgrade.
 	 *
-	 * @param string $plugin Plugin reference.
+	 * @param  string  $plugin  Plugin reference.
 	 */
 	function after_plugin_row( $plugin ) {
 		if ( 'wp-geo/wp-geo.php' == $plugin && ! empty( $this->plugin_message ) ) {
-			echo '<td colspan="3" class="plugin-update colspanchange" style="line-height:1.2em;"><div class="update-message" style="color:#CC0000;padding-top:3px;">' . $this->plugin_message . '</div></td>';
-			return;
+			echo '<tr><td colspan="3" class="plugin-update colspanchange" style="line-height:1.2em;"><div class="update-message" style="color:#CC0000;padding-top:3px;">' . $this->plugin_message . '</div></td></tr>';
 		}
 	}
-	
+
 }
