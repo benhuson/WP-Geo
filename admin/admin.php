@@ -17,6 +17,7 @@ class WPGeo_Admin {
 		add_action( 'admin_menu', array( $this, 'add_custom_boxes' ) );
 		add_action( 'save_post', array( $this, 'wpgeo_location_save_postdata' ) );
 		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 4 );
 		add_action( 'after_plugin_row', array( $this, 'after_plugin_row' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 	}
@@ -366,7 +367,26 @@ class WPGeo_Admin {
 		
 		return $mydata;
 	}
-	
+
+	/**
+	 * Plugin Row Meta
+	 *
+	 * Adds documentation and issue links below the plugin description on the plugins page.
+	 *
+	 * @param   array   $plugin_meta  Plugin meta display array.
+	 * @param   string  $plugin_file  Plugin reference.
+	 * @param   array   $plugin_data  Plugin data.
+	 * @param   string  $status       Plugin status.
+	 * @return  array                 Plugin meta array.
+	 */
+	function plugin_row_meta( $plugin_meta, $plugin_file, $plugin_data, $status ) {
+		if ( 'wp-geo/wp-geo.php' == $plugin_file ) {
+			$plugin_meta[] = sprintf( '<a href="%s">%s</a>', __( 'http://github.com/benhuson/wp-geo/wiki', 'wp-geo' ), __( 'Documentation', 'wp-geo' ) );
+			$plugin_meta[] = sprintf( '<a href="%s">%s</a>', __( 'http://github.com/benhuson/wp-geo/issues', 'wp-geo' ), __( 'Submit an Issue', 'wp-geo' ) );
+		}
+		return $plugin_meta;
+	}
+
 	/**
 	 * After Plugin Row
 	 *
