@@ -371,7 +371,7 @@ class WPGeo_Admin {
 	/**
 	 * Plugin Row Meta
 	 *
-	 * Adds documentation and issue links below the plugin description on the plugins page.
+	 * Adds documentation, support and issue links below the plugin description on the plugins page.
 	 *
 	 * @param   array   $plugin_meta  Plugin meta display array.
 	 * @param   string  $plugin_file  Plugin reference.
@@ -382,6 +382,7 @@ class WPGeo_Admin {
 	function plugin_row_meta( $plugin_meta, $plugin_file, $plugin_data, $status ) {
 		if ( 'wp-geo/wp-geo.php' == $plugin_file ) {
 			$plugin_meta[] = sprintf( '<a href="%s">%s</a>', __( 'http://github.com/benhuson/wp-geo/wiki', 'wp-geo' ), __( 'Documentation', 'wp-geo' ) );
+			$plugin_meta[] = sprintf( '<a href="%s">%s</a>', __( 'http://wordpress.org/support/plugin/wp-geo', 'wp-geo' ), __( 'Support Forum', 'wp-geo' ) );
 			$plugin_meta[] = sprintf( '<a href="%s">%s</a>', __( 'http://github.com/benhuson/wp-geo/issues', 'wp-geo' ), __( 'Submit an Issue', 'wp-geo' ) );
 		}
 		return $plugin_meta;
