@@ -3,8 +3,8 @@ Contributors: husobj
 Donate link: http://www.wpgeo.com/donate
 Tags: maps, map, geo, geocoding, google, location, georss
 Requires at least: 3.1
-Tested up to: 3.6.1
-Stable tag: 3.3.2
+Tested up to: 3.7.1
+Stable tag: 3.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,6 +95,11 @@ None at the moment.
 4. Widget Settings
 
 == Changelog ==
+
+= WP Geo 3.3.3 =
+
+* Try to fix box shadow styles on themes like Twenty Twelve.
+* Fixed map type, overview, pan and zoom controls.
 
 = WP Geo 3.3.2 =
 
@@ -405,7 +410,10 @@ NOTE: You will need to re-add your widgets after upgrading!
 
 == Upgrade Notice ==
 
-= 3.3.1 =
+= 3.3.3 =
+Fixes pan, zoom and map type controls.
+
+= 3.3.2 =
 Fixes minimum zoom levels for maps and widgets, and Google Maps localization.
 
 = 3.3.1 =
