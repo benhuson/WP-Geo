@@ -10,6 +10,7 @@
 			
 			// Define map
 			WPGeo_Admin.map = new google.maps.Map(document.getElementById(WPGeo_Admin.map_dom_id), {
+				scrollwheel    : false,
 				zoom           : parseInt(WPGeo_Admin.zoom, 10),
 				center         : new google.maps.LatLng(WPGeo_Admin.mapCentreX, WPGeo_Admin.mapCentreY),
 				mapTypeId      : WPGeo_Admin.mapType,
