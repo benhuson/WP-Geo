@@ -109,20 +109,23 @@ class WPGeo_API_GoogleMapsV2 extends WPGeo_API {
 					' . $map->get_js_id() . '.addControl(new GSmallZoomControl3D()); // @todo
 					' . $map->get_js_id() . '.setCenter(new GLatLng(' . $center_coord->get_delimited() . '), 0);
 					' . $map->get_js_id() . '.setMapType(' . $map->get_map_type() . ');
+					' . $map->get_js_id() . '.setZoom(' . $map->get_map_zoom() . ');
 					bounds = new GLatLngBounds();
 					
 					// Add the markers and polylines
 					' . $this->get_markers_js( $map ) . '
-					' . $this->get_polylines_js( $map ) . '
-		
-					// Center the map to show all markers
-					var center = bounds.getCenter();
-					var zoom = ' . $map->get_js_id() . '.getBoundsZoomLevel(bounds)
-					if (zoom > ' . $map->get_map_zoom() . ') {
-						zoom = ' . $map->get_map_zoom() . ';
-					}
-					' . $map->get_js_id() . '.setCenter(center, zoom);
-					
+					' . $this->get_polylines_js( $map );
+				if ( count( $map->points ) > 1 ) {
+					echo '
+						// Center the map to show all markers
+						var center = bounds.getCenter();
+						var zoom = ' . $map->get_js_id() . '.getBoundsZoomLevel(bounds)
+						if (zoom > ' . $map->get_map_zoom() . ') {
+							zoom = ' . $map->get_map_zoom() . ';
+						}
+						' . $map->get_js_id() . '.setCenter(center, zoom);';
+				}
+				echo '
 					' . apply_filters( 'wpgeo_map_js_preoverlays', '', $map->get_js_id() ) . '
 					' . $this->get_feeds_js( $map ) . '
 					';
