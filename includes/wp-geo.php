@@ -104,6 +104,7 @@ class WPGeo {
 			'save_post_centre_point'        => 'N',
 			'show_polylines'                => 'Y',
 			'polyline_colour'               => '#FFFFFF',
+			'supported_post_types'          => array( 'post', 'page' ),
 			'show_maps_on_home'             => 'Y',
 			'show_maps_on_pages'            => 'Y',
 			'show_maps_on_posts'            => 'Y',
@@ -306,7 +307,24 @@ class WPGeo {
 		}
 		return $controltypes;
 	}
-
+	
+	/**
+	 * Post Types Supports
+	 *
+	 * Checks if a post type supports WP Geo.
+	 * Checks the admin settings add post types added with add_post_type_support().
+	 *
+	 * @param   string  $post_type  Post type.
+	 * @return  boolean
+	 */
+	function post_type_supports( $post_type ) {
+		$options = get_option( 'wp_geo_options' );
+		if ( post_type_supports( $post_type, 'wpgeo' ) || in_array( $post_type, $options['supported_post_types'] ) ) {
+			return true;
+		}
+		return false;
+	}
+	
 	/**
 	 * Init
 	 * Runs actions on init if Google API Key exists.
@@ -721,7 +739,7 @@ class WPGeo {
 	 * Checks the current page/scenario and wether maps should be shown.
 	 */
 	function show_maps() {
-		global $post, $post_ID, $pagenow;
+		global $wpgeo, $post, $post_ID, $pagenow;
 		
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		
@@ -737,18 +755,13 @@ class WPGeo {
 		if ( is_home() && $wp_geo_options['show_maps_on_home'] == 'Y' )
 			return $this->show_maps_filter( true );
 		if ( is_single() ) {
-			if ( function_exists( 'get_post_type' ) && function_exists( 'get_post_type_object' ) && function_exists( 'post_type_supports' ) ) {
-				$post_type = get_post_type( $post->ID );
-				$post_type_object = get_post_type_object( $post_type );
-				if ( $post_type == 'post' ) {
-					return $this->show_maps_filter( true );
-				} elseif ( isset( $wp_geo_options['show_maps_on_customposttypes'][$post_type] ) && $wp_geo_options['show_maps_on_customposttypes'][$post_type] == 'Y' ) {
-					return $this->show_maps_filter( true );
-				} elseif ( ! $post_type_object->show_ui ) {
-					return $this->show_maps_filter( post_type_supports( $post_type, 'wpgeo' ) );
-				}
-			} elseif ( $wp_geo_options['show_maps_on_posts'] == 'Y' ) {
+			$post_type = get_post_type( $post->ID );
+			if ( $post_type == 'post' ) {
 				return $this->show_maps_filter( true );
+			} elseif ( isset( $wp_geo_options['show_maps_on_customposttypes'][$post_type] ) && $wp_geo_options['show_maps_on_customposttypes'][$post_type] == 'Y' ) {
+				return $this->show_maps_filter( true );
+			} elseif ( $wpgeo->post_type_supports( $post_type ) ) {
+				return true;
 			}
 		}
 		if ( is_page() && $wp_geo_options['show_maps_on_pages'] == 'Y' )                return $this->show_maps_filter( true );
@@ -759,7 +772,7 @@ class WPGeo {
 		if ( is_author() && $wp_geo_options['show_maps_in_authorarchives'] == 'Y' )     return $this->show_maps_filter( true );
 		if ( is_search() && $wp_geo_options['show_maps_in_searchresults'] == 'Y' )      return $this->show_maps_filter( true );
 		if ( is_feed() && $wp_geo_options['add_geo_information_to_rss'] == 'Y' )        return $this->show_maps_filter( true );
-		if ( is_post_type_archive() && post_type_supports( get_post_type(), 'wpgeo' ) && $wp_geo_options['show_maps_on_home'] == 'Y' )
+		if ( is_post_type_archive() && $wpgeo->post_type_supports( get_post_type() ) && $wp_geo_options['show_maps_on_home'] == 'Y' )
 			return $this->show_maps_filter( true );
 		
 		// Activate maps in admin...

@@ -14,7 +14,8 @@ class WPGeo_Admin {
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 		add_action( 'admin_head', array( $this, 'admin_head' ) );
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-		add_action( 'admin_menu', array( $this, 'add_custom_boxes' ) );
+		add_action( 'admin_menu', array( $this, 'add_meta_boxes' ) );
+		add_action( 'edit_attachment', array( $this, 'wpgeo_location_save_postdata' ) );
 		add_action( 'save_post', array( $this, 'wpgeo_location_save_postdata' ) );
 		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 4 );
@@ -126,7 +127,7 @@ class WPGeo_Admin {
 	function options_page() {
 		global $wpgeo;
 		$wp_geo_options = get_option( 'wp_geo_options' );
-		
+
 		echo '<div class="wrap">
 			<div id="icon-options-wpgeo" class="icon32" style="background: url(' . WPGEO_URL . 'img/logo/icon32.png) 2px 1px no-repeat;"><br></div>
 			<h2>' . __( 'WP Geo Settings', 'wp-geo' ) . '</h2>
@@ -149,33 +150,29 @@ class WPGeo_Admin {
 			. '<p>' . sprintf( __( "If you like WP Geo and would like to make a donation, please do so on the <a %s>WP Geo website</a>. Your contributions help to ensure that I can dedicate more time to the support and development of the plugin.", 'wp-geo' ), 'href="http://www.wpgeo.com/donate" target="_blank"' ) . '</p>
 		</div>';
 	}
-	
+
 	/**
-	 * Add Custom Meta Boxes
+	 * Add WP Geo Meta Boxes
 	 *
-	 * @todo Check if should be added to pages/posts.
+	 * Adds meta boxes to all supported post types which have been regsitered using add_post_type_support().
+	 * Use the wpgeo_add_post_type_support action to add/remove post type support.
 	 */
-	function add_custom_boxes() {
-		global $wpgeo, $post;
-		
+	function add_meta_boxes() {
+		global $wpgeo;
+
+		// Check we can display a map
 		if ( ! $wpgeo->checkGoogleAPIKey() )
 			return;
-		
-		add_meta_box( 'wpgeo_location', __( 'WP Geo Location', 'wpgeo' ), array( $this, 'wpgeo_location_inner_custom_box' ), 'post', 'advanced' );
-		add_meta_box( 'wpgeo_location', __( 'WP Geo Location', 'wpgeo' ), array( $this, 'wpgeo_location_inner_custom_box' ), 'page', 'advanced' );
-		
-		// Support for custom post types
-		if ( function_exists( 'get_post_types' ) && function_exists( 'post_type_supports' ) ) {
-			$post_types = get_post_types();
-			foreach ( $post_types as $post_type ) {
-				$post_type_object = get_post_type_object( $post_type );
-				if ( post_type_supports( $post_type, 'wpgeo' ) ) {
-					add_meta_box( 'wpgeo_location', __( 'WP Geo Location', 'wpgeo' ), array( $this, 'wpgeo_location_inner_custom_box' ), $post_type, 'advanced' );
-				}
+
+		// Only add for supported post types
+		$post_types = get_post_types();
+		foreach ( $post_types as $post_type ) {
+			if ( $wpgeo->post_type_supports( $post_type ) ) {
+				add_meta_box( 'wpgeo_location', __( 'WP Geo Location', 'wpgeo' ), array( $this, 'wpgeo_location_inner_custom_box' ), $post_type, 'advanced' );
 			}
 		}
 	}
-	
+
 	/**
 	 * WP Geo Location Inner Custom Box
 	 */
@@ -289,7 +286,7 @@ class WPGeo_Admin {
 	 */
 	function wpgeo_location_save_postdata( $post_id ) {
 		global $wpgeo;
-		
+
 		if ( ! $wpgeo->checkGoogleAPIKey() )
 			return;
 		
@@ -362,6 +359,7 @@ class WPGeo_Admin {
 		if ( isset( $_POST['wpgeo_map_settings_centre'] ) && ! empty( $_POST['wpgeo_map_settings_centre'] ) ) {
 			$settings['centre'] = $_POST['wpgeo_map_settings_centre'];
 		}
+
 		add_post_meta( $post_id, WPGEO_MAP_SETTINGS_META, $settings );
 		$mydata[WPGEO_MAP_SETTINGS_META] = $settings;
 		

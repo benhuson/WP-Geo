@@ -113,13 +113,14 @@ class WPGeo_Recent_Locations_Widget extends WPGeo_Widget {
 	function widget_form_fields_post_types( $instance, $widget ) {
 		global $wpgeo;
 		if ( $widget == $this ) {
+			$options = get_option( 'wp_geo_options' );
 			echo '<p><strong>' . __( 'Show Post Types', 'wp-geo' ) . ':</strong></p>';
 			$post_types = get_post_types( array(), 'objects' );
 			$custom_post_type_checkboxes = '';
 			foreach ( $post_types as $post_type ) {
-				if ( post_type_supports( $post_type->query_var, 'wpgeo' ) || $post_type->name == 'post' || $post_type->name == 'page' ) {
+				if ( $wpgeo->post_type_supports( $post_type->name ) ) {
 					$checked = in_array( $post_type->name, $instance['post_type'] ) ? $post_type->name : false;
-					$custom_post_type_checkboxes .= wpgeo_checkbox( $this->get_field_name( 'post_type' ) . '[]', $post_type->name, $checked ) . ' ' . __( $post_type->label, 'wp-geo' ) . '<br />';
+					$custom_post_type_checkboxes .= wpgeo_checkbox( $this->get_field_name( 'post_type' ) . '[]', $post_type->name, $checked ) . ' ' . $post_type->label . '<br />';
 				}
 			}
 			echo $custom_post_type_checkboxes;

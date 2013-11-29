@@ -34,6 +34,7 @@ class WPGeo_Settings {
  		add_settings_field( 'default_post_options', __( 'Default Post Options', 'wp-geo' ), array( $this, 'default_post_options_field' ), 'wp_geo_options', 'wpgeo_general' );
  		add_settings_field( 'show_polylines', __( 'Polylines', 'wp-geo' ), array( $this, 'show_polylines_field' ), 'wp_geo_options', 'wpgeo_general' );
  		add_settings_field( 'polyline_colour', __( 'Polyline Colour', 'wp-geo' ), array( $this, 'polyline_colour_field' ), 'wp_geo_options', 'wpgeo_general' );
+ 		add_settings_field( 'supported_post_types', __( 'Supported Post Types', 'wp-geo' ), array( $this, 'supported_post_types_field' ), 'wp_geo_options', 'wpgeo_general' );
  		add_settings_field( 'show_maps_on', __( 'Show Maps On', 'wp-geo' ), array( $this, 'show_maps_on_field' ), 'wp_geo_options', 'wpgeo_general' );
  		add_settings_field( 'feeds', __( 'Feeds', 'wp-geo' ), array( $this, 'feeds_field' ), 'wp_geo_options', 'wpgeo_general' );
  		
@@ -58,6 +59,7 @@ class WPGeo_Settings {
 			'save_post_map_type'            => 'N',
 			'save_post_centre_point'        => 'N',
 			'show_polylines'                => 'N',
+			'supported_post_types'          => array(),
 			'show_maps_on_home'             => 'N',
 			'show_maps_on_pages'            => 'N',
 			'show_maps_on_posts'            => 'N',
@@ -230,7 +232,40 @@ class WPGeo_Settings {
 		$options = get_option( 'wp_geo_options' );
 		echo '<input name="wp_geo_options[polyline_colour]" type="text" id="polyline_colour" value="' . $options['polyline_colour'] . '" size="7" />';
 	}
-	
+
+	/**
+	 * Get All UI Supporting Post Types
+	 *
+	 * Returns an array of all post types (as objects) that support the WordPress admin UI.
+	 * We should be able to add meta boxes to all of these.
+	 *
+	 * @param   array  $args  Parameters for get_post_types().
+	 * @return  array         Array of post type objects.
+	 */
+	function get_all_ui_supporting_post_types( $args = null ) {
+		$post_types = get_post_types( $args, 'objects' );
+		return wp_list_filter( $post_types, array( 'show_ui' => 1 ) );
+	}
+
+	/**
+	 * Supported Post Types Field
+	 */
+	function supported_post_types_field() {
+		global $wpgeo;
+		$options = get_option( 'wp_geo_options' );
+
+		$post_types = $this->get_all_ui_supporting_post_types();
+		foreach ( $post_types as $post_type => $data ) {
+			$checked = is_array( $options['supported_post_types'] ) && in_array( $post_type, $options['supported_post_types'] ) ? $post_type : '';
+			$disabled = false;
+			if ( post_type_supports( $post_type, 'wpgeo' ) ) {
+				$disabled = true;
+				$checked = $post_type;
+			}
+			echo wpgeo_checkbox( 'wp_geo_options[supported_post_types][]', $post_type, $checked, $disabled, 'supported_post_types_' . $post_type ) . ' ' . $data->label . '<br />';
+		}
+	}
+
 	/**
 	 * Show Maps On Field
 	 */
@@ -248,21 +283,18 @@ class WPGeo_Settings {
 		echo wpgeo_checkbox( 'wp_geo_options[show_maps_in_searchresults]', 'Y', $options['show_maps_in_searchresults'], false, 'show_maps_in_searchresults' ) . ' ' . __( 'Search Results', 'wp-geo' ) . '<br />';
 		
 		// Custom Post Types
-		// Only works in WordPress 3.0+
-		if ( function_exists( 'get_post_types' ) && function_exists( 'post_type_supports' ) ) {
-			$custom_post_type_checkboxes = '';
-			$post_types = get_post_types( array( '_builtin' => false ), 'objects' );
-			foreach ( $post_types as $post_type ) {
-				if ( post_type_supports( $post_type->query_var, 'wpgeo' )) {
-					$custom_post_type_checkboxes .= wpgeo_checkbox( 'wp_geo_options[show_maps_on_customposttypes][' . $post_type->query_var . ']', 'Y', 'Y', true ) . ' ' . __( $post_type->label, 'wp-geo' ) . '<br />';
-				} elseif ( $post_type->show_ui ) {
-					$custom_post_type_checkbox_value = isset( $options['show_maps_on_customposttypes'][$post_type->query_var] ) ? $options['show_maps_on_customposttypes'][$post_type->query_var] : '';
-					$custom_post_type_checkboxes .= wpgeo_checkbox( 'wp_geo_options[show_maps_on_customposttypes][' . $post_type->query_var . ']', 'Y', $custom_post_type_checkbox_value, false ) . ' ' . __( $post_type->label, 'wp-geo' ) . '<br />';
-				}
+		$custom_post_type_checkboxes = '';
+		$post_types = get_post_types( array( '_builtin' => false ), 'objects' );
+		foreach ( $post_types as $post_type ) {
+			if ( post_type_supports( $post_type->query_var, 'wpgeo' )) {
+				$custom_post_type_checkboxes .= wpgeo_checkbox( 'wp_geo_options[show_maps_on_customposttypes][' . $post_type->query_var . ']', 'Y', 'Y', true ) . ' ' . __( $post_type->label, 'wp-geo' ) . '<br />';
+			} elseif ( $post_type->show_ui ) {
+				$custom_post_type_checkbox_value = isset( $options['show_maps_on_customposttypes'][$post_type->query_var] ) ? $options['show_maps_on_customposttypes'][$post_type->query_var] : '';
+				$custom_post_type_checkboxes .= wpgeo_checkbox( 'wp_geo_options[show_maps_on_customposttypes][' . $post_type->query_var . ']', 'Y', $custom_post_type_checkbox_value, false ) . ' ' . __( $post_type->label, 'wp-geo' ) . '<br />';
 			}
-			if ( ! empty( $custom_post_type_checkboxes ) ) {
-				echo '<strong>' . __( 'Custom Post Types', 'wp-geo' ) . '</strong><br />' . $custom_post_type_checkboxes;
-			}
+		}
+		if ( ! empty( $custom_post_type_checkboxes ) ) {
+			echo '<strong>' . __( 'Custom Post Types', 'wp-geo' ) . '</strong><br />' . $custom_post_type_checkboxes;
 		}
 	}
 	
