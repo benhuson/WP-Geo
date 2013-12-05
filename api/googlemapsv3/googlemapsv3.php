@@ -9,12 +9,44 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 	 * Constructor
 	 */
 	function WPGeo_API_GoogleMapsV3() {
+		add_action( 'wpgeo_register_scripts', array( $this, 'wpgeo_register_scripts' ) );
+		add_action( 'wpgeo_enqueue_scripts', array( $this, 'wpgeo_enqueue_scripts' ) );
 		add_filter( 'wpgeo_api_string', array( $this, 'wpgeo_api_string' ), 10, 3 );
 		add_filter( 'wpgeo_decode_api_string', array( $this, 'wpgeo_decode_api_string' ), 10, 3 );
 		add_action( 'wpgeo_api_googlemapsv3_js', array( $this, 'wpgeo_js' ) );
 		add_filter( 'wpgeo_api_googlemapsv3_markericon', array( $this, 'wpgeo_api_googlemapsv3_markericon' ), 10, 2 );
 	}
-	
+
+	/**
+	 * Register WP Geo Scripts
+	 *
+	 * @uses  WPGeo:$version
+	 * @uses  WPGeo:get_googlemaps_locale()
+	 * @uses  WPGeo:get_google_api_key()
+	 */
+	function wpgeo_register_scripts() {
+		global $wpgeo;
+		$googlemaps_js = add_query_arg( array(
+			'language' => $wpgeo->get_googlemaps_locale(),
+			'key'      => $wpgeo->get_google_api_key(),
+			'sensor'   => 'false'
+		), '//maps.googleapis.com/maps/api/js' );
+		wp_register_script( 'googlemaps3', $googlemaps_js, false, $wpgeo->version );
+		wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.v3.js', array( 'jquery', 'wpgeo_tooltip' ), $wpgeo->version );
+		wp_register_script( 'wpgeo_admin_post_googlemaps3', WPGEO_URL . 'api/googlemapsv3/js/admin-post.js', array( 'jquery', 'wpgeo_admin_post', 'googlemaps3' ), $wpgeo->version );
+	}
+
+	/**
+	 * Enqueue WP Geo Scripts
+	 */
+	function wpgeo_enqueue_scripts() {
+		wp_enqueue_script( 'wpgeo' );
+		wp_enqueue_script( 'googlemaps3' );
+		if ( is_admin() ) {
+			wp_enqueue_script( 'wpgeo_admin_post_googlemaps3' );
+		}
+	}
+
 	/**
 	 * Marker Icon
 	 *
