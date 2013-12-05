@@ -209,9 +209,7 @@ class WPGeo_Widget extends WP_Widget {
 					}
 					$map->add_polyline( $polyline );
 				}
-				
-				$wpgeo->includeGoogleMapsJavaScriptAPI();
-				
+
 				$html_js .= $map->get_map_html( array(
 					'classes' => array( 'wp_geo_map' )
 				) );
