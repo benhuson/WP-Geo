@@ -376,6 +376,17 @@ class WPGeo {
 	}
 
 	/**
+	 * Include Google Maps JavaScript API
+	 *
+	 * Legacy function. Please use WPGeo::enqueue_scripts();
+	 *
+	 * @todo  Deprecate function.
+	 */
+	function includeGoogleMapsJavaScriptAPI() {
+		$this->enqueue_scripts();
+	}
+
+	/**
 	 * Enqueue Scripts
 	 *
 	 * Register required WP Geo styles and scripts.

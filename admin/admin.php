@@ -38,7 +38,7 @@ class WPGeo_Admin {
 		
 		$this->map = new WPGeo_Map( 'admin_post' );
 		
-		add_action( 'admin_enqueue_scripts', array( $wpgeo, 'includeGoogleMapsJavaScriptAPI' ) );
+		add_action( 'admin_enqueue_scripts', array( $wpgeo, 'enqueue_scripts' ) );
 		
 		// Only show editor if Google API Key valid
 		if ( $wpgeo->checkGoogleAPIKey() ) {
