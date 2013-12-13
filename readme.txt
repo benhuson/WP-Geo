@@ -2,11 +2,11 @@
 Contributors: husobj
 Donate link: http://www.wpgeo.com/donate
 Tags: maps, map, geo, geocoding, google, location, georss
-Requires at least: 3.1
-Tested up to: 3.7.1
-Stable tag: 3.3.3
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Requires at least: 3.5
+Tested up to: 3.8
+Stable tag: 3.3.4
+License: GPLv3
+License URI: http://www.gnu.org/licenses/gpl.html
 
 Adds location maps to your posts, pages and custom post types.
 
@@ -95,6 +95,16 @@ None at the moment.
 4. Widget Settings
 
 == Changelog ==
+
+= WP Geo 3.3.4 =
+
+* Maps should use default control setting if not specified.
+* Remove old unused renderMapJS() function.
+* Change layout of "Show maps on" fields.
+* Remove feedback from settings page.
+* Add post type support settings. Supports media.
+* Fix map centre and zoom in Google Maps API v2.
+* Disable mouse scrollwheel on admin map.
 
 = WP Geo 3.3.3 =
 
@@ -409,6 +419,9 @@ NOTE: You will need to re-add your widgets after upgrading!
 * Added option to set wether maps appear at the top or bottom of posts.
 
 == Upgrade Notice ==
+
+= 3.3.4 =
+Maps use default control setting if not specified. Remove old unused renderMapJS() function. Add post type support settings. Supports media.
 
 = 3.3.3 =
 Fixes pan, zoom and map type controls.
