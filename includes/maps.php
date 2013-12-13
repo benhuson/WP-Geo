@@ -81,7 +81,7 @@ class WPGeo_Map {
 	var $maptype = 'G_NORMAL_MAP';
 	var $mapcentre;
 	
-	var $mapcontrol = 'GLargeMapControl3D';
+	var $mapcontrol = '';
 	var $show_map_scale = false;
 	var $show_map_overview = false;
 	var $show_streetview_control = false;
@@ -94,13 +94,14 @@ class WPGeo_Map {
 	 */
 	function WPGeo_Map( $id = 0 ) {
 		$wp_geo_options = get_option( 'wp_geo_options' );
-		
-		$this->id        = $this->validate_map_id( $id );
-		$this->points    = array();
-		$this->polylines = array();
-		$this->maptypes  = array();
-		$this->feeds     = array();
-		$this->mapcentre = new WPGeo_Coord( $wp_geo_options['default_map_latitude'], $wp_geo_options['default_map_longitude'] );
+
+		$this->id         = $this->validate_map_id( $id );
+		$this->points     = array();
+		$this->polylines  = array();
+		$this->maptypes   = array();
+		$this->feeds      = array();
+		$this->mapcentre  = new WPGeo_Coord( $wp_geo_options['default_map_latitude'], $wp_geo_options['default_map_longitude'] );
+		$this->mapcontrol = $wp_geo_options['default_map_control'];
 	}
 	
 	/**
