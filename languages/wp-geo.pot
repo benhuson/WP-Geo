@@ -4,79 +4,82 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Geo 3.3.3\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-geo\n"
-"POT-Creation-Date: 2013-10-31 22:44-0000\n"
-"PO-Revision-Date: 2013-10-31 22:44-0000\n"
+"POT-Creation-Date: 2013-12-13 23:15-0000\n"
+"PO-Revision-Date: 2013-12-13 23:15-0000\n"
 "Last-Translator: Ben Huson <ben@thewhiteroom.net>\n"
 "Language-Team: zh_CN steen <@imsteen>\n"
+"Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.6.2\n"
 "X-Poedit-KeywordsList: __;_e;_ex;_x\n"
-"X-Poedit-Basepath: .\n"
+"X-Poedit-Basepath: ./\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../admin/admin.php:72
+#: ../admin/admin.php:73
 #, php-format
 msgid ""
 "Unable to create the markers folder %s.<br />Please create it and copy the "
 "marker images to it from %s"
 msgstr ""
 
-#: ../admin/admin.php:76
+#: ../admin/admin.php:77
 #, php-format
 msgid ""
 "Before you can use WP Geo you must acquire a %s for your blog - the plugin "
 "will not function without it!"
 msgstr ""
 
-#: ../admin/admin.php:76 ../admin/settings.php:25
+#: ../admin/admin.php:77 ../admin/settings.php:25
 msgid "Google API Key"
 msgstr ""
 
-#: ../admin/admin.php:84
+#: ../admin/admin.php:85
 msgid ""
 "Important Notice: <a href=\"https://developers.google.com/maps/documentation/"
-"javascript/v2/reference\">Version 2 of the Google Maps API will no longer be "
-"available from November 19, 2013</a>"
+"javascript/v2/reference\">Version 2 of the Google Maps API is no longer "
+"available</a>"
 msgstr ""
 
-#: ../admin/admin.php:84
+#: ../admin/admin.php:85
 msgid ""
-"WP Geo has been updated to support Google Map API v3. Future versions of WP "
-"Geo will no longer support the v2 API. You may need <a href=\"https://"
-"developers.google.com/maps/documentation/javascript/tutorial#api_key\" "
-"target=\"_blank\">create a new API key</a>, then update your WP Geo settings "
-"to use the Google Map API v3. If you have added custom code or plugins to "
-"work with WP Geo you may need to update them. Please <a href=\"https://"
-"github.com/benhuson/WP-Geo/issues\">report bug issues here...</a>"
+"WP Geo has been updated to support Google Map API v3. The v2 API will be "
+"completed removed from future versions of WP Geo. You may need <a href="
+"\"https://developers.google.com/maps/documentation/javascript/"
+"tutorial#api_key\" target=\"_blank\">create a new API key</a>, then update "
+"your WP Geo settings to use the Google Map API v3. If you have added custom "
+"code or plugins to work with WP Geo you may need to update them. Please <a "
+"href=\"https://github.com/benhuson/WP-Geo/issues\">report bug issues here..."
+"</a>"
 msgstr ""
 
-#: ../admin/admin.php:84
+#: ../admin/admin.php:85
 msgid "Dismiss"
 msgstr ""
 
-#: ../admin/admin.php:119
+#: ../admin/admin.php:120
 msgid "WP Geo Options"
 msgstr ""
 
-#: ../admin/admin.php:119
+#: ../admin/admin.php:120
 msgid "WP Geo"
 msgstr ""
 
-#: ../admin/admin.php:132
+#: ../admin/admin.php:133
 msgid "WP Geo Settings"
 msgstr ""
 
-#: ../admin/admin.php:138
+#: ../admin/admin.php:139
 msgid "Save Changes"
 msgstr ""
 
-#: ../admin/admin.php:141
+#: ../admin/admin.php:142
 msgid "Marker Settings"
 msgstr ""
 
-#: ../admin/admin.php:142
+#: ../admin/admin.php:143
 msgid ""
 "<p>Custom marker images are automatically created in your WordPress uploads "
 "folder and used by WP Geo.<br />A copy of these images will remain in the WP "
@@ -88,11 +91,11 @@ msgid ""
 "- looking to provide more control in future versions.</p>"
 msgstr ""
 
-#: ../admin/admin.php:144 ../admin/admin.php:384
+#: ../admin/admin.php:145 ../admin/admin.php:378 ../admin/donate-links.php:11
 msgid "Documentation"
 msgstr ""
 
-#: ../admin/admin.php:145
+#: ../admin/admin.php:146
 msgid ""
 "<p>If you set the Show Post Map setting to &quot;Manual&quot;, you can use "
 "the Shortcode <code>[wp_geo_map]</code> in a post to display a map (if a "
@@ -101,118 +104,91 @@ msgid ""
 "will be ignored and the map will be positioned automatically.</p>"
 msgstr ""
 
-#: ../admin/admin.php:146
-msgid "Feedback"
-msgstr ""
-
-#: ../admin/admin.php:147
-#, php-format
-msgid ""
-"If you require help or support with WP Geo, please visit the <a %s>WordPress "
-"Support Forums</a>."
-msgstr ""
-
-#: ../admin/admin.php:148
-#, php-format
-msgid ""
-"If you experience any problems or bugs with the plugin, or want to suggest "
-"an improvement, please visit the new <a %s>GitHib Issues</a> page to log "
-"your issue."
-msgstr ""
-
-#: ../admin/admin.php:149
-#, php-format
-msgid ""
-"If you like WP Geo and would like to make a donation, please do so on the <a "
-"%s>WP Geo website</a>. Your contributions help to ensure that I can dedicate "
-"more time to the support and development of the plugin."
-msgstr ""
-
-#: ../admin/admin.php:164 ../admin/admin.php:165 ../admin/admin.php:173
+#: ../admin/admin.php:167
 msgid "WP Geo Location"
 msgstr ""
 
-#: ../admin/admin.php:204
+#: ../admin/admin.php:197
 msgid "Use Default"
 msgstr ""
 
-#: ../admin/admin.php:238
+#: ../admin/admin.php:231
 msgid "Loading Google map, please wait..."
 msgstr ""
 
-#: ../admin/admin.php:247
+#: ../admin/admin.php:240
 msgid "Search for location"
 msgstr ""
 
-#: ../admin/admin.php:247
+#: ../admin/admin.php:240
 msgid "town, postcode or address"
 msgstr ""
 
-#: ../admin/admin.php:250
+#: ../admin/admin.php:243
 msgid "Search"
 msgstr ""
 
-#: ../admin/admin.php:256 ../admin/settings.php:156
+#: ../admin/admin.php:249 ../admin/settings.php:158
 msgid "Latitude"
 msgstr ""
 
-#: ../admin/admin.php:256 ../admin/settings.php:157
+#: ../admin/admin.php:249 ../admin/settings.php:159
 msgid "Longitude"
 msgstr ""
 
-#: ../admin/admin.php:259
+#: ../admin/admin.php:252
 msgid "clear location"
 msgstr ""
 
-#: ../admin/admin.php:259
+#: ../admin/admin.php:252
 msgid "centre location"
 msgstr ""
 
-#: ../admin/admin.php:263
+#: ../admin/admin.php:256
 msgid "Marker Title"
 msgstr ""
 
-#: ../admin/admin.php:263
+#: ../admin/admin.php:256
 msgid "optional"
 msgstr ""
 
-#: ../admin/admin.php:267
+#: ../admin/admin.php:260
 msgid "Marker Image"
 msgstr ""
 
-#: ../admin/admin.php:271
+#: ../admin/admin.php:264
 msgid "Map Settings"
 msgstr ""
 
-#: ../admin/admin.php:273 ../admin/settings.php:210
+#: ../admin/admin.php:266 ../admin/settings.php:212
 msgid "Save custom map zoom for this post"
 msgstr ""
 
-#: ../admin/admin.php:274 ../admin/settings.php:211
+#: ../admin/admin.php:267 ../admin/settings.php:213
 msgid "Save custom map type for this post"
 msgstr ""
 
-#: ../admin/admin.php:275 ../admin/settings.php:212
+#: ../admin/admin.php:268 ../admin/settings.php:214
 msgid "Save map centre point for this post"
 msgstr ""
 
-#: ../admin/admin.php:384
+#: ../admin/admin.php:378
 msgid "http://github.com/benhuson/wp-geo/wiki"
 msgstr ""
 
-#: ../admin/admin.php:385
+#: ../admin/admin.php:379
 msgid "http://wordpress.org/support/plugin/wp-geo"
 msgstr ""
 
-#: ../admin/admin.php:385 ../admin/donate-links.php:10
+#: ../admin/admin.php:379 ../admin/donate-links.php:10
 msgid "Support Forum"
 msgstr ""
 
-#: ../admin/admin.php:386
+#: ../admin/admin.php:380
 msgid "http://github.com/benhuson/wp-geo/issues"
 msgstr ""
 
-#: ../admin/admin.php:386
+#: ../admin/admin.php:380
 msgid "Submit an Issue"
 msgstr ""
 
@@ -224,19 +200,23 @@ msgstr ""
 msgid "View all WP Geo news..."
 msgstr ""
 
-#: ../admin/donate-links.php:11
+#: ../admin/donate-links.php:12
 msgid "Report Bugs"
 msgstr ""
 
-#: ../admin/donate-links.php:12
-msgid "Make a donation"
-msgstr ""
-
 #: ../admin/donate-links.php:13
-msgid "Follow @wpgeo for updates"
+msgid "Contribute"
 msgstr ""
 
 #: ../admin/donate-links.php:14
+msgid "Make a donation"
+msgstr ""
+
+#: ../admin/donate-links.php:15
+msgid "Follow @wpgeo for updates"
+msgstr ""
+
+#: ../admin/donate-links.php:16
 msgid "Follow me on Twitter"
 msgstr ""
 
@@ -256,7 +236,7 @@ msgstr ""
 msgid "General Settings"
 msgstr ""
 
-#: ../admin/settings.php:27 ../widgets/wpgeo-widget.php:254
+#: ../admin/settings.php:27 ../widgets/wpgeo-widget.php:252
 msgid "Map Type"
 msgstr ""
 
@@ -288,7 +268,7 @@ msgstr ""
 msgid "Default Post Options"
 msgstr ""
 
-#: ../admin/settings.php:35 ../widgets/wpgeo-widget.php:255
+#: ../admin/settings.php:35 ../widgets/wpgeo-widget.php:253
 msgid "Polylines"
 msgstr ""
 
@@ -297,146 +277,158 @@ msgid "Polyline Colour"
 msgstr ""
 
 #: ../admin/settings.php:37
-msgid "Show Maps On"
+msgid "Supported Post Types"
 msgstr ""
 
 #: ../admin/settings.php:38
+msgid "Show Maps On"
+msgstr ""
+
+#: ../admin/settings.php:39
 msgid "Feeds"
 msgstr ""
 
-#: ../admin/settings.php:89 ../admin/settings.php:101
+#: ../admin/settings.php:91 ../admin/settings.php:103
 msgid "Google Maps v2"
 msgstr ""
 
-#: ../admin/settings.php:90 ../admin/settings.php:102
+#: ../admin/settings.php:92 ../admin/settings.php:104
 msgid "Google Maps v3"
 msgstr ""
 
-#: ../admin/settings.php:120
+#: ../admin/settings.php:122
 #, php-format
 msgid ""
 "For more information and documentation about this plugin please visit the <a "
 "%s>WP Geo Plugin</a> home page."
 msgstr ""
 
-#: ../admin/settings.php:121
+#: ../admin/settings.php:123
 #, php-format
 msgid ""
 "If you experience any problems/bugs with the plugin, please <a %s>log it "
 "here</a>."
 msgstr ""
 
-#: ../admin/settings.php:142
+#: ../admin/settings.php:144
 msgid "At top of post"
 msgstr ""
 
-#: ../admin/settings.php:143
+#: ../admin/settings.php:145
 msgid "At bottom of post"
 msgstr ""
 
-#: ../admin/settings.php:144
+#: ../admin/settings.php:146
 msgid "Manually"
 msgstr ""
 
-#: ../admin/settings.php:147
+#: ../admin/settings.php:149
 msgid "Show on excerpts"
 msgstr ""
 
-#: ../admin/settings.php:155
+#: ../admin/settings.php:157
 msgid ""
 "When creating a new post, the map will default to focussing on this area for "
 "you to position a marker."
 msgstr ""
 
-#: ../admin/settings.php:192
+#: ../admin/settings.php:194
 msgid "Map Type Controls"
 msgstr ""
 
-#: ../admin/settings.php:193
+#: ../admin/settings.php:195
 msgid "You must select at least 2 map types for the control to show."
 msgstr ""
 
-#: ../admin/settings.php:194
+#: ../admin/settings.php:196
 msgid "Normal map"
 msgstr ""
 
-#: ../admin/settings.php:195 ../includes/api.php:90
+#: ../admin/settings.php:197 ../includes/api.php:90
 msgid "Satellite (photographic map)"
 msgstr ""
 
-#: ../admin/settings.php:196 ../includes/api.php:91
+#: ../admin/settings.php:198 ../includes/api.php:91
 msgid "Hybrid (photographic map with normal features)"
 msgstr ""
 
-#: ../admin/settings.php:197 ../includes/api.php:92
+#: ../admin/settings.php:199 ../includes/api.php:92
 msgid "Physical (terrain map)"
 msgstr ""
 
-#: ../admin/settings.php:198
+#: ../admin/settings.php:200
 msgid "Other Controls"
 msgstr ""
 
-#: ../admin/settings.php:199
+#: ../admin/settings.php:201
 msgid "Show map scale"
 msgstr ""
 
-#: ../admin/settings.php:200
+#: ../admin/settings.php:202
 msgid "Show collapsible overview map (in the corner of the map)"
 msgstr ""
 
-#: ../admin/settings.php:201
+#: ../admin/settings.php:203
 msgid "Show Street View Control"
 msgstr ""
 
-#: ../admin/settings.php:222
+#: ../admin/settings.php:224
 msgid "Show polylines (to connect multiple points on a single map)"
 msgstr ""
 
-#: ../admin/settings.php:240
+#: ../admin/settings.php:276
+msgid "Single Pages"
+msgstr ""
+
+#: ../admin/settings.php:277
 msgid "Pages"
 msgstr ""
 
-#: ../admin/settings.php:241
-msgid "Posts (single posts)"
+#: ../admin/settings.php:278
+msgid "Posts"
 msgstr ""
 
-#: ../admin/settings.php:242
-msgid "Posts archive/home page"
+#: ../admin/settings.php:295
+msgid "Posts on Taxonomy Pages"
 msgstr ""
 
-#: ../admin/settings.php:243
-msgid "Posts in date archives"
+#: ../admin/settings.php:296
+msgid "Categories"
 msgstr ""
 
-#: ../admin/settings.php:244
-msgid "Posts in category archives"
+#: ../admin/settings.php:297
+msgid "Tags"
 msgstr ""
 
-#: ../admin/settings.php:245
-msgid "Posts in tag archives"
+#: ../admin/settings.php:298
+msgid "All Taxonomies"
 msgstr ""
 
-#: ../admin/settings.php:246
-msgid "Posts in taxonomy archives"
+#: ../admin/settings.php:300
+msgid "Posts on Other Pages"
 msgstr ""
 
-#: ../admin/settings.php:247
-msgid "Posts in author archives"
+#: ../admin/settings.php:301
+msgid "Posts Archive"
 msgstr ""
 
-#: ../admin/settings.php:248
+#: ../admin/settings.php:302
+msgid "Date Archives"
+msgstr ""
+
+#: ../admin/settings.php:303
+msgid "Author Archives"
+msgstr ""
+
+#: ../admin/settings.php:304
 msgid "Search Results"
 msgstr ""
 
-#: ../admin/settings.php:264
-msgid "Custom Post Types"
-msgstr ""
-
-#: ../admin/settings.php:275
+#: ../admin/settings.php:313
 msgid "Add geographic information"
 msgstr ""
 
-#: ../admin/settings.php:295 ../widgets/wpgeo-widget.php:253
+#: ../admin/settings.php:333 ../widgets/wpgeo-widget.php:251
 msgid "Settings"
 msgstr ""
 
@@ -546,7 +538,7 @@ msgstr ""
 msgid "Number of markers to show"
 msgstr ""
 
-#: ../widgets/recent-locations.php:116
+#: ../widgets/recent-locations.php:117
 msgid "Show Post Types"
 msgstr ""
 
@@ -558,23 +550,23 @@ msgstr ""
 msgid "Please update your WP Geo settings"
 msgstr ""
 
-#: ../widgets/wpgeo-widget.php:236
+#: ../widgets/wpgeo-widget.php:234
 msgid "Title"
 msgstr ""
 
-#: ../widgets/wpgeo-widget.php:237
+#: ../widgets/wpgeo-widget.php:235
 msgid "Width"
 msgstr ""
 
-#: ../widgets/wpgeo-widget.php:238
+#: ../widgets/wpgeo-widget.php:236
 msgid "Height"
 msgstr ""
 
-#: ../widgets/wpgeo-widget.php:251
+#: ../widgets/wpgeo-widget.php:249
 msgid "Zoom"
 msgstr ""
 
-#: ../widgets/wpgeo-widget.php:252
+#: ../widgets/wpgeo-widget.php:250
 msgid ""
 "If not all markers fit, the map will automatically be zoomed so they do."
 msgstr ""
