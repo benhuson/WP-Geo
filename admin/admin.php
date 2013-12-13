@@ -78,7 +78,7 @@ class WPGeo_Admin {
 			}
 		}
 		// Version upgrade message
-		if ( in_array( $current_screen->id, array( 'settings_page_wp-geo', 'plugins' ) ) ) {
+		if ( in_array( $current_screen->id, array( 'settings_page_wp-geo' ) ) ) {
 			$wp_geo_show_version_msg = get_option( 'wp_geo_show_version_msg' );
 			if ( current_user_can( 'manage_options' ) && $wp_geo_show_version_msg == 'Y' ) {
 				echo '<div id="wpgeo_version_message" class="error below-h2" style="margin:5px 15px 2px 0px;">
