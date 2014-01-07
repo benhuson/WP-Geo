@@ -190,7 +190,7 @@ class WPGeo_Widget extends WP_Widget {
 					$map->add_point( $coord, array(
 						'icon'  => apply_filters( 'wpgeo_marker_icon', 'small', $post, 'widget' ),
 						'title' => get_wpgeo_title( $post->ID ),
-						'link'  => get_permalink( $post ),
+						'link'  => apply_filters( 'wpgeo_marker_link', get_permalink( $post ), $post ),
 						'post'  => $post
 					) );
 				}

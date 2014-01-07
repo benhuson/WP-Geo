@@ -230,7 +230,7 @@ function get_wpgeo_post_map( $post_id = 0, $args = null ) {
 			$map->add_point( $coord, array(
 				'icon'  => apply_filters( 'wpgeo_marker_icon', $marker_meta, $this_post, 'post' ),
 				'title' => $title_meta,
-				'link'  => get_permalink( $this_post ),
+				'link'  => apply_filters( 'wpgeo_marker_link', get_permalink( $this_post ), $this_post ),
 				'post'  => $this_post
 			) );
 			if ( ! empty( $args['width'] ) )
@@ -370,7 +370,7 @@ function get_wpgeo_map( $query, $options = null ) {
 				$map->add_point( $coord, array(
 					'icon'  => apply_filters( 'wpgeo_marker_icon', $marker, $post, 'template' ),
 					'title' => get_wpgeo_title( $post->ID ),
-					'link'  => get_permalink( $post ),
+					'link'  => apply_filters( 'wpgeo_marker_link', get_permalink( $post ), $post ),
 					'post'  => $post
 				) );
 			}
