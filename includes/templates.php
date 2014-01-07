@@ -312,6 +312,7 @@ function get_wpgeo_map( $query, $options = null ) {
 		'type'            => $wp_geo_options['google_map_type'],
 		'polylines'       => $wp_geo_options['show_polylines'],
 		'polyline_colour' => $wp_geo_options['polyline_colour'],
+		'zoom'            => $wp_geo_options['default_map_zoom'],
 		'align'           => 'none',
 		'numberposts'     => -1,
 		'posts_per_page'  => -1,
@@ -355,7 +356,7 @@ function get_wpgeo_map( $query, $options = null ) {
 	$map = new WPGeo_Map( 'id_' . $wpgeo_map_id );
 	$map->set_size( $r['width'], $r['height'] );
 	$map->set_map_centre( new WPGeo_Coord( $wp_geo_options['default_map_latitude'], $wp_geo_options['default_map_longitude'] ) );
-	$map->set_map_zoom( $wp_geo_options['default_map_zoom'] );
+	$map->set_map_zoom( $r['zoom'] );
 	$map->set_map_type( $r['type'] );
 	
 	// Points
