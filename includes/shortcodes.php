@@ -181,6 +181,7 @@ if ( ! function_exists( 'shortcode_wpgeo_mashup' ) ) {
 			'align'           => 'none',
 			'numberposts'     => -1,
 			'posts_per_page'  => -1,
+			'post_ids'        => null,
 			'post_type'       => null,
 			'post_status'     => 'publish',
 			'orderby'         => 'post_date',

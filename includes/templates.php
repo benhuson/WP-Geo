@@ -326,6 +326,7 @@ function get_wpgeo_map( $query, $options = null ) {
         'exclude'         => null,
         'meta_key'        => null,
         'meta_value'      => null,
+        'post_ids'        => '',
         'post_mime_type'  => null,
         'post_parent'     => null
 	) );
@@ -338,7 +339,16 @@ function get_wpgeo_map( $query, $options = null ) {
 	if ( $r['posts_per_page'] < $r['numberposts'] ) {
 		$r['posts_per_page'] = $r['numberposts'];
 	}
-	
+
+	// Set 'post__in' if 'post_ids' set, but don't overwrite.
+	if ( ! empty( $r['post_ids'] ) && empty( $r['post__in'] ) ) {
+		if ( is_array( $r['post_ids'] ) ) {
+			$r['post__in'] = $r['post_ids'];
+		} else {
+			$r['post__in'] = explode( ',', $r['post_ids'] );
+		}
+	}
+
 	$posts = get_posts( $r );
 	
 	// Map
