@@ -44,8 +44,9 @@ class WPGeo_API {
 	function static_map_url( $map ) {
 		$point = $map->get_point();
 		$coord = $point->get_coord();
-		if ( ! $coord->is_valid_coord() )
+		if ( ! $coord->is_valid_coord() ) {
 			return '';
+		}
 
 		$center = $map->get_map_centre();
 		$types = $this->static_map_types();
@@ -71,8 +72,9 @@ class WPGeo_API {
 	function map_url( $map ) {
 		$point = $map->get_point();
 		$coord = $point->get_coord();
-		if ( ! $coord->is_valid_coord() )
+		if ( ! $coord->is_valid_coord() ) {
 			return '';
+		}
 
 		$url = add_query_arg( array(
 			'q' => $coord->get_delimited(),

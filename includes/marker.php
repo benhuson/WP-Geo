@@ -109,8 +109,9 @@ class WPGeo_Marker {
 	function get_javascript() {
 		global $wpgeo;
 		$icon = apply_filters( $wpgeo->get_api_string( 'wpgeo_api_%s_markericon' ), '', $this );
-		if ( ! empty( $icon ) )
+		if ( ! empty( $icon ) ) {
 			return "var wpgeo_icon_" . $this->id . " = " . $icon . ";";
+		}
 		return $icon;
 	}		
 

@@ -18,8 +18,9 @@ class WPGeo_Editor {
 	function add_buttons() {
 	
 		// Don't bother doing this stuff if the current user lacks permissions
-		if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'edit_pages' ) )
+		if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'edit_pages' ) ) {
 			return;
+		}
 		
 		// Add only in Rich Editor mode
 		if ( get_user_option( 'rich_editing' ) == 'true' ) {

@@ -157,8 +157,9 @@ class WPGeo_Admin {
 		global $wpgeo;
 
 		// Check we can display a map
-		if ( ! $wpgeo->checkGoogleAPIKey() )
+		if ( ! $wpgeo->checkGoogleAPIKey() ) {
 			return;
+		}
 
 		// Only add for supported post types
 		$post_types = get_post_types();
@@ -283,8 +284,9 @@ class WPGeo_Admin {
 	function wpgeo_location_save_postdata( $post_id ) {
 		global $wpgeo;
 
-		if ( ! $wpgeo->checkGoogleAPIKey() )
+		if ( ! $wpgeo->checkGoogleAPIKey() ) {
 			return;
+		}
 		
 		// Verify this came from the our screen and with proper authorization,
 		// because save_post can be triggered at other times
@@ -294,16 +296,19 @@ class WPGeo_Admin {
 		
 		// Authenticate user
 		if ( 'page' == $_POST['post_type'] ) {
-			if ( ! current_user_can( 'edit_page', $post_id ) )
+			if ( ! current_user_can( 'edit_page', $post_id ) ) {
 				return $post_id;
+			}
 		} elseif ( 'post' == $_POST['post_type'] ) {
-			if ( ! current_user_can( 'edit_post', $post_id ) )
+			if ( ! current_user_can( 'edit_post', $post_id ) ) {
 				return $post_id;
+			}
 		} elseif ( function_exists( 'get_post_type_object' ) ) {
 			$post_type = get_post_type_object( $_POST['post_type'] );
 			// @todo Should this be "edit_" . $post_type->capability_type
-			if ( ! current_user_can( $post_type->cap->edit_post, $post_id ) )
+			if ( ! current_user_can( $post_type->cap->edit_post, $post_id ) ) {
 				return $post_id;
+			}
 		}
 		
 		$mydata = array();

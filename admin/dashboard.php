@@ -38,8 +38,9 @@ if ( ! class_exists( 'WPGeo_Dashboard' ) ) {
 		function add_widget( $widgets ) {
 			global $wp_registered_widgets;
 			
-			if ( ! isset( $wp_registered_widgets['wpgeo_dashboard'] ) )
+			if ( ! isset( $wp_registered_widgets['wpgeo_dashboard'] ) ) {
 				return $widgets;
+			}
 			array_splice( $widgets, sizeof( $widgets ) - 1, 0, 'wpgeo_dashboard' );
 			
 			return $widgets;

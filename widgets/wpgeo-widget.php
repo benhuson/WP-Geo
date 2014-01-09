@@ -26,8 +26,9 @@ class WPGeo_Widget extends WP_Widget {
 	function wrap_content( $content, $args, $instance ) {
 		if ( ! empty( $content ) ) {
 			$html = $args['before_widget'];
-			if ( ! empty( $instance['title'] ) )
+			if ( ! empty( $instance['title'] ) ) {
 				$html .= $args['before_title'] . $instance['title'] . $args['after_title'];
+			}
 			$html .= $content . $args['after_widget'];
 			return $html;
 		}
@@ -166,8 +167,9 @@ class WPGeo_Widget extends WP_Widget {
 			'id'            => 'widget_map',
 			'posts'         => null
 		) );
-		if ( ! $args['posts'] )
+		if ( ! $args['posts'] ) {
 			return $html_js;
+		}
 		
 		// Create Map
 		$map = new WPGeo_Map( $args['id'] );
@@ -185,8 +187,9 @@ class WPGeo_Widget extends WP_Widget {
 				$coord = get_wpgeo_post_coord( $post->ID );
 				if ( $coord->is_valid_coord() ) {
 					$count++;
-					if ( count( $count ) == 1 )
+					if ( count( $count ) == 1 ) {
 						$map->set_map_centre( $coord );
+					}
 					$map->add_point( $coord, array(
 						'icon'  => apply_filters( 'wpgeo_marker_icon', 'small', $post, 'widget' ),
 						'title' => get_wpgeo_title( $post->ID ),

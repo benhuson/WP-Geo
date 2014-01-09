@@ -224,8 +224,9 @@ class WPGeo_Map {
 	 * @return  object   WPGeo_Point.
 	 */
 	function get_point( $n = 0 ) {
-		if ( count( $this->points ) >= $n + 1 )
+		if ( count( $this->points ) >= $n + 1 ) {
 			return $this->points[$n];
+		}
 		return false;
 	}
 
@@ -634,8 +635,9 @@ class WPGeo_Coord {
 	 * @return bool
 	 */
 	function is_valid_coord() {
-		if ( is_numeric( $this->latitude ) && is_numeric( $this->longitude ) )
+		if ( is_numeric( $this->latitude ) && is_numeric( $this->longitude ) ) {
 			return true;
+		}
 		return false;
 	}
 

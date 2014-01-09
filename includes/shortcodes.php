@@ -70,8 +70,9 @@ if ( ! function_exists( 'shortcode_wpgeo_map_link' ) ) {
 		) );
 		$atts['echo'] = 0;
 
-		if ( ! $content )
+		if ( ! $content ) {
 			$content = __( 'View Larger Map', 'wp-geo' );
+		}
 
 		return sprintf( '<a href="%s" target="%s">%s</a>', esc_attr( wpgeo_map_link( $atts ) ), esc_attr( $atts['target'] ), do_shortcode( $content ) );
 	}
@@ -133,8 +134,9 @@ if ( ! function_exists( 'shortcode_wpgeo_map' ) ) {
 			) );
 
 			// Escape?
-			if ( $atts['escape'] == 'true' )
+			if ( $atts['escape'] == 'true' ) {
 				return '[wpgeo_map]';
+			}
 
 			// To Do: Add in lon/lat check and output map if needed
 			$styles = array();
@@ -189,8 +191,9 @@ if ( ! function_exists( 'shortcode_wpgeo_mashup' ) ) {
 			'markers'         => 'large'
 		) );
 
-		if ( ! is_feed() && isset( $wpgeo ) && $wpgeo->show_maps() && $wpgeo->checkGoogleAPIKey() )
+		if ( ! is_feed() && isset( $wpgeo ) && $wpgeo->show_maps() && $wpgeo->checkGoogleAPIKey() ) {
 			return get_wpgeo_map( $atts );
+		}
 		return '';
 	}
 	add_shortcode( 'wpgeo_mashup', 'shortcode_wpgeo_mashup' );

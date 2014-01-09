@@ -36,8 +36,9 @@ class WPGeo_Feeds {
 		global $wp_query;
 
 		// If GeoRSS feed, return all...
-		if ( is_feed() && $wp_query->get( 'feed' ) == 'georss' )
+		if ( is_feed() && $wp_query->get( 'feed' ) == 'georss' ) {
 			return '';
+		}
 		return $limits;
 	}
 
@@ -48,8 +49,9 @@ class WPGeo_Feeds {
 	 * @return string Content type.
 	 */
 	function feed_content_type( $type ) {
-		if ( $type == 'georss' )
+		if ( $type == 'georss' ) {
 			$type = 'application/rss+xml';
+		}
 		return $type;
 	}
 

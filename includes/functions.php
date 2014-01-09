@@ -22,8 +22,9 @@ function wpgeo_is_valid_geo_coord( $lat, $lng ) {
  * @return  string            Dimension as string.
  */
 function wpgeo_css_dimension( $str = false ) {
-	if ( is_numeric( $str ) )
+	if ( is_numeric( $str ) ) {
 		$str .= 'px';
+	}
 	return $str;
 }
 
@@ -60,8 +61,9 @@ function wpgeo_check_domain() {
 function wpgeo_check_version( $version ) {
 	global $wpgeo;
 
-	if ( version_compare( $version, $wpgeo->version, '>=' ) )
+	if ( version_compare( $version, $wpgeo->version, '>=' ) ) {
 		return true;
+	}
 	return false;
 }
 
@@ -75,8 +77,9 @@ function wpgeo_check_version( $version ) {
 function wpgeo_check_db_version( $version ) {
 	global $wpgeo;
 
-	if ( $version >= $wpgeo->db_version )
+	if ( $version >= $wpgeo->db_version ) {
 		return true;
+	}
 	return false;
 }
 
@@ -101,8 +104,9 @@ function wpgeo_show_polylines_options( $args = null ) {
 		'N'	=> __( 'Hide Polylines', 'wp-geo' )
 	);
 
-	if ( $args['return'] = 'menu' )
+	if ( $args['return'] = 'menu' ) {
 		return wpgeo_select( $args['name'], $menu_options, $args['selected'] );
+	}
 	return $menu_options;
 }
 
@@ -117,8 +121,9 @@ function wpgeo_show_polylines_options( $args = null ) {
  * @return  string             Checkbox HTML.
  */
 function wpgeo_checkbox( $name, $val, $checked, $disabled = false, $id = '' ) {
-	if ( empty( $id ) )
+	if ( empty( $id ) ) {
 		$id = $name;
+	}
 	return '<input name="' . esc_attr( $name ) . '" type="checkbox" id="' . esc_attr( $id ) . '" value="' . esc_attr( $val ) . '"' . checked( $val, $checked, false ) . disabled( true, $disabled, false ) . ' />';
 }
 
@@ -133,8 +138,9 @@ function wpgeo_checkbox( $name, $val, $checked, $disabled = false, $id = '' ) {
  * @return  string             Select HTML.
  */
 function wpgeo_select( $name, $options, $selected = '', $disabled = false, $id = '' ) {
-	if ( empty( $id ) )
+	if ( empty( $id ) ) {
 		$id = $name;
+	}
 	$options_html = '';
 	foreach ( $options as $value => $label ) {
 		$options_html .= '<option value="' . esc_attr( $value ) . '"' . selected( $selected, $value, false ) . '>' . $label . '</option>';

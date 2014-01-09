@@ -63,8 +63,9 @@ class WPGeo_Markers {
 	 * @return  string        Image URL.
 	 */
 	function get_image_url( $img ) {
-		if ( file_exists( $this->marker_image_dir . $img ) )
+		if ( file_exists( $this->marker_image_dir . $img ) ) {
 			return $this->marker_image_url . $img;
+		}
 		return WPGEO_URL . 'img/markers/' . $img;
 	}
 
@@ -84,8 +85,9 @@ class WPGeo_Markers {
 	 */
 	function get_marker_by_id( $marker_id ) {
 		foreach ( $this->markers as $m ) {
-			if ( $m->id == $marker_id )
+			if ( $m->id == $marker_id ) {
 				return $m;
+			}
 		}
 	}
 
@@ -96,8 +98,9 @@ class WPGeo_Markers {
 	 * @return  boolean
 	 */
 	function marker_folder_exists() {
-		if ( is_dir( $this->marker_image_dir ) )
+		if ( is_dir( $this->marker_image_dir ) ) {
 			return true;
+		}
 
 		// Make dirs and register for site because we may be in multisite.
 		// Then retry. props Alain (alm)
@@ -211,21 +214,24 @@ class WPGeo_Markers {
 		$output = '';
 		$name = $r['name'];
 
-		if ( empty( $r['id'] ) )
+		if ( empty( $r['id'] ) ) {
 			$r['id'] = $r['name'];
+		}
 		$id = $r['id'];
 
 		$options = array();
-		if ( ! empty( $r['show_option_none'] ) )
+		if ( ! empty( $r['show_option_none'] ) ) {
 			$options[$r['option_none_value']] = $r['show_option_none'];
+		}
 		foreach ( $this->markers as $marker ) {
 			$options[$marker->id] = $marker->name;
 		}
 
 		$output .= wpgeo_select( $name, $options, $r['selected'], false, $id );
 
-		if ( $r['echo'] )
+		if ( $r['echo'] ) {
 			echo $output;
+		}
 		return $output;
 	}
 

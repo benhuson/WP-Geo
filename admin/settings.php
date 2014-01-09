@@ -331,8 +331,9 @@ class WPGeo_Settings {
 	function wpgeo_filter_plugin_action_links( $links, $file ) {
 		if ( $file == 'wp-geo/wp-geo.php' ) {
 			$settings_link = '<a href="' . admin_url( 'options-general.php?page=wp-geo' ) . '">' . __( 'Settings', 'wp-geo' ) . '</a>';
-			if ( ! in_array( $settings_link, $links ) )
+			if ( ! in_array( $settings_link, $links ) ) {
 				array_unshift( $links, $settings_link );
+			}
 		}
 		return $links;
 	}

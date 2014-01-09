@@ -17,10 +17,12 @@ define( 'WPGEO_URL', plugins_url( WPGEO_SUBDIR ) );
 define( 'WPGEO_DIR', plugin_dir_path( __FILE__ ) );
 
 // Constants
-if ( ! defined( 'WPGEO_LATITUDE_META' ) )
+if ( ! defined( 'WPGEO_LATITUDE_META' ) ) {
 	define( 'WPGEO_LATITUDE_META', '_wp_geo_latitude' );
-if ( ! defined( 'WPGEO_LONGITUDE_META' ) )
+}
+if ( ! defined( 'WPGEO_LONGITUDE_META' ) ) {
 	define( 'WPGEO_LONGITUDE_META', '_wp_geo_longitude' );
+}
 define( 'WPGEO_TITLE_META',        '_wp_geo_title' );
 define( 'WPGEO_MARKER_META',       '_wp_geo_marker' );
 define( 'WPGEO_MAP_SETTINGS_META', '_wp_geo_map_settings' );

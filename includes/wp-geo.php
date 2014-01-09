@@ -252,8 +252,9 @@ class WPGeo {
 				// Dublin Core Meta Title Tag
 				// Some geo databases extract the web-page's title out of the DC.title tag
 				$title = get_post_meta( $post->ID, WPGEO_TITLE_META, true );
-				if ( ! empty( $title ) )
+				if ( ! empty( $title ) ) {
 					echo '<meta name="DC.title" content="' . esc_attr( $title ) . '" />';
+				}
 			}
 		}
 	}
@@ -302,8 +303,9 @@ class WPGeo {
 		$map_type_options = $wpgeo->api->map_type_options();
 		$controltypes = array();
 		foreach ( $map_type_options as $key => $val ) {
-			if ( $options[$val] == 'Y' )
+			if ( $options[$val] == 'Y' ) {
 				$controltypes[] = $key;
+			}
 		}
 		return $controltypes;
 	}
@@ -370,8 +372,9 @@ class WPGeo {
 	 * It's not standard but Google doesn;t seem to like '&#038;'
 	 */
 	function clean_googleapis_url( $url, $original_url, $_context ) {
-		if ( strstr( $url, 'googleapis.com' ) !== false )
+		if ( strstr( $url, 'googleapis.com' ) !== false ) {
 			$url = str_replace( '&#038;', '&', $url );
+		}
 		return $url;
 	}
 
@@ -589,12 +592,14 @@ class WPGeo {
 	function get_api_string( $str = '%s' ) {
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		if ( is_admin() ) {
-			if ( empty( $wp_geo_options['admin_api'] ) )
+			if ( empty( $wp_geo_options['admin_api'] ) ) {
 				$wp_geo_options['admin_api'] = 'googlemapsv3';
+			}
 			$str = sprintf( $str, $wp_geo_options['admin_api'] );
 		} else {
-			if ( empty( $wp_geo_options['public_api'] ) )
+			if ( empty( $wp_geo_options['public_api'] ) ) {
 				$wp_geo_options['public_api'] = 'googlemapsv3';
+			}
 			$str = sprintf( $str, $wp_geo_options['public_api'] );
 		}
 		return $str;
@@ -661,12 +666,15 @@ class WPGeo {
 					$map->addMapType( $map_type );
 				}
 
-				if ( $wp_geo_options['show_map_scale'] == 'Y' )
+				if ( $wp_geo_options['show_map_scale'] == 'Y' ) {
 					$map->showMapScale( true );
-				if ( $wp_geo_options['show_map_overview'] == 'Y' )
+				}
+				if ( $wp_geo_options['show_map_overview'] == 'Y' ) {
 					$map->showMapOverview( true );
-				if ( $wp_geo_options['show_streetview_control'] == 'Y' )
+				}
+				if ( $wp_geo_options['show_streetview_control'] == 'Y' ) {
 					$map->show_streetview_control( true );
+				}
 				
 				$map->setMapControl( $wp_geo_options['default_map_control'] );
 
@@ -722,16 +730,19 @@ class WPGeo {
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		
 		// Check if domain is correct
-		if ( ! wpgeo_check_domain() )
+		if ( ! wpgeo_check_domain() ) {
 			return false;
+		}
 		
 		// Widget active
-		// if ( is_active_widget( array( 'WPGeo_Widget', 'map_widget' ) ) )
+		// if ( is_active_widget( array( 'WPGeo_Widget', 'map_widget' ) ) ) {
 		//	return true;
+		// }
 		
 		// Check settings
-		if ( is_home() && $wp_geo_options['show_maps_on_home'] == 'Y' )
+		if ( is_home() && $wp_geo_options['show_maps_on_home'] == 'Y' ) {
 			return $this->show_maps_filter( true );
+		}
 		if ( is_single() ) {
 			$post_type = get_post_type( $post->ID );
 			if ( $post_type == 'post' ) {
@@ -742,30 +753,50 @@ class WPGeo {
 				return true;
 			}
 		}
-		if ( is_page() && $wp_geo_options['show_maps_on_pages'] == 'Y' )                return $this->show_maps_filter( true );
-		if ( is_date() && $wp_geo_options['show_maps_in_datearchives'] == 'Y' )         return $this->show_maps_filter( true );
-		if ( is_category() && $wp_geo_options['show_maps_in_categoryarchives'] == 'Y' ) return $this->show_maps_filter( true );
-		if ( is_tag() && $wp_geo_options['show_maps_in_tagarchives'] == 'Y' )           return $this->show_maps_filter( true );
-		if ( is_tax() && $wp_geo_options['show_maps_in_taxarchives'] == 'Y' )           return $this->show_maps_filter( true );
-		if ( is_author() && $wp_geo_options['show_maps_in_authorarchives'] == 'Y' )     return $this->show_maps_filter( true );
-		if ( is_search() && $wp_geo_options['show_maps_in_searchresults'] == 'Y' )      return $this->show_maps_filter( true );
-		if ( is_feed() && $wp_geo_options['add_geo_information_to_rss'] == 'Y' )        return $this->show_maps_filter( true );
-		if ( is_post_type_archive() && $wpgeo->post_type_supports( get_post_type() ) && $wp_geo_options['show_maps_on_home'] == 'Y' )
+		if ( is_page() && $wp_geo_options['show_maps_on_pages'] == 'Y' ) {
 			return $this->show_maps_filter( true );
+		}
+		if ( is_date() && $wp_geo_options['show_maps_in_datearchives'] == 'Y' ) {
+			return $this->show_maps_filter( true );
+		}
+		if ( is_category() && $wp_geo_options['show_maps_in_categoryarchives'] == 'Y' ) {
+			return $this->show_maps_filter( true );
+		}
+		if ( is_tag() && $wp_geo_options['show_maps_in_tagarchives'] == 'Y' ) {
+			return $this->show_maps_filter( true );
+		}
+		if ( is_tax() && $wp_geo_options['show_maps_in_taxarchives'] == 'Y' ) {
+			return $this->show_maps_filter( true );
+		}
+		if ( is_author() && $wp_geo_options['show_maps_in_authorarchives'] == 'Y' ) {
+			return $this->show_maps_filter( true );
+		}
+		if ( is_search() && $wp_geo_options['show_maps_in_searchresults'] == 'Y' ) {
+			return $this->show_maps_filter( true );
+		}
+		if ( is_feed() && $wp_geo_options['add_geo_information_to_rss'] == 'Y' ) {
+			return $this->show_maps_filter( true );
+		}
+		if ( is_post_type_archive() && $wpgeo->post_type_supports( get_post_type() ) && $wp_geo_options['show_maps_on_home'] == 'Y' ) {
+			return $this->show_maps_filter( true );
+		}
 		
 		// Activate maps in admin...
 		if ( is_admin() ) {
 			// If editing a post or page...
-			if ( is_numeric( $post_ID ) && $post_ID > 0 )
+			if ( is_numeric( $post_ID ) && $post_ID > 0 ) {
 				return $this->show_maps_filter( true );
+			}
 			// If writing a new post or page...
-			if ( $pagenow == 'post-new.php' || $pagenow == 'page-new.php' )
+			if ( $pagenow == 'post-new.php' || $pagenow == 'page-new.php' ) {
 				return $this->show_maps_filter( true );
+			}
 		}
 		
 		// Do Action
-		if ( $this->show_maps_external )
+		if ( $this->show_maps_external ) {
 			return $this->show_maps_filter( true );
+		}
 		
 		return $this->show_maps_filter( false );
 	}
@@ -835,10 +866,12 @@ class WPGeo {
 		) );
 
 		// Deprecated compatibility
-		if ( $args['return'] == null ) 
+		if ( $args['return'] == null ) {
 			$args['return'] = $return;
-		if ( $args['selected'] == null ) 
+		}
+		if ( $args['selected'] == null ) {
 			$args['selected'] = $selected;
+		}
 
 		$menu_options = $this->api->zoom_values();
 
@@ -868,10 +901,12 @@ class WPGeo {
 		) );
 
 		// Deprecated compatibility
-		if ( $args['return'] == null ) 
+		if ( $args['return'] == null ) {
 			$args['return'] = $return;
-		if ( $args['selected'] == null ) 
+		}
+		if ( $args['selected'] == null ) {
 			$args['selected'] = $selected;
+		}
 
 		$menu_options = $wpgeo->api->map_types();
 
