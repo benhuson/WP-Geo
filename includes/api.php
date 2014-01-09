@@ -43,7 +43,8 @@ class WPGeo_API {
 	 */
 	function static_map_url( $map ) {
 		$point = $map->get_point();
-		if ( ! $point->coord->is_valid_coord() )
+		$coord = $point->get_coord();
+		if ( ! $coord->is_valid_coord() )
 			return '';
 
 		$center = $map->get_map_centre();
@@ -54,7 +55,7 @@ class WPGeo_API {
 			'zoom'    => $map->get_map_zoom(),
 			'size'    => $map->get_width() . 'x' . $map->get_height(),
 			'maptype' => $types[$map->get_map_type()],
-			'markers' => 'color:red%7C' . $point->coord->get_delimited(),
+			'markers' => 'color:red%7C' . $coord->get_delimited(),
 			'sensor'  => 'false'
 		), 'http://maps.googleapis.com/maps/api/staticmap' );
 		return apply_filters( 'wpgeo_static_map_url', $url, $map );
@@ -69,11 +70,12 @@ class WPGeo_API {
 	 */
 	function map_url( $map ) {
 		$point = $map->get_point();
-		if ( ! $point->coord->is_valid_coord() )
+		$coord = $point->get_coord();
+		if ( ! $coord->is_valid_coord() )
 			return '';
 
 		$url = add_query_arg( array(
-			'q' => $point->coord->get_delimited(),
+			'q' => $coord->get_delimited(),
 			'z' => $map->get_map_zoom()
 		),'http://maps.google.co.uk/maps' );
 		return apply_filters( 'wpgeo_map_url', $url, $map );

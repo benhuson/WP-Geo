@@ -470,18 +470,18 @@ class WPGeo_Polyline {
  * Point Class
  */
 class WPGeo_Point {
-	
+
 	var $coord = null;
 	var $args  = null;
 	var $icon  = 'large';
 	var $title = '';
 	var $link  = '';
-	
+
 	/**
 	 * Constructor
 	 *
-	 * @param float $latitude Latitude.
-	 * @param float $longitude Longitude.
+	 * @param  object  $coord  WPGeo_Coord object.
+	 * @param  array   $args   Point arguments.
 	 */
 	function WPGeo_Point( $coord, $args = null ) {
 		$args = wp_parse_args( $args, array(
@@ -495,7 +495,55 @@ class WPGeo_Point {
 		$this->title = $args['title'];
 		$this->link  = $args['link'];
 	}
-	
+
+	/**
+	 * Get Coord
+	 *
+	 * @return  object  WPGeo_Coord.
+	 */
+	function get_coord() {
+		return $this->coord;
+	}
+
+	/**
+	 * Get Arg
+	 *
+	 * @return  mixed  Argument value.
+	 */
+	function get_arg( $key ) {
+		if ( is_array( $this->args ) && isset( $this->args[$key] ) ) {
+			return $this->args[$key];
+		}
+		return null;
+	}
+
+	/**
+	 * Get Icon
+	 *
+	 * @return  string  Icon string.
+	 */
+	function get_icon() {
+		return $this->icon;
+	}
+
+	/**
+	 * Get Title
+	 *
+	 * @return  string  Title string.
+	 */
+	function get_title() {
+		return $this->icon;
+	}
+
+	/**
+	 * Get Link
+	 *
+	 * @return  string  URL.
+	 */
+	function get_link() {
+		return $this->link;
+	}
+
 }
 
 /**

@@ -205,7 +205,7 @@ class WPGeo_Widget extends WP_Widget {
 						'color' => $wp_geo_options['polyline_colour']
 					) );
 					foreach ( $map->points as $point ) {
-						$polyline->add_coord( $point->coord );
+						$polyline->add_coord( $point->get_coord() );
 					}
 					$map->add_polyline( $polyline );
 				}

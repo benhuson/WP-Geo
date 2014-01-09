@@ -78,12 +78,14 @@ class WPGeo_API_GoogleMapsV2 extends WPGeo_API {
 	function get_markers_js( $map ) {
 		$markers = '';
 		for ( $i = 0; $i < count( $map->points ); $i++ ) {
-			$post_icon = isset( $map->points[$i]->icon ) ? $map->points[$i]->icon : 'small';
+			$post_icon = $map->points[$i]->get_icon();
+			$post = $map->points[$i]->get_arg( 'post' );
+			$coord = $map->points[$i]->get_coord();
 			$icon = 'wpgeo_icon_' . $post_icon;
-			if ( isset( $map->points[$i]->args['post'] ) ) {
-				$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', $post_icon, $map->points[$i]->args['post'], 'widget' );
+			if ( ! is_null( $post ) ) {
+				$icon = 'wpgeo_icon_' . apply_filters( 'wpgeo_marker_icon', $post_icon, $post, 'widget' );
 			}
-			$markers .= 'var marker_' . $i . ' = wpgeoCreateMapMarker(' . $map->get_js_id() . ', new GLatLng(' . $map->points[$i]->coord->get_delimited() . '), ' . $icon . ', "' . addslashes( __( $map->points[$i]->title ) ) . '", "' . $map->points[$i]->link . '");' . "\n";
+			$markers .= 'var marker_' . $i . ' = wpgeoCreateMapMarker(' . $map->get_js_id() . ', new GLatLng(' . $coord->get_delimited() . '), ' . $icon . ', "' . addslashes( __( $map->points[$i]->get_title() ) ) . '", "' . $map->points[$i]->get_link() . '");' . "\n";
 		}
 		return $markers;
 	}

@@ -384,7 +384,7 @@ function get_wpgeo_map( $query, $options = null ) {
 				'color' => $r['polyline_colour']
 			) );
 			foreach ( $map->points as $point ) {
-				$polyline->add_coord( $point->coord );
+				$polyline->add_coord( $point->get_coord() );
 			}
 			$map->add_polyline( $polyline );
 		}
