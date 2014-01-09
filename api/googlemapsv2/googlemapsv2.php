@@ -95,14 +95,15 @@ class WPGeo_API_GoogleMapsV2 extends WPGeo_API {
 		if ( count( $map->polylines ) > 0 ) {
 			foreach ( $map->polylines as $polyline ) {
 				$coords = array();
-				foreach ( $polyline->coords as $coord ) {
+				$polyline_coords = $polyline->get_coords();
+				foreach ( $polyline_coords as $coord ) {
 					$coords[] = 'new GLatLng(' . $coord->get_delimited() . ')';
 				}
 				$options = array();
-				if ( $polyline->geodesic ) {
+				if ( $polyline->is_geodesic() ) {
 					$options[] = 'geodesic:true';
 				}
-				$polylines = $map->get_js_id() . '.addOverlay(new GPolyline([' . implode( ',', $coords ) . '],"' . $polyline->color . '",' . $polyline->thickness . ',' . $polyline->opacity . ',{' . implode( ',', $options ) . '}));';
+				$polylines = $map->get_js_id() . '.addOverlay(new GPolyline([' . implode( ',', $coords ) . '],"' . $polyline->get_color() . '",' . $polyline->get_thickness() . ',' . $polyline->get_opacity() . ',{' . implode( ',', $options ) . '}));';
 			}
 		}
 		return $polylines;

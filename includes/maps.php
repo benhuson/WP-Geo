@@ -423,13 +423,13 @@ class WPGeo_Map {
  * Polyline Class
  */
 class WPGeo_Polyline {
-	
+
 	var $coords    = array();
 	var $geodesic  = true;
 	var $color     = '#FFFFFF';
 	var $thickness = 2;
 	var $opacity   = 0.5;
-	
+
 	/**
 	 * Constructor
 	 *
@@ -449,7 +449,7 @@ class WPGeo_Polyline {
 		$this->thickness = $args['thickness'];
 		$this->opacity   = $args['opacity'];
 	}
-	
+
 	/**
 	 * Add Coord
 	 *
@@ -463,7 +463,64 @@ class WPGeo_Polyline {
 			$this->coords[] = new WPGeo_Coord( $coord, $longitude );
 		}
 	}
-	
+
+	/**
+	 * Get Coords
+	 *
+	 * @return  array  Array of WPGeo_Coord objects.
+	 */
+	function get_coords() {
+		return $this->coords;
+	}
+
+	/**
+	 * Get Geodesic
+	 *
+	 * @return  string  Geodesic.
+	 */
+	function get_geodesic() {
+		return $this->geodesic;
+	}
+
+	/**
+	 * Is Geodesic?
+	 *
+	 * @return  bool  Is geodesic display.
+	 */
+	function is_geodesic() {
+		if ( $this->geodesic ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Get Color
+	 *
+	 * @return  string  Color.
+	 */
+	function get_color() {
+		return $this->color;
+	}
+
+	/**
+	 * Get Thickness
+	 *
+	 * @return  string  Thickness.
+	 */
+	function get_thickness() {
+		return $this->thickness;
+	}
+
+	/**
+	 * Get Opacity
+	 *
+	 * @return  string  Opacity.
+	 */
+	function get_opacity() {
+		return $this->opacity;
+	}
+
 }
 
 /**

@@ -139,15 +139,16 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 			$count = 1;
 			foreach ( $map->polylines as $polyline ) {
 				$polyline_js_3_coords = array();
-				foreach ( $polyline->coords as $c ) {
+				$coords = $polyline->get_coords();
+				foreach ( $coords as $c ) {
 					$polyline_js_3_coords[] = 'new google.maps.LatLng(' . $c->get_delimited() . ')';
 				}
 				$polylines = 'var polyline_' . $count . '_' . $map->get_js_id() . ' = new google.maps.Polyline({
 						path          : [' . implode( ',', $polyline_js_3_coords ) . '],
-						strokeColor   : "' . $polyline->color . '",
-						strokeOpacity : ' . $polyline->opacity . ',
-						strokeWeight  : ' . $polyline->thickness . ',
-						geodesic      : ' . $polyline->geodesic . ',
+						strokeColor   : "' . $polyline->get_color() . '",
+						strokeOpacity : ' . $polyline->get_opacity() . ',
+						strokeWeight  : ' . $polyline->get_thickness() . ',
+						geodesic      : ' . $polyline->get_geodesic() . ',
 						map           : ' . $map->get_js_id() . '
 					});';
 				$count++;
