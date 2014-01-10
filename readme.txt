@@ -4,7 +4,7 @@ Donate link: http://www.wpgeo.com/donate
 Tags: maps, map, geo, geocoding, google, location, georss
 Requires at least: 3.5
 Tested up to: 3.8
-Stable tag: 3.3.4
+Stable tag: 3.3.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -95,6 +95,13 @@ None at the moment.
 4. Widget Settings
 
 == Changelog ==
+
+= WP Geo 3.3.5 =
+
+* Allow specifying of 'post_ids' in wpgeo_mashup shortcode.
+* Workaround for when blog is non-ssl but the admin-page is. Props miicha
+* Added zoom parameter to get_wpgeo_map() function.
+* Added 'wpgeo_marker_link' filter.
 
 = WP Geo 3.3.4 =
 
@@ -419,6 +426,9 @@ NOTE: You will need to re-add your widgets after upgrading!
 * Added option to set wether maps appear at the top or bottom of posts.
 
 == Upgrade Notice ==
+
+= 3.3.5 =
+Workaround for when blog is non-ssl but the admin-page is and several new filters and parameters.
 
 = 3.3.4 =
 Maps use default control setting if not specified. Remove old unused renderMapJS() function. Add post type support settings. Supports media.
