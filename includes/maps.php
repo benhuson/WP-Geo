@@ -590,7 +590,7 @@ class WPGeo_Point {
 	 * @return  string  Title string.
 	 */
 	function get_title() {
-		return $this->icon;
+		return $this->title;
 	}
 
 	/**
