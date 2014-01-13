@@ -154,9 +154,11 @@ class WPGeo_Settings {
 	 */
 	function default_map_location_field() {
 		$options = get_option( 'wp_geo_options' );
-		echo __( 'When creating a new post, the map will default to focussing on this area for you to position a marker.', 'wp-geo' ) . '<br />';
-		echo '<label for="default_map_latitude" style="width:70px; display:inline-block;">' . __( 'Latitude', 'wp-geo' ) . '</label> <input name="wp_geo_options[default_map_latitude]" type="text" id="default_map_latitude" value="' . $options['default_map_latitude'] . '" size="25" /><br />';
-		echo '<label for="default_map_longitude" style="width:70px; display:inline-block;">' . __( 'Longitude', 'wp-geo' ) . '</label> <input name="wp_geo_options[default_map_longitude]" type="text" id="default_map_longitude" value="' . $options['default_map_longitude'] . '" size="25" />';
+		echo '<p>' . __( 'When creating a new post, the map will default to focussing on this area for you to position a marker.', 'wp-geo' ) . '</p>';
+		echo '<table class="wpgeo-inner-admin-table">';
+		echo '<tr><th><label for="default_map_latitude">' . __( 'Latitude', 'wp-geo' ) . '</label></th><td><input name="wp_geo_options[default_map_latitude]" type="text" id="default_map_latitude" value="' . $options['default_map_latitude'] . '" size="25" /></td></tr>';
+		echo '<tr><th><label for="default_map_longitude">' . __( 'Longitude', 'wp-geo' ) . '</label></th><td><input name="wp_geo_options[default_map_longitude]" type="text" id="default_map_longitude" value="' . $options['default_map_longitude'] . '" size="25" /></td></tr>';
+		echo '</table>';
 	}
 
 	/**
