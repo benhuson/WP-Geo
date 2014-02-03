@@ -43,7 +43,10 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 		wp_enqueue_script( 'wpgeo' );
 		wp_enqueue_script( 'googlemaps3' );
 		if ( is_admin() ) {
-			wp_enqueue_script( 'wpgeo_admin_post_googlemaps3' );
+			$screen = get_current_screen();
+			if ( 'post' == $screen->base ) {
+				wp_enqueue_script( 'wpgeo_admin_post_googlemaps3' );
+			}
 		}
 	}
 
