@@ -4,7 +4,7 @@ Donate link: http://www.wpgeo.com/donate
 Tags: maps, map, geo, geocoding, google, location, georss
 Requires at least: 3.5
 Tested up to: 3.8
-Stable tag: 3.3.6
+Stable tag: 3.3.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -95,6 +95,10 @@ None at the moment.
 4. Widget Settings
 
 == Changelog ==
+
+= WP Geo 3.3.7 =
+
+* Only load admin JavaScript on edit post pages (fixes Jetpack plugin conflict).
 
 = WP Geo 3.3.6 =
 
@@ -432,6 +436,9 @@ NOTE: You will need to re-add your widgets after upgrading!
 * Added option to set wether maps appear at the top or bottom of posts.
 
 == Upgrade Notice ==
+
+= 3.3.7 =
+Only load admin JavaScript on edit post pages - fixes Jetpack plugin conflict.
 
 = 3.3.6 =
 Fix tooltip titles.
