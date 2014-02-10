@@ -190,8 +190,8 @@ function get_wpgeo_post_map( $post_id = 0, $args = null ) {
 	$wp_geo_options = get_option( 'wp_geo_options' );
 	
 	$args = wp_parse_args( $args, array(
-		'width'          => '',
-		'height'         => '',
+		'width'          => $wp_geo_options['default_map_width'],
+		'height'         => $wp_geo_options['default_map_height'],
 		'maptype'        => empty( $wp_geo_options['google_map_type'] ) ? 'G_NORMAL_MAP' : $wp_geo_options['google_map_type'],
 		'show_polylines' => false,
 		'zoom'           => $wp_geo_options['default_map_zoom'],
