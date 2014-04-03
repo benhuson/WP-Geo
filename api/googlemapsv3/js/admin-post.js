@@ -22,7 +22,8 @@
 			WPGeo_Admin.marker = new google.maps.Marker({
 				position  : new google.maps.LatLng(WPGeo_Admin.latitude, WPGeo_Admin.longitude),
 				map       : WPGeo_Admin.map,
-				draggable : true
+				draggable : true,
+				visible   : WPGeo_Admin.hideMarker == 0
 			});
 			
 			// Update marker location
@@ -144,10 +145,7 @@
 					});
 				}
 			});
-			
-			// Show/hide marker by default?
-			WPGeo_Admin.marker.setVisible(WPGeo_Admin.hideMarker);
-			
+
 			// Map ready, do other stuff if needed
 			$("#wpgeo_location").trigger("WPGeo_adminPostMapReady");
 		});
