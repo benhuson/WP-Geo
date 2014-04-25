@@ -15,6 +15,7 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 		add_filter( 'wpgeo_decode_api_string', array( $this, 'wpgeo_decode_api_string' ), 10, 3 );
 		add_action( 'wpgeo_api_googlemapsv3_js', array( $this, 'wpgeo_js' ) );
 		add_filter( 'wpgeo_api_googlemapsv3_markericon', array( $this, 'wpgeo_api_googlemapsv3_markericon' ), 10, 2 );
+		add_filter( 'wpgeo_check_google_api_key', array( $this, 'check_google_api_key' ) );
 	}
 
 	/**
@@ -29,6 +30,18 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 		wp_register_script( 'googlemaps3', $this->get_googlemaps3_script_url(), false, $wpgeo->version );
 		wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.v3.js', array( 'jquery', 'wpgeo_tooltip' ), $wpgeo->version );
 		wp_register_script( 'wpgeo_admin_post_googlemaps3', WPGEO_URL . 'api/googlemapsv3/js/admin-post.js', array( 'jquery', 'wpgeo_admin_post', 'googlemaps3' ), $wpgeo->version );
+	}
+
+	/**
+	 * Check Google API Key
+	 *
+	 * Always return true as Google Maps API v3 does not require the API key.
+	 *
+	 * @param   bool  $bool  Is an API key set?
+	 * @return  bool
+	 */
+	public function check_google_api_key( $bool ) {
+		return true;
 	}
 
 	/**
