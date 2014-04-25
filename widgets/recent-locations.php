@@ -85,10 +85,7 @@ class WPGeo_Recent_Locations_Widget extends WPGeo_Widget {
 		
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		$instance = $this->validate_instance( (array)$instance );
-		
-		// Message if API key not set
-		echo $this->check_api_key_message();
-		
+
 		do_action( 'wpgeo_widget_form_fields', $instance, $this );
 	}
 	

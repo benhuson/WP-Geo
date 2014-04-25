@@ -522,7 +522,6 @@ class WPGeo {
 		}
 		
 		// Vars
-		$google_maps_api_key = $wpgeo->get_google_api_key();
 		$panel_open = ! $hide_marker || $panel_open ? '.removeClass("closed")' : '';
 		
 		$wpgeo_admin_vars = array(

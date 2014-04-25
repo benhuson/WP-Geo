@@ -14,6 +14,7 @@ class WPGeo_API_GoogleMapsV2 extends WPGeo_API {
 		add_filter( 'wpgeo_api_string', array( $this, 'wpgeo_api_string' ), 10, 3 );
 		add_action( 'wpgeo_api_googlemapsv2_js', array( $this, 'wpgeo_js' ) );
 		add_filter( 'wpgeo_api_googlemapsv2_markericon', array( $this, 'wpgeo_api_googlemapsv2_markericon' ), 10, 2 );
+		add_action( 'wpgeo_widget_form_fields', array( $this, 'display_widget_api_key_message' ), 1 );
 	}
 
 	/**
@@ -184,5 +185,17 @@ class WPGeo_API_GoogleMapsV2 extends WPGeo_API {
 				';
 		}
 	}
-	
+
+	/**
+	 * Display Widget API Key Message
+	 *
+	 * @param  object  $widget  Instance of WPGeo_Widget or superclass.
+	 */
+	public function display_widget_api_key_message( $widget ) {
+		global $wpgeo;
+		if ( ! $wpgeo->checkGoogleAPIKey() ) {
+			echo '<p class="wp_geo_error">' . __( 'WP Geo is not currently active as you have not entered a Google Maps API v2 Key', 'wp-geo') . '. <a href="' . admin_url( '/options-general.php?page=wp-geo/includes/wp-geo.php' ) . '">' . __( 'Please update your WP Geo settings', 'wp-geo' ) . '</a>.</p>';
+		}
+	}
+
 }

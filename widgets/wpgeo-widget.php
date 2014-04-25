@@ -124,20 +124,18 @@ class WPGeo_Widget extends WP_Widget {
 		$instance['zoom']           = absint( $new_instance['zoom'] );
 		return $instance;
 	}
-	
+
 	/**
 	 * Check API Key Message
-	 * Returns a message is no Google API Key set.
 	 *
-	 * @todo Check if there is a 'less hard-coded' way to write link to settings page
+	 * Returned a message in the widget admin is no Google API Key set.
+	 * Now handled per map API using the wpgeo_widget_form_fields hook.
 	 *
-	 * @return string HTML message.
+	 * @deprecated  3.3.8
+	 *
+	 * @return  string  HTML message.
 	 */
 	function check_api_key_message() {
-		global $wpgeo;
-		if ( ! $wpgeo->checkGoogleAPIKey() ) {
-			return '<p class="wp_geo_error">' . __( 'WP Geo is not currently active as you have not entered a Google API Key', 'wp-geo') . '. <a href="' . admin_url( '/options-general.php?page=wp-geo/includes/wp-geo.php' ) . '">' . __( 'Please update your WP Geo settings', 'wp-geo' ) . '</a>.</p>';
-		}
 		return '';
 	}
 
