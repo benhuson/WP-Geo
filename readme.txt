@@ -3,8 +3,8 @@ Contributors: husobj
 Donate link: http://www.wpgeo.com/donate
 Tags: maps, map, geo, geocoding, google, location, georss
 Requires at least: 3.5
-Tested up to: 3.8
-Stable tag: 3.3.7
+Tested up to: 3.9
+Stable tag: 3.3.8
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -95,6 +95,12 @@ None at the moment.
 4. Widget Settings
 
 == Changelog ==
+
+= WP Geo 3.3.8 =
+
+* Google Maps API v3 URL does not require API key.
+* Fix JavaScript setVisible() bool error in admin - was causing certain parts of the media modal to fail.
+* Use default width and height in get_wpgeo_post_map().
 
 = WP Geo 3.3.7 =
 
@@ -436,6 +442,9 @@ NOTE: You will need to re-add your widgets after upgrading!
 * Added option to set wether maps appear at the top or bottom of posts.
 
 == Upgrade Notice ==
+
+= 3.3.8 =
+* Fixed a JavaScript error that was breaking other scripts and Google Maps API v3 URL does not require API key.
 
 = 3.3.7 =
 Only load admin JavaScript on edit post pages - fixes Jetpack plugin conflict.
