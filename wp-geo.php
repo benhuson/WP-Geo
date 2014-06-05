@@ -2,11 +2,11 @@
 
 /*
 Plugin Name: WP Geo
-Plugin URI: http://www.wpgeo.com/
+Plugin URI: https://wordpress.org/plugins/wp-geo/
 Description: Adds location maps to your posts, pages and custom post types.
 Version: 3.3.8
 Author: Ben Huson
-Author URI: http://www.benhuson.co.uk/
+Author URI: https://github.com/benhuson/wp-geo
 Minimum WordPress Version Required: 3.5
 Tested up to: 3.9
 */
