@@ -62,6 +62,7 @@ WP Geo is currently available in the following languages:
 * German (by [Ivan Graf](http://blog.bildergallery.com/))
 * Italian (by Diego Pierotto)
 * Russian (by [Fat Cower](http://www.fatcow.com/))
+* Serbian (by Borisa Djuraskovic - [Web Hosting Hub](http://www.webhostinghub.com/))
 * Spanish (by Alberto)
 
 == Installation ==

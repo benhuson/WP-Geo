@@ -1,0 +1,616 @@
+# Copyright (c) 2013 WP Geo
+# This file is distributed under the same license as the WP Geo package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Geo 3.3.3\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-geo\n"
+"POT-Creation-Date: 2013-12-13 23:15-0000\n"
+"PO-Revision-Date: 2014-07-14 23:12-0000\n"
+"Last-Translator: Ben Huson <ben@thewhiteroom.net>\n"
+"Language-Team: Borisa Djuraskovic <www.webhostinghub.com>\n"
+"Language: sr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.2\n"
+"X-Poedit-KeywordsList: __;_e;_ex;_x\n"
+"X-Poedit-Basepath: ./\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../admin/admin.php:73
+#, php-format
+msgid ""
+"Unable to create the markers folder %s.<br />Please create it and copy the "
+"marker images to it from %s"
+msgstr ""
+"Fascikla sa %s markerima ne može da se kreira. <br /> Molimo vas da je "
+"kreirate i da slike markera kopirate u %s."
+
+#: ../admin/admin.php:77
+#, php-format
+msgid ""
+"Before you can use WP Geo you must acquire a %s for your blog - the plugin "
+"will not function without it!"
+msgstr ""
+"Pre nego što budete u mogućnosti da koristite WP Geo, morate nabaviti %s za "
+"svoj blog - plugin ne funkcioniše bez njega!"
+
+#: ../admin/admin.php:77 ../admin/settings.php:25
+msgid "Google API Key"
+msgstr "Google ključ za API."
+
+#: ../admin/admin.php:85
+msgid ""
+"Important Notice: <a href=\"https://developers.google.com/maps/documentation/"
+"javascript/v2/reference\">Version 2 of the Google Maps API is no longer "
+"available</a>"
+msgstr ""
+"Važna napomena: <a href=\"https://developers.google.com/maps/documentation/"
+"javascript/v2/reference\"> Verzija 2 za Google Maps API više nije "
+"raspoloživa </a>."
+
+#: ../admin/admin.php:85
+msgid ""
+"WP Geo has been updated to support Google Map API v3. The v2 API will be "
+"completed removed from future versions of WP Geo. You may need <a href="
+"\"https://developers.google.com/maps/documentation/javascript/"
+"tutorial#api_key\" target=\"_blank\">create a new API key</a>, then update "
+"your WP Geo settings to use the Google Map API v3. If you have added custom "
+"code or plugins to work with WP Geo you may need to update them. Please <a "
+"href=\"https://github.com/benhuson/WP-Geo/issues\">report bug issues here..."
+"</a>"
+msgstr ""
+"WP Geo ažuriran je tako da podržava Google Map API v3. Verzija 2 biće "
+"potpuno uklonjena iz budućih WP Geo verzija. Možda će vam biti potrebna  "
+"uputstva sa <a href=\"https://developers.google.com/maps/documentation/"
+"javascript/tutorial#api_key\" target=\"_blank\">kreiranje novog ključa za "
+"API</a>, a zatim i ažuriranje WP Geo postavki da biste koristili Google Map "
+"API v3. Ako ste dodali prilagođeni kod ili plugin-e za rad sa WP Geo-m, "
+"možda ćete morati da ih ažurirate. Molimo vas da napišete izveštaj o većim "
+"problemima na: <a href=\"https://github.com/benhuson/WP-Geo/issues\">report "
+"bug issues here...</a>."
+
+#: ../admin/admin.php:85
+msgid "Dismiss"
+msgstr "Obustavi"
+
+#: ../admin/admin.php:120
+msgid "WP Geo Options"
+msgstr "WP Geo opcije"
+
+#: ../admin/admin.php:120
+msgid "WP Geo"
+msgstr "WP Geo"
+
+#: ../admin/admin.php:133
+msgid "WP Geo Settings"
+msgstr "WP Geo postavke"
+
+#: ../admin/admin.php:139
+msgid "Save Changes"
+msgstr "Sačuvaj izmene"
+
+#: ../admin/admin.php:142
+msgid "Marker Settings"
+msgstr "Postavke markera"
+
+#: ../admin/admin.php:143
+msgid ""
+"<p>Custom marker images are automatically created in your WordPress uploads "
+"folder and used by WP Geo.<br />A copy of these images will remain in the WP "
+"Geo folder in case you need to revert to them at any time.<br />You may edit "
+"these marker icons if you wish - they must be PNG files. Each marker consist "
+"of a marker image and a shadow image. If you do not wish to show a marker "
+"shadow you should use a transparent PNG for the shadow file.</p><p>Currently "
+"you must update these images manually and the anchor point must be the same "
+"- looking to provide more control in future versions.</p>"
+msgstr ""
+"<p> Prilagoćene slike markera automatski se generišu u vašoj WordPress "
+"fascikli za otpremanje koju koristi WP Geo. <br /> Kopije tih slika ostaće u "
+"WP Geo fascikli u slučaju da vam opet budu potrebne u bilo kom trenutku. "
+"<br /> Ako poželite, možete i da izmenite  ikonice markera - samo pazite da "
+"budu u PNG formatima datoteka. Svaki marker sastoji se od slike markera i "
+"senke. Ako nećete da se uz marker prikazuje i senka, umesto slike senke, "
+"treba da koristite providan PNG. </p><p> Trenutno morate ažurirati te slike "
+"ručno, a sidrište mora da bude zajedničko - u narednim verzijama "
+"obezbedićemo više opcija kontrole. </p>"
+
+#: ../admin/admin.php:145 ../admin/admin.php:378 ../admin/donate-links.php:11
+msgid "Documentation"
+msgstr "Dokumentacija"
+
+#: ../admin/admin.php:146
+msgid ""
+"<p>If you set the Show Post Map setting to &quot;Manual&quot;, you can use "
+"the Shortcode <code>[wp_geo_map]</code> in a post to display a map (if a "
+"location has been set for the post). You can only include the Shortcode once "
+"within a post. If you select another Show Post Map option then the Shortcode "
+"will be ignored and the map will be positioned automatically.</p>"
+msgstr ""
+"<p> Ako podesite postavku Show Post Map na &quot;Manual&quot, možete "
+"iskoristiti shortcode  <code>[wp_geo_map]</code> da biste u svom post-u "
+"prikazali mapu (ako je za post podešena lokacija). Shortcode možete samo "
+"jednom upotrebiti u postu. Ako ponovo odaberete Show Post Map opciju, "
+"shortcode će biti zanemaren i mapa će se automatski pozicionirati. </p>"
+
+#: ../admin/admin.php:167
+msgid "WP Geo Location"
+msgstr "WP Geo Lokacija"
+
+#: ../admin/admin.php:197
+msgid "Use Default"
+msgstr "Upotrebi standardnu postavku"
+
+#: ../admin/admin.php:231
+msgid "Loading Google map, please wait..."
+msgstr "Učitavanje Google mape, molimo sačekajte..."
+
+#: ../admin/admin.php:240
+msgid "Search for location"
+msgstr "Pretraga za lokacijom"
+
+#: ../admin/admin.php:240
+msgid "town, postcode or address"
+msgstr "grad, poštanski broj i adresa"
+
+#: ../admin/admin.php:243
+msgid "Search"
+msgstr "Traži"
+
+#: ../admin/admin.php:249 ../admin/settings.php:158
+msgid "Latitude"
+msgstr "Širina"
+
+#: ../admin/admin.php:249 ../admin/settings.php:159
+msgid "Longitude"
+msgstr "Dužina"
+
+#: ../admin/admin.php:252
+msgid "clear location"
+msgstr "Obriši lokaciju"
+
+#: ../admin/admin.php:252
+msgid "centre location"
+msgstr "Postavi lokaciju u centar"
+
+#: ../admin/admin.php:256
+msgid "Marker Title"
+msgstr "Naziv markera"
+
+#: ../admin/admin.php:256
+msgid "optional"
+msgstr "Po želji"
+
+#: ../admin/admin.php:260
+msgid "Marker Image"
+msgstr "Slika markera"
+
+#: ../admin/admin.php:264
+msgid "Map Settings"
+msgstr "Postavke mape"
+
+#: ../admin/admin.php:266 ../admin/settings.php:212
+msgid "Save custom map zoom for this post"
+msgstr "Sačuvaj prilagođeno uveličavanje mape u ovom post-u"
+
+#: ../admin/admin.php:267 ../admin/settings.php:213
+msgid "Save custom map type for this post"
+msgstr "Sačuvaj prilagođenu mapu za ovaj post"
+
+#: ../admin/admin.php:268 ../admin/settings.php:214
+msgid "Save map centre point for this post"
+msgstr "Sačuvaj centralnu tačku mape za ovaj post"
+
+#: ../admin/admin.php:378
+msgid "http://github.com/benhuson/wp-geo/wiki"
+msgstr "http://github.com/benhuson/wp-geo/wiki"
+
+#: ../admin/admin.php:379
+msgid "http://wordpress.org/support/plugin/wp-geo"
+msgstr "http://wordpress.org/support/plugin/wp-geo"
+
+#: ../admin/admin.php:379 ../admin/donate-links.php:10
+msgid "Support Forum"
+msgstr "Forum za podršku"
+
+#: ../admin/admin.php:380
+msgid "http://github.com/benhuson/wp-geo/issues"
+msgstr "http://github.com/benhuson/wp-geo/issues"
+
+#: ../admin/admin.php:380
+msgid "Submit an Issue"
+msgstr "Podnesi izveštaj o problemu"
+
+#: ../admin/dashboard.php:71
+msgid "No recent updates."
+msgstr "Nema novih ažuriranja"
+
+#: ../admin/dashboard.php:89
+msgid "View all WP Geo news..."
+msgstr "Vidi sve WP Geo novosti"
+
+#: ../admin/donate-links.php:12
+msgid "Report Bugs"
+msgstr "Podnesi izveštaj o problemima"
+
+#: ../admin/donate-links.php:13
+msgid "Contribute"
+msgstr "Doprinesite"
+
+#: ../admin/donate-links.php:14
+msgid "Make a donation"
+msgstr "Uplatite donaciju"
+
+#: ../admin/donate-links.php:15
+msgid "Follow @wpgeo for updates"
+msgstr "Pratite @wpgeo ažuriranja"
+
+#: ../admin/donate-links.php:16
+msgid "Follow me on Twitter"
+msgstr "Pratite me na Twitter-u"
+
+#: ../admin/settings.php:22
+msgid "API Settings"
+msgstr "API postavke"
+
+#: ../admin/settings.php:23
+msgid "Public API"
+msgstr "Javni API"
+
+#: ../admin/settings.php:24
+msgid "Admin API"
+msgstr "Administratorski API"
+
+#: ../admin/settings.php:26
+msgid "General Settings"
+msgstr "Opšte postavke"
+
+#: ../admin/settings.php:27 ../widgets/wpgeo-widget.php:252
+msgid "Map Type"
+msgstr "Vrsta mape"
+
+#: ../admin/settings.php:28
+msgid "Show Post Map"
+msgstr "Prikaži mapu u post-u"
+
+#: ../admin/settings.php:29
+msgid "Default Map Location"
+msgstr "Standardna lokacija mape"
+
+#: ../admin/settings.php:30
+msgid "Default Map Width"
+msgstr "Standardna širina mape"
+
+#: ../admin/settings.php:31
+msgid "Default Map Height"
+msgstr "Standardna visina mape"
+
+#: ../admin/settings.php:32
+msgid "Default Map Zoom"
+msgstr "Standardno uveličavanje mape"
+
+#: ../admin/settings.php:33
+msgid "Default Map Controls"
+msgstr "Standardne kontrole mape"
+
+#: ../admin/settings.php:34
+msgid "Default Post Options"
+msgstr "Standardne opcije post-a"
+
+#: ../admin/settings.php:35 ../widgets/wpgeo-widget.php:253
+msgid "Polylines"
+msgstr "Polilinije"
+
+#: ../admin/settings.php:36
+msgid "Polyline Colour"
+msgstr "Boja polilinije"
+
+#: ../admin/settings.php:37
+msgid "Supported Post Types"
+msgstr "Podržane vrste post-ova"
+
+#: ../admin/settings.php:38
+msgid "Show Maps On"
+msgstr "Prikaži mape na"
+
+#: ../admin/settings.php:39
+msgid "Feeds"
+msgstr "Novosti"
+
+#: ../admin/settings.php:91 ../admin/settings.php:103
+msgid "Google Maps v2"
+msgstr "Google Maps v2"
+
+#: ../admin/settings.php:92 ../admin/settings.php:104
+msgid "Google Maps v3"
+msgstr "Google Maps v3"
+
+#: ../admin/settings.php:122
+#, php-format
+msgid ""
+"For more information and documentation about this plugin please visit the <a "
+"%s>WP Geo Plugin</a> home page."
+msgstr ""
+"Za više informacija i dokumentacije o ovom plugin-u, molimo vas da posetite "
+"<a %s>WP Geo Plugin</a> početnu stranu."
+
+#: ../admin/settings.php:123
+#, php-format
+msgid ""
+"If you experience any problems/bugs with the plugin, please <a %s>log it "
+"here</a>."
+msgstr ""
+"Ako imate bilo kakve probleme/neispravnosti u vezu s plugin-om, molimo vas "
+"da to <a %s>navedete ovde</a>."
+
+#: ../admin/settings.php:144
+msgid "At top of post"
+msgstr "Na vrhu post-a"
+
+#: ../admin/settings.php:145
+msgid "At bottom of post"
+msgstr "Na dnu post-a"
+
+#: ../admin/settings.php:146
+msgid "Manually"
+msgstr "Ručno"
+
+#: ../admin/settings.php:149
+msgid "Show on excerpts"
+msgstr "Prikaži u isečcima"
+
+#: ../admin/settings.php:157
+msgid ""
+"When creating a new post, the map will default to focussing on this area for "
+"you to position a marker."
+msgstr ""
+"Kad kreirate novi post, mapa će se po standardnoj postavci fokusirati na to "
+"područje da biste postavili marker."
+
+#: ../admin/settings.php:194
+msgid "Map Type Controls"
+msgstr "Kontrole vrste mapa"
+
+#: ../admin/settings.php:195
+msgid "You must select at least 2 map types for the control to show."
+msgstr "Morate odbrati bar 2 vrste mapa da bi se prikazale kontrole."
+
+#: ../admin/settings.php:196
+msgid "Normal map"
+msgstr "Normalna mapa"
+
+#: ../admin/settings.php:197 ../includes/api.php:90
+msgid "Satellite (photographic map)"
+msgstr "Satelitska (fotografska) mapa"
+
+#: ../admin/settings.php:198 ../includes/api.php:91
+msgid "Hybrid (photographic map with normal features)"
+msgstr "Hibridna (fotografska sa normalnim karakteristikama) mapa"
+
+#: ../admin/settings.php:199 ../includes/api.php:92
+msgid "Physical (terrain map)"
+msgstr "Fizička (mapa terena) "
+
+#: ../admin/settings.php:200
+msgid "Other Controls"
+msgstr "Ostale kontrole"
+
+#: ../admin/settings.php:201
+msgid "Show map scale"
+msgstr "Prikaži skalu mape"
+
+#: ../admin/settings.php:202
+msgid "Show collapsible overview map (in the corner of the map)"
+msgstr "Prikaži opciju za sklapanje mape (u uglu mape)"
+
+#: ../admin/settings.php:203
+msgid "Show Street View Control"
+msgstr "Prikaži kontrole za pregled ulica"
+
+#: ../admin/settings.php:224
+msgid "Show polylines (to connect multiple points on a single map)"
+msgstr "Prikaži polilinije (da biste na jednoj mapi povezali više tačaka)"
+
+#: ../admin/settings.php:276
+msgid "Single Pages"
+msgstr "Pojedinačne stranice"
+
+#: ../admin/settings.php:277
+msgid "Pages"
+msgstr "Stranice"
+
+#: ../admin/settings.php:278
+msgid "Posts"
+msgstr "Post-ovi"
+
+#: ../admin/settings.php:295
+msgid "Posts on Taxonomy Pages"
+msgstr "Post-ovi na stranicama taksonomije"
+
+#: ../admin/settings.php:296
+msgid "Categories"
+msgstr "Kategorije"
+
+#: ../admin/settings.php:297
+msgid "Tags"
+msgstr "Oznake"
+
+#: ../admin/settings.php:298
+msgid "All Taxonomies"
+msgstr "Sve taksonomije"
+
+#: ../admin/settings.php:300
+msgid "Posts on Other Pages"
+msgstr "Post-ovi na drugim stranicama"
+
+#: ../admin/settings.php:301
+msgid "Posts Archive"
+msgstr "Arhivirani post-ovi"
+
+#: ../admin/settings.php:302
+msgid "Date Archives"
+msgstr "Datumi arhiviranja"
+
+#: ../admin/settings.php:303
+msgid "Author Archives"
+msgstr "Autori arhiva"
+
+#: ../admin/settings.php:304
+msgid "Search Results"
+msgstr "Rezultati pretrage"
+
+#: ../admin/settings.php:313
+msgid "Add geographic information"
+msgstr "Dodaj geografske podatke"
+
+#: ../admin/settings.php:333 ../widgets/wpgeo-widget.php:251
+msgid "Settings"
+msgstr "Postavke"
+
+#: ../includes/api.php:89
+msgid "Normal"
+msgstr "Normalan"
+
+#: ../includes/api.php:133
+msgid "Large 3D pan/zoom control"
+msgstr "Veliki 3D/kontrola uveličavanja"
+
+#: ../includes/api.php:134
+msgid "Large pan/zoom control"
+msgstr "Velika tabla/kontrola uveličavanja"
+
+#: ../includes/api.php:135
+msgid "Smaller pan/zoom control"
+msgstr "Manja tabla/kontrola uveličavanja"
+
+#: ../includes/api.php:136
+msgid "Small 3D zoom control (no panning controls)"
+msgstr "Kontrola za malo 3D uveličavanje (nema kontrola za tabeliranje) "
+
+#: ../includes/api.php:137
+msgid "Small zoom control (no panning controls)"
+msgstr "Kontrola malog uveličavanja (nema kontrola za tabeliranje) "
+
+#: ../includes/api.php:138
+msgid "No pan/zoom controls"
+msgstr "Nema kontrola za tabeliranje/uveličavanje"
+
+#: ../includes/api.php:153
+msgid "Zoomed Out"
+msgstr "Umanjeno"
+
+#: ../includes/api.php:155
+msgid "Zoomed In"
+msgstr "Uvećano"
+
+#: ../includes/functions.php:95
+msgid "Default"
+msgstr "Standardno"
+
+#: ../includes/functions.php:96
+msgid "Show Polylines"
+msgstr "Prikaži polilinije"
+
+#: ../includes/functions.php:97
+msgid "Hide Polylines"
+msgstr "Sakrij polilinije"
+
+#: ../includes/markers.php:31
+msgid "Default Large Marker"
+msgstr "Standardni veliki marker"
+
+#: ../includes/markers.php:32
+msgid "This is the default marker used to indicate a location on most maps."
+msgstr ""
+"Ovo je standardni marker koji se koristi za prikazivanje lokacije na većini "
+"mapa."
+
+#: ../includes/markers.php:41
+msgid "Default Small Marker"
+msgstr "Standardni mali marker"
+
+#: ../includes/markers.php:42
+msgid "This is the default marker used for the WP Geo sidebar widget."
+msgstr ""
+"Ovo je standardni marker koji se koristi za traku sa menijem za WP Geo "
+"widget."
+
+#: ../includes/markers.php:51
+msgid "Default Dot Marker"
+msgstr "Standardna oznaka za tačku"
+
+#: ../includes/markers.php:52
+msgid ""
+"This marker image is not currently used but it is anticipated that it will "
+"be used to indicate less important locations in a future versions of WP Geo."
+msgstr ""
+"Trenutno se koristi ova slika markera, ali u narednim WP Geo verzijama, "
+"koristiće se za označavanje manje važnih lokacija. "
+
+#: ../includes/shortcodes.php:74
+msgid "View Larger Map"
+msgstr "Vidi veću mapu"
+
+#: ../widgets/category-map.php:20
+msgid "WP Geo Category Map"
+msgstr "WP Geo mapa kategorije"
+
+#: ../widgets/category-map.php:23
+msgid "Displays markers from the current category"
+msgstr "Prikazuje markere iz date kategorije"
+
+#: ../widgets/contextual-map.php:20
+msgid "WP Geo Contextual Map"
+msgstr "WP Geo kontekstualna mapa"
+
+#: ../widgets/contextual-map.php:23
+msgid "Displays markers from the current page"
+msgstr "Prikazuje markere sa date stranice"
+
+#: ../widgets/recent-locations.php:19
+msgid "WP Geo Recent Locations"
+msgstr "WP Geo skorašnje lokacije"
+
+#: ../widgets/recent-locations.php:22
+msgid "Displays markers for recent posts"
+msgstr "Prikazuje markere za skorašnje post-ove"
+
+#: ../widgets/recent-locations.php:103
+msgid "Number of markers to show"
+msgstr "Broj markera za prikazivanje"
+
+#: ../widgets/recent-locations.php:117
+msgid "Show Post Types"
+msgstr "Prikaži vrste post-ova"
+
+#: ../widgets/wpgeo-widget.php:138
+msgid "WP Geo is not currently active as you have not entered a Google API Key"
+msgstr "WP Geo trenutno nije aktivan jer niste uneli Google API ključ."
+
+#: ../widgets/wpgeo-widget.php:138
+msgid "Please update your WP Geo settings"
+msgstr "Molimo vas, ažurirajte svoje WP Geo postavke."
+
+#: ../widgets/wpgeo-widget.php:234
+msgid "Title"
+msgstr "Naziv"
+
+#: ../widgets/wpgeo-widget.php:235
+msgid "Width"
+msgstr "Širina"
+
+#: ../widgets/wpgeo-widget.php:236
+msgid "Height"
+msgstr "Visina"
+
+#: ../widgets/wpgeo-widget.php:249
+msgid "Zoom"
+msgstr "Uvećanje"
+
+#: ../widgets/wpgeo-widget.php:250
+msgid ""
+"If not all markers fit, the map will automatically be zoomed so they do."
+msgstr ""
+"Ako svi markeri ne odgovaraju, mapa će se automatski uveličati tako da "
+"odgovaraju."
