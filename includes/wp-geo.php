@@ -345,12 +345,12 @@ class WPGeo {
 	 * Called on WP action - runs after WordPress is ready.
 	 */
 	function init_later() {
-		$wp_geo_options = get_option( 'wp_geo_options' );
-		
+
 		// Support for custom post types
 		// Don't add support if on the WP settings page though
 		if ( ! is_admin() || ! isset( $_GET['page'] ) || ( isset( $_GET['page'] ) && $_GET['page'] != 'wp-geo' ) ) {
 			if ( function_exists( 'get_post_types' ) && function_exists( 'add_post_type_support' ) && isset( $wp_geo_options['show_maps_on_customposttypes'] ) ) {
+				$wp_geo_options = get_option( 'wp_geo_options' );
 				$post_types = get_post_types();
 				foreach ( $post_types as $post_type ) {
 					$post_type_object = get_post_type_object( $post_type );
@@ -360,7 +360,7 @@ class WPGeo {
 				}
 			}
 		}
-		
+
 		// Add extra markers
 		$this->markers->add_extra_markers();
 	}
