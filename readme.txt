@@ -1,11 +1,12 @@
 === WP Geo  ===
 Contributors: husobj
 Tags: maps, map, geo, geocoding, google, location, georss
+Donate link: http://www.benhuson.co.uk/donate/
 Requires at least: 3.5
-Tested up to: 3.9
+Tested up to: 4.0
 Stable tag: 3.3.8
 License: GPLv3
-License URI: http://www.gnu.org/licenses/gpl.html
+License URI: http://www.opensource.org/licenses/gpl-license.php
 
 Adds location maps to your posts, pages and custom post types.
 
