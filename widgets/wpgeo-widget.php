@@ -181,18 +181,18 @@ class WPGeo_Widget extends WP_Widget {
 			
 			// Add points (from posts) to map
 			$count = 0;
-			foreach ( $args['posts'] as $post ) {
-				$coord = get_wpgeo_post_coord( $post->ID );
+			foreach ( $args['posts'] as $geo_post ) {
+				$coord = get_wpgeo_post_coord( $geo_post->ID );
 				if ( $coord->is_valid_coord() ) {
 					$count++;
 					if ( count( $count ) == 1 ) {
 						$map->set_map_centre( $coord );
 					}
 					$map->add_point( $coord, array(
-						'icon'  => apply_filters( 'wpgeo_marker_icon', 'small', $post, 'widget' ),
-						'title' => get_wpgeo_title( $post->ID ),
-						'link'  => apply_filters( 'wpgeo_marker_link', get_permalink( $post ), $post ),
-						'post'  => $post
+						'icon'  => apply_filters( 'wpgeo_marker_icon', 'small', $geo_post, 'widget' ),
+						'title' => get_wpgeo_title( $geo_post->ID ),
+						'link'  => apply_filters( 'wpgeo_marker_link', get_permalink( $geo_post ), $geo_post ),
+						'post'  => $geo_post
 					) );
 				}
 			}
