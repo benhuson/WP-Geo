@@ -66,14 +66,19 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 	 * Enqueue WP Geo Scripts
 	 */
 	function wpgeo_enqueue_scripts() {
+
+		global $wpgeo;
+
 		wp_enqueue_script( 'wpgeo' );
 		wp_enqueue_script( 'googlemaps3' );
+
 		if ( is_admin() ) {
 			$screen = get_current_screen();
-			if ( 'post' == $screen->base ) {
+			if ( 'post' == $screen->base && $wpgeo->post_type_supports( $screen->post_type ) ) {
 				wp_enqueue_script( 'wpgeo_admin_post_googlemaps3' );
 			}
 		}
+
 	}
 
 	/**
