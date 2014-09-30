@@ -479,7 +479,7 @@ class WPGeo {
 	
 	/**
 	 * Map Scripts Init
-	 * Output Javascripts to display maps.
+	 * Output Javascripts to display maps in admin.
 	 *
 	 * @param object $coord WPGeo_Coord.
 	 * @param int $zoom Zoom.
