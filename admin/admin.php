@@ -92,26 +92,58 @@ class WPGeo_Admin {
 	 * Admin Enqueue Scripts & Styles
 	 */
 	function admin_enqueue_scripts() {
-		wp_enqueue_style( 'wpgeo_admin', WPGEO_URL . 'css/wp-geo.css' );
-	}
 
+		if ( $this->show_on_admin_screen() ) {
+			wp_enqueue_style( 'wpgeo_admin', WPGEO_URL . 'css/wp-geo.css' );
+		}
+
+	}
+	
 	/**
 	 * Admin Head
 	 * @todo Refactor mapScriptsInit()
 	 */
 	function admin_head() {
-
 		global $wpgeo, $post_ID;
-
-		$screen = get_current_screen();
-
+		
 		// Only load if on a post or page
-		if ( 'post' == $screen->base && $wpgeo->post_type_supports( $screen->post_type ) && $wpgeo->show_maps() ) {
+		if ( $this->show_on_admin_screen() && $wpgeo->show_maps() ) {
 			$coord = get_wpgeo_post_coord( $post_ID );
 			if ( ! $wpgeo->show_maps_external ) {
 				echo $wpgeo->mapScriptsInit( $coord, 13, false, false );
 			}
 		}
+	}
+
+	/**
+	 * Show on Admin Screen
+	 *
+	 * Ensures scripts are only loaded in admin on screens where needed.
+	 */
+	function show_on_admin_screen() {
+
+		global $wpgeo;
+
+		if ( is_admin() ) {
+
+			$screen = get_current_screen();
+
+			if ( $screen ) {
+
+				if ( $wpgeo->post_type_supports( $screen->post_type ) ) {
+					return true;
+				}
+
+			} else {
+
+				// Not sure so load anyway
+				return true;
+
+			}
+
+		}
+
+		return false;
 
 	}
 

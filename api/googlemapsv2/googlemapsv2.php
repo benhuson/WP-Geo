@@ -48,9 +48,11 @@ class WPGeo_API_GoogleMapsV2 extends WPGeo_API {
 		wp_enqueue_script( 'googlemaps2' );
 
 		if ( is_admin() ) {
-			$screen = get_current_screen();
-			if ( 'post' == $screen->base && $wpgeo->post_type_supports( $screen->post_type ) ) {
-				wp_enqueue_script( 'wpgeo_admin_post_googlemaps2' );
+			if ( $wpgeo->admin->show_on_admin_screen() ) {
+				$screen = get_current_screen();
+				if ( 'post' == $screen->base ) {
+					wp_enqueue_script( 'wpgeo_admin_post_googlemaps2' );
+				}
 			}
 		}
 
