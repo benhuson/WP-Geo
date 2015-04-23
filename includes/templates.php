@@ -159,9 +159,10 @@ function wpgeo_map_link( $args = null ) {
 
 	// Output
 	if ( $r['echo'] == 0 ) {
-		return $url;
+		return esc_url_raw( $url );
 	}
-	echo $url;
+	echo esc_url( $url );
+
 }
 
 /**
@@ -490,5 +491,5 @@ function get_wpgeo_post_static_map( $post_id = 0, $query = null ) {
 
 	$url = $wpgeo->api->static_map_url( $map );
 
-	return sprintf( '<img id="wp_geo_static_map_%s" src="%s" class="wp_geo_static_map" />', $post_id, esc_attr( $url ) );
+	return sprintf( '<img id="wp_geo_static_map_%s" src="%s" class="wp_geo_static_map" />', $post_id, esc_url( $url ) );
 }

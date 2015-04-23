@@ -59,7 +59,9 @@ class WPGeo_API {
 			'markers' => 'color:red%7C' . $coord->get_delimited(),
 			'sensor'  => 'false'
 		), 'http://maps.googleapis.com/maps/api/staticmap' );
-		return apply_filters( 'wpgeo_static_map_url', $url, $map );
+
+		return esc_url_raw( apply_filters( 'wpgeo_static_map_url', $url, $map ) );
+
 	}
 
 	/**
@@ -80,7 +82,9 @@ class WPGeo_API {
 			'q' => $coord->get_delimited(),
 			'z' => $map->get_map_zoom()
 		),'http://maps.google.co.uk/maps' );
-		return apply_filters( 'wpgeo_map_url', $url, $map );
+
+		return esc_url_raw( apply_filters( 'wpgeo_map_url', $url, $map ) );
+
 	}
 
 	/**

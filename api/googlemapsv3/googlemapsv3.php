@@ -59,7 +59,7 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 		if ( ! empty( $api_key ) ) {
 			$googlemaps_js_args['key'] = $api_key;
 		}
-		return add_query_arg( $googlemaps_js_args, '//maps.googleapis.com/maps/api/js' );
+		return esc_url_raw( add_query_arg( $googlemaps_js_args, '//maps.googleapis.com/maps/api/js' ) );
 	}
 
 	/**

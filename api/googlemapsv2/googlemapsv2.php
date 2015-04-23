@@ -32,7 +32,7 @@ class WPGeo_API_GoogleMapsV2 extends WPGeo_API {
 			'key'    => $wpgeo->get_google_api_key(),
 			'sensor' => 'false'
 		), '//maps.google.com/maps?file=api' );
-		wp_register_script( 'googlemaps2', $googlemaps_js, false, $wpgeo->version );
+		wp_register_script( 'googlemaps2', esc_url_raw( $googlemaps_js ), false, $wpgeo->version );
 		wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.js', array( 'jquery', 'wpgeo_tooltip' ), $wpgeo->version );
 		wp_register_script( 'wpgeo_admin_post_googlemaps2', WPGEO_URL . 'api/googlemapsv2/js/admin-post.js', array( 'jquery', 'wpgeo_admin_post', 'googlemaps2' ), $wpgeo->version );
 	}
