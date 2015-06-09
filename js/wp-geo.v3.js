@@ -9,11 +9,14 @@
 /**
  * Refresh Map Container
  *
+ * This function can be used to refresh a map that has been previously
+ * hidden - for example in a hidden tab.
+ *
  * @param  obj  container  Map container jQuery object.
  */
 function wpgeo_refreshMapContainer( container ) {
 
-	jQuery( container ).each( function() {
+	container.each( function() {
 
 		var map_id = jQuery( this ).attr( 'id' );
 		var map = window[ map_id ];
