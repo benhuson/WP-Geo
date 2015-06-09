@@ -7,6 +7,26 @@
 */
 
 /**
+ * Refresh Map Container
+ *
+ * @param  obj  container  Map container jQuery object.
+ */
+function wpgeo_refreshMapContainer( container ) {
+
+	jQuery( container ).each( function() {
+
+		var map_id = jQuery( this ).attr( 'id' );
+		var map = window[ map_id ];
+		var centerofmap = map.getCenter();
+
+		google.maps.event.trigger( map, 'resize' );
+		map.setCenter( centerofmap );
+
+	} );
+
+}
+
+/**
  * Create a custom marker icon for the map
  */
 function wpgeo_createIcon(width, height, anchorX, anchorY, image, transparent) {
