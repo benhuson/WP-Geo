@@ -172,7 +172,7 @@ class WPGeo_Admin {
 		
 		do_settings_sections( 'wp_geo_options' );
 		settings_fields( 'wp_geo_options' );
-		echo '<p class="submit"><input type="submit" name="submit" value="' . __( 'Save Changes', 'wp-geo' ) . '" class="button-primary" /></p>
+		echo '<p class="submit"><input type="submit" name="submit" value="' . esc_attr__( 'Save Changes', 'wp-geo' ) . '" class="button-primary" /></p>
 			</form>';
 		echo '
 				<h2 style="margin-top:30px;">' . __( 'Marker Settings', 'wp-geo' ) . '</h2>'
@@ -277,32 +277,32 @@ class WPGeo_Admin {
 				<td colspan="2">' . $map_html . '</td>
 			</tr>
 			<tr>
-				<th scope="row">' . __( 'Search for location', 'wp-geo' ) . '</th>
-				<td><input name="wp_geo_search" type="text" size="45" id="wp_geo_search" value="' . $search . '" placeholder="' . __( 'e.g. town, postcode or address', 'wp-geo' ) . '" />
-					<input type="hidden" name="wp_geo_base_country_code" id="wp_geo_base_country_code" value="' . apply_filters( 'wpgeo_base_country_code', '' ) . '" />
-					<span class="submit"><input type="button" id="wp_geo_search_button" class="button" name="wp_geo_search_button" value="' . __( 'Search', 'wp-geo' ) . '" /></span></td>
+				<th scope="row">' . esc_html__( 'Search for location', 'wp-geo' ) . '</th>
+				<td><input name="wp_geo_search" type="text" size="45" id="wp_geo_search" value="' . esc_attr( $search ) . '" placeholder="' . esc_attr__( 'e.g. town, postcode or address', 'wp-geo' ) . '" />
+					<input type="hidden" name="wp_geo_base_country_code" id="wp_geo_base_country_code" value="' . esc_attr( apply_filters( 'wpgeo_base_country_code', '' ) ) . '" />
+					<span class="submit"><input type="button" id="wp_geo_search_button" class="button" name="wp_geo_search_button" value="' . esc_attr__( 'Search', 'wp-geo' ) . '" /></span></td>
 			</tr>
 			<tr>
-				<th scope="row">' . __( 'Co-ordinates', 'wp-geo' ) . '</th>
-				<td><input name="wp_geo_latitude" type="text" size="25" id="wp_geo_latitude" value="' . $coord->latitude() . '" placeholder="' . __( 'Latitude', 'wp-geo' ) . '" />,
-					<input name="wp_geo_longitude" type="text" size="25" id="wp_geo_longitude" value="' . $coord->longitude() . '" placeholder="' . __( 'Longitude', 'wp-geo' ) . '" /><br />
-					<a href="#" class="button button-small wpgeo-clear-location-fields">' . __( 'clear location', 'wp-geo' ) . '</a> <a href="#" class="button button-small wpgeo-centre-location">' . __( 'centre location', 'wp-geo' ) . '</a>
+				<th scope="row">' . esc_html__( 'Co-ordinates', 'wp-geo' ) . '</th>
+				<td><input name="wp_geo_latitude" type="text" size="25" id="wp_geo_latitude" value="' . esc_attr( $coord->latitude() ) . '" placeholder="' . esc_attr__( 'Latitude', 'wp-geo' ) . '" />,
+					<input name="wp_geo_longitude" type="text" size="25" id="wp_geo_longitude" value="' . esc_attr( $coord->longitude() ) . '" placeholder="' . esc_attr__( 'Longitude', 'wp-geo' ) . '" /><br />
+					<a href="#" class="button button-small wpgeo-clear-location-fields">' . esc_html__( 'clear location', 'wp-geo' ) . '</a> <a href="#" class="button button-small wpgeo-centre-location">' . esc_html__( 'centre location', 'wp-geo' ) . '</a>
 				</td>
 			</tr>
 			<tr>
-				<th scope="row">' . __( 'Marker Title', 'wp-geo' ) . ' <small>(' . __( 'optional', 'wp-geo' ) . ')</small></th>
-				<td><input name="wp_geo_title" type="text" size="25" style="width:100%;" id="wp_geo_title" value="' . $title . '" /></td>
+				<th scope="row">' . esc_html__( 'Marker Title', 'wp-geo' ) . ' <small>(' . esc_html__( 'optional', 'wp-geo' ) . ')</small></th>
+				<td><input name="wp_geo_title" type="text" size="25" style="width:100%;" id="wp_geo_title" value="' . esc_attr( $title ) . '" /></td>
 			</tr>
 			<tr>
-				<th scope="row">' . __( 'Marker Image', 'wp-geo' ) . '</th>
+				<th scope="row">' . esc_html__( 'Marker Image', 'wp-geo' ) . '</th>
 				<td>' . $wpgeo->markers->dropdown_markers( $markers_menu ) . '</td>
 			</tr>
 			<tr>
-				<th scope="row">' . __( 'Map Settings', 'wp-geo' ) . '</th>
+				<th scope="row">' . esc_html__( 'Map Settings', 'wp-geo' ) . '</th>
 				<td>
-					<label for="wpgeo_map_settings_zoom"><input type="checkbox" name="wpgeo_map_settings_zoom" id="wpgeo_map_settings_zoom" value="' . $wpgeo_map_settings_zoom . '" ' . $wpgeo_map_settings_zoom_checked . ' /> ' . __( 'Save custom map zoom for this post', 'wp-geo' ) . '</label><br />
-					<label for="wpgeo_map_settings_type"><input type="checkbox" name="wpgeo_map_settings_type" id="wpgeo_map_settings_type" value="' . $wpgeo_map_settings_type . '" ' . $wpgeo_map_settings_type_checked . ' /> ' . __( 'Save custom map type for this post', 'wp-geo' ) . '</label><br />
-					<label for="wpgeo_map_settings_centre"><input type="checkbox" name="wpgeo_map_settings_centre" id="wpgeo_map_settings_centre" value="' . $wpgeo_map_settings_centre . '" ' . $wpgeo_map_settings_centre_checked . ' /> ' . __( 'Save map centre point for this post', 'wp-geo' ) . '</label>
+					<label for="wpgeo_map_settings_zoom"><input type="checkbox" name="wpgeo_map_settings_zoom" id="wpgeo_map_settings_zoom" value="' . esc_attr( $wpgeo_map_settings_zoom ) . '" ' . $wpgeo_map_settings_zoom_checked . ' /> ' . esc_html__( 'Save custom map zoom for this post', 'wp-geo' ) . '</label><br />
+					<label for="wpgeo_map_settings_type"><input type="checkbox" name="wpgeo_map_settings_type" id="wpgeo_map_settings_type" value="' . esc_attr( $wpgeo_map_settings_type ) . '" ' . $wpgeo_map_settings_type_checked . ' /> ' . esc_html__( 'Save custom map type for this post', 'wp-geo' ) . '</label><br />
+					<label for="wpgeo_map_settings_centre"><input type="checkbox" name="wpgeo_map_settings_centre" id="wpgeo_map_settings_centre" value="' . esc_attr( $wpgeo_map_settings_centre ) . '" ' . $wpgeo_map_settings_centre_checked . ' /> ' . esc_html__( 'Save map centre point for this post', 'wp-geo' ) . '</label>
 				</td>
 			</tr>
 			' . apply_filters( 'wpgeo_edit_post_map_fields', '', $post->ID ) . '
@@ -416,9 +416,9 @@ class WPGeo_Admin {
 	 */
 	function plugin_row_meta( $plugin_meta, $plugin_file, $plugin_data, $status ) {
 		if ( 'wp-geo/wp-geo.php' == $plugin_file ) {
-			$plugin_meta[] = sprintf( '<a href="%s">%s</a>', __( 'http://github.com/benhuson/wp-geo/wiki', 'wp-geo' ), __( 'Documentation', 'wp-geo' ) );
-			$plugin_meta[] = sprintf( '<a href="%s">%s</a>', __( 'http://wordpress.org/support/plugin/wp-geo', 'wp-geo' ), __( 'Support Forum', 'wp-geo' ) );
-			$plugin_meta[] = sprintf( '<a href="%s">%s</a>', __( 'http://github.com/benhuson/wp-geo/issues', 'wp-geo' ), __( 'Submit an Issue', 'wp-geo' ) );
+			$plugin_meta[] = sprintf( '<a href="%s">%s</a>', esc_url( __( 'http://github.com/benhuson/wp-geo/wiki', 'wp-geo' ) ), esc_html__( 'Documentation', 'wp-geo' ) );
+			$plugin_meta[] = sprintf( '<a href="%s">%s</a>', esc_url( __( 'http://wordpress.org/support/plugin/wp-geo', 'wp-geo' ) ), esc_html__( 'Support Forum', 'wp-geo' ) );
+			$plugin_meta[] = sprintf( '<a href="%s">%s</a>', esc_url( __( 'http://github.com/benhuson/wp-geo/issues', 'wp-geo' ) ), esc_html__( 'Submit an Issue', 'wp-geo' ) );
 		}
 		return $plugin_meta;
 	}

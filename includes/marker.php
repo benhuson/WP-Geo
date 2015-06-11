@@ -123,11 +123,11 @@ class WPGeo_Marker {
 	 */
 	function get_admin_display() {
 		return '<tr valign="top">
-				<th scope="row">' . $this->name . '</th>
+				<th scope="row">' . esc_html( $this->name ) . '</th>
 				<td>
-					<p style="margin:0px; background-image:url(' . $this->shadow . '); background-repeat:no-repeat;"><img src="' . $this->image . '"></p>
+					<p style="margin:0px; background-image:url(' . esc_url( $this->shadow ) . '); background-repeat:no-repeat;"><img src="' . esc_url( $this->image ) . '"></p>
 					<p style="margin:10px 0 0 0;">' . $this->description . '<br />
-						{ width:' . $this->width . ', height:' . $this->height . ', anchorX:' . $this->anchorX . ', anchorY:' . $this->anchorY . ' }
+						{ width:' . esc_html( $this->width ) . ', height:' . esc_html( $this->height ) . ', anchorX:' . esc_html( $this->anchorX ) . ', anchorY:' . esc_html( $this->anchorY ) . ' }
 					</p>
 				</td>
 			</tr>';

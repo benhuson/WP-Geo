@@ -232,9 +232,9 @@ class WPGeo_Widget extends WP_Widget {
 	function widget_form_fields_default( $instance, $widget ) {
 		if ( $widget == $this ) {
 			echo '
-				<p><label for="' . $this->get_field_id( 'title' ) . '">' . __( 'Title', 'wp-geo' ) . ': <input class="widefat" id="' . $this->get_field_id( 'title' ) . '" name="' . $this->get_field_name( 'title' ) . '" type="text" value="' . $instance['title'] . '" /></label></p>
-				<p><label for="' . $this->get_field_id( 'width' ) . '">' . __( 'Width', 'wp-geo' ) . ': <input class="widefat" id="' . $this->get_field_id( 'width' ) . '" name="' . $this->get_field_name( 'width' ) . '" type="text" value="' . $instance['width'] . '" /></label></p>
-				<p><label for="' . $this->get_field_id( 'height' ) . '">' . __( 'Height', 'wp-geo' ) . ': <input class="widefat" id="' . $this->get_field_id( 'height' ) . '" name="' . $this->get_field_name( 'height' ) . '" type="text" value="' . $instance['height'] . '" /></label></p>';
+				<p><label for="' . $this->get_field_id( 'title' ) . '">' . esc_html__( 'Title', 'wp-geo' ) . ': <input class="widefat" id="' . esc_attr( $this->get_field_id( 'title' ) ) . '" name="' . esc_attr( $this->get_field_name( 'title' ) ) . '" type="text" value="' . esc_attr( $instance['title'] ) . '" /></label></p>
+				<p><label for="' . $this->get_field_id( 'width' ) . '">' . esc_html__( 'Width', 'wp-geo' ) . ': <input class="widefat" id="' . esc_attr( $this->get_field_id( 'width' ) ) . '" name="' . esc_attr( $this->get_field_name( 'width' ) ) . '" type="text" value="' . esc_attr( $instance['width'] ) . '" /></label></p>
+				<p><label for="' . $this->get_field_id( 'height' ) . '">' . esc_html__( 'Height', 'wp-geo' ) . ': <input class="widefat" id="' . esc_attr( $this->get_field_id( 'height' ) ) . '" name="' . esc_attr( $this->get_field_name( 'height' ) ) . '" type="text" value="' . esc_attr( $instance['height'] ) . '" /></label></p>';
 		}
 	}
 	
@@ -247,11 +247,11 @@ class WPGeo_Widget extends WP_Widget {
 	function widget_form_fields_settings( $instance, $widget ) {
 		global $wpgeo;
 		if ( $widget == $this ) {
-			echo '<p><strong>' . __( 'Zoom', 'wp-geo' ) . ':</strong> ' . $wpgeo->selectMapZoom( null, null, array( 'return' => 'menu', 'selected' => $instance['zoom'], 'id' => $this->get_field_id( 'zoom' ), 'name' => $this->get_field_name( 'zoom' ) ) ) . '<br />
-			<small>' . __( 'If not all markers fit, the map will automatically be zoomed so they do.', 'wp-geo' ) . '</small></p>';
-			echo '<p><strong>' . __( 'Settings', 'wp-geo' ) . ':</strong></p>';
-			echo '<p>' . __( 'Map Type', 'wp-geo' ) . ':<br />' . $wpgeo->google_map_types( null, null, array( 'return' => 'menu', 'selected' => $instance['maptype'], 'id' => $this->get_field_id( 'maptype' ), 'name' => $this->get_field_name( 'maptype' ) ) ) . '</p>';
-			echo '<p>' . __( 'Polylines', 'wp-geo' ) . ':<br />' . wpgeo_show_polylines_options( array( 'return' => 'menu', 'selected' => $instance['show_polylines'], 'id' => $this->get_field_id( 'show_polylines' ), 'name' => $this->get_field_name( 'show_polylines' ) ) ) . '</p>';
+			echo '<p><strong>' . esc_html__( 'Zoom', 'wp-geo' ) . ':</strong> ' . $wpgeo->selectMapZoom( null, null, array( 'return' => 'menu', 'selected' => $instance['zoom'], 'id' => $this->get_field_id( 'zoom' ), 'name' => $this->get_field_name( 'zoom' ) ) ) . '<br />
+			<small>' . esc_html__( 'If not all markers fit, the map will automatically be zoomed so they do.', 'wp-geo' ) . '</small></p>';
+			echo '<p><strong>' . esc_html__( 'Settings', 'wp-geo' ) . ':</strong></p>';
+			echo '<p>' . esc_html__( 'Map Type', 'wp-geo' ) . ':<br />' . $wpgeo->google_map_types( null, null, array( 'return' => 'menu', 'selected' => $instance['maptype'], 'id' => $this->get_field_id( 'maptype' ), 'name' => $this->get_field_name( 'maptype' ) ) ) . '</p>';
+			echo '<p>' . esc_html__( 'Polylines', 'wp-geo' ) . ':<br />' . wpgeo_show_polylines_options( array( 'return' => 'menu', 'selected' => $instance['show_polylines'], 'id' => $this->get_field_id( 'show_polylines' ), 'name' => $this->get_field_name( 'show_polylines' ) ) ) . '</p>';
 		}
 	}
 	

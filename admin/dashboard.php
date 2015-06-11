@@ -69,25 +69,21 @@ if ( ! class_exists( 'WPGeo_Dashboard' ) ) {
 			$feed = fetch_feed( 'http://feeds2.feedburner.com/wpgeo' );
 			
 			if ( is_wp_error( $feed ) || ! $feed->get_item_quantity() ) {
-				echo '<p>' . __( 'No recent updates.', 'wp-geo' ) . '</p>';
+				echo '<p>' . esc_html__( 'No recent updates.', 'wp-geo' ) . '</p>';
 				return;
 			}
 			
 			$items = $feed->get_items( 0, 2 );
 			
 			foreach ( $items as $item ) {
-				$url         = esc_url( $item->get_link() );
-				$title       = esc_html( $item->get_title() );
-				$date        = esc_html( strip_tags( $item->get_date() ) );
-				$description = esc_html( strip_tags( @html_entity_decode( $item->get_description(), ENT_QUOTES, get_option( 'blog_charset' ) ) ) );
 				echo '<div style="margin-bottom:20px;">';
-				echo '<p style="margin-bottom:5px;"><a style="font-size: 1.2em; font-weight:bold;" href="' . $url  . '" title="' . $title . '">' . $title . '</a></p>';
-				echo '<p style="color: #aaa; margin-top:5px;">' . date( 'l, jS F Y', strtotime( $date ) ) . '</p>';
-				echo '<p>' . $description .'</p>';
+				echo '<p style="margin-bottom:5px;"><a style="font-size: 1.2em; font-weight:bold;" href="' . esc_url( $item->get_link() ) . '" title="' . esc_attr( $item->get_title() ) . '">' . esc_html( $item->get_title() ) . '</a></p>';
+				echo '<p style="color: #aaa; margin-top:5px;">' . date( 'l, jS F Y', strtotime( strip_tags( $item->get_date() ) ) ) . '</p>';
+				echo '<p>' . esc_html( strip_tags( @html_entity_decode( $item->get_description(), ENT_QUOTES, get_option( 'blog_charset' ) ) ) ) .'</p>';
 				echo '</div>';
 			}
 			
-			echo '<p><a href="http://www.wpgeo.com/">' . __( 'View all WP Geo news...', 'wp-geo' ) . '</a></p>';
+			echo '<p><a href="http://www.wpgeo.com/">' . esc_html__( 'View all WP Geo news...', 'wp-geo' ) . '</a></p>';
 			echo '</div>';
 			echo $after_widget;
 		}

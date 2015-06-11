@@ -97,7 +97,7 @@ class WPGeo_Recent_Locations_Widget extends WPGeo_Widget {
 	 */
 	function widget_form_fields_number( $instance, $widget ) {
 		if ( $widget == $this ) {
-			echo '<p><label for="' . $this->get_field_id( 'number' ) . '">' . __( 'Number of markers to show', 'wp-geo' ) . ':</label> <input id="' . $this->get_field_id( 'number' ) . '" name="' . $this->get_field_name( 'number' ) . '" type="text" value="' . $instance['number'] . '" size="3"></p>';
+			echo '<p><label for="' . esc_attr( $this->get_field_id( 'number' ) ) . '">' . esc_html__( 'Number of markers to show', 'wp-geo' ) . ':</label> <input id="' . esc_attr( $this->get_field_id( 'number' ) ) . '" name="' . esc_attr( $this->get_field_name( 'number' ) ) . '" type="text" value="' . esc_attr( $instance['number'] ) . '" size="3"></p>';
 		}
 	}
 	
@@ -111,7 +111,7 @@ class WPGeo_Recent_Locations_Widget extends WPGeo_Widget {
 		global $wpgeo;
 		if ( $widget == $this ) {
 			$options = get_option( 'wp_geo_options' );
-			echo '<p><strong>' . __( 'Show Post Types', 'wp-geo' ) . ':</strong></p>';
+			echo '<p><strong>' . esc_html__( 'Show Post Types', 'wp-geo' ) . ':</strong></p>';
 			$post_types = get_post_types( array(), 'objects' );
 			$custom_post_type_checkboxes = '';
 			foreach ( $post_types as $post_type ) {
