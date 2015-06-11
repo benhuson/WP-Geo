@@ -274,19 +274,19 @@ class WPGeo_Admin {
 		// The actual fields for data entry
 		echo '<table cellpadding="3" cellspacing="5" class="form-table">
 			<tr>
-				<th scope="row">' . __( 'Search for location', 'wp-geo' ) . '<br /><span style="font-weight:normal;">(' . __( 'town, postcode or address', 'wp-geo' ) . ')</span></th>
-				<td><input name="wp_geo_search" type="text" size="45" id="wp_geo_search" value="' . $search . '" />
-					<input type="hidden" name="wp_geo_base_country_code" id="wp_geo_base_country_code" value="' . apply_filters( 'wpgeo_base_country_code', '' ) . '" />
-					<span class="submit"><input type="button" id="wp_geo_search_button" name="wp_geo_search_button" value="' . __( 'Search', 'wp-geo' ) . '" /></span></td>
-			</tr>
-			<tr>
 				<td colspan="2">' . $map_html . '</td>
 			</tr>
 			<tr>
-				<th scope="row">' . __( 'Latitude', 'wp-geo' ) . ', ' . __( 'Longitude', 'wp-geo' ) . '</th>
-				<td><input name="wp_geo_latitude" type="text" size="25" id="wp_geo_latitude" value="' . $coord->latitude() . '" /><br />
-					<input name="wp_geo_longitude" type="text" size="25" id="wp_geo_longitude" value="' . $coord->longitude() . '" /><br />
-					<a href="#" class="wpgeo-clear-location-fields">' . __( 'clear location', 'wp-geo' ) . '</a> | <a href="#" class="wpgeo-centre-location">' . __( 'centre location', 'wp-geo' ) . '</a>
+				<th scope="row">' . __( 'Search for location', 'wp-geo' ) . '</th>
+				<td><input name="wp_geo_search" type="text" size="45" id="wp_geo_search" value="' . $search . '" placeholder="' . __( 'e.g. town, postcode or address', 'wp-geo' ) . '" />
+					<input type="hidden" name="wp_geo_base_country_code" id="wp_geo_base_country_code" value="' . apply_filters( 'wpgeo_base_country_code', '' ) . '" />
+					<span class="submit"><input type="button" id="wp_geo_search_button" class="button" name="wp_geo_search_button" value="' . __( 'Search', 'wp-geo' ) . '" /></span></td>
+			</tr>
+			<tr>
+				<th scope="row">' . __( 'Co-ordinates', 'wp-geo' ) . '</th>
+				<td><input name="wp_geo_latitude" type="text" size="25" id="wp_geo_latitude" value="' . $coord->latitude() . '" placeholder="' . __( 'Latitude', 'wp-geo' ) . '" />,
+					<input name="wp_geo_longitude" type="text" size="25" id="wp_geo_longitude" value="' . $coord->longitude() . '" placeholder="' . __( 'Longitude', 'wp-geo' ) . '" /><br />
+					<a href="#" class="button button-small wpgeo-clear-location-fields">' . __( 'clear location', 'wp-geo' ) . '</a> <a href="#" class="button button-small wpgeo-centre-location">' . __( 'centre location', 'wp-geo' ) . '</a>
 				</td>
 			</tr>
 			<tr>
