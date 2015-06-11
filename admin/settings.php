@@ -84,26 +84,46 @@ class WPGeo_Settings {
 
 	/**
 	 * Public API Field
+	 *
+	 * Only shows Google Maps v2 option if already selected or 'googlemaps=v2' URL
+	 * query exists (just to help with reverting changes if required).
 	 */
 	function public_api_field() {
+
 		$options = get_option( 'wp_geo_options' );
+
 		$menu_options = array(
-			'googlemapsv2' => __( 'Google Maps v2', 'wp-geo' ),
 			'googlemapsv3' => __( 'Google Maps v3', 'wp-geo' )
 		);
+
+		if ( 'googlemapsv2' == $options['public_api'] || ( isset( $_GET['googlemaps'] ) && 'v2' == $_GET['googlemaps'] ) ) {
+			$menu_options['googlemapsv2'] = __( 'Google Maps v2', 'wp-geo' );
+		}
+
 		echo wpgeo_select( 'wp_geo_options[public_api]', $menu_options, $options['public_api'], false, 'public_api' );
+
 	}
 
 	/**
 	 * Admin API Field
+	 *
+	 * Only shows Google Maps v2 option if already selected or 'googlemaps=v2' URL
+	 * query exists (just to help with reverting changes if required).
 	 */
 	function admin_api_field() {
+
 		$options = get_option( 'wp_geo_options' );
+
 		$menu_options = array(
-			'googlemapsv2' => __( 'Google Maps v2', 'wp-geo' ),
 			'googlemapsv3' => __( 'Google Maps v3', 'wp-geo' )
 		);
+
+		if ( 'googlemapsv2' == $options['admin_api'] || ( isset( $_GET['googlemaps'] ) && 'v2' == $_GET['googlemaps'] ) ) {
+			$menu_options['googlemapsv2'] = __( 'Google Maps v2', 'wp-geo' );
+		}
+
 		echo wpgeo_select( 'wp_geo_options[admin_api]', $menu_options, $options['admin_api'], false, 'admin_api' );
+
 	}
 
 	/**
