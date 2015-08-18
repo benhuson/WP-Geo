@@ -14,13 +14,20 @@ class WPGeo_Coord {
 	 * @param float $latitude Latitude.
 	 * @param float $longitude Longitude.
 	 */
-	function WPGeo_Coord( $latitude, $longitude ) {
+	function __construct( $latitude, $longitude ) {
 		$this->latitude  = $latitude;
 		$this->longitude = $longitude;
 		if ( $this->is_valid_coord() ) {
 			$this->latitude  = $this->sanitize_latlng( $this->latitude );
 			$this->longitude = $this->sanitize_latlng( $this->longitude );
 		}
+	}
+
+	/**
+	 * Deprecated PHP 4 Constructor
+	 */
+	function WPGeo_Coord() {
+		$this->__construct();
 	}
 
 	/**

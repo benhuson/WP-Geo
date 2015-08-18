@@ -13,8 +13,8 @@ class WPGeo_Recent_Locations_Widget extends WPGeo_Widget {
 	/**
 	 * Widget Constuctor
 	 */
-	function WPGeo_Recent_Locations_Widget() {
-		$this->WPGeo_Widget(
+	function __construct() {
+		parent::__construct(
 			'wpgeo_recent_locations_widget',
 			__( 'WP Geo Recent Locations', 'wp-geo' ),
 			array(
@@ -24,6 +24,13 @@ class WPGeo_Recent_Locations_Widget extends WPGeo_Widget {
 		);
 		add_action( 'wpgeo_widget_form_fields', array( $this, 'widget_form_fields_number' ), 10, 2 );
 		add_action( 'wpgeo_widget_form_fields', array( $this, 'widget_form_fields_post_types' ), 50, 2 );
+	}
+
+	/**
+	 * Deprecated PHP 4 Constructor
+	 */
+	function WPGeo_Recent_Locations_Widget() {
+		$this->__construct();
 	}
 	
 	/**

@@ -31,7 +31,7 @@ class WPGeo_Map {
 	 *
 	 * @param string $id Map ID.
 	 */
-	function WPGeo_Map( $id = 0 ) {
+	function __construct( $id = 0 ) {
 		$wp_geo_options = get_option( 'wp_geo_options' );
 
 		$this->id         = $this->validate_map_id( $id );
@@ -42,7 +42,14 @@ class WPGeo_Map {
 		$this->mapcentre  = new WPGeo_Coord( $wp_geo_options['default_map_latitude'], $wp_geo_options['default_map_longitude'] );
 		$this->mapcontrol = $wp_geo_options['default_map_control'];
 	}
-	
+
+	/**
+	 * Deprecated PHP 4 Constructor
+	 */
+	function WPGeo_Map() {
+		$this->__construct();
+	}
+
 	/**
 	 * Validate Map ID
 	 *

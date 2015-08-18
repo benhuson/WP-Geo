@@ -14,7 +14,7 @@ class WPGeo_Markers {
 	/**
 	 * Constructor
 	 */
-	function WPGeo_Markers() {
+	function __construct() {
 
 		// Marker directories abstraction. props Alain (alm)
 		$upl = wp_upload_dir();
@@ -54,6 +54,13 @@ class WPGeo_Markers {
 			$this->get_image_url( 'dot-marker.png' ),
 			$this->get_image_url( 'dot-marker-shadow.png' )
 		);
+	}
+
+	/**
+	 * Deprecated PHP 4 Constructor
+	 */
+	function WPGeo_Markers() {
+		$this->__construct();
 	}
 
 	/**

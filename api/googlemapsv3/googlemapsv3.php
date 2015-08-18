@@ -8,7 +8,7 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 	/**
 	 * Constructor
 	 */
-	function WPGeo_API_GoogleMapsV3() {
+	function __construct() {
 		add_action( 'wpgeo_register_scripts', array( $this, 'wpgeo_register_scripts' ) );
 		add_action( 'wpgeo_enqueue_scripts', array( $this, 'wpgeo_enqueue_scripts' ) );
 		add_filter( 'wpgeo_api_string', array( $this, 'wpgeo_api_string' ), 10, 3 );
@@ -16,6 +16,13 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 		add_action( 'wpgeo_api_googlemapsv3_js', array( $this, 'wpgeo_js' ) );
 		add_filter( 'wpgeo_api_googlemapsv3_markericon', array( $this, 'wpgeo_api_googlemapsv3_markericon' ), 10, 2 );
 		add_filter( 'wpgeo_check_google_api_key', array( $this, 'check_google_api_key' ) );
+	}
+
+	/**
+	 * Deprecated PHP 4 Constructor
+	 */
+	function WPGeo_API_GoogleMapsV3() {
+		$this->__construct();
 	}
 
 	/**

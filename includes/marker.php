@@ -21,7 +21,7 @@ class WPGeo_Marker {
 	/**
 	 * Constructor
 	 */
-	function WPGeo_Marker( $id, $name, $description, $width, $height, $anchorX, $anchorY, $image, $shadow = null ) {
+	function __construct( $id, $name, $description, $width, $height, $anchorX, $anchorY, $image, $shadow = null ) {
 		$this->set_id( $id );
 		$this->set_name( $name );
 		$this->set_description( $description );
@@ -29,6 +29,13 @@ class WPGeo_Marker {
 		$this->set_anchor( $anchorX, $anchorY );
 		$this->set_image( $image );
 		$this->set_shadow( $shadow );
+	}
+
+	/**
+	 * Deprecated PHP 4 Constructor
+	 */
+	function WPGeo_Marker() {
+		$this->__construct();
 	}
 
 	/**

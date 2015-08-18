@@ -14,8 +14,8 @@ class WPGeo_Category_Map_Widget extends WPGeo_Widget {
 	/**
 	 * Constuctor
 	 */
-	function WPGeo_Category_Map_Widget() {
-		$this->WPGeo_Widget(
+	function __construct() {
+		parent::__construct(
 			'wpgeo_category_map_widget',
 			__( 'WP Geo Category Map', 'wp-geo' ),
 			array(
@@ -23,6 +23,13 @@ class WPGeo_Category_Map_Widget extends WPGeo_Widget {
 				'description' => __( 'Displays markers from the current category', 'wp-geo' )
 			)
 		);
+	}
+
+	/**
+	 * Deprecated PHP 4 Constructor
+	 */
+	function WPGeo_Category_Map_Widget() {
+		$this->__construct();
 	}
 	
 	/**

@@ -9,7 +9,14 @@ class WPGeo_API {
 	/**
 	 * Constructor
 	 */
+	function __construct() {
+	}
+
+	/**
+	 * Deprecated PHP 4 Constructor
+	 */
 	function WPGeo_API() {
+		$this->__construct();
 	}
 
 	/**

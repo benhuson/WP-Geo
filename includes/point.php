@@ -17,7 +17,7 @@ class WPGeo_Point {
 	 * @param  object  $coord  WPGeo_Coord object.
 	 * @param  array   $args   Point arguments.
 	 */
-	function WPGeo_Point( $coord, $args = null ) {
+	function __construct( $coord, $args = null ) {
 		$args = wp_parse_args( $args, array(
 			'icon'  => 'large',
 			'title' => '',
@@ -28,6 +28,13 @@ class WPGeo_Point {
 		$this->icon  = $args['icon'];
 		$this->title = $args['title'];
 		$this->link  = $args['link'];
+	}
+
+	/**
+	 * Deprecated PHP 4 Constructor
+	 */
+	function WPGeo_Point() {
+		$this->__construct();
 	}
 
 	/**

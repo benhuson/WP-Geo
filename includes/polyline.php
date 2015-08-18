@@ -16,7 +16,7 @@ class WPGeo_Polyline {
 	 *
 	 * @param array $args Args.
 	 */
-	function WPGeo_Polyline( $args = null ) {
+	function __construct( $args = null ) {
 		$args = wp_parse_args( $args, array(
 			'coords'    => $this->coords,
 			'geodesic'  => $this->geodesic,
@@ -29,6 +29,13 @@ class WPGeo_Polyline {
 		$this->color     = $args['color'];
 		$this->thickness = $args['thickness'];
 		$this->opacity   = $args['opacity'];
+	}
+
+	/**
+	 * Deprecated PHP 4 Constructor
+	 */
+	function WPGeo_Polyline() {
+		$this->__construct();
 	}
 
 	/**

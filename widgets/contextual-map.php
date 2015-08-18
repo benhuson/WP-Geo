@@ -14,8 +14,8 @@ class WPGeo_Contextual_Map_Widget extends WPGeo_Widget {
 	/**
 	 * Widget Constuctor
 	 */
-	function WPGeo_Contextual_Map_Widget() {
-		$this->WPGeo_Widget(
+	function __construct() {
+		parent::__construct(
 			'wpgeo_contextual_map_widget',
 			__( 'WP Geo Contextual Map', 'wp-geo' ),
 			array(
@@ -23,6 +23,13 @@ class WPGeo_Contextual_Map_Widget extends WPGeo_Widget {
 				'description' => __( 'Displays markers from the current page', 'wp-geo' )
 			)
 		);
+	}
+
+	/**
+	 * Deprecated PHP 4 Constructor
+	 */
+	function WPGeo_Contextual_Map_Widget() {
+		$this->__construct();
 	}
 	
 	/**

@@ -9,12 +9,19 @@ class WPGeo_Widget extends WP_Widget {
 	/**
 	 * Constuctor
 	 */
-	function WPGeo_Widget( $id_base = false, $name, $widget_options = array(), $control_options = array() ) {
-		$this->WP_Widget( $id_base, $name, $widget_options, $control_options );
+	function __construct( $id_base = false, $name, $widget_options = array(), $control_options = array() ) {
+		parent::__construct( $id_base, $name, $widget_options, $control_options );
 		add_action( 'wpgeo_widget_form_fields', array( $this, 'widget_form_fields_default' ), 5, 2 );
 		add_action( 'wpgeo_widget_form_fields', array( $this, 'widget_form_fields_settings' ), 9, 2 );
 	}
-	
+
+	/**
+	 * Deprecated PHP 4 Constructor
+	 */
+	function WPGeo_Widget( $id_base = false, $name, $widget_options = array(), $control_options = array() ) {
+		$this->__construct( $id_base, $name, $widget_options, $control_options );
+	}
+
 	/**
 	 * Wrap Content
 	 *

@@ -8,8 +8,15 @@ class WPGeo_Feeds {
 	/**
 	 * Constructor
 	 */
-	function WPGeo_Feeds() {
+	function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
+	}
+
+	/**
+	 * Deprecated PHP 4 Constructor
+	 */
+	function WPGeo_Feeds() {
+		$this->__construct();
 	}
 
 	/**

@@ -12,10 +12,17 @@ class WPGeo_Maps {
 	/**
 	 * Constructor
 	 */
-	function WPGeo_Maps() {
+	function __construct() {
 		$this->maps = array();
 	}
-	
+
+	/**
+	 * Deprecated PHP 4 Constructor
+	 */
+	function WPGeo_Maps() {
+		$this->__construct();
+	}
+
 	/**
 	 * Add Map
 	 * Adds a WPGeo_Map object to the maps array.

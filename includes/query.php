@@ -9,10 +9,17 @@ class WPGeo_Query {
 	/**
 	 * Constructor
 	 */
-	function WPGeo_Query() {
+	function __construct() {
 		add_filter( 'post_limits', array( $this, 'post_limits' ) );
 		add_filter( 'posts_join', array( $this, 'posts_join' ) );
 		add_filter( 'posts_where', array( $this, 'posts_where' ) );
+	}
+
+	/**
+	 * Deprecated PHP 4 Constructor
+	 */
+	function WPGeo_Query() {
+		$this->__construct();
 	}
 
 	/**

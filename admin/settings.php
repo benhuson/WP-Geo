@@ -8,11 +8,18 @@ class WPGeo_Settings {
 	/**
 	 * Constructor
 	 */
-	function WPGeo_Settings() {
+	function __construct() {
 		$this->register_settings();
 		$this->filter_plugin_action_links();
 	}
-	
+
+	/**
+	 * Deprecated PHP 4 Constructor
+	 */
+	function WPGeo_Settings() {
+		$this->__construct();
+	}
+
 	/**
 	 * Settings API
 	 */

@@ -24,7 +24,7 @@ class WPGeo {
 	/**
 	 * Constructor
 	 */
-	function WPGeo() {
+	function __construct() {
 		
 		// API
 		$wp_geo_options = get_option( 'wp_geo_options' );
@@ -65,7 +65,14 @@ class WPGeo {
 			$this->admin = new WPGeo_Admin();
 		}
 	}
-	
+
+	/**
+	 * Deprecated PHP 4 Constructor
+	 */
+	function WPGeo() {
+		$this->__construct();
+	}
+
 	/**
 	 * Filter 'wp_geo_options' value to ensure all defaults are set.
 	 *

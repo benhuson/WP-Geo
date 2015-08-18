@@ -11,11 +11,18 @@ if ( ! class_exists( 'WPGeo_Dashboard' ) ) {
 		/**
 		 * Constructor
 		 */
-		function WPGeo_Dashboard() {
+		function __construct() {
 			add_action( 'wp_dashboard_setup', array( $this, 'register_widget' ) );
 			add_filter( 'wp_dashboard_widgets', array( $this, 'add_widget' ) );
 		}
-		
+
+		/**
+		 * Deprecated PHP 4 Constructor
+		 */
+		function WPGeo_Dashboard() {
+			$this->__construct();
+		}
+
 		/**
 		 * Register the dashboard widget
 		 */

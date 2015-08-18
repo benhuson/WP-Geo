@@ -8,13 +8,20 @@ class WPGeo_API_GoogleMapsV2 extends WPGeo_API {
 	/**
 	 * Constructor
 	 */
-	function WPGeo_API_GoogleMapsV2() {
+	function __construct() {
 		add_action( 'wpgeo_register_scripts', array( $this, 'wpgeo_register_scripts' ) );
 		add_action( 'wpgeo_enqueue_scripts', array( $this, 'wpgeo_enqueue_scripts' ) );
 		add_filter( 'wpgeo_api_string', array( $this, 'wpgeo_api_string' ), 10, 3 );
 		add_action( 'wpgeo_api_googlemapsv2_js', array( $this, 'wpgeo_js' ) );
 		add_filter( 'wpgeo_api_googlemapsv2_markericon', array( $this, 'wpgeo_api_googlemapsv2_markericon' ), 10, 2 );
 		add_action( 'wpgeo_widget_form_fields', array( $this, 'display_widget_api_key_message' ), 1 );
+	}
+
+	/**
+	 * Deprecated PHP 4 Constructor
+	 */
+	function WPGeo_API_GoogleMapsV2() {
+		$this->__construct();
 	}
 
 	/**
