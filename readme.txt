@@ -2,9 +2,9 @@
 Contributors: husobj
 Tags: maps, map, geo, geocoding, google, location, georss
 Donate link: http://www.benhuson.co.uk/donate/
-Requires at least: 3.7
-Tested up to: 4.2
-Stable tag: 3.3.9
+Requires at least: 3.9
+Tested up to: 4.3
+Stable tag: 3.4
 License: GPLv3
 License URI: http://www.opensource.org/licenses/gpl-license.php
 
@@ -96,6 +96,15 @@ None at the moment.
 4. Widget Settings
 
 == Changelog ==
+
+= WP Geo 3.4 =
+
+* Use PHP 5 class constructors (compatibility with WordPress 4.3).
+* Split Map, Polyline, Point and Coord classes into seperate files.
+* Prepare for deprecating Google Maps v2 support by only showing option if already selected.
+* Add wpgeo_refreshMapContainer() JS function to refresh map (e.g. after showing in tab).
+* Escape HTML and attributes.
+* Use WordPress buttons styles for post admin fields and add placeholder text.
 
 = WP Geo 3.3.9 =
 
@@ -451,6 +460,9 @@ NOTE: You will need to re-add your widgets after upgrading!
 * Added option to set wether maps appear at the top or bottom of posts.
 
 == Upgrade Notice ==
+
+= 3.4 =
+Use PHP 5 class constructors (compatibility with WordPress 4.3). Escape HTML and attributes.
 
 = 3.3.9 =
 Security fix: Escape URLs that use add_query_arg() or remove_query_arg(). Also prevent widgets from overwriting global $post variable.
