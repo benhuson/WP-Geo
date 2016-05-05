@@ -30,6 +30,7 @@ function wpgeo_css_dimension( $str = false ) {
 
 /**
  * Check Domain
+ *
  * This function checks that the domain name of the page matches the blog site url.
  * If it doesn't match we can prevent maps from showing as the Google API Key will not be valid.
  * This prevent warnings if the site is accessed through Google cache.
@@ -37,18 +38,18 @@ function wpgeo_css_dimension( $str = false ) {
  * @return  boolean
  */
 function wpgeo_check_domain() {
-	$http = is_ssl() ? 'https' : 'http';
-	$host = $http . '://' . rtrim( $_SERVER["HTTP_HOST"], '/' );
+
+	$host = 'http://' . rtrim( $_SERVER["HTTP_HOST"], '/' );
 
 	// Blog might not be in site root so strip to domain
+	$http = is_ssl() ? 'https' : 'http';
 	$blog = preg_replace( "/(" . $http . ":\/\/[^\/]*).*/", "$1", get_bloginfo( 'url' ) );
 
-	// Strip both boths to non-SSL to compare
-	$host = str_replace( 'https:', 'http:', $host );
+	// Strip blog to non-SSL to compare
 	$blog = str_replace( 'https:', 'http:', $blog );
 
-	$match = $host == $blog ? true : false;
-	return $match;
+	return $host == $blog;
+
 }
 
 /**
