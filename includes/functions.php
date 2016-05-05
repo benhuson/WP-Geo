@@ -41,7 +41,7 @@ function wpgeo_check_domain() {
 	$host = $http . '://' . rtrim( $_SERVER["HTTP_HOST"], '/' );
 
 	// Blog might not be in site root so strip to domain
-	$blog = preg_replace( "/(http:\/\/[^\/]*).*/", "$1", get_bloginfo( 'url' ) );
+	$blog = preg_replace( "/(" . $http . ":\/\/[^\/]*).*/", "$1", get_bloginfo( 'url' ) );
 
 	// Strip both boths to non-SSL to compare
 	$host = str_replace( 'https:', 'http:', $host );
