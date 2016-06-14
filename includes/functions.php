@@ -35,6 +35,8 @@ function wpgeo_css_dimension( $str = false ) {
  * If it doesn't match we can prevent maps from showing as the Google API Key will not be valid.
  * This prevent warnings if the site is accessed through Google cache.
  *
+ * Can be overriden via the `wpgeo_check_domain` filter.
+ *
  * @return  boolean
  */
 function wpgeo_check_domain() {
@@ -48,7 +50,7 @@ function wpgeo_check_domain() {
 	// Strip blog to non-SSL to compare
 	$blog = str_replace( 'https:', 'http:', $blog );
 
-	return $host == $blog;
+	return apply_filters( 'wpgeo_check_domain', $host == $blog );
 
 }
 
