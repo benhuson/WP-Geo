@@ -56,16 +56,14 @@ class WPGeo_Admin {
 		}
 		
 		// Dismiss Upgrade Message
-
 		if ( isset( $_GET['wpgeo_action'] ) && $_GET['wpgeo_action'] = 'dismiss-update-msg' ) {
 			if ( wp_verify_nonce( $_GET['_wpnonce'], 'wpgeo_dismiss_update_msg' ) ) {
 				update_option( 'wp_geo_show_version_msg', 'N' );
-				$url = remove_query_arg( 'wpgeo_action', $_SERVER['PHP_SELF'] );
-				$url = remove_query_arg( '_wpnonce', $url );
-				wp_redirect( esc_url_raw( $url ) );
+				wp_redirect( esc_url_raw( admin_url( 'options-general.php?page=wp-geo' ) ) );
 				exit();
 			}
 		}
+
 	}
 	
 	/**
