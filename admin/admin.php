@@ -85,7 +85,7 @@ class WPGeo_Admin {
 		}
 		// Version upgrade message
 		if ( in_array( $current_screen->id, array( 'settings_page_wp-geo' ) ) ) {
-			$wp_geo_show_version_msg = get_option( 'wp_geo_show_version_msg' );echo 'xxxx';
+			$wp_geo_show_version_msg = get_option( 'wp_geo_show_version_msg' );
 			if ( current_user_can( 'manage_options' ) && $wp_geo_show_version_msg == 'Y' ) {
 				echo '<div id="wpgeo_version_message" class="error below-h2" style="margin:5px 15px 2px 0px;">
 						<p><strong style="color: #C00;">' . __( 'Important Notice: <a href="https://developers.google.com/maps/documentation/javascript/v2/reference">Version 2 of the Google Maps API is no longer available</a>', 'wp-geo' ) . '</strong><br />' . __( 'WP Geo has been updated to support Google Map API v3. The v2 API will be completed removed from future versions of WP Geo. You may need <a href="https://developers.google.com/maps/documentation/javascript/tutorial#api_key" target="_blank">create a new API key</a>, then update your WP Geo settings to use the Google Map API v3. If you have added custom code or plugins to work with WP Geo you may need to update them. Please <a href="https://github.com/benhuson/WP-Geo/issues">report bug issues here...</a>', 'wp-geo' ) . ' <a href="' . esc_url( add_query_arg( 'wpgeo_action', 'dismiss-update-msg', wp_nonce_url( add_query_arg( array() ), 'wpgeo_dismiss_update_msg' ) ) ) . '">' . __( 'Dismiss', 'wp-geo' ) . '</a></p>
