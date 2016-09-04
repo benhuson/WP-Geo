@@ -1,7 +1,7 @@
 === WP Geo  ===
 Contributors: husobj
 Tags: maps, map, geo, geocoding, google, location, georss
-Donate link: http://www.benhuson.co.uk/donate/
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5FN8ZMNCHBM3J
 Requires at least: 3.9
 Tested up to: 4.3
 Stable tag: 3.4
