@@ -192,7 +192,7 @@ class WPGeo_Widget extends WP_Widget {
 				$coord = get_wpgeo_post_coord( $geo_post->ID );
 				if ( $coord->is_valid_coord() ) {
 					$count++;
-					if ( count( $count ) == 1 ) {
+					if ( $count = 1 ) {
 						$map->set_map_centre( $coord );
 					}
 					$map->add_point( $coord, array(
