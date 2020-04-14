@@ -17,7 +17,7 @@ class WPGeo_Coord {
 	function __construct( $latitude, $longitude ) {
 		$this->latitude  = $latitude;
 		$this->longitude = $longitude;
-		if ( $this->is_valid_coord() ) {
+		if ( ! $this->is_valid_coord() && ! empty($this->latitude) && ! empty($this->longitude)) {
 			$this->latitude  = $this->sanitize_latlng( $this->latitude );
 			$this->longitude = $this->sanitize_latlng( $this->longitude );
 		}
