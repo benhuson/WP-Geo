@@ -88,13 +88,24 @@ class WPGeo_Feeds {
 	 * Add the GeoRSS namespace to the feed
 	 */
 	function georss_namespace() {
+
 		global $wpgeo;
 
 		if ( $wpgeo->show_maps() ) {
-			echo 'xmlns:georss="http://www.georss.org/georss" ';
-			echo 'xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" ';
-			echo 'xmlns:ymaps="http://api.maps.yahoo.com/Maps/V2/AnnotatedMaps.xsd" ';
+
+			$geo_namespaces = array(
+				'georss' => 'http://www.georss.org/georss',
+				'geo'    => 'http://www.w3.org/2003/01/geo/wgs84_pos#',
+			);
+
+			$geo_namespaces = apply_filters( 'wpgeo_feed_namespaces', $geo_namespaces );
+
+			foreach ( $geo_namespaces as $ns => $url ) {
+				printf( 'xmlns:%s="%s" ', $ns, $url );
+			}
+
  		}
+
 	}
 
 	/**
