@@ -4,6 +4,10 @@
  * WP Geo class
  * The main WP Geo class - this is where it all happens.
  */
+
+use WP_Geo\API\GoogleMaps\GoogleMaps_v2;
+use WP_Geo\API\GoogleMaps\GoogleMaps_v3;
+
 class WPGeo {
 	
 	// Version Information
@@ -29,11 +33,9 @@ class WPGeo {
 		// API
 		$wp_geo_options = get_option( 'wp_geo_options' );
 		if ( 'googlemapsv3' == $this->get_api_string() ) {
-			include_once( WPGEO_DIR . 'api/googlemapsv3/googlemapsv3.php' );
-			$this->api = new WPGeo_API_GoogleMapsV3();
+			$this->api = new GoogleMaps_v3();
 		} elseif ( 'googlemapsv2' == $this->get_api_string() ) {
-			include_once( WPGEO_DIR . 'api/googlemapsv2/googlemapsv2.php' );
-			$this->api = new WPGeo_API_GoogleMapsV2();
+			$this->api = new GoogleMaps_v2();
 		} else {
 			$this->api = new WPGeo_API();
 		}

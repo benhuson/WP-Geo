@@ -1,10 +1,16 @@
 <?php
 
 /**
- * WP Geo API: Google Maps v3
+ * @package     WP Geo
+ * @subpackage  API \ GoogleMaps \ v3
  */
-class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
-	
+
+namespace WP_Geo\API\GoogleMaps;
+
+if ( ! defined( 'ABSPATH' ) ) exit;  // Exit if accessed directly
+
+class GoogleMaps_v3 extends \WPGeo_API {
+
 	/**
 	 * Constructor
 	 */
@@ -36,7 +42,7 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 		global $wpgeo;
 		wp_register_script( 'googlemaps3', $this->get_googlemaps3_script_url(), false, $wpgeo->version );
 		wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.v3.js', array( 'jquery', 'wpgeo_tooltip' ), $wpgeo->version );
-		wp_register_script( 'wpgeo_admin_post_googlemaps3', WPGEO_URL . 'api/googlemapsv3/js/admin-post.js', array( 'jquery', 'wpgeo_admin_post', 'googlemaps3' ), $wpgeo->version );
+		wp_register_script( 'wpgeo_admin_post_googlemaps3', WPGEO_URL . 'api/googlemapsv3/js/admin-post-v3.js', array( 'jquery', 'wpgeo_admin_post', 'googlemaps3' ), $wpgeo->version );
 	}
 
 	/**
