@@ -8,6 +8,7 @@
 use WP_Geo\API\WPGeo_API;
 use WP_Geo\API\GoogleMaps\GoogleMaps_v2;
 use WP_Geo\API\GoogleMaps\GoogleMaps_v3;
+use WP_Geo\API\Leaflet\OSM;
 
 class WPGeo {
 	
@@ -37,6 +38,8 @@ class WPGeo {
 			$this->api = new GoogleMaps_v3();
 		} elseif ( 'googlemapsv2' == $this->get_api_string() ) {
 			$this->api = new GoogleMaps_v2();
+		} elseif ( 'leaflet' == $this->get_api_string() ) {
+			$this->api = new OSM();
 		} else {
 			$this->api = new WPGeo_API();
 		}

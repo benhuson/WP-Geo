@@ -100,7 +100,8 @@ class WPGeo_Settings {
 		$options = get_option( 'wp_geo_options' );
 
 		$menu_options = array(
-			'googlemapsv3' => __( 'Google Maps v3', 'wp-geo' )
+			'googlemapsv3' => __( 'Google Maps v3', 'wp-geo' ),
+			'leaflet'      => __( 'Leaflet + OpenStreetMap', 'wp-geo' )
 		);
 
 		if ( 'googlemapsv2' == $options['public_api'] || ( isset( $_GET['googlemaps'] ) && 'v2' == $_GET['googlemaps'] ) ) {
@@ -122,7 +123,8 @@ class WPGeo_Settings {
 		$options = get_option( 'wp_geo_options' );
 
 		$menu_options = array(
-			'googlemapsv3' => __( 'Google Maps v3', 'wp-geo' )
+			'googlemapsv3' => __( 'Google Maps v3', 'wp-geo' ),
+			'leaflet'      => __( 'Leaflet + OpenStreetMap', 'wp-geo' )
 		);
 
 		if ( 'googlemapsv2' == $options['admin_api'] || ( isset( $_GET['googlemaps'] ) && 'v2' == $_GET['googlemaps'] ) ) {
