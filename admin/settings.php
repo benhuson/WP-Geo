@@ -138,7 +138,10 @@ class WPGeo_Settings {
 	 */
 	function google_api_key_field() {
 		$options = get_option( 'wp_geo_options' );
-		echo '<input name="wp_geo_options[google_api_key]" type="text" id="google_api_key" value="' . esc_attr( $options['google_api_key'] ) . '" class="regular-text" />';
+		echo '<input name="wp_geo_options[google_api_key]" type="text" id="google_api_key" value="' . esc_attr( $options['google_api_key'] ) . '" class="regular-text" /><br />';
+
+		echo '<p class="description">' . __( 'You will need to register a <a href="https://cloud.google.com/maps-platform" target="_blank">Google Maps Platform</a> account to <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">create an API key</a>.', 'wp-geo' ) . '</p>';
+
 	}
 
 	/**
