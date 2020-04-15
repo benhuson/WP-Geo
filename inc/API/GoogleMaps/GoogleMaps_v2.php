@@ -49,7 +49,7 @@ class GoogleMaps_v2 extends WPGeo_API {
 
 		wp_register_script( 'googlemaps2', esc_url_raw( $googlemaps_js ), false, $wpgeo->version );
 		wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.js', array( 'jquery', 'wpgeo_tooltip' ), $wpgeo->version );
-		wp_register_script( 'wpgeo_admin_post_googlemaps2', WPGEO_URL . 'api/googlemapsv2/js/admin-post-v2.js', array( 'jquery', 'wpgeo_admin_post', 'googlemaps2' ), $wpgeo->version );
+		wp_register_script( 'wpgeo_admin_post_googlemaps2', WPGEO_URL . 'inc/API/GoogleMaps/js/admin-post-v2.js', array( 'jquery', 'wpgeo_admin_post', 'googlemaps2' ), $wpgeo->version );
 
 	}
 

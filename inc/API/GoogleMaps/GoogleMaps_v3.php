@@ -43,7 +43,7 @@ class GoogleMaps_v3 extends WPGeo_API {
 
 		wp_register_script( 'googlemaps3', $this->get_googlemaps3_script_url(), false, $wpgeo->version );
 		wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.v3.js', array( 'jquery', 'wpgeo_tooltip' ), $wpgeo->version );
-		wp_register_script( 'wpgeo_admin_post_googlemaps3', WPGEO_URL . 'api/googlemapsv3/js/admin-post-v3.js', array( 'jquery', 'wpgeo_admin_post', 'googlemaps3' ), $wpgeo->version );
+		wp_register_script( 'wpgeo_admin_post_googlemaps3', WPGEO_URL . 'inc/API/GoogleMaps/js/admin-post-v3.js', array( 'jquery', 'wpgeo_admin_post', 'googlemaps3' ), $wpgeo->version );
 
 	}
 
