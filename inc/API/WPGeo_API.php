@@ -16,48 +16,50 @@ class WPGeo_API {
 	/**
 	 * Constructor
 	 */
-	function __construct() {
-	}
-
-	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_API() {
-		$this->__construct();
+	public function __construct() {
 	}
 
 	/**
 	 * Map
-	 * Gets map to display.
+	 *
+	 * Gets the map to display.
 	 *
 	 * @param   object  $map  WPGeo_Map object.
 	 * @return  string        HTML.
 	 */
-	function map( $map ) {
+	public function map( $map ) {
+
 		return '';
+
 	}
 
 	/**
 	 * Input Map
-	 * Gets input map to display.
+	 *
+	 * Gets the input map to display.
 	 *
 	 * @param   object  $map  WPGeo_Map object.
 	 * @return  string        HTML.
 	 */
-	function input_map( $map ) {
+	public function input_map( $map ) {
+
 		return '';
+
 	}
 
 	/**
 	 * Static Map URL
-	 * Gets static map URL.
+	 *
+	 * Gets the static map URL.
 	 *
 	 * @param   object  $map  WPGeo_Map object.
 	 * @return  string        HTML.
 	 */
-	function static_map_url( $map ) {
+	public function static_map_url( $map ) {
+
 		$point = $map->get_point();
 		$coord = $point->get_coord();
+
 		if ( ! $coord->is_valid_coord() ) {
 			return '';
 		}
@@ -80,14 +82,17 @@ class WPGeo_API {
 
 	/**
 	 * Map Link
+	 *
 	 * Gets a link to an external map.
 	 *
 	 * @param   object  $map  WPGeo_Map object.
 	 * @return  string        Map URL.
 	 */
-	function map_url( $map ) {
+	public function map_url( $map ) {
+
 		$point = $map->get_point();
 		$coord = $point->get_coord();
+
 		if ( ! $coord->is_valid_coord() ) {
 			return '';
 		}
@@ -106,14 +111,17 @@ class WPGeo_API {
 	 *
 	 * @return  array  Map types.
 	 */
-	function map_types() {
+	public function map_types() {
+
 		$types = array(
 			'G_NORMAL_MAP'    => __( 'Normal', 'wp-geo' ),
 			'G_SATELLITE_MAP' => __( 'Satellite (photographic map)', 'wp-geo' ),
 			'G_HYBRID_MAP'    => __( 'Hybrid (photographic map with normal features)', 'wp-geo' ),
 			'G_PHYSICAL_MAP'  => __( 'Physical (terrain map)', 'wp-geo' )
 		);
+
 		return $types;
+
 	}
 
 	/**
@@ -121,14 +129,17 @@ class WPGeo_API {
 	 *
 	 * @return  array  Map type options.
 	 */
-	function map_type_options() {
+	public function map_type_options() {
+
 		$types = array(
 			'G_NORMAL_MAP'    => 'show_map_type_normal',
 			'G_SATELLITE_MAP' => 'show_map_type_satellite',
 			'G_HYBRID_MAP'    => 'show_map_type_hybrid',
 			'G_PHYSICAL_MAP'  => 'show_map_type_physical'
 		);
+
 		return $types;
+
 	}
 
 	/**
@@ -136,13 +147,15 @@ class WPGeo_API {
 	 *
 	 * @return  array  Static map types.
 	 */
-	function static_map_types() {
+	public function static_map_types() {
+
 		return array(
 			'G_NORMAL_MAP'    => 'roadmap',
 			'G_SATELLITE_MAP' => 'satellite',
 			'G_PHYSICAL_MAP'  => 'terrain',
 			'G_HYBRID_MAP'    => 'hybrid'
 		);
+
 	}
 
 	/**
@@ -150,7 +163,8 @@ class WPGeo_API {
 	 *
 	 * @return  array  Map controls.
 	 */
-	function map_controls() {
+	public function map_controls() {
+
 		$controls = array(
 			'GLargeMapControl3D'  => __( 'Large 3D pan/zoom control', 'wp-geo' ),
 			'GLargeMapControl'    => __( 'Large pan/zoom control', 'wp-geo' ),
@@ -159,7 +173,9 @@ class WPGeo_API {
 			'GSmallZoomControl'   => __( 'Small zoom control (no panning controls)', 'wp-geo' ),
 			''                    => __( 'No pan/zoom controls', 'wp-geo' )
 		);
+
 		return $controls;
+
 	}
 
 	/**
@@ -167,8 +183,10 @@ class WPGeo_API {
 	 *
 	 * @return  array  Zoom values.
 	 */
-	function zoom_values() {
+	public function zoom_values() {
+
 		$values = array();
+
 		for ( $i = 0; $i <= 19; $i++ ) {
 			$values[$i] = $i;
 			if ( $i == 0 ) {
@@ -177,7 +195,9 @@ class WPGeo_API {
 				$values[$i] .= ' - ' . __( 'Zoomed In', 'wp-geo' );
 			}
 		}
+
 		return $values;
+
 	}
 
 }
