@@ -16,6 +16,12 @@ http://www.opensource.org/licenses/gpl-license.php
 
 */
 
+namespace WP_Geo;
+
+if ( ! defined( 'ABSPATH' ) ) exit;  // Exit if accessed directly
+
+require_once( __DIR__ . '/vendor/autoload.php' );
+
 // WP Geo plugin directory and url paths. props Alain (alm)
 define( 'WPGEO_SUBDIR', '/' . str_replace( basename( __FILE__ ), '', plugin_basename( __FILE__ ) ) );
 define( 'WPGEO_URL', plugins_url( WPGEO_SUBDIR ) );
@@ -57,4 +63,4 @@ include_once( WPGEO_DIR . 'widgets/recent-locations.php' );
 
 // Init.
 global $wpgeo;
-$wpgeo = new WPGeo();
+$wpgeo = new \WPGeo();
