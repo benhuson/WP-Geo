@@ -2,9 +2,9 @@
 Contributors: husobj
 Tags: maps, map, geo, geocoding, google, location, georss
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5FN8ZMNCHBM3J
-Requires at least: 3.9
-Tested up to: 4.3
-Stable tag: 3.4
+Requires at least: 4.3
+Tested up to: 5.4
+Stable tag: 3.5
 License: GPLv3
 License URI: http://www.opensource.org/licenses/gpl-license.php
 
@@ -12,7 +12,7 @@ Adds location maps to your posts, pages and custom post types.
 
 == Description ==
 
-> **Important Note About WP Geo 3.3**  
+> **Important Note About WP Geo 3.3+**  
 > This update now uses Google Maps API v3. While it should continue to work OK it you have simply installed and are using a previous version of WP Geo, if you have customised your templates or used any filters you may need to update your code to work with this version of Google's API. Please [submit any bugs or issues here...](https://github.com/benhuson/WP-Geo/issues)
 
 When editing a post or page, you will be able to set a physical location for that post and easily embed a Google map into your post. You can select the location by:
@@ -72,7 +72,7 @@ WP Geo is currently available in the following languages:
 3. Enable in WordPress by visiting the "Plugins" menu and activating it.
 4. Go to the Settings page in the admin and enter your Google API Key and customise the settings.
 
-You can [sign up for a Google API Key here](https://developers.google.com/maps/documentation/javascript/v2/introduction#Obtaining_Key).
+You will need to register a [Google Maps Platform](https://cloud.google.com/maps-platform) account to [create an API key](https://developers.google.com/maps/documentation/javascript/get-api-key).
 
 WP Geo will appear on the edit post and edit page screens.
 If you set a location, a Google map will automatically appear on your post or page (if your settings are set to).
@@ -96,6 +96,16 @@ None at the moment.
 4. Widget Settings
 
 == Changelog ==
+
+= WP Geo 3.5 =
+
+* Remove Yahoo! feed namespace.
+* Add `wpgeo_feed_namespaces` filter to allow feed namespaces to be customized.
+* Fix code in widget. Props @Fussverkehr.
+* Fix sanitization of coordinates. Props @PiwEL.
+* Update Google Maps documentation and notifications.
+* Refactor and fix issues with the `wpgeo_check_domain()` function.
+* Remove SensortNotRequired JS warning.
 
 = WP Geo 3.4 =
 
