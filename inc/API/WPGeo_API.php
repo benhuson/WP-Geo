@@ -1,9 +1,16 @@
 <?php
 
 /**
- * WP Geo API
+ * @package     WP Geo
+ * @subpackage  API \ WP Geo API
+ *
  * Can be extended for other APIs.
  */
+
+namespace WP_Geo\API;
+
+if ( ! defined( 'ABSPATH' ) ) exit;  // Exit if accessed directly
+
 class WPGeo_API {
 
 	/**

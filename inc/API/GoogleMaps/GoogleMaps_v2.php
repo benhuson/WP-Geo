@@ -7,9 +7,11 @@
 
 namespace WP_Geo\API\GoogleMaps;
 
+use WP_Geo\API\WPGeo_API;
+
 if ( ! defined( 'ABSPATH' ) ) exit;  // Exit if accessed directly
 
-class GoogleMaps_v2 extends \WPGeo_API {
+class GoogleMaps_v2 extends WPGeo_API {
 
 	/**
 	 * Constructor

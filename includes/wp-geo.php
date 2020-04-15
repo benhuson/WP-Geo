@@ -5,6 +5,7 @@
  * The main WP Geo class - this is where it all happens.
  */
 
+use WP_Geo\API\GoogleMaps\WPGeo_API;
 use WP_Geo\API\GoogleMaps\GoogleMaps_v2;
 use WP_Geo\API\GoogleMaps\GoogleMaps_v3;
 
