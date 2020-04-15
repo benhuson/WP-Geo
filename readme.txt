@@ -4,6 +4,7 @@ Tags: maps, map, geo, geocoding, google, location, georss
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5FN8ZMNCHBM3J
 Requires at least: 4.3
 Tested up to: 5.4
+Requires PHP: 5.6
 Stable tag: 3.5
 License: GPLv3
 License URI: http://www.opensource.org/licenses/gpl-license.php
