@@ -14,20 +14,15 @@ class GoogleMaps_v2 extends \WPGeo_API {
 	/**
 	 * Constructor
 	 */
-	function __construct() {
+	public function __construct() {
+
 		add_action( 'wpgeo_register_scripts', array( $this, 'wpgeo_register_scripts' ) );
 		add_action( 'wpgeo_enqueue_scripts', array( $this, 'wpgeo_enqueue_scripts' ) );
 		add_filter( 'wpgeo_api_string', array( $this, 'wpgeo_api_string' ), 10, 3 );
 		add_action( 'wpgeo_api_googlemapsv2_js', array( $this, 'wpgeo_js' ) );
 		add_filter( 'wpgeo_api_googlemapsv2_markericon', array( $this, 'wpgeo_api_googlemapsv2_markericon' ), 10, 2 );
 		add_action( 'wpgeo_widget_form_fields', array( $this, 'display_widget_api_key_message' ), 1 );
-	}
 
-	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_API_GoogleMapsV2() {
-		$this->__construct();
 	}
 
 	/**
@@ -36,24 +31,32 @@ class GoogleMaps_v2 extends \WPGeo_API {
 	 * @uses  WPGeo:$version
 	 * @uses  WPGeo:get_googlemaps_locale()
 	 * @uses  WPGeo:get_google_api_key()
+	 *
+	 * @internal  Private. Called via the `wpgeo_register_scripts` action.
 	 */
-	function wpgeo_register_scripts() {
+	public function wpgeo_register_scripts() {
+
 		global $wpgeo;
+
 		$googlemaps_js = add_query_arg( array(
 			'v'      => 2,
 			'hl'     => $wpgeo->get_googlemaps_locale(),
 			'key'    => $wpgeo->get_google_api_key(),
 			'sensor' => 'false'
 		), '//maps.google.com/maps?file=api' );
+
 		wp_register_script( 'googlemaps2', esc_url_raw( $googlemaps_js ), false, $wpgeo->version );
 		wp_register_script( 'wpgeo', WPGEO_URL . 'js/wp-geo.js', array( 'jquery', 'wpgeo_tooltip' ), $wpgeo->version );
 		wp_register_script( 'wpgeo_admin_post_googlemaps2', WPGEO_URL . 'api/googlemapsv2/js/admin-post-v2.js', array( 'jquery', 'wpgeo_admin_post', 'googlemaps2' ), $wpgeo->version );
+
 	}
 
 	/**
 	 * Enqueue WP Geo Scripts
+	 *
+	 * @internal  Private. Called via the `wpgeo_enqueue_scripts` action.
 	 */
-	function wpgeo_enqueue_scripts() {
+	public function wpgeo_enqueue_scripts() {
 
 		global $wpgeo;
 
@@ -74,19 +77,30 @@ class GoogleMaps_v2 extends \WPGeo_API {
 	/**
 	 * Marker Icon
 	 *
-	 * @param string $value Marker icon JavaScript.
-	 * @param object $marker WPGeo_Marker.
-	 * @return string Marker icon.
+	 * @param   string  $value   Marker icon JavaScript.
+	 * @param   object  $marker  WPGeo_Marker.
+	 * @return  string           Marker icon.
+	 *
+	 * @internal  Private. Called via the `wpgeo_api_googlemapsv2_markericon` filter.
 	 */
-	function wpgeo_api_googlemapsv2_markericon( $value, $marker ) {
-		$value = "wpgeo_createIcon(" . $marker->width . ", " . $marker->height . ", " . $marker->anchorX . ", " . $marker->anchorY . ", '" . $marker->image . "', '" . $marker->shadow . "')";
-		return $value;
+	public function wpgeo_api_googlemapsv2_markericon( $value, $marker ) {
+
+		return "wpgeo_createIcon(" . $marker->width . ", " . $marker->height . ", " . $marker->anchorX . ", " . $marker->anchorY . ", '" . $marker->image . "', '" . $marker->shadow . "')";
+
 	}
-	
+
 	/**
 	 * API String
+	 *
+	 * @param   string  $string   API String.
+	 * @param   string  $key      Map Type.
+	 * @param   string  $context  API Context (eg. Map Type).
+	 * @return  string            API String.
+	 *
+	 * @internal  Private. Called via the `wpgeo_api_string` filter.
 	 */
-	function wpgeo_api_string( $string, $key, $context ) {
+	public function wpgeo_api_string( $string, $key, $context ) {
+
 		if ( 'maptype' == $context ) {
 			switch ( strtolower( $key ) ) {
 				case 'g_physical_map'  : return 'G_PHYSICAL_MAP';
@@ -96,11 +110,21 @@ class GoogleMaps_v2 extends \WPGeo_API {
 				default                : return 'G_NORMAL_MAP';
 			}
 		}
+
 		return $string;
+
 	}
-	
-	function get_markers_js( $map ) {
+
+	/**
+	 * Get Markers JS
+	 *
+	 * @param   WPGeo_Map  Map object.
+	 * @return  string     Markers JS.
+	 */
+	public function get_markers_js( $map ) {
+
 		$markers = '';
+
 		for ( $i = 0; $i < count( $map->points ); $i++ ) {
 			$post_icon = $map->points[$i]->get_icon();
 			$post = $map->points[$i]->get_arg( 'post' );
@@ -111,11 +135,21 @@ class GoogleMaps_v2 extends \WPGeo_API {
 			}
 			$markers .= 'var marker_' . $i . ' = wpgeoCreateMapMarker(' . $map->get_js_id() . ', new GLatLng(' . $coord->get_delimited() . '), ' . $icon . ', "' . addslashes( __( $map->points[$i]->get_title() ) ) . '", "' . $map->points[$i]->get_link() . '");' . "\n";
 		}
+
 		return $markers;
+
 	}
-	
-	function get_polylines_js( $map ) {
+
+	/**
+	 * Get Polylines JS
+	 *
+	 * @param   WPGeo_Map  Map object.
+	 * @return  string     Polylines JS.
+	 */
+	public function get_polylines_js( $map ) {
+
 		$polylines = '';
+
 		if ( count( $map->polylines ) > 0 ) {
 			foreach ( $map->polylines as $polyline ) {
 				$coords = array();
@@ -130,11 +164,21 @@ class GoogleMaps_v2 extends \WPGeo_API {
 				$polylines = $map->get_js_id() . '.addOverlay(new GPolyline([' . implode( ',', $coords ) . '],"' . $polyline->get_color() . '",' . $polyline->get_thickness() . ',' . $polyline->get_opacity() . ',{' . implode( ',', $options ) . '}));';
 			}
 		}
+
 		return $polylines;
+
 	}
-	
-	function get_feeds_js( $map ) {
+
+	/**
+	 * Get Feeds JS
+	 *
+	 * @param   WPGeo_Map  Map object.
+	 * @return  string     Feeds JS.
+	 */
+	public function get_feeds_js( $map ) {
+
 		$feeds = '';
+
 		if ( count( $map->feeds ) > 0 ) {
 			$count = 1;
 			foreach ( $map->feeds as $feed ) {
@@ -148,13 +192,24 @@ class GoogleMaps_v2 extends \WPGeo_API {
 				$count++;
 			}
 		}
+
 		return $feeds;
+
 	}
-	
-	function wpgeo_js( $maps ) {
+
+	/**
+	 * Maps JS
+	 *
+	 * @param  array   Map objects.
+	 *
+	 * @internal  Private. Called via the `wpgeo_api_googlemapsv2_js` action.
+	 */
+	public function wpgeo_js( $maps ) {
+
 		if ( ! is_array( $maps ) ) {
 			$maps = array( $maps );
 		}
+
 		if ( count( $maps ) > 0 ) {
 			echo '
 				<script type="text/javascript">
@@ -204,18 +259,24 @@ class GoogleMaps_v2 extends \WPGeo_API {
 				</script>
 				';
 		}
+
 	}
 
 	/**
 	 * Display Widget API Key Message
 	 *
 	 * @param  object  $widget  Instance of WPGeo_Widget or superclass.
+	 *
+	 * @internal  Private. Called via the `wpgeo_widget_form_fields` action.
 	 */
 	public function display_widget_api_key_message( $widget ) {
+
 		global $wpgeo;
+
 		if ( ! $wpgeo->checkGoogleAPIKey() ) {
 			echo '<p class="wp_geo_error">' . __( 'WP Geo is not currently active as you have not entered a Google Maps API v2 Key', 'wp-geo') . '. <a href="' . admin_url( '/options-general.php?page=wp-geo/includes/wp-geo.php' ) . '">' . __( 'Please update your WP Geo settings', 'wp-geo' ) . '</a>.</p>';
 		}
+
 	}
 
 }
