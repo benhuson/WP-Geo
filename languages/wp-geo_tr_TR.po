@@ -1,0 +1,617 @@
+# Copyright (c) 2013 WP Geo
+# This file is distributed under the same license as the WP Geo package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Geo\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-geo\n"
+"POT-Creation-Date: 2016-07-24 15:09+0300\n"
+"PO-Revision-Date: 2016-08-02 17:14+0300\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Poedit-KeywordsList: __;_e;_ex;_x;esc_html__;esc_html_e;esc_attr__;"
+"esc_attr_e\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: WPsitesi <mhakan1974@gmail.com>\n"
+"Language: tr_TR\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../admin/admin.php:73
+#, php-format
+msgid ""
+"Unable to create the markers folder %s.<br />Please create it and copy the "
+"marker images to it from %s"
+msgstr ""
+"%s işaretleyici dosyası oluşturulamıyor.<br />Lütfen onu oluşturup %s "
+"içerisinden işaretleyici resimlerini kopyalayın"
+
+#: ../admin/admin.php:77
+#, php-format
+msgid ""
+"Before you can use WP Geo you must acquire a %s for your blog - the plugin "
+"will not function without it!"
+msgstr ""
+"WP Geo kullanmadan önce blogunuz için bir %s edinmeniz gerekir - bu olmadan "
+"eklenti düzgün çalışmaz!"
+
+#: ../admin/admin.php:77 ../admin/settings.php:25
+msgid "Google API Key"
+msgstr "Google API Key"
+
+#: ../admin/admin.php:85
+msgid ""
+"Important Notice: <a href=\"https://developers.google.com/maps/documentation/"
+"javascript/v2/reference\">Version 2 of the Google Maps API is no longer "
+"available</a>"
+msgstr ""
+"Önemli Uyarı: <a href=\"https://developers.google.com/maps/documentation/"
+"javascript/v2/reference\">Google Maps API Sürüm 2 artık mevcut değil</a>"
+
+#: ../admin/admin.php:85
+msgid ""
+"WP Geo has been updated to support Google Map API v3. The v2 API will be "
+"completed removed from future versions of WP Geo. You may need <a href="
+"\"https://developers.google.com/maps/documentation/javascript/"
+"tutorial#api_key\" target=\"_blank\">create a new API key</a>, then update "
+"your WP Geo settings to use the Google Map API v3. If you have added custom "
+"code or plugins to work with WP Geo you may need to update them. Please <a "
+"href=\"https://github.com/benhuson/WP-Geo/issues\">report bug issues here..."
+"</a>"
+msgstr ""
+"WP Geo Google Map API v3 desteği için güncellendi. v2 API WP Geo "
+"eklentisinin gelecekteki sürümlerinden tamamen kaldırılacak. Yeni bir<a href="
+"\"https://developers.google.com/maps/documentation/javascript/"
+"tutorial#api_key\" target=\"_blank\">API key oluşturma</a> ihtiyacınız "
+"olabilir, sonrasında WP Geo ayarları içerisinden Google Map API v3 "
+"güncellemesini yapın. Eğer WP Geo için kendi kodunuzu oluşturduysanız veya "
+"eklenti kullandıysanız bunları güncellemeniz gerekebilir. Karşılaştığınız "
+"hataları <a href=\"https://github.com/benhuson/WP-Geo/issues\">buradan rapor "
+"edebilirsiniz...</a>"
+
+#: ../admin/admin.php:85
+msgid "Dismiss"
+msgstr "Yoksay"
+
+#: ../admin/admin.php:120
+msgid "WP Geo Options"
+msgstr "WP Geo Seçenekleri"
+
+#: ../admin/admin.php:120
+msgid "WP Geo"
+msgstr "WP Geo"
+
+#: ../admin/admin.php:133
+msgid "WP Geo Settings"
+msgstr "WP Geo Ayarları"
+
+#: ../admin/admin.php:139
+msgid "Save Changes"
+msgstr "Degisiklikleri Kaydet"
+
+#: ../admin/admin.php:142
+msgid "Marker Settings"
+msgstr "İmleç Ayarları"
+
+#: ../admin/admin.php:143
+msgid ""
+"<p>Custom marker images are automatically created in your WordPress uploads "
+"folder and used by WP Geo.<br />A copy of these images will remain in the WP "
+"Geo folder in case you need to revert to them at any time.<br />You may edit "
+"these marker icons if you wish - they must be PNG files. Each marker consist "
+"of a marker image and a shadow image. If you do not wish to show a marker "
+"shadow you should use a transparent PNG for the shadow file.</p><p>Currently "
+"you must update these images manually and the anchor point must be the same "
+"- looking to provide more control in future versions.</p>"
+msgstr ""
+"<p>İşaretleyici resim dosyası Wordpress upload dosyası içerisinde "
+"oluşturulup WP Geo tarafından kullanılacaktır.<br />Bu işaretleyicilerin bir "
+"kopyası WP Geo eklentisi içerisinde geri dönme ihtimaline karşı bulunacaktır."
+"<br />Dilerseniz bu işaretleyicileri kendiniz de düzenleyebilirsiniz - "
+"uzantıları PNG olmak kaydıyla. Her işaretleyici bir işaretleme resmi ve "
+"gölge resmi içerir. Eğer gölgeleme resmi kullanmak istemiyorsan bu resim "
+"yerine transparan bir PNG kullanmak zorundasınız.</p><p>Şu an için bu "
+"işlemleri manuel olarak ve resim uzantılarına dikkat ederek yapmak "
+"zorundasınız ancak gelecek versiyonlarda daha gelişmiş araçlar eklenecektir."
+"</p>"
+
+#: ../admin/admin.php:145 ../admin/admin.php:378 ../admin/donate-links.php:11
+msgid "Documentation"
+msgstr "Dökümanlar"
+
+#: ../admin/admin.php:146
+msgid ""
+"<p>If you set the Show Post Map setting to &quot;Manual&quot;, you can use "
+"the Shortcode <code>[wp_geo_map]</code> in a post to display a map (if a "
+"location has been set for the post). You can only include the Shortcode once "
+"within a post. If you select another Show Post Map option then the Shortcode "
+"will be ignored and the map will be positioned automatically.</p>"
+msgstr ""
+"<p>Eğer Yazı Harita Görüntüleme işlemini &quot;Manuel&quot; yapmak istersen, "
+"bir haritayı görüntülemek için <code>[wp_geo_map]</code> kısakodunu yazılara "
+"ekleyebilirsin (tabiki yazı bir lokasyona atandıysa). Kısa kodu yalnızca "
+"yazıların içerisine ekleyebilirsin. Diğer yerlere ekleyeceğin kısa kod "
+"çalışmayacak ve hata verecektir.</p>"
+
+#: ../admin/admin.php:167
+msgid "WP Geo Location"
+msgstr "WP Coğrafi Konum"
+
+#: ../admin/admin.php:197
+msgid "Use Default"
+msgstr "Varsayılanı Kullan"
+
+#: ../admin/admin.php:231
+msgid "Loading Google map, please wait..."
+msgstr "Google harita yükleniyor, lütfen bekleyin ..."
+
+#: ../admin/admin.php:240
+msgid "Search for location"
+msgstr "﻿Bir konum ara"
+
+#: ../admin/admin.php:240
+msgid "town, postcode or address"
+msgstr "şehir, posta kodu veya adres"
+
+#: ../admin/admin.php:243
+msgid "Search"
+msgstr "Ara.."
+
+#: ../admin/admin.php:249 ../admin/settings.php:158
+msgid "Latitude"
+msgstr "Enlem"
+
+#: ../admin/admin.php:249 ../admin/settings.php:159
+msgid "Longitude"
+msgstr "Boylam"
+
+#: ../admin/admin.php:252
+msgid "clear location"
+msgstr "konum temizle"
+
+#: ../admin/admin.php:252
+msgid "centre location"
+msgstr "konum merkeze al"
+
+#: ../admin/admin.php:256
+msgid "Marker Title"
+msgstr "İşaretleyici Başlığı"
+
+#: ../admin/admin.php:256
+msgid "optional"
+msgstr "isteğe bağlı"
+
+#: ../admin/admin.php:260
+msgid "Marker Image"
+msgstr "İşaretleyici Resmi"
+
+#: ../admin/admin.php:264
+msgid "Map Settings"
+msgstr "Harita Ayarları"
+
+#: ../admin/admin.php:266 ../admin/settings.php:212
+msgid "Save custom map zoom for this post"
+msgstr "Bu yazı için özel harita zoom kaydet"
+
+#: ../admin/admin.php:267 ../admin/settings.php:213
+msgid "Save custom map type for this post"
+msgstr "Bu yazı için özel harita türünü kaydet"
+
+#: ../admin/admin.php:268 ../admin/settings.php:214
+msgid "Save map centre point for this post"
+msgstr "Bu yazı için harita merkez noktası kaydet"
+
+#: ../admin/admin.php:378
+msgid "http://github.com/benhuson/wp-geo/wiki"
+msgstr "http://github.com/benhuson/wp-geo/wiki"
+
+#: ../admin/admin.php:379
+msgid "http://wordpress.org/support/plugin/wp-geo"
+msgstr "http://wordpress.org/support/plugin/wp-geo"
+
+#: ../admin/admin.php:379 ../admin/donate-links.php:10
+msgid "Support Forum"
+msgstr "Destek Forumu"
+
+#: ../admin/admin.php:380
+msgid "http://github.com/benhuson/wp-geo/issues"
+msgstr "http://github.com/benhuson/wp-geo/issues"
+
+#: ../admin/admin.php:380
+msgid "Submit an Issue"
+msgstr "Sorun Gönder"
+
+#: ../admin/dashboard.php:71
+msgid "No recent updates."
+msgstr "Yeni güncelleme yok."
+
+#: ../admin/dashboard.php:89
+msgid "View all WP Geo news..."
+msgstr "Tüm WP Geo haberleri görüntüleyin ..."
+
+#: ../admin/donate-links.php:12
+msgid "Report Bugs"
+msgstr "Hata bildir"
+
+#: ../admin/donate-links.php:13
+msgid "Contribute"
+msgstr "Katkıda bulun"
+
+#: ../admin/donate-links.php:14
+msgid "Make a donation"
+msgstr "Bağış yapın"
+
+#: ../admin/donate-links.php:15
+msgid "Follow @wpgeo for updates"
+msgstr "Güncellemeler için @wpgeo takip et"
+
+#: ../admin/donate-links.php:16
+msgid "Follow me on Twitter"
+msgstr "Twitter'dan Beni takip et"
+
+#: ../admin/settings.php:22
+msgid "API Settings"
+msgstr "API Ayarları"
+
+#: ../admin/settings.php:23
+msgid "Public API"
+msgstr "Public API"
+
+#: ../admin/settings.php:24
+msgid "Admin API"
+msgstr "Yönetici API"
+
+#: ../admin/settings.php:26
+msgid "General Settings"
+msgstr "Genel Ayarlar"
+
+#: ../admin/settings.php:27 ../widgets/wpgeo-widget.php:252
+msgid "Map Type"
+msgstr "Harita Türü"
+
+#: ../admin/settings.php:28
+msgid "Show Post Map"
+msgstr "Yazı Haritası Göster"
+
+#: ../admin/settings.php:29
+msgid "Default Map Location"
+msgstr "Varsayılan Harita Konumu"
+
+#: ../admin/settings.php:30
+msgid "Default Map Width"
+msgstr "Varsayılan Harita Genişliği"
+
+#: ../admin/settings.php:31
+msgid "Default Map Height"
+msgstr "Varsayılan Harita Yüksekliği"
+
+#: ../admin/settings.php:32
+msgid "Default Map Zoom"
+msgstr "Varsayılan Harita Zoom"
+
+#: ../admin/settings.php:33
+msgid "Default Map Controls"
+msgstr "Varsayılan Harita Kontrolleri"
+
+#: ../admin/settings.php:34
+msgid "Default Post Options"
+msgstr "Varsayılan Yazı Seçenekleri"
+
+#: ../admin/settings.php:35 ../widgets/wpgeo-widget.php:253
+msgid "Polylines"
+msgstr "Çoklu Çizgiler"
+
+#: ../admin/settings.php:36
+msgid "Polyline Colour"
+msgstr "Çoklu Çizgiler Renk"
+
+#: ../admin/settings.php:37
+msgid "Supported Post Types"
+msgstr "Desteklenen Yazı Türleri"
+
+#: ../admin/settings.php:38
+msgid "Show Maps On"
+msgstr "Göster Harita üzerinde"
+
+#: ../admin/settings.php:39
+msgid "Feeds"
+msgstr "Akışlar/Feeds"
+
+#: ../admin/settings.php:91 ../admin/settings.php:103
+msgid "Google Maps v2"
+msgstr "Google Maps v2"
+
+#: ../admin/settings.php:92 ../admin/settings.php:104
+msgid "Google Maps v3"
+msgstr "Google Maps v3"
+
+#: ../admin/settings.php:122
+#, php-format
+msgid ""
+"For more information and documentation about this plugin please visit the <a "
+"%s>WP Geo Plugin</a> home page."
+msgstr ""
+"Bu eklenti hakkında daha fazla bilgi ve belgeler için ziyaret ediniz <a "
+"%s>WP Geo Plugin</a> ana sayfasını."
+
+#: ../admin/settings.php:123
+#, php-format
+msgid ""
+"If you experience any problems/bugs with the plugin, please <a %s>log it "
+"here</a>."
+msgstr ""
+"Eğer eklenti ile herhangi bir sorun yaşarsanız lütfen <a %s>buraya log "
+"yapın</a> ."
+
+#: ../admin/settings.php:144
+msgid "At top of post"
+msgstr "Yazının üst kısmına"
+
+#: ../admin/settings.php:145
+msgid "At bottom of post"
+msgstr "Yazının alt kısmına"
+
+#: ../admin/settings.php:146
+msgid "Manually"
+msgstr "Manuel olarak"
+
+#: ../admin/settings.php:149
+msgid "Show on excerpts"
+msgstr "Alıntıları göster"
+
+#: ../admin/settings.php:157
+msgid ""
+"When creating a new post, the map will default to focussing on this area for "
+"you to position a marker."
+msgstr ""
+"Yeni bir yazı oluştururken, harita işaretçi yerleştirmek için bu alanda "
+"odaklanarak varsayılan olacaktır."
+
+#: ../admin/settings.php:194
+msgid "Map Type Controls"
+msgstr "Harita Türü Kontrolleri"
+
+#: ../admin/settings.php:195
+msgid "You must select at least 2 map types for the control to show."
+msgstr "Kontrol göstermek için en az 2 harita türlerini seçmeniz gerekir."
+
+#: ../admin/settings.php:196
+msgid "Normal map"
+msgstr "Normal harita"
+
+#: ../admin/settings.php:197 ../includes/api.php:90
+msgid "Satellite (photographic map)"
+msgstr "Uydu (fotografik harita)"
+
+#: ../admin/settings.php:198 ../includes/api.php:91
+msgid "Hybrid (photographic map with normal features)"
+msgstr "Hibrit (normal özelliklere sahip fotoğraf harita)"
+
+#: ../admin/settings.php:199 ../includes/api.php:92
+msgid "Physical (terrain map)"
+msgstr "Fiziksel (arazi haritası)"
+
+#: ../admin/settings.php:200
+msgid "Other Controls"
+msgstr "Diğer Kontroller"
+
+#: ../admin/settings.php:201
+msgid "Show map scale"
+msgstr "Harita ölçeğini göster"
+
+#: ../admin/settings.php:202
+msgid "Show collapsible overview map (in the corner of the map)"
+msgstr "Katlanabilir genel bakış haritayı göster (haritanın köşesinde)"
+
+#: ../admin/settings.php:203
+msgid "Show Street View Control"
+msgstr "Sokak Görünümü Kontrollerini Göster"
+
+#: ../admin/settings.php:224
+msgid "Show polylines (to connect multiple points on a single map)"
+msgstr ""
+"Bağlantılı çizgiler göster (tek bir harita üzerinde birden fazla noktayı "
+"bağlamak için)"
+
+#: ../admin/settings.php:276
+msgid "Single Pages"
+msgstr "Tek sayfalar"
+
+#: ../admin/settings.php:277
+msgid "Pages"
+msgstr "Sayfalar"
+
+#: ../admin/settings.php:278
+msgid "Posts"
+msgstr "Yazılar"
+
+#: ../admin/settings.php:295
+msgid "Posts on Taxonomy Pages"
+msgstr "Taksonomi sayfalarında yazılar"
+
+#: ../admin/settings.php:296
+msgid "Categories"
+msgstr "kategoriler"
+
+#: ../admin/settings.php:297
+msgid "Tags"
+msgstr "Etiketler"
+
+#: ../admin/settings.php:298
+msgid "All Taxonomies"
+msgstr "Tüm Taksonomiler"
+
+#: ../admin/settings.php:300
+msgid "Posts on Other Pages"
+msgstr "Diğer sayfalardaki yazılar"
+
+#: ../admin/settings.php:301
+msgid "Posts Archive"
+msgstr "Yazı Arşivleri"
+
+#: ../admin/settings.php:302
+msgid "Date Archives"
+msgstr "Tarih Arşivleri"
+
+#: ../admin/settings.php:303
+msgid "Author Archives"
+msgstr "Yazar Arşivleri"
+
+#: ../admin/settings.php:304
+msgid "Search Results"
+msgstr "Arama Sonucu"
+
+#: ../admin/settings.php:313
+msgid "Add geographic information"
+msgstr "Coğrafi bilgi ekle"
+
+#: ../admin/settings.php:333 ../widgets/wpgeo-widget.php:251
+msgid "Settings"
+msgstr "Ayarlar"
+
+#: ../includes/api.php:89
+msgid "Normal"
+msgstr "Normal"
+
+#: ../includes/api.php:133
+msgid "Large 3D pan/zoom control"
+msgstr "Büyük 3D kaydırma/yakınlaştırma denetimi"
+
+#: ../includes/api.php:134
+msgid "Large pan/zoom control"
+msgstr "Büyük pan/yakınlaştırma denetimi"
+
+#: ../includes/api.php:135
+msgid "Smaller pan/zoom control"
+msgstr "Daha küçük kaydırma/yakınlaştırma denetimi"
+
+#: ../includes/api.php:136
+msgid "Small 3D zoom control (no panning controls)"
+msgstr "Küçük 3D Yakınlaştırma denetimini (kaydırma kontrolü yok)"
+
+#: ../includes/api.php:137
+msgid "Small zoom control (no panning controls)"
+msgstr "Küçük zoom kontrol (kaydırma kontrolü yok)"
+
+#: ../includes/api.php:138
+msgid "No pan/zoom controls"
+msgstr "Hiçbir kaydırma/yakınlaştırma denetimi yok"
+
+#: ../includes/api.php:153
+msgid "Zoomed Out"
+msgstr "Uzaklaştır"
+
+#: ../includes/api.php:155
+msgid "Zoomed In"
+msgstr "Yakınlaştır"
+
+#: ../includes/functions.php:95
+msgid "Default"
+msgstr "Varsayılan "
+
+#: ../includes/functions.php:96
+msgid "Show Polylines"
+msgstr "Çoklu Çizgileri Göster"
+
+#: ../includes/functions.php:97
+msgid "Hide Polylines"
+msgstr "Çoklu Çizgileri Gizle"
+
+#: ../includes/markers.php:31
+msgid "Default Large Marker"
+msgstr "Varsayılan Büyük İşaretleyici"
+
+#: ../includes/markers.php:32
+msgid "This is the default marker used to indicate a location on most maps."
+msgstr ""
+"Bu bir lokasyonu haritalar üzerinde göstermek için kullanılan varsayılan "
+"belirtecidir."
+
+#: ../includes/markers.php:41
+msgid "Default Small Marker"
+msgstr "Varsayılan Küçük İşaretleyici"
+
+#: ../includes/markers.php:42
+msgid "This is the default marker used for the WP Geo sidebar widget."
+msgstr ""
+"Bu WP Geo kenar çubuğu bileşeni için kullanılan varsayılan belirtecidir."
+
+#: ../includes/markers.php:51
+msgid "Default Dot Marker"
+msgstr "Varsayılan Nokta İşaretleyici"
+
+#: ../includes/markers.php:52
+msgid ""
+"This marker image is not currently used but it is anticipated that it will "
+"be used to indicate less important locations in a future versions of WP Geo."
+msgstr ""
+"Bu işaret şu anda kullanılmıyor ama WP Geo gelecekteki sürümlerinde daha az "
+"önemli konumları belirtmek için kullanılacağı tahmin edilmektedir."
+
+#: ../includes/shortcodes.php:74
+msgid "View Larger Map"
+msgstr "Daha Büyük Haritayı Görüntüle"
+
+#: ../widgets/category-map.php:20
+msgid "WP Geo Category Map"
+msgstr "WP Geo Kategori Haritası"
+
+#: ../widgets/category-map.php:23
+msgid "Displays markers from the current category"
+msgstr "Geçerli kategoriden işaretleyicileri görüntüler"
+
+#: ../widgets/contextual-map.php:20
+msgid "WP Geo Contextual Map"
+msgstr "WP Geo Bağlamsal Harita"
+
+#: ../widgets/contextual-map.php:23
+msgid "Displays markers from the current page"
+msgstr "Geçerli sayfadan işaretçileri görüntüler"
+
+#: ../widgets/recent-locations.php:19
+msgid "WP Geo Recent Locations"
+msgstr "WP Geo Son Lokasyonlar"
+
+#: ../widgets/recent-locations.php:22
+msgid "Displays markers for recent posts"
+msgstr "Son blog gönderileri için işaretleyicileri görüntüler"
+
+#: ../widgets/recent-locations.php:103
+msgid "Number of markers to show"
+msgstr "Gösterilecek işaretleyici sayısı"
+
+#: ../widgets/recent-locations.php:117
+msgid "Show Post Types"
+msgstr "Yazı Tiplerini Göster"
+
+#: ../widgets/wpgeo-widget.php:138
+msgid "WP Geo is not currently active as you have not entered a Google API Key"
+msgstr ""
+"Bir Google API anahtarı girmediğiniz sürece WP Geo etkin duruma gelmeyecek"
+
+#: ../widgets/wpgeo-widget.php:138
+msgid "Please update your WP Geo settings"
+msgstr "WP Geo ayarlarınızı güncelleyin"
+
+#: ../widgets/wpgeo-widget.php:234
+msgid "Title"
+msgstr "Başlık"
+
+#: ../widgets/wpgeo-widget.php:235
+msgid "Width"
+msgstr "Genişlik "
+
+#: ../widgets/wpgeo-widget.php:236
+msgid "Height"
+msgstr "Yükseklik"
+
+#: ../widgets/wpgeo-widget.php:249
+msgid "Zoom"
+msgstr "Yakınlaştırma"
+
+#: ../widgets/wpgeo-widget.php:250
+msgid ""
+"If not all markers fit, the map will automatically be zoomed so they do."
+msgstr "Tüm işaretleyiciler sığmazsa, harita otomatik olarak zum yapacak"
