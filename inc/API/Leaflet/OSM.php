@@ -20,8 +20,6 @@ class OSM extends WPGeo_API {
 
 		add_action( 'wpgeo_register_scripts', array( $this, 'wpgeo_register_scripts' ) );
 		add_action( 'wpgeo_enqueue_scripts', array( $this, 'wpgeo_enqueue_scripts' ) );
-		add_filter( 'wpgeo_api_string', array( $this, 'wpgeo_api_string' ), 10, 3 );
-		add_filter( 'wpgeo_decode_api_string', array( $this, 'wpgeo_decode_api_string' ), 10, 3 );
 		add_action( 'wpgeo_api_leaflet_js', array( $this, 'wpgeo_js' ) );
 		add_filter( 'wpgeo_api_leaflet_markericon', array( $this, 'wpgeo_api_leaflet_markericon' ), 10, 2 );
 		add_filter( 'wpgeo_check_google_api_key', array( $this, 'check_google_api_key' ) );
@@ -52,7 +50,7 @@ class OSM extends WPGeo_API {
 	/**
 	 * Check Google API Key
 	 *
-	 * Always return true as Google Maps API v3 does not require the API key.
+	 * Always return true as Leaflet does not require the API key.
 	 *
 	 * @param   bool  $bool  Is an API key set?
 	 * @return  bool
@@ -62,28 +60,6 @@ class OSM extends WPGeo_API {
 	public function check_google_api_key( $bool ) {
 
 		return true;
-
-	}
-
-	/**
-	 * Get Google Maps v3 Script URL
-	 *
-	 * @return  string  Google Maps API v3 URL.
-	 */
-	public function get_leaflet_script_url() {
-
-		global $wpgeo;
-
-		$googlemaps_js_args = array(
-			'language' => $wpgeo->get_googlemaps_locale(),
-		);
-
-		$api_key = $wpgeo->get_google_api_key();
-		if ( ! empty( $api_key ) ) {
-			$googlemaps_js_args['key'] = $api_key;
-		}
-
-		return esc_url_raw( add_query_arg( $googlemaps_js_args, '//maps.googleapis.com/maps/api/js' ) );
 
 	}
 
@@ -132,65 +108,6 @@ class OSM extends WPGeo_API {
 			shadowAnchor: [' . $marker->anchorX . ', ' . $marker->anchorY . '],  // the same for the shadow
 			popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 		});';
-
-	}
-
-	/**
-	 * API String
-	 *
-	 * @param   string  $string   API String.
-	 * @param   string  $key      Map Type.
-	 * @param   string  $context  API Context (eg. Map Type).
-	 * @return  string            API String.
-	 *
-	 * @internal  Private. Called via the `wpgeo_api_string` filter.
-	 */
-	public function wpgeo_api_string( $string, $key, $context ) {
-
-		if ( 'maptype' == $context ) {
-			switch ( strtolower( $key ) ) {
-				case 'g_physical_map'  : return 'google.maps.MapTypeId.TERRAIN';
-				case 'g_satellite_map' : return 'google.maps.MapTypeId.SATELLITE';
-				case 'g_hybrid_map'    : return 'google.maps.MapTypeId.HYBRID';
-				case 'g_normal_map'    :
-				default                : return 'google.maps.MapTypeId.ROADMAP';
-			}
-		}
-
-		return $string;
-
-	}
-
-	/**
-	 * Decode API String
-	 *
-	 * @param   string  $string   API String.
-	 * @param   string  $key      Map Type.
-	 * @param   string  $context  API Context (eg. Map Type).
-	 * @return  string            API String.
-	 *
-	 * @internal  Private. Called via the `wpgeo_decode_api_string` filter.
-	 */
-	public function wpgeo_decode_api_string( $string, $key, $context ) {
-
-		if ( 'maptype' == $context ) {
-			switch ( strtolower( $key ) ) {
-				case 'google.maps.maptypeid.terrain' :
-				case 'terrain' :
-					return 'G_PHYSICAL_MAP';
-				case 'google.maps.maptypeid.satellite' :
-				case 'satellite' :
-					return 'G_SATELLITE_MAP';
-				case 'google.maps.maptypeid.hybrid' :
-				case 'hybrid' :
-					return 'G_HYBRID_MAP';
-				case 'google.maps.maptypeid.roadmap' :
-				case 'roadmap' :
-					return 'G_NORMAL_MAP';
-			}
-		}
-
-		return $string;
 
 	}
 
@@ -257,16 +174,13 @@ class OSM extends WPGeo_API {
 				$polyline_js_3_coords = array();
 				$coords = $polyline->get_coords();
 				foreach ( $coords as $c ) {
-					$polyline_js_3_coords[] = 'new google.maps.LatLng(' . $c->get_delimited() . ')';
+					$polyline_js_3_coords[] = '[' . $c->get_delimited() . ']';
 				}
-				$polylines = 'var polyline_' . $count . '_' . $map->get_js_id() . ' = new google.maps.Polyline({
-						path          : [' . implode( ',', $polyline_js_3_coords ) . '],
-						strokeColor   : "' . $polyline->get_color() . '",
-						strokeOpacity : ' . $polyline->get_opacity() . ',
-						strokeWeight  : ' . $polyline->get_thickness() . ',
-						geodesic      : ' . $polyline->get_geodesic() . ',
-						map           : ' . $map->get_js_id() . '
-					});';
+				$polylines = 'var polyline_' . $count . '_' . $map->get_js_id() . ' = L.polyline([' . implode( ',', $polyline_js_3_coords ) . '], {
+						color   : "' . $polyline->get_color() . '",
+						opacity : ' . $polyline->get_opacity() . ',
+						weight  : ' . $polyline->get_thickness() . '
+					}).addTo(' . $map->get_js_id() . ');';
 				$count++;
 			}
 		}
@@ -283,21 +197,9 @@ class OSM extends WPGeo_API {
 	 */
 	public function get_feeds_js( $map ) {
 
-		$feeds = '';
+		// Not yet supported
 
-		if ( count( $map->feeds ) > 0 ) {
-			$count = 1;
-			foreach ( $map->feeds as $feed ) {
-				$feeds .= '
-					var kmlLayer_' . $count . ' = new google.maps.KmlLayer({
-						url : "' . $feed . '",
-						map : ' . $map->get_js_id() . '
-					});';
-				$count++;
-			}
-		}
-
-		return $feeds;
+		return '';
 
 	}
 
@@ -322,13 +224,6 @@ class OSM extends WPGeo_API {
 					';
 			foreach ( $maps as $map ) {
 				$center_coord = $map->get_map_centre();
-				$map_types = $map->get_map_types();
-				$map_types[] = $map->get_map_type();
-				foreach ( $map_types as $key => $type ) {
-					$map_types[$key] = apply_filters( 'wpgeo_api_string', 'google.maps.MapTypeId.ROADMAP', $type, 'maptype' );
-				}
-				$map_types = array_unique( $map_types );
-				$map_type_control = count( $map_types ) > 1 ? 1 : 0;
 
 				echo '
 					if (document.getElementById("' . $map->get_dom_id() . '")) {
@@ -337,6 +232,7 @@ class OSM extends WPGeo_API {
 						var mapOptions = {
 							center          : [' . $center_coord->get_delimited() . '],
 							zoom            : ' . $map->get_map_zoom() . ',
+							zoomControl     : ' . (int) $map->show_control( 'zoom' ) . ',
 							scrollWheelZoom : false
 						};
 
@@ -348,60 +244,26 @@ class OSM extends WPGeo_API {
 
 						// Add the markers and polylines
 						' . $this->get_markers_js( $map ) . '
-
-					}
-					';
-
-				/*
-				echo '
-					if (document.getElementById("' . $map->get_dom_id() . '")) {
-						var bounds = new google.maps.LatLngBounds();
-						var mapOptions = {
-							center             : new google.maps.LatLng(' . $center_coord->get_delimited() . '),
-							zoom               : ' . $map->get_map_zoom() . ',
-							mapTypeId          : ' . apply_filters( 'wpgeo_api_string', 'google.maps.MapTypeId.ROADMAP', $map->get_map_type(), 'maptype' ) . ',
-							mapTypeControl     : ' . $map_type_control . ',
-							mapTypeControlOptions : {
-								mapTypeIds : [' . implode( ', ', $map_types ) . ']
-							},
-							streetViewControl  : ' . (int) $map->show_control( 'streetview' ) . ',
-							scaleControl       : ' . (int) $map->show_control( 'scale' ) . ',
-							overviewMapControl : ' . (int) $map->show_control( 'overview' ) . ',
-							overviewMapControlOptions : {
-								opened : ' . (int) $map->show_control( 'overview' ) . '
-							},
-							panControl         : ' . (int) $map->show_control( 'pan' ) . ',
-							zoomControl        : ' . (int) $map->show_control( 'zoom' ) . ',
-							zoomControlOptions : {
-								' . $this->zoom_control_options_js( $map->mapcontrol ) . '
-							},
-							scrollwheel        : false
-						};
-						' . $map->get_js_id() . ' = new google.maps.Map(document.getElementById("' . $map->get_dom_id() . '"), mapOptions);
-						
-						// Add the markers and polylines
-						' . $this->get_markers_js( $map ) . '
 						' . $this->get_polylines_js( $map ) . '
 						';
-					if ( count( $map->points ) > 1 ) {
-						echo '
-						// Adjust Zoom
-						google.maps.event.addListenerOnce(' . $map->get_js_id() . ', "bounds_changed", function() {
-							var oldZoom = ' . $map->get_js_id() . '.getZoom();
-							if ( ' . $map->get_map_zoom() . ' < oldZoom ) {
-								' . $map->get_js_id() . '.setZoom(' . $map->get_map_zoom() . ');
-							}
-						});';
-						echo $map->get_js_id() . '.fitBounds(bounds);';
-					}
+				if ( count( $map->points ) > 1 ) {
 					echo '
-						' . apply_filters( 'wpgeo_map_js_preoverlays', '', $map->get_js_id() ) . '
-						' . $this->get_feeds_js( $map ) . '
-						';
+					// Adjust Zoom
+					' . $map->get_js_id() . '.on("moveend", function(e) {
+						var oldZoom = ' . $map->get_js_id() . '.getZoom();
+						if ( ' . $map->get_map_zoom() . ' < oldZoom ) {
+							' . $map->get_js_id() . '.setZoom(' . $map->get_map_zoom() . ');
+						}
+					});';
+					echo $map->get_js_id() . '.fitBounds(bounds);';
+				}
+				echo '
+					' . apply_filters( 'wpgeo_map_leaflet_js_preoverlays', '', $map->get_js_id() ) . '
+					' . $this->get_feeds_js( $map ) . '
+					';
 				echo '
 					}
 					';
-					*/
 			}
 			echo '
 				}
@@ -409,22 +271,6 @@ class OSM extends WPGeo_API {
 				//]]>
 				</script>';
 		}
-
-	}
-
-	/**
-	 * Zoom Control Options JS
-	 *
-	 * @param   string  $mapcontrol  Map Control.
-	 * @return  string               Map Control JS.
-	 */
-	public function zoom_control_options_js( $mapcontrol ) {
-
-		if ( in_array( $mapcontrol, array( 'GSmallMapControl', 'GSmallZoomControl3D', 'GSmallZoomControl' ) ) ) {
-			return 'style: google.maps.ZoomControlStyle.SMALL';
-		}
-
-		return '';
 
 	}
 
