@@ -252,7 +252,7 @@ class WPGeo {
 
 				// Would make sense to look these up automatically from Google
 				//echo '<meta name="geo.region" content="DE-BY" />';                                            // Geo-Tag: Country code (ISO 3166-1) and regional code (ISO 3166-2)
-				//echo '<meta name="geo.placename" content="M�nchen" />';                                       // Geo-Tag: City or the nearest town
+				//echo '<meta name="geo.placename" content="MÙnchen" />';                                       // Geo-Tag: City or the nearest town
 				echo '<meta name="geo.position" content="' . esc_attr( $coord->get_delimited( ';' ) ) . '" />'; // Geo-Tag: Latitude and longitude
 				echo '<meta name="ICBM" content="' . esc_attr( $coord->get_delimited() ) . '" />';              // ICBM Tag (prior existing equivalent to the geo.position)
 

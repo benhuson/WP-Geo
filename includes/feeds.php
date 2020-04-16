@@ -94,7 +94,7 @@ class WPGeo_Feeds {
 		if ( $wpgeo->show_maps() ) {
 
 			$geo_namespaces = array(
-				'georss' => 'https://www.georss.org/georss',
+				'georss' => 'http://www.georss.org/georss',
 				'geo'    => 'https://www.w3.org/2003/01/geo/wgs84_pos#',
 			);
 
