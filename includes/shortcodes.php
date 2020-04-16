@@ -162,7 +162,7 @@ if ( ! function_exists( 'shortcode_wpgeo_map' ) ) {
  * Shortcode [wpgeo_mashup type="G_NORMAL_MAP"]
  * Outputs a map mashup.
  * Original function by RavanH (updated by Ben Huson)
- * See http://wordpress.org/extend/plugins/wp-geo-mashup-map/
+ * See https://wordpress.org/extend/plugins/wp-geo-mashup-map/
  *
  * @param   array   $atts     Shortcode attributes.
  * @param   string  $content  Content between shortcode tags.

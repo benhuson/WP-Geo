@@ -12,7 +12,7 @@ Tested up to: 5.4
 Minimum WordPress Version Required: 3.9
 
 Released under the GPL:
-http://www.opensource.org/licenses/gpl-license.php
+https://www.opensource.org/licenses/gpl-license.php
 
 */
 
