@@ -16,13 +16,6 @@ class WPGeo_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_Widget( $id_base = false, $name, $widget_options = array(), $control_options = array() ) {
-		$this->__construct( $id_base, $name, $widget_options, $control_options );
-	}
-
-	/**
 	 * Wrap Content
 	 *
 	 * @param string $content Widget HTML content.

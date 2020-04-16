@@ -24,20 +24,12 @@ class WPGeo_Admin {
 	}
 
 	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_Admin() {
-		$this->__construct();
-	}
-
-	/**
 	 * Admin Init
 	 */
 	function admin_init() {
 		global $wpgeo;
 		
 		include_once( WPGEO_DIR . 'admin/editor.php' );
-		include_once( WPGEO_DIR . 'admin/dashboard.php' );
 		include_once( WPGEO_DIR . 'admin/settings.php' );
 		
 		// Register Settings
@@ -430,9 +422,9 @@ class WPGeo_Admin {
 	 */
 	function plugin_row_meta( $plugin_meta, $plugin_file, $plugin_data, $status ) {
 		if ( 'wp-geo/wp-geo.php' == $plugin_file ) {
-			$plugin_meta[] = sprintf( '<a href="%s">%s</a>', esc_url( __( 'http://github.com/benhuson/wp-geo/wiki', 'wp-geo' ) ), esc_html__( 'Documentation', 'wp-geo' ) );
-			$plugin_meta[] = sprintf( '<a href="%s">%s</a>', esc_url( __( 'http://wordpress.org/support/plugin/wp-geo', 'wp-geo' ) ), esc_html__( 'Support Forum', 'wp-geo' ) );
-			$plugin_meta[] = sprintf( '<a href="%s">%s</a>', esc_url( __( 'http://github.com/benhuson/wp-geo/issues', 'wp-geo' ) ), esc_html__( 'Submit an Issue', 'wp-geo' ) );
+			$plugin_meta[] = sprintf( '<a href="%s">%s</a>', esc_url( __( 'https://github.com/benhuson/wp-geo/wiki', 'wp-geo' ) ), esc_html__( 'Documentation', 'wp-geo' ) );
+			$plugin_meta[] = sprintf( '<a href="%s">%s</a>', esc_url( __( 'https://wordpress.org/support/plugin/wp-geo', 'wp-geo' ) ), esc_html__( 'Support Forum', 'wp-geo' ) );
+			$plugin_meta[] = sprintf( '<a href="%s">%s</a>', esc_url( __( 'https://github.com/benhuson/wp-geo/issues', 'wp-geo' ) ), esc_html__( 'Submit an Issue', 'wp-geo' ) );
 		}
 		return $plugin_meta;
 	}

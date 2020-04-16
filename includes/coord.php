@@ -24,13 +24,6 @@ class WPGeo_Coord {
 	}
 
 	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_Coord() {
-		$this->__construct();
-	}
-
-	/**
 	 * Is Valid Geo Coord
 	 *
 	 * @param float $lat Latitude.

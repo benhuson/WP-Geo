@@ -24,13 +24,6 @@ class WPGeo_Contextual_Map_Widget extends WPGeo_Widget {
 			)
 		);
 	}
-
-	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_Contextual_Map_Widget() {
-		$this->__construct();
-	}
 	
 	/**
 	 * Widget Output
@@ -84,4 +77,6 @@ class WPGeo_Contextual_Map_Widget extends WPGeo_Widget {
 }
 
 // Widget Hook
-add_action( 'widgets_init', create_function( '', 'return register_widget( "WPGeo_Contextual_Map_Widget" );' ) );
+add_action( 'widgets_init', function() {
+	return register_widget( "WPGeo_Contextual_Map_Widget" );
+});

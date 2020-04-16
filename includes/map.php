@@ -44,13 +44,6 @@ class WPGeo_Map {
 	}
 
 	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_Map() {
-		$this->__construct();
-	}
-
-	/**
 	 * Validate Map ID
 	 *
 	 * @param string $id The map ID.

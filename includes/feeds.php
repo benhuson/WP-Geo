@@ -13,13 +13,6 @@ class WPGeo_Feeds {
 	}
 
 	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_Feeds() {
-		$this->__construct();
-	}
-
-	/**
 	 * Initialise WP Geo feeds
 	 */
 	function init() {
@@ -95,7 +88,7 @@ class WPGeo_Feeds {
 
 			$geo_namespaces = array(
 				'georss' => 'http://www.georss.org/georss',
-				'geo'    => 'http://www.w3.org/2003/01/geo/wgs84_pos#',
+				'geo'    => 'https://www.w3.org/2003/01/geo/wgs84_pos#',
 			);
 
 			$geo_namespaces = apply_filters( 'wpgeo_feed_namespaces', $geo_namespaces );

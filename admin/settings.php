@@ -14,13 +14,6 @@ class WPGeo_Settings {
 	}
 
 	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_Settings() {
-		$this->__construct();
-	}
-
-	/**
 	 * Settings API
 	 */
 	function register_settings() {
@@ -151,8 +144,8 @@ class WPGeo_Settings {
 	 */
 	function general_settings_section() {
 		echo '<p>'
-			. sprintf( __( "For more information and documentation about this plugin please visit the <a %s>WP Geo Plugin</a> home page.", 'wp-geo' ), 'href="http://www.benhuson.co.uk/wordpress-plugins/wp-geo/"' ) . '<br />'
-			. sprintf( __( "If you experience any problems/bugs with the plugin, please <a %s>log it here</a>.", 'wp-geo' ), 'href="http://code.google.com/p/wp-geo/issues/list"' ) . 
+			. sprintf( __( "For more information and documentation about this plugin please visit the <a %s>WP Geo Plugin</a> home page.", 'wp-geo' ), 'href="https://www.benhuson.co.uk/wordpress-plugins/wp-geo/"' ) . '<br />'
+			. sprintf( __( "If you experience any problems/bugs with the plugin, please <a %s>log it here</a>.", 'wp-geo' ), 'href="https://code.google.com/p/wp-geo/issues/list"' ) . 
 			'</p>';
 	}
 

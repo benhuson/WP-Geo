@@ -62,25 +62,29 @@
 			
 			// Update map type
 			google.maps.event.addListener(WPGeo_Admin.map, "maptypeid_changed", function() {
-				var type = WPGeo_Admin.map.getMapTypeId();
-				switch (type) {
-					case "terrain":
-						type = "G_PHYSICAL_MAP";
-						break;
-					case "roadmap":
-						type = "G_NORMAL_MAP";
-						break;
-					case "satellite":
-						type = "G_SATELLITE_MAP";
-						break;
-					case "hybrid":
-						type = "G_HYBRID_MAP";
-						break;
-				}
+				var type = mapTypeToId(WPGeo_Admin.map.getMapTypeId());
+
 				$("#wpgeo_location").trigger({
 					type    : "WPGeo_updateMapType",
 					mapType : type
 				});
+			});
+
+			// Set map center value in our Map Settings checkbox
+			$("#wpgeo_location").trigger({
+				type   : 'WPGeo_updateMapCenter',
+				latLng : WPGeo_Admin.map.getCenter(),
+				lat    : WPGeo_Admin.map.getCenter().lat(),
+				lng    : WPGeo_Admin.map.getCenter().lng(),
+			});
+			// Set map zoom value in our Map Settings checkbox
+			$("#wpgeo_location").trigger({
+				type : "WPGeo_updateMapZoom",
+				zoom : WPGeo_Admin.map.getZoom()
+			});
+			$("#wpgeo_location").trigger({
+				type    : "WPGeo_updateMapType",
+				mapType : mapTypeToId(WPGeo_Admin.map.getMapTypeId())
 			});
 			
 			// Update zoom
@@ -139,6 +143,12 @@
 								lat    : results[0].geometry.location.lat(),
 								lng    : results[0].geometry.location.lng()
 							});
+							$("#wpgeo_location").trigger({
+								type   : 'WPGeo_updateMapCenter',
+								latLng : results[0].geometry.location,
+								lat    : results[0].geometry.location.lat(),
+								lng    : results[0].geometry.location.lng()
+							});
 						} else {
 							alert(e.address + " not found");
 						}
@@ -151,5 +161,25 @@
 		});
 	}
 	google.maps.event.addDomListener(window, "load", wpgeo_init_admin_post_map);
+
+	function mapTypeToId(type)
+	{
+		switch (type) {
+			case "terrain":
+				type = "G_PHYSICAL_MAP";
+				break;
+			case "roadmap":
+				type = "G_NORMAL_MAP";
+				break;
+			case "satellite":
+				type = "G_SATELLITE_MAP";
+				break;
+			case "hybrid":
+				type = "G_HYBRID_MAP";
+				break;
+		}
+
+		return type;
+	}
 
 })(jQuery);
