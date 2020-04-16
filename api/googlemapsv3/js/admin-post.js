@@ -139,6 +139,12 @@
 								lat    : results[0].geometry.location.lat(),
 								lng    : results[0].geometry.location.lng()
 							});
+							$("#wpgeo_location").trigger({
+								type   : 'WPGeo_updateMapCenter',
+								latLng : results[0].geometry.location,
+								lat    : results[0].geometry.location.lat(),
+								lng    : results[0].geometry.location.lng()
+							});
 						} else {
 							alert(e.address + " not found");
 						}
