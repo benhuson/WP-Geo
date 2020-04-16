@@ -23,8 +23,8 @@ if ( ! class_exists( 'WPGeo_Dashboard' ) ) {
 			wp_add_dashboard_widget( 'wpgeo_dashboard', 'WP Geo',
 				array( $this, 'widget' ),
 				array(
-					'all_link'  => 'http://www.wpgeo.com/',
-					'feed_link' => 'http://www.wpgeo.com/feed/'
+					'all_link'  => 'https://www.wpgeo.com/',
+					'feed_link' => 'https://www.wpgeo.com/feed/'
 				)
 			);
 		}
@@ -66,7 +66,7 @@ if ( ! class_exists( 'WPGeo_Dashboard' ) ) {
 			echo $before_widget . $before_title . $widget_name . $after_title;
 			echo '<div style="background-image:url(' . plugins_url( WPGEO_SUBDIR . 'img/logo/wp-geo.png' ) . '); background-repeat:no-repeat; background-position:right top; padding-right:80px;">';
 			
-			$feed = fetch_feed( 'http://feeds2.feedburner.com/wpgeo' );
+			$feed = fetch_feed( 'https://feeds2.feedburner.com/wpgeo' );
 			
 			if ( is_wp_error( $feed ) || ! $feed->get_item_quantity() ) {
 				echo '<p>' . esc_html__( 'No recent updates.', 'wp-geo' ) . '</p>';
@@ -83,7 +83,7 @@ if ( ! class_exists( 'WPGeo_Dashboard' ) ) {
 				echo '</div>';
 			}
 			
-			echo '<p><a href="http://www.wpgeo.com/">' . esc_html__( 'View all WP Geo news...', 'wp-geo' ) . '</a></p>';
+			echo '<p><a href="https://www.wpgeo.com/">' . esc_html__( 'View all WP Geo news...', 'wp-geo' ) . '</a></p>';
 			echo '</div>';
 			echo $after_widget;
 		}

@@ -421,7 +421,7 @@ class WPGeo {
 
 	/**
 	 * Get Google Maps Locale
-	 * See http://code.google.com/apis/maps/faq.html#languagesupport for link to updated languages codes.
+	 * See https://code.google.com/apis/maps/faq.html#languagesupport for link to updated languages codes.
 	 * https://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1
 	 *
 	 * @author Alain Messin, tweaked by Ben :)
