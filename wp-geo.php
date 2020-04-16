@@ -9,7 +9,7 @@ Author: Ben Huson
 Author URI: https://github.com/benhuson/wp-geo
 Text Domain: wp-geo
 Domain Path: /languages
-Version: 3.5
+Version: 3.5.1
 Tested up to: 5.4
 Minimum WordPress Version Required: 3.9
 

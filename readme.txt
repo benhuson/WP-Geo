@@ -4,7 +4,7 @@ Tags: maps, map, geo, geocoding, google, location, georss
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5FN8ZMNCHBM3J
 Requires at least: 4.3
 Tested up to: 5.4
-Stable tag: 3.5
+Stable tag: 3.5.1
 License: GPLv3
 License URI: http://www.opensource.org/licenses/gpl-license.php
 
@@ -65,6 +65,7 @@ WP Geo is currently available in the following languages:
 * Russian (by [Fat Cower](http://www.fatcow.com/))
 * Serbian (by Borisa Djuraskovic - [Web Hosting Hub](http://www.webhostinghub.com/))
 * Spanish (by Alberto)
+* Turkish (by Mehmet HAKAN, [WPsitesi](www.wpsitesi.com))
 
 == Installation ==
 1. Download the archive file and uncompress it.
@@ -96,6 +97,16 @@ None at the moment.
 4. Widget Settings
 
 == Changelog ==
+
+= WP Geo 3.5.1 =
+
+* Deprecate `create_function()`. Props @flynsarmy.
+* Remove deprecated PHP4 constructors. Props @flynsarmy.
+* Correctly set Map Settings checkbox values on post admin page load. Props @flynsarmy.
+* Change URLs to https. Props @flynsarmy.
+* Update map center value when updating location. Props @flynsarmy.
+* Remove WP Geo admin Dashboard as feed no longer exists.
+* Add Turkish translation. Props @WPsitesi.
 
 = WP Geo 3.5 =
 
