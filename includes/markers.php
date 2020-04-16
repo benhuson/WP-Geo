@@ -57,13 +57,6 @@ class WPGeo_Markers {
 	}
 
 	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_Markers() {
-		$this->__construct();
-	}
-
-	/**
 	 * Get Image URL
 	 *
 	 * @param   string  $img  Image file name.

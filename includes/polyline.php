@@ -32,13 +32,6 @@ class WPGeo_Polyline {
 	}
 
 	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_Polyline() {
-		$this->__construct();
-	}
-
-	/**
 	 * Add Coord
 	 *
 	 * @param float $coord WPGeo_Coord object (or deprecated Latitude).

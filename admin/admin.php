@@ -24,13 +24,6 @@ class WPGeo_Admin {
 	}
 
 	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_Admin() {
-		$this->__construct();
-	}
-
-	/**
 	 * Admin Init
 	 */
 	function admin_init() {

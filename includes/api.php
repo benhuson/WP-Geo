@@ -13,13 +13,6 @@ class WPGeo_API {
 	}
 
 	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_API() {
-		$this->__construct();
-	}
-
-	/**
 	 * Map
 	 * Gets map to display.
 	 *

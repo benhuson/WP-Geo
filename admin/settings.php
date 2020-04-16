@@ -14,13 +14,6 @@ class WPGeo_Settings {
 	}
 
 	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_Settings() {
-		$this->__construct();
-	}
-
-	/**
 	 * Settings API
 	 */
 	function register_settings() {
