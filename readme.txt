@@ -2,7 +2,7 @@
 Contributors: husobj
 Tags: maps, map, geo, geocoding, google, location, georss
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5FN8ZMNCHBM3J
-Requires at least: 4.3
+Requires at least: 4.6
 Tested up to: 5.4
 Stable tag: 3.5.1
 License: GPLv3
