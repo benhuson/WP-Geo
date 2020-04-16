@@ -16,13 +16,6 @@ class WPGeo_Query {
 	}
 
 	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_Query() {
-		$this->__construct();
-	}
-
-	/**
 	 * Get Custom Field Posts Join
 	 * Join custom fields on to results.
 	 *

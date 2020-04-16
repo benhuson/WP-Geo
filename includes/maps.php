@@ -17,13 +17,6 @@ class WPGeo_Maps {
 	}
 
 	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_Maps() {
-		$this->__construct();
-	}
-
-	/**
 	 * Add Map
 	 * Adds a WPGeo_Map object to the maps array.
 	 *

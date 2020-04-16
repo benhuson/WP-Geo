@@ -17,13 +17,6 @@ if ( ! class_exists( 'WPGeo_Dashboard' ) ) {
 		}
 
 		/**
-		 * Deprecated PHP 4 Constructor
-		 */
-		function WPGeo_Dashboard() {
-			$this->__construct();
-		}
-
-		/**
 		 * Register the dashboard widget
 		 */
 		function register_widget() {

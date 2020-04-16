@@ -12,13 +12,6 @@ class WPGeo_Editor {
 	}
 
 	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_Editor() {
-		$this->__construct();
-	}
-
-	/**
 	 * Add Buttons
 	 * This function add buttons to the Rich Editor.
 	 */

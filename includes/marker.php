@@ -32,13 +32,6 @@ class WPGeo_Marker {
 	}
 
 	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_Marker() {
-		$this->__construct();
-	}
-
-	/**
 	 * Set the marker's ID.
 	 *
 	 * @param  string  $id  ID.

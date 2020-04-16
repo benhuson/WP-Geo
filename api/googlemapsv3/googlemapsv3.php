@@ -19,13 +19,6 @@ class WPGeo_API_GoogleMapsV3 extends WPGeo_API {
 	}
 
 	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_API_GoogleMapsV3() {
-		$this->__construct();
-	}
-
-	/**
 	 * Register WP Geo Scripts
 	 *
 	 * @uses  WPGeo:$version

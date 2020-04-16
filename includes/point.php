@@ -31,13 +31,6 @@ class WPGeo_Point {
 	}
 
 	/**
-	 * Deprecated PHP 4 Constructor
-	 */
-	function WPGeo_Point() {
-		$this->__construct();
-	}
-
-	/**
 	 * Get Coord
 	 *
 	 * @return  object  WPGeo_Coord.
