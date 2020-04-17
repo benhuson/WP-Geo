@@ -95,6 +95,33 @@
 				WPGeo_Admin.map.setView(WPGeo_Admin.marker.getLatLng());
 			});
 
+			// Search Location
+			$("#wpgeo_location").bind("WPGeo_searchLocation", function(e) {
+				var queryURL = 'https://nominatim.openstreetmap.org/search?format=geojson&countrycodes=' + e.base_country_code + '&q=' + e.address;
+				$.getJSON( queryURL, function( data ) {
+					if (typeof data.features !== "undefined" && data.features.length) {
+						var latLng = L.latLng(data.features[0].geometry.coordinates[1], data.features[0].geometry.coordinates[0]);
+						WPGeo_Admin.map.setView(latLng);
+						WPGeo_Admin.marker.setLatLng(latLng);
+						WPGeo_Admin.marker.setOpacity(1);
+						$("#wpgeo_location").trigger({
+							type   : 'WPGeo_updateMarkerLatLng',
+							latLng : latLng,
+							lat    : latLng.lat,
+							lng    : latLng.lng
+						});
+						$("#wpgeo_location").trigger({
+							type   : 'WPGeo_updateMapCenter',
+							latLng : latLng,
+							lat    : latLng.lat,
+							lng    : latLng.lng
+						});
+					} else {
+						alert(e.address + " not found");
+					}
+				});
+			});
+
 			// Map ready, do other stuff if needed
 			$("#wpgeo_location").trigger("WPGeo_adminPostMapReady");
 
