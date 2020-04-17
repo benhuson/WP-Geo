@@ -727,7 +727,18 @@ class WPGeo {
 		global $wpgeo, $post, $post_ID, $pagenow;
 		
 		$wp_geo_options = get_option( 'wp_geo_options' );
-		
+
+		// Activate maps in admin...
+		if ( is_admin() ) {
+
+			$current_screen = get_current_screen();
+
+			if ( 'post' == $current_screen->base || ( is_numeric( $post_ID ) && $post_ID > 0 ) || $pagenow == 'post-new.php' || $pagenow == 'page-new.php' ) {
+				return true;
+			}
+
+		}
+
 		// Check if domain is correct
 		if ( ! wpgeo_check_domain() ) {
 			return false;
@@ -778,18 +789,6 @@ class WPGeo {
 		}
 		if ( is_post_type_archive() && $wpgeo->post_type_supports( get_post_type() ) && $wp_geo_options['show_maps_on_home'] == 'Y' ) {
 			return $this->show_maps_filter( true );
-		}
-		
-		// Activate maps in admin...
-		if ( is_admin() ) {
-			// If editing a post or page...
-			if ( is_numeric( $post_ID ) && $post_ID > 0 ) {
-				return $this->show_maps_filter( true );
-			}
-			// If writing a new post or page...
-			if ( $pagenow == 'post-new.php' || $pagenow == 'page-new.php' ) {
-				return $this->show_maps_filter( true );
-			}
 		}
 		
 		// Do Action
