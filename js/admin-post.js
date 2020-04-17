@@ -82,7 +82,7 @@
 		
 		// Update center
 		$("#wpgeo_location").bind("WPGeo_updateMapCenter", function(e) {
-			$("#wpgeo_map_settings_centre").val(e.latLng.lat() + "," + e.latLng.lng());
+			$("#wpgeo_map_settings_centre").val(e.lat + "," + e.lng);
 		});
 		
 		// Clear location fields handler

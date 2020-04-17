@@ -51,9 +51,9 @@
 			WPGeo_Admin.map.on("click", function(e) {
 				$("#wpgeo_location").trigger({
 					type   : 'WPGeo_updateMarkerLatLng',
-					latLng : e.latLng,
-					lat    : e.latLng.lat,
-					lng    : e.latLng.lng
+					latLng : e.latlng,
+					lat    : e.latlng.lat,
+					lng    : e.latlng.lng
 				});
 			});
 			
