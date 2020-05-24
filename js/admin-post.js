@@ -1,11 +1,11 @@
 
 (function($){
-	
+
 	/**
 	 * Post Admin
 	 */
 	 $(document).ready(function() {
-		
+
 		/**
 		 * Events
 		 */
@@ -37,7 +37,7 @@
 			$("#wpgeo_location").trigger({
 				type : 'WPGeo_updateLatLngField',
 				lat  : $("input#wp_geo_latitude").val(),
-				lng  : $("input#wp_geo_longitude").val(),
+				lng  : $("input#wp_geo_longitude").val()
 			});
 		});
 		
@@ -46,7 +46,7 @@
 			$("#wpgeo_location").trigger({
 				type : 'WPGeo_updateLatLngField',
 				lat  : $("input#wp_geo_latitude").val(),
-				lng  : $("input#wp_geo_longitude").val(),
+				lng  : $("input#wp_geo_longitude").val()
 			});
 		});
 		
@@ -92,6 +92,40 @@
 			$(this).find("input#wp_geo_longitude").val('');
 			$('#wpgeo_location').trigger('WPGeo_hideMarker');
 		});
+
+         /**
+          * Set Settings if no Values are set
+          */
+
+         var setSettingsValue = function(element, value) {
+             if (($(element).val() == 'Y' || $(element).val() == '') && $(element).is(':checked')) {
+                 $(element).val(value);
+             }
+         };
+
+         var settingsZoom = $("#wpgeo_map_settings_zoom");
+         var zoomValue = WPGeo_Admin.zoom;
+
+         setSettingsValue(settingsZoom, zoomValue);
+         settingsZoom.on('change', function() {
+             setSettingsValue(this, zoomValue);
+         });
+
+         var settingsType = $("#wpgeo_map_settings_type");
+         var typeValue = WPGeo_Admin.mapType;
+
+         setSettingsValue(settingsZoom, typeValue);
+         settingsType.on('change', function() {
+             setSettingsValue(this, typeValue);
+         });
+
+         var settingsCentre = $("#wpgeo_map_settings_centre");
+         var centreValue = WPGeo_Admin.latitude + "," + WPGeo_Admin.longitude;
+
+         setSettingsValue(settingsCentre, centreValue);
+         settingsCentre.on('change', function() {
+             setSettingsValue(this, centreValue);
+         });
 	 	
 	 });
 	 
